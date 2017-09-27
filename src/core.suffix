@@ -1,0 +1,14 @@
+
+    return {
+
+        services: {
+            js: $js,
+            window: $window,
+            code: $code,
+            log: $log,
+            app: $app,
+            event: $event
+        }
+    }
+
+})(window);
