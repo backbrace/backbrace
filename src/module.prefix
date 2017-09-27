@@ -1,0 +1,14 @@
+/**
+ * @license JumpStartJS v"JS_VERSION_FULL"
+ * (c) 2009-2017 Liveapp Solutions
+ * License: MIT
+ */
+(function(window, scope) {
+
+    // Get services.
+    var $js = scope.services.js,
+        $window = scope.services.window,
+        $code = scope.services.code,
+        $log = scope.services.log,
+        $app = scope.services.app;
+    
