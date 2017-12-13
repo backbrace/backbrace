@@ -1,6 +1,0 @@
-/**
- * @license JumpStartJS v"JS_VERSION_FULL"
- * (c) 2009-2017 Liveapp Solutions
- * License: MIT
- */
-var $scope = (function(window) {

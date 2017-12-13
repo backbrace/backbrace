@@ -16,14 +16,8 @@
   },
 
   "globals": {
-
     "window": false,
-
-    /* JumpStart.js */
-    "$js": false,
-    "$window": false,
-    "$log": false
-
+    "jumpstart": false
   }
 
 }

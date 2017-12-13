@@ -1,5 +1,3 @@
 build/**
 node_modules/**
 tmp/**
-lib/jquery/**
-src/core/scope.js

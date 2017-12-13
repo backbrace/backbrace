@@ -3,40 +3,13 @@
   "extends": "../.eslintrc-browser.json",
 
   "globals": {
-
-    "window": false,
-    "$": false,
-    "jQuery": false,
-    "swal": false,
-
-    /* Services */
-    "$js": false,
-    "$window": false,
-    "contentLoaded": false,
-    "$scope": false,
-    "$code": false,
-    "$event": false,
-    "loaderHelper": false,
-    "$log": false,
-    "packageHelper": false,
-    "styleHelper": false,
-    "$app": false,
-
-    /* Objects */
-    "Page": false,
-    "PageField": false,
-    "PageAction": false,
-    "Table": false,
-    "Column": false,
     
-    /* Components */
-    "AppComponent": false,
-    "HeaderComponent": false,
-    "WindowComponent": false,
-    "PageComponent": false,
+    // Browser.    
+    "window": false,
 
-    /* Component Services */
-    "alertHelper": false
+    // CommonJS.
+    "module": false,
+    "require": false
 
   }
 }

@@ -1,7 +1,5 @@
 'use strict';
 
-var files = require('./jumpStartFiles').files;
-var util = require('./lib/grunt/utils.js');
 var versionInfo = require('./lib/version-info/version-info.js');
 
 module.exports = function(grunt) {
@@ -9,6 +7,8 @@ module.exports = function(grunt) {
   //Load grunt modules.
   require('load-grunt-tasks')(grunt);
   grunt.loadTasks('lib/grunt');
+
+  var path = require('path');
 
   //Get the current version info.
   var JS_VERSION = versionInfo.currentVersion;
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         src: [
           '*.js',
           'src/**/*.js',
-          '!src/Bind.js'
+          'test/**/*.js'
         ]
       }
     },
@@ -44,16 +44,19 @@ module.exports = function(grunt) {
       core: 'karma.conf.js'
     },
 
-    //Build targets.
-    build: {
-
-      //JumpStart source.
-      jumpStart: {
-        dest: 'build/JumpStart.js',
-        src: [
-          util.wrap([files['jumpStartCore']], 'core'),
-          util.wrap([files['jumpStartComponents']], 'module')
-        ]
+    webpack: {
+      options: {
+        cache: true,
+        entry: {
+          JumpStart: './src/jumpstart.js'
+        },
+        output: {
+          path: path.join(__dirname, 'build'),
+          publicPath: 'build/',
+          filename: '[name].js'
+        }
+      },
+      build: {
       }
     },
 
@@ -70,9 +73,12 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('package', ['clean', 'buildall', 'uglify']);
-  grunt.registerTask('test:core', 'Run the unit tests with Karma', ['build', 'tests:core']);
-  grunt.registerTask('test', 'Run tests', ['eslint', 'package']); //TODO ADD unit tests
+  grunt.loadNpmTasks('grunt-webpack');
+
+  grunt.registerTask('pack', ['webpack:build']);
+  grunt.registerTask('package', ['clean', 'pack', 'uglify']);
+  grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
+  grunt.registerTask('test', 'Run tests', ['eslint', 'package', 'test:core']);
   grunt.registerTask('default', ['test']);
 
 };

@@ -1,7 +1,5 @@
 'use strict';
 
-var jumpStartFiles = require('./jumpStartFiles');
-
 module.exports = function(config) {
   config.set({
     frameworks: ['jasmine'],
@@ -11,6 +9,9 @@ module.exports = function(config) {
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
-    files: jumpStartFiles.mergeFilesFor('karma')
+    files: [
+      'build/JumpStart.js',
+      'test/**/*.js'
+    ]
   });
 };

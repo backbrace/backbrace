@@ -4,23 +4,29 @@
   "branchPattern": "0.1.*",
   "license": "MIT",
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^3.0.0",
-    "grunt-eslint": "^19.0.0",
-    "jasmine-core": "^2.4.0",
-    "karma": "^1.1.2",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-jasmine": "^1.0.2",
-    "load-grunt-tasks": "^3.5.0",
-    "lodash": "~2.4.1",
-    "npm-run": "^4.1.0",
-    "semver": "~4.0.3",
-    "shelljs": "^0.7.5"
+    "@types/jasmine": "^2.8.2",
+    "@types/jquery": "^3.2.16",
+    "@types/moment": "^2.13.0",
+    "@types/sweetalert": "^1.1.28"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/JumpStartJS/jumpstart.js.git"
+  },
+  "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-uglify": "^3.2.1",
+    "grunt-eslint": "^20.1.0",
+    "grunt-webpack": "^3.0.2",
+    "jasmine-core": "^2.8.0",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.1",
+    "load-grunt-tasks": "^3.5.2",
+    "npm-run": "^4.1.2",
+    "semver": "^5.4.1",
+    "shelljs": "^0.7.8",
+    "webpack": "^3.10.0"
   }
 }
