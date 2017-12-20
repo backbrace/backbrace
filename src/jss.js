@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var $config = require('./config'),
+var $settings = require('./settings'),
     $util = require('./util');
 
 
@@ -15,7 +15,7 @@ var $config = require('./config'),
 function mergeConfig(val) {
 
     // Loop through the style config.
-    $util.forEach($config.style, function(style_item, style_key) {
+    $util.forEach($settings.style, function(style_item, style_key) {
 
         // Loop though the sub config (colors,images,etc).
         $util.forEach(style_item, function(item, key) {

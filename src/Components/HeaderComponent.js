@@ -1,6 +1,6 @@
 'use strict';
 
-var $config = require('../config'),
+var $settings = require('../settings'),
     $ = require('../../external/jquery');
 
 /**
@@ -26,15 +26,15 @@ HeaderComponent.prototype.load = function(container) {
         + '<ul id="mnuMain" /></div>').appendTo(container);
 
     // Add profile image.
-    if ($config.mobile) {
+    if ($settings.mobile) {
         $('.menu-logo').remove();
         $('.menu-brand').append('<img id="imgProfile" class="circle-img profile-img" />');
     } else {
-        $('.menu-logo').attr('src', $config.style.images.menuLogo);
+        $('.menu-logo').attr('src', $settings.style.images.menuLogo);
         $('.navbar-inner').append('<img id="imgProfile" class="circle-img profile-img" />');
     }
 
-    $('.navbar-logo').attr('src', $config.style.images.logo);
+    $('.navbar-logo').attr('src', $settings.style.images.logo);
 
     $('.menu-icon').ripple().on('click', function() {
         $('.menu').show().animate({

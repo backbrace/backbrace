@@ -1,6 +1,6 @@
 'use strict';
 
-var $config = require('../config'),
+var $settings = require('../settings'),
   $ = require('../../external/jquery'),
   HeaderComponent = require('./HeaderComponent');
 
@@ -18,7 +18,7 @@ AppComponent.prototype.load = function(container) {
 
   this.main = $('<div class="main"></div>').appendTo(container);
 
-  $('body').addClass($config.mobile ? 'mobile-app' : 'desktop-app');
+  $('body').addClass($settings.mobile ? 'mobile-app' : 'desktop-app');
 
   // Load components.
   this.header.load(this.main);

@@ -1,6 +1,6 @@
 'use strict';
 
-var $config = require('./config');
+var $settings = require('./settings');
 
 module.exports = {
 
@@ -8,17 +8,17 @@ module.exports = {
      * JQuery Package.
      */
     jQuery: function() {
-        var min = ($config.minify ? '.min' : '');
+        var min = ($settings.minify ? '.min' : '');
         return 'https://ajax.googleapis.com/ajax/libs/jquery/' +
-            ($config.mobile ? '2.1.0' : '3.2.1') + '/jquery' + min + '.js';
+            ($settings.mobile ? '2.1.0' : '3.2.1') + '/jquery' + min + '.js';
     },
 
     /**
      * JQuery UI.
      */
     jQueryUI: function() {
-        var min = ($config.minify ? '.min' : '');
-        if ($config.mobile)
+        var min = ($settings.minify ? '.min' : '');
+        if ($settings.mobile)
             return [[
                 'https://ajax.googleapis.com/ajax/libs/jquerymobile/' +
                 '1.4.5/jquery.mobile' + min + '.js',
@@ -37,13 +37,13 @@ module.exports = {
      * Common packages.
      */
     common: function() {
-        var min = ($config.minify ? '.min' : '');
+        var min = ($settings.minify ? '.min' : '');
         return [
             [
                 'https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons' + min + '.css',
                 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment' + min + '.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert' +
-                ($config.minify ? '.min' : '-dev') + '.js',
+                ($settings.minify ? '.min' : '-dev') + '.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert' + min + '.css'
             ],
             [

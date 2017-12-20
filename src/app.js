@@ -5,7 +5,7 @@
 'use strict';
 
 var $code = require('./code'),
-    $config = require('./config'),
+    $settings = require('./settings'),
     $event = require('./event'),
     $jss = require('./jss'),
     $log = require('./log'),
@@ -25,7 +25,7 @@ var $code = require('./code'),
 function message(msg, callbackFn, title) {
 
     // If there is no gui, just run the callback.
-    if (!$config.guiAllowed) {
+    if (!$settings.guiAllowed) {
         if (callbackFn)
             $util.setZeroTimeout(callbackFn);
         return;
@@ -112,28 +112,28 @@ function ready(func) {
 function start(settings) {
 
     // Extend the config.
-    $util.extend($config, settings);
+    $util.extend($settings, settings);
 
-    $log.debugMode($config.debug);
+    $log.debugMode($settings.debug);
 
     // Add font css.
     $util.addElement('link', {
-        'href': $config.style.font.url,
+        'href': $settings.style.font.url,
         'rel': 'stylesheet'
     }, $window.document.head);
 
     // Add font family to body tag.
     $util.addElement('style', {}, $window.document.head)
-        .innerHTML = 'body{font-family: ' + $config.style.font.family + '}';
+        .innerHTML = 'body{font-family: ' + $settings.style.font.family + '}';
 
     // Set mobile mode.
-    if ($config.autoSwitch &&
+    if ($settings.autoSwitch &&
         /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
             .test($window.navigator.userAgent.toLowerCase()))
-        $config.mobile = true;
+        $settings.mobile = true;
 
     // Add mobile head tags.
-    if ($config.mobile) {
+    if ($settings.mobile) {
 
         $util.addElement('meta', {
             'http-equiv': 'X-UA-Compatible',
@@ -160,7 +160,7 @@ function start(settings) {
     loader.show();
 
     // Update title.
-    $window.document.title = $config.title;
+    $window.document.title = $settings.title;
 
     // Check for HTML5.
     if (!$util.html5Check())
@@ -191,7 +191,7 @@ function start(settings) {
                 AppComponent = require('./Components/AppComponent');
 
             // Compile app JSS and load into a style tag.
-            var css = $jss.compile($config.app_jss);
+            var css = $jss.compile($settings.app_jss);
             $('<style>')
                 .append(css)
                 .appendTo($('head'));
@@ -210,7 +210,7 @@ function start(settings) {
                     function() {
                         // Load base application component.
                         var app_component = new AppComponent();
-                        return app_component.load($config.mobile ? $('.ui-page') : $('body'));
+                        return app_component.load($settings.mobile ? $('.ui-page') : $('body'));
                     },
 
                     function() {
