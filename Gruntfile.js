@@ -9,6 +9,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('lib/grunt');
 
   var path = require('path');
+  var webpackConfig = require("./webpack.config.js");
 
   //Get the current version info.
   var JS_VERSION = versionInfo.currentVersion;
@@ -45,20 +46,19 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      options: {
-        cache: true,
-        entry: {
-          JumpStart: './src/jumpstart.js'
-        },
-        output: {
-          path: path.join(__dirname, 'build'),
-          publicPath: 'build/',
-          filename: '[name].js'
-        }
-      },
+      options: webpackConfig,
       build: {
       }
     },
+
+    "webpack-dev-server": {
+			options: {
+        webpack: webpackConfig,
+        publicPath: '/scripts',
+        contentBase: 'website/'
+			},
+			start: {}
+		},
 
     uglify: {
       options: {
@@ -75,6 +75,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-webpack');
 
+  grunt.registerTask('dev', ['webpack-dev-server:start']);
   grunt.registerTask('pack', ['webpack:build']);
   grunt.registerTask('package', ['clean', 'pack', 'uglify']);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
