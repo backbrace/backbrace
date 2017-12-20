@@ -1,4 +1,6 @@
-var path = require("path");
+'use strict';
+
+var path = require('path');
 module.exports = {
     cache: true,
     entry: {
@@ -11,6 +13,6 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: "website/"
+        contentBase: 'website/'
     }
 };

@@ -8,8 +8,7 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.loadTasks('lib/grunt');
 
-  var path = require('path');
-  var webpackConfig = require("./webpack.config.js");
+  var webpackConfig = require('./webpack.config.js');
 
   //Get the current version info.
   var JS_VERSION = versionInfo.currentVersion;
@@ -51,7 +50,7 @@ module.exports = function(grunt) {
       }
     },
 
-    "webpack-dev-server": {
+    'webpack-dev-server': {
 			options: {
         webpack: webpackConfig,
         publicPath: '/scripts',
