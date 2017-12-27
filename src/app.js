@@ -6,13 +6,13 @@
 
 var $code = require('./code'),
     $settings = require('./settings'),
-    $event = require('./event'),
     $jss = require('./jss'),
     $log = require('./log'),
     $package = require('./package'),
     $util = require('./util'),
     loader = require('./content-loader'),
     packages = require('./packages'),
+    readyFunc = null,
     suppressNextError = false;
 
 /**
@@ -110,8 +110,7 @@ function error(msg, args) {
  * @param {Function} func - Function to execute.
  */
 function ready(func) {
-    var $event = require('./event');
-    $event.bind('js.loaded', func);
+    readyFunc = func;
 }
 
 /**
@@ -229,7 +228,7 @@ function start(settings) {
 
                     function() {
                         loader.hide();
-                        $event.fire('js.loaded');
+                        if (readyFunc) readyFunc();
                     }
                 );
             });
