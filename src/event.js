@@ -5,7 +5,6 @@
 'use strict';
 
 var $code = require('./code'),
-    $window = require('./window').get(),
     event = {};
 
 function exists(name) {

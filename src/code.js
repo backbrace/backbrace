@@ -6,7 +6,6 @@
 
 var $log = require('./log'),
     $util = require('./util'),
-    $window = require('./window').get(),
     CodeThread = require('./Classes/CodeThread'),
     testMode = false;
 

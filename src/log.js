@@ -14,7 +14,7 @@ var $util = require('./util'),
  */
 function write(msg, type) {
 
-    var $window = require('./window').get(),
+    var $window = require('./Providers/window').get(),
         dte = new Date();
 
     // Add date and time to string.
@@ -82,7 +82,7 @@ function debug(msg) {
  * @param {Object} obj - Object to log.
  */
 function object(obj) {
-    var $window = require('./window').get();
+    var $window = require('./Providers/window').get();
     if ($window.console && $window.console.dir) {
         write(obj, 'dir');
         return;

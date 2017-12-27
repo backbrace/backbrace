@@ -1,5 +1,5 @@
 /**
- * Browser window module. Allows the window to be mocked for testing.
+ * Browser window provider module. Allows the window to be mocked for testing.
  * @module
  */
 'use strict';
@@ -16,7 +16,7 @@ function get() {
 
 /**
  * Set the browser window instance.
- * @param {*} win
+ * @param {(Window|Object)} win
  */
 function set(win) {
     window_instance = win;

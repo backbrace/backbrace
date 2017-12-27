@@ -9,5 +9,5 @@ module.exports = {
     log: require('./log'),
     settings: require('./settings'),
     util: require('./util'),
-    window: require('./window.js')
+    window: require('./Providers/window.js')
 };

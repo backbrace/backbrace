@@ -6,7 +6,6 @@
 
 var $log = require('./log'),
     $util = require('./util'),
-    $window = require('./window').get(),
     packages = [],
     loadedPackages = [],
     loadedComponents = [];
@@ -18,6 +17,8 @@ var $log = require('./log'),
  * @param {*} onerror - On error function.
  */
 function loadScript(url, onsuccess, onerror) {
+
+    var $window = require('./Providers/window').get();
 
     $log.debug('Loading script: ' + url);
 
@@ -37,6 +38,8 @@ function loadScript(url, onsuccess, onerror) {
  * @param {*} onerror - On error function.
  */
 function loadCSS(url, onsuccess, onerror) {
+
+    var $window = require('./Providers/window').get();
 
     $log.debug('Loading css: ' + url);
 

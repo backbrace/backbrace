@@ -11,7 +11,6 @@ var $code = require('./code'),
     $log = require('./log'),
     $package = require('./package'),
     $util = require('./util'),
-    $window = require('./window').get(),
     loader = require('./content-loader'),
     packages = require('./packages'),
     suppressNextError = false;
