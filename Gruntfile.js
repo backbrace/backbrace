@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         publicPath: '/scripts',
         contentBase: 'website/'
 			},
-			start: {}
+      start: {}
 		},
 
     uglify: {
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-webpack');
 
-  grunt.registerTask('dev', ['webpack-dev-server:start']);
+  grunt.registerTask('startdev', ['webpack-dev-server:start']);
   grunt.registerTask('pack', ['webpack:build']);
   grunt.registerTask('package', ['clean', 'pack', 'uglify']);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
