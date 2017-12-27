@@ -1,5 +1,5 @@
 /**
- * Data module.
+ * Meta data module. Get object meta data from cache, JSON files or data.
  * @module
  */
 'use strict';
@@ -10,15 +10,15 @@ var $code = require('./code'),
     Page = require('./Classes/Page');
 
 /**
- * Get a page.
- * @param {string} name - Name of the page to load.
+ * Get page object meta data.
+ * @param {string} name - Name of the page to get.
  * @returns {JQueryPromise}
  */
 function page(name) {
     return $code.block(
         function() {
-            // Get the page from the page dir.
-            return $http.get($settings.config.dir + 'pages/' + name + '.json');
+            // Get the page from a JSON file.
+            return $http.get($settings.meta.dir + 'pages/' + name + '.json');
         },
         function(data) {
             if (data) {

@@ -66,9 +66,9 @@ module.exports = {
      */
     app_jss: jss_styles.flat,
 
-    config: {
+    meta: {
 
-        dir: './config/'
+        dir: './meta/'
 
     },
 

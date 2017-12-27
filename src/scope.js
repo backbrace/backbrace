@@ -4,9 +4,9 @@
 module.exports = {
     app: require('./app'),
     code: require('./code'),
-    config: require('./config'),
     event: require('./event'),
     log: require('./log'),
+    meta: require('./meta'),
     settings: require('./settings'),
     util: require('./util'),
     window: require('./Providers/window.js')
