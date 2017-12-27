@@ -76,34 +76,6 @@ function fire() {
     }
 }
 
-// Setup default events.
-bind('js.message', function(msg, callback, title) {
-
-    // Show a simple alert.
-    $window.alert(msg);
-    if (callback)
-        callback();
-});
-
-bind('js.confirm', function(msg, callback, title, yescaption, nocaption) {
-
-    // Show a simple confirmation.
-    var ret = $window.confirm(msg);
-    if (callback)
-        callback(ret);
-});
-
-bind('js.error', function(msg) {
-
-    // Add error to body if it is loaded...
-    if ($window.document.body) {
-        $window.document.body.innerHTML = '<div style="padding: 30px; ' +
-            'overflow-wrap: break-word;"><h1>Oops, we had an issue</h1>' + msg + '</div>';
-    } else {
-        $window.alert(msg);
-    }
-});
-
 module.exports = {
     exists: exists,
     bind: bind,

@@ -24,6 +24,8 @@ var $code = require('./code'),
  */
 function message(msg, callbackFn, title) {
 
+    var $alert = require('./Providers/alert').get();
+
     // If there is no gui, just run the callback.
     if (!$settings.guiAllowed) {
         if (callbackFn)
@@ -33,19 +35,25 @@ function message(msg, callbackFn, title) {
 
     title = title || 'Application Message';
 
-    // Fire the event.
-    $event.fire('js.message', msg, callbackFn, title);
+    $alert.message(msg, callbackFn, title);
 }
+
+/**
+ * Alert confirm callback.
+ * @typedef {function(boolean):void} JSConfirmCallback
+ */
 
 /**
  * Show a confirmation dialog.
  * @param {string} msg - Message to display.
- * @param {Function} [callbackFn] - Callback function to execute after the dialog is dismissed.
+ * @param {JSConfirmCallback} [callbackFn] - Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Confirmation"] - Title of the dialog.
  * @param {string} [yescaption="OK"] - Caption of the "yes" button.
  * @param {string} [nocaption="Cancel"] - Caption of the "no" button.
  */
 function confirm(msg, callbackFn, title, yescaption, nocaption) {
+
+    var $alert = require('./Providers/alert').get();
 
     // If there is no gui, just run the callback.
     if (!$util.guiAllowed) {
@@ -57,7 +65,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
     title = title || 'Application Confirmation';
 
     // Fire the event.
-    $event.fire('js.confirm', msg, callbackFn, title, yescaption, nocaption);
+    $alert.confirm(msg, callbackFn, title, yescaption, nocaption);
 }
 
 /**
@@ -66,6 +74,8 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
  * @param {...*} [args] - Arguments to merge into message.
  */
 function error(msg, args) {
+
+    var $alert = require('./Providers/alert').get();
 
     msg = msg.message || msg;
 
@@ -87,7 +97,7 @@ function error(msg, args) {
     if (!suppressNextError) {
 
         // Run the event.
-        $event.fire('js.error', msg);
+        $alert.error(msg);
 
         // Kill execution.
         throw new Error('ERROR_HANDLED');
@@ -110,6 +120,9 @@ function ready(func) {
  * @param {*} settings - Settings for the app.
  */
 function start(settings) {
+
+    var $alert = require('./Providers/alert'),
+        $window = require('./Providers/window').get();
 
     // Extend the config.
     $util.extend($settings, settings);
@@ -197,11 +210,13 @@ function start(settings) {
                 .appendTo($('head'));
 
             // Lets upgrade alerts...
-            $event.bind('js.message', sweetalert.show, true);
-            $event.bind('js.confirm', sweetalert.show, true);
-            $event.bind('js.error', function(msg) {
+            $alert.set({
+                message: sweetalert.show,
+                confirm: sweetalert.show,
+                error: function(msg) {
                 sweetalert.show(msg, null, 'Application Error');
-            }, true);
+                }
+            });
 
             $code.thread(function() {
 
