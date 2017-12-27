@@ -55,7 +55,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
     var $alert = require('./Providers/alert').get();
 
     // If there is no gui, just run the callback.
-    if (!$util.guiAllowed) {
+    if (!$settings.guiAllowed) {
         if (callbackFn)
             $util.setZeroTimeout(callbackFn);
         return;
@@ -212,7 +212,7 @@ function start(settings) {
                 message: sweetalert.show,
                 confirm: sweetalert.show,
                 error: function(msg) {
-                sweetalert.show(msg, null, 'Application Error');
+                    sweetalert.show(msg, null, 'Application Error');
                 }
             });
 
