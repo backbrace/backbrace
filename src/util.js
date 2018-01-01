@@ -4,7 +4,8 @@
  */
 'use strict';
 
-var uid = 1,
+var $window = require('./Providers/window'),
+  uid = 1,
   timeouts = [],
   messageName = 'ztm';
 
@@ -27,8 +28,8 @@ function nextID() {
  * @returns {boolean}
  */
 function html5Check() {
-  var $window = require('./Providers/window').get();
-  return typeof $window.document.addEventListener !== 'undefined';
+  var window = $window.get();
+  return typeof window.document.addEventListener !== 'undefined';
 }
 
 /**
@@ -106,9 +107,9 @@ function noThrow(func) {
 
 // Bind a message event listener to the window.
 function bindMessageEvent() {
-  var $window = require('./Providers/window').get();
-  $window.addEventListener('message', function(event) {
-    if (event.source === $window && event.data === messageName) {
+  var window = $window.get();
+  window.addEventListener('message', function(event) {
+    if (event.source === window && event.data === messageName) {
       event.stopPropagation();
       if (timeouts.length)
         timeouts.shift()();
@@ -125,9 +126,9 @@ function clearTimeouts() {
  * @param {Function} fn - Function to run after 0 seconds.
  */
 function setZeroTimeout(fn) {
-  var $window = require('./Providers/window').get();
+  var window = $window.get();
   timeouts.push(fn);
-  $window.postMessage(messageName, '*');
+  window.postMessage(messageName, '*');
 }
 
 function parseDate(str) {
@@ -146,8 +147,8 @@ function parseDate(str) {
  */
 function addElement(type, attributes, parentElement) {
 
-  var $window = require('./Providers/window').get(),
-    element = $window.document.createElement(type);
+  var window = $window.get(),
+    element = window.document.createElement(type);
 
   if (attributes)
     for (var i in attributes)
@@ -161,9 +162,9 @@ function addElement(type, attributes, parentElement) {
  * Get the width of the window.
  */
 function width() {
-  var $window = require('./Providers/window').get();
-  return $window.innerWidth || $window.document.documentElement.clientWidth ||
-    $window.document.body.clientWidth;
+  var window = $window.get();
+  return window.innerWidth || window.document.documentElement.clientWidth ||
+    window.document.body.clientWidth;
 }
 
 // Bind the message event to the browser window.

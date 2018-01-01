@@ -6,6 +6,7 @@
 
 var $log = require('./log'),
     $util = require('./util'),
+    $window = require('./Providers/window'),
     packages = [],
     loadedPackages = [],
     loadedComponents = [];
@@ -18,17 +19,17 @@ var $log = require('./log'),
  */
 function loadScript(url, onsuccess, onerror) {
 
-    var $window = require('./Providers/window').get();
+    var window = $window.get();
 
     $log.debug('Loading script: ' + url);
 
-    var script = $window.document.createElement('script');
+    var script = window.document.createElement('script');
     script.src = url;
     script.async = true;
     script.onerror = onerror;
     script.onload = onsuccess;
 
-    $window.document.head.appendChild(script);
+    window.document.head.appendChild(script);
 }
 
 /**
@@ -39,18 +40,18 @@ function loadScript(url, onsuccess, onerror) {
  */
 function loadCSS(url, onsuccess, onerror) {
 
-    var $window = require('./Providers/window').get();
+    var window = $window.get();
 
     $log.debug('Loading css: ' + url);
 
-    var css = $window.document.createElement('link');
+    var css = window.document.createElement('link');
     css.type = 'text/css';
     css.rel = 'stylesheet';
     css.href = url;
     css.onerror = onerror;
     css.onload = onsuccess;
 
-    $window.document.head.appendChild(css);
+    window.document.head.appendChild(css);
 }
 
 /**

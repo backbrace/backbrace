@@ -5,6 +5,7 @@
 'use strict';
 
 var $util = require('./util'),
+    $window = require('./Providers/window'),
     debugFlag = false;
 
 /**
@@ -14,7 +15,7 @@ var $util = require('./util'),
  */
 function write(msg, type) {
 
-    var $window = require('./Providers/window').get(),
+    var window = $window.get(),
         dte = new Date();
 
     // Add date and time to string.
@@ -23,7 +24,7 @@ function write(msg, type) {
             dte.toISOString(), msg);
 
     // Write to the console if available.
-    var console = $window.console || { log: $util.noop },
+    var console = window.console || { log: $util.noop },
         consoleFn = console[type] || console.log || $util.noop;
 
     $util.noThrow(function() {
@@ -82,8 +83,8 @@ function debug(msg) {
  * @param {Object} obj - Object to log.
  */
 function object(obj) {
-    var $window = require('./Providers/window').get();
-    if ($window.console && $window.console.dir) {
+    var window = $window.get();
+    if (window.console && window.console.dir) {
         write(obj, 'dir');
         return;
     }

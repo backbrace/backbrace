@@ -7,6 +7,7 @@
 var $settings = require('./settings'),
     $jss = require('./jss'),
     $util = require('./util'),
+    $window = require('./Providers/window'),
     progressbar,
     progressbarbg,
     progressblocker,
@@ -49,10 +50,10 @@ var $settings = require('./settings'),
  */
 function animate() {
 
-    var $window = require('./Providers/window').get(),
-        id = $window.setInterval(frame, 10),
-        client_width = $window.innerWidth || $window.document.documentElement.clientWidth ||
-            $window.document.body.clientWidth,
+    var window = $window.get(),
+        id = window.setInterval(frame, 10),
+        client_width = window.innerWidth || window.document.documentElement.clientWidth ||
+            window.document.body.clientWidth,
         bar_width = parseInt($settings.style.loader.barwidth, 10),
         fromLeft = -bar_width;
 
@@ -66,7 +67,7 @@ function animate() {
                 progressbar.style.left = fromLeft + 'px';
             }
         } else {
-            $window.clearInterval(id);
+            window.clearInterval(id);
         }
     }
 }
@@ -76,14 +77,14 @@ function animate() {
  */
 function start() {
 
-    var $window = require('./Providers/window').get();
+    var window = $window.get();
 
     if (!fadingOut) {
         inProgress = true;
         progressblocker.style.opacity = 1;
         animate();
     } else {
-        $window.setTimeout(function() {
+        window.setTimeout(function() {
             start();
         }, 200);
     }
@@ -105,16 +106,16 @@ function stop() {
  */
 function fadeOut() {
 
-    var $window = require('./Providers/window').get(),
+    var window = $window.get(),
         op = 1;
 
     fadingOut = true;
-    var timer = $window.setInterval(function() {
+    var timer = window.setInterval(function() {
         if (op <= 0.1) {
             progressblocker.style.opacity = 0;
-            $window.clearInterval(timer);
+            window.clearInterval(timer);
             fadingOut = false;
-            var element = $window.document.getElementsByClassName('progressbar-blocker');
+            var element = window.document.getElementsByClassName('progressbar-blocker');
             if (element.length > 0)
                 element[0].outerHTML = '';
         } else {
@@ -131,14 +132,14 @@ function fadeOut() {
  */
 function createStyle() {
 
-    var $window = require('./Providers/window').get(),
+    var window = $window.get(),
         css = $jss.compile(style),
-        head_element = $window.document.head || $window.document.getElementsByTagName('head')[0],
-        style_element = $window.document.createElement('style');
+        head_element = window.document.head || window.document.getElementsByTagName('head')[0],
+        style_element = window.document.createElement('style');
 
     // Create the style.
     style_element.type = 'text/css';
-    style_element.appendChild($window.document.createTextNode(css));
+    style_element.appendChild(window.document.createTextNode(css));
 
     // Add the style to the head.
     head_element.appendChild(style_element);
@@ -153,7 +154,7 @@ function show() {
     if (inProgress)
         return;
 
-    var $window = require('./Providers/window').get();
+    var window = $window.get();
 
     // Compile and add the style
     if (!styleAdded)
@@ -161,7 +162,7 @@ function show() {
 
     // Add the elements.
     progressblocker = $util.addElement('div', { 'class': 'progressbar-blocker' },
-        $window.document.body);
+        window.document.body);
     progressbarbg = $util.addElement('div', { 'class': 'progressbar-bg' },
         progressblocker);
     progressbar = $util.addElement('div', { 'class': 'progressbar' },

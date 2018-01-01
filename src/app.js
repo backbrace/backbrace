@@ -4,12 +4,14 @@
  */
 'use strict';
 
-var $code = require('./code'),
+var $alert = require('./Providers/alert'),
+    $code = require('./code'),
     $settings = require('./settings'),
     $jss = require('./jss'),
     $log = require('./log'),
     $package = require('./package'),
     $util = require('./util'),
+    $window = require('./Providers/window'),
     loader = require('./content-loader'),
     packages = require('./packages'),
     readyFunc = null,
@@ -23,7 +25,7 @@ var $code = require('./code'),
  */
 function message(msg, callbackFn, title) {
 
-    var $alert = require('./Providers/alert').get();
+    var alert = $alert.get();
 
     // If there is no gui, just run the callback.
     if (!$settings.guiAllowed) {
@@ -34,7 +36,7 @@ function message(msg, callbackFn, title) {
 
     title = title || 'Application Message';
 
-    $alert.message(msg, callbackFn, title);
+    alert.message(msg, callbackFn, title);
 }
 
 /**
@@ -52,7 +54,7 @@ function message(msg, callbackFn, title) {
  */
 function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
-    var $alert = require('./Providers/alert').get();
+    var alert = $alert.get();
 
     // If there is no gui, just run the callback.
     if (!$settings.guiAllowed) {
@@ -64,7 +66,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
     title = title || 'Application Confirmation';
 
     // Fire the event.
-    $alert.confirm(msg, callbackFn, title, yescaption, nocaption);
+    alert.confirm(msg, callbackFn, title, yescaption, nocaption);
 }
 
 /**
@@ -74,7 +76,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
  */
 function error(msg, args) {
 
-    var $alert = require('./Providers/alert').get();
+    var alert = $alert.get();
 
     msg = msg.message || msg;
 
@@ -96,7 +98,7 @@ function error(msg, args) {
     if (!suppressNextError) {
 
         // Run the event.
-        $alert.error(msg);
+        alert.error(msg);
 
         // Kill execution.
         throw new Error('ERROR_HANDLED');
@@ -119,8 +121,7 @@ function ready(func) {
  */
 function start(settings) {
 
-    var $alert = require('./Providers/alert'),
-        $window = require('./Providers/window').get();
+    var window = $window.get();
 
     // Extend the config.
     $util.extend($settings, settings);
@@ -131,16 +132,16 @@ function start(settings) {
     $util.addElement('link', {
         'href': $settings.style.font.url,
         'rel': 'stylesheet'
-    }, $window.document.head);
+    }, window.document.head);
 
     // Add font family to body tag.
-    $util.addElement('style', {}, $window.document.head)
+    $util.addElement('style', {}, window.document.head)
         .innerHTML = 'body{font-family: ' + $settings.style.font.family + '}';
 
     // Set mobile mode.
     if ($settings.autoSwitch &&
         /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
-            .test($window.navigator.userAgent.toLowerCase()))
+            .test(window.navigator.userAgent.toLowerCase()))
         $settings.mobile = true;
 
     // Add mobile head tags.
@@ -149,29 +150,29 @@ function start(settings) {
         $util.addElement('meta', {
             'http-equiv': 'X-UA-Compatible',
             'content': 'IE=Edge'
-        }, $window.document.head);
+        }, window.document.head);
 
         $util.addElement('meta', {
             'name': 'viewport',
             'content': 'width=device-width, initial-scale=1, maximum-scale=1, ' +
                 'user-scalable=no, minimal-ui'
-        }, $window.document.head);
+        }, window.document.head);
 
         $util.addElement('meta', {
             'name': 'apple-mobile-web-app-capable',
             'content': 'yes'
-        }, $window.document.head);
+        }, window.document.head);
 
         $util.addElement('meta', {
             'name': 'mobile-web-app-capable',
             'content': 'yes'
-        }, $window.document.head);
+        }, window.document.head);
     }
 
     loader.show();
 
     // Update title.
-    $window.document.title = $settings.title;
+    window.document.title = $settings.title;
 
     // Check for HTML5.
     if (!$util.html5Check())
