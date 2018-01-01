@@ -37,11 +37,11 @@ function runNextThread() {
 
 /**
  * Setup a new block of functions to run.
- * @returns {JQueryPromise}
+ * @returns {JQueryPromise} Promise to run the functions.
  */
 function block() {
 
-    var $app = require('./app'),
+    var $app = require('./app'), // We require $app down here so we don't get a dependency loop.
         $ = require('../external/jquery');
 
     if (!currentThread)
@@ -56,8 +56,9 @@ function block() {
 
 /**
  * Start a new code thread to execute code when possible.
- * @param {Function} func - Function to execute when possible.
- * @param {number} [id] - Unique ID of the thread.
+ * @param {Function} func Function to execute when possible.
+ * @param {number} [id] Unique ID of the thread.
+ * @returns {void}
  */
 function thread(func, id) {
 

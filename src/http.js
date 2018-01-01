@@ -5,8 +5,8 @@
 
 /**
  * Send a HTTP get request.
- * @param {string} url - URL to get.
- * @returns {JQueryPromise}
+ * @param {string} url URL to get.
+ * @returns {JQueryPromise} Promise to get the URL.
  */
 function get(url) {
 

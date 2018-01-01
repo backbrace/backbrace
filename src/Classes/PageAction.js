@@ -4,7 +4,7 @@ var $util = require('../util');
 
 /**
  * Page Action class.
- * @param {*} properties - Properties for the new page action.
+ * @param {*} properties Properties for the new page action.
  * @class
  */
 function PageAction(properties) {

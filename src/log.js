@@ -10,8 +10,9 @@ var $util = require('./util'),
 
 /**
  * Write to the console.
- * @param {*} msg - Message to write.
- * @param {string} type - Type of message.
+ * @param {*} msg Message to write.
+ * @param {string} type Type of message.
+ * @returns {void}
  */
 function write(msg, type) {
 
@@ -30,11 +31,12 @@ function write(msg, type) {
     $util.noThrow(function() {
         consoleFn(msg);
     });
-}
+    }
 
 /**
  * Turn on/off debug messages.
- * @param {boolean} flag - Flag debug messages on or off.
+ * @param {boolean} flag Flag debug messages on or off.
+ * @returns {void}
  */
 function debugMode(flag) {
     debugFlag = flag;
@@ -42,7 +44,8 @@ function debugMode(flag) {
 
 /**
  * Log an info message.
- * @param {string} msg - Message to log.
+ * @param {string} msg Message to log.
+ * @returns {void}
  */
 function info(msg) {
     msg = $util.formatString.apply(null, arguments);
@@ -51,7 +54,8 @@ function info(msg) {
 
 /**
  * Log an error message.
- * @param {string} msg - Message to log.
+ * @param {string} msg Message to log.
+ * @returns {void}
  */
 function error(msg) {
     msg = $util.formatString.apply(null, arguments);
@@ -60,7 +64,8 @@ function error(msg) {
 
 /**
  * Log a warning message.
- * @param {string} msg - Message to log.
+ * @param {string} msg Message to log.
+ * @returns {void}
  */
 function warning(msg) {
     msg = $util.formatString.apply(null, arguments);
@@ -69,7 +74,8 @@ function warning(msg) {
 
 /**
  * Log a debug message (If debug mode is turned on).
- * @param {string} msg - Message to log.
+ * @param {string} msg Message to log.
+ * @returns {void}
  */
 function debug(msg) {
     if (debugFlag) {
@@ -80,7 +86,8 @@ function debug(msg) {
 
 /**
  * Log an object.
- * @param {Object} obj - Object to log.
+ * @param {Object} obj Object to log.
+ * @returns {void}
  */
 function object(obj) {
     var window = $window.get();

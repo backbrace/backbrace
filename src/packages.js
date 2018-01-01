@@ -6,6 +6,7 @@ module.exports = {
 
     /**
      * JQuery Package.
+     * @returns {string} JQuery script URL.
      */
     jQuery: function() {
         var min = ($settings.minify ? '.min' : '');
@@ -15,6 +16,7 @@ module.exports = {
 
     /**
      * JQuery UI.
+     * @returns {Array.<string[]>} JQuery UI scripts and CSS URLS.
      */
     jQueryUI: function() {
         var min = ($settings.minify ? '.min' : '');
@@ -35,6 +37,7 @@ module.exports = {
 
     /**
      * Common packages.
+     * @returns {Array.<string[]>} Common scripts and CSS URLS.
      */
     common: function() {
         var min = ($settings.minify ? '.min' : '');

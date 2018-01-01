@@ -10,7 +10,8 @@ var $settings = require('./settings'),
 
 /**
  * Merge the JSS with the config.
- * @param {string} val - JSS value to merge.
+ * @param {string} val JSS value to merge.
+ * @returns {string} Merged JSS value.
  */
 function mergeConfig(val) {
 
@@ -31,8 +32,8 @@ function mergeConfig(val) {
 
 /**
  * Compile a JSS object into a CSS string.
- * @param {*} obj - JSS object to compile.
- * @returns {string}
+ * @param {*} obj JSS object to compile.
+ * @returns {string} CSS string
  */
 function compile(obj) {
 

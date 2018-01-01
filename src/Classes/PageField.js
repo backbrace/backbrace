@@ -4,7 +4,7 @@ var $util = require('../util');
 
 /**
  * Page Field class.
- * @param {*} properties - Properties for the new page field.
+ * @param {*} properties Properties for the new page field.
  * @class
  */
 function PageField(properties) {

@@ -7,8 +7,8 @@
 var instance = window;
 
 /**
- * Get the browser window.
- * @returns {Window}
+ * Get the browser window instance.
+ * @returns {Window} Returns the window instance.
  */
 function get() {
     return instance;
@@ -16,7 +16,8 @@ function get() {
 
 /**
  * Set the browser window instance.
- * @param {(Window|Object)} win
+ * @param {(Window|Object)} win Window instance to set.
+ * @returns {void}
  */
 function set(win) {
     instance = win;

@@ -25,6 +25,7 @@ swal.close = function() {
 
 /**
  * Open a sweet alert or queue it if one is already open.
+ * @returns {void}
  */
 function openSwal() {
     if (isOpen || isClosing) {
@@ -37,6 +38,7 @@ function openSwal() {
 
 /**
  * Sweetalert close event.
+ * @returns {void}
  */
 function onClosed() {
     isClosing = false;
@@ -46,12 +48,14 @@ function onClosed() {
 
 /**
  * Fix alert messages.
+ * @param {Object} msg Alert message to fix.
+ * @returns {string} Alert message
  */
 function fixMessage(msg) {
 
     $util.noThrow(function() {
         if (msg.message) {
-            msg = msg.message;
+        msg = msg.message;
         }
         msg = msg.replace(/\n/g, '<br />');
     });
@@ -61,6 +65,11 @@ function fixMessage(msg) {
 
 /**
  * Shows a sweet alert. Queues the alert if an alert is already displayed.
+ * @param {string} msg Message to display
+ * @param {Function} [callback] Callback function to execute after the dialog is dismissed.
+ * @param {string} [title="Application Confirmation"] Title of the dialog.
+ * @param {string} [icon] Icon URL to display in the dialog.
+ * @returns {void}
  */
 function show(msg, callback, title, icon) {
 

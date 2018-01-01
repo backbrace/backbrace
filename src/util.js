@@ -11,13 +11,14 @@ var $window = require('./providers/window'),
 
 /**
  * A function that performs no operations.
+ * @returns {void}
  */
 function noop() {
 }
 
 /**
  * Get the next unique id.
- * @returns {number}
+ * @returns {number} Returns a unique ID.
  */
 function nextID() {
   return uid++;
@@ -25,7 +26,7 @@ function nextID() {
 
 /**
  * Check for HTML5 compatability.
- * @returns {boolean}
+ * @returns {boolean} Returns true if the current environment is HTML5 compatable.
  */
 function html5Check() {
   var window = $window.get();
@@ -34,8 +35,8 @@ function html5Check() {
 
 /**
  * Format a string.
- * @param {string} str - String to format.
- * @returns {string}
+ * @param {string} str String to format.
+ * @returns {string} Formatted string.
  */
 function formatString(str) {
   var a = arguments;
@@ -47,9 +48,9 @@ function formatString(str) {
 
 /**
  * Extend an object with another object.
- * @param {*} me - Object to extend.
- * @param {*} withthis - Object to extend with.
- * @returns {*}
+ * @param {Object} me Object to extend.
+ * @param {Object} withthis Object to extend with.
+ * @returns {Object} Extended object.
  */
 function extend(me, withthis) {
   if (withthis && me)
@@ -65,10 +66,10 @@ function extend(me, withthis) {
 
 /**
  * Iterate through an array or object.
- * @param {*} obj - Object to iterate through.
- * @param {function} iterator - Iterator function to call.
- * @param {*} [context] - Context to run the iterator function.
- * @returns {*}
+ * @param {Array|Object} obj Object to iterate through.
+ * @param {Function} iterator Iterator function to call.
+ * @param {Object} [context] Context to run the iterator function.
+ * @returns {Array|Object} Returned object for chaining.
  */
 function forEach(obj, iterator, context) {
   var key, length;
@@ -117,13 +118,18 @@ function bindMessageEvent() {
   }, true);
 }
 
+/**
+ * Clear all current message timeouts.
+ * @returns {void}
+ */
 function clearTimeouts() {
   timeouts = [];
 }
 
 /**
  * Run a function asyncroniously. Runs faster than setTimeout(fn, 0).
- * @param {Function} fn - Function to run after 0 seconds.
+ * @param {Function} fn Function to run after 0 seconds.
+ * @returns {void}
  */
 function setZeroTimeout(fn) {
   var window = $window.get();
@@ -140,10 +146,10 @@ function parseDate(str) {
 
 /**
  * Add an element (native).
- * @param {string} type - Element type to create.
- * @param {*} attributes - Attributes to add to the element.
- * @param {*} parentElement - Parent element to append to.
- * @returns {*}
+ * @param {string} type Element type to create.
+ * @param {Object} attributes Attributes to add to the element.
+ * @param {HTMLElement} parentElement Parent element to append to.
+ * @returns {HTMLElement} Returns the new element created.
  */
 function addElement(type, attributes, parentElement) {
 
@@ -160,6 +166,7 @@ function addElement(type, attributes, parentElement) {
 
 /**
  * Get the width of the window.
+ * @returns {number} Width of the window.
  */
 function width() {
   var window = $window.get();
@@ -177,7 +184,6 @@ module.exports = {
   formatString: formatString,
   extend: extend,
   forEach: forEach,
-  noThrow: noThrow,
   clearTimeouts: clearTimeouts,
   setZeroTimeout: setZeroTimeout,
   addElement: addElement,

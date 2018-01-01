@@ -6,8 +6,9 @@ var $log = require('../log'),
 /**
  * Code Thread class.
  * @class
- * @param {Function} func - Thread function to execute.
- * @param {number} [id] - Unique id of the thread.
+ * @param {Function} func Thread function to execute.
+ * @param {number} [id] Unique id of the thread.
+ * @returns {void}
  */
 function CodeThread(func, id) {
 
@@ -18,6 +19,7 @@ function CodeThread(func, id) {
 
 /**
  * Create a new code queue and run the first function.
+ * @returns {void}
  */
 CodeThread.prototype.createQueue = function() {
 
@@ -45,7 +47,8 @@ CodeThread.prototype.createQueue = function() {
 
 /**
  * Run the current function in the queue. Catch any errors.
- * @param {*} result - Result from the last method to send into the current function.
+ * @param {*} result Result from the last method to send into the current function.
+ * @returns {void}
  */
 CodeThread.prototype.resolveQueue = function(result) {
 
@@ -98,8 +101,10 @@ CodeThread.prototype.resolveQueue = function(result) {
 
         // Check if the error has been handled.
         var msg = e.message || e;
-        if (msg !== 'ERROR_HANDLED')
-            $util.error(e);
+        if (msg !== 'ERROR_HANDLED') {
+            var $app = require('../app');
+            $app.error(e);
+        }
     }
 };
 

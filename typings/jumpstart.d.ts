@@ -18,7 +18,7 @@ declare namespace Jumpstart {
         object?(msg: Object): void;
     }
 
-    interface Util {
+    interface Util {        
         noThrow?(func: Function): void;
     }
 
@@ -38,6 +38,6 @@ declare namespace Jumpstart {
 
 /**
  * Jumpstart global function. Used externally to access Jumpstart modules, etc.
- * @param fn - Callback function that will be passed the Jumpstart scope.
+ * @param fn Callback function that will be passed the Jumpstart scope.
  */
 declare function jumpstart(fn: ((scope: Jumpstart.Scope) => void)): void;

@@ -13,9 +13,10 @@ var $log = require('./log'),
 
 /**
  * Load an external script (native).
- * @param {string} url - URL to load.
- * @param {*} onsuccess - On success function.
- * @param {*} onerror - On error function.
+ * @param {string} url URL to load.
+ * @param {*} onsuccess On success function.
+ * @param {*} onerror On error function.
+ * @returns {void}
  */
 function loadScript(url, onsuccess, onerror) {
 
@@ -34,9 +35,10 @@ function loadScript(url, onsuccess, onerror) {
 
 /**
  * Load an external css style (native).
- * @param {string} url - URL to load.
- * @param {*} onsuccess - On success function.
- * @param {*} onerror - On error function.
+ * @param {string} url URL to load.
+ * @param {*} onsuccess On success function.
+ * @param {*} onerror On error function.
+ * @returns {void}
  */
 function loadCSS(url, onsuccess, onerror) {
 
@@ -56,7 +58,8 @@ function loadCSS(url, onsuccess, onerror) {
 
 /**
  * Add a package to be loaded.
- * @param {string[][]} pack - Package to load.
+ * @param {Array.<string[]>} pack Package to load.
+ * @returns {void}
  */
 function add(pack) {
 
@@ -75,8 +78,9 @@ function add(pack) {
 
 /**
  * Load pending packages.
- * @param {Function} onsuccess - On success function.
- * @param {Function} onerror - On error function.
+ * @param {Function} onsuccess On success function.
+ * @param {Function} onerror On error function.
+ * @returns {void}
  */
 function load(onsuccess, onerror) {
 

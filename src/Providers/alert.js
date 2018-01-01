@@ -47,7 +47,7 @@ var instance = {
 
 /**
  * Get the alert box instance.
- * @returns {JSAlertInstance}
+ * @returns {JSAlertInstance} Returns the alert instance.
  */
 function get() {
     return instance;
@@ -55,7 +55,8 @@ function get() {
 
 /**
  * Set the alert box instance.
- * @param {JSAlertInstance} ai
+ * @param {JSAlertInstance} ai Alert instance to set.
+ * @returns {void}
  */
 function set(ai) {
     instance = ai;

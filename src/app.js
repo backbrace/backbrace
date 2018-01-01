@@ -19,9 +19,10 @@ var $alert = require('./providers/alert'),
 
 /**
  * Show a message dialog.
- * @param {string} msg - Message to display.
- * @param {Function} [callbackFn] - Callback function to execute after the dialog is dismissed.
- * @param {string} [title="Application Message"] - Title of the dialog.
+ * @param {string} msg Message to display.
+ * @param {Function} [callbackFn] Callback function to execute after the dialog is dismissed.
+ * @param {string} [title="Application Message"] Title of the dialog.
+ * @returns {void}
  */
 function message(msg, callbackFn, title) {
 
@@ -46,11 +47,12 @@ function message(msg, callbackFn, title) {
 
 /**
  * Show a confirmation dialog.
- * @param {string} msg - Message to display.
- * @param {JSConfirmCallback} [callbackFn] - Callback function to execute after the dialog is dismissed.
- * @param {string} [title="Application Confirmation"] - Title of the dialog.
- * @param {string} [yescaption="OK"] - Caption of the "yes" button.
- * @param {string} [nocaption="Cancel"] - Caption of the "no" button.
+ * @param {string} msg Message to display.
+ * @param {JSConfirmCallback} [callbackFn] Callback function to execute after the dialog is dismissed.
+ * @param {string} [title="Application Confirmation"] Title of the dialog.
+ * @param {string} [yescaption="OK"] Caption of the "yes" button.
+ * @param {string} [nocaption="Cancel"] Caption of the "no" button.
+ * @returns {void}
  */
 function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
@@ -71,8 +73,9 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
 /**
  * Display an error and kill the current execution.
- * @param {*} msg - Message to display.
- * @param {...*} [args] - Arguments to merge into message.
+ * @param {*} msg Message to display.
+ * @param {...*} [args] Arguments to merge into message.
+ * @returns {void}
  */
 function error(msg, args) {
 
@@ -109,7 +112,8 @@ function error(msg, args) {
 
 /**
  * Execute a function after the app is loaded.
- * @param {Function} func - Function to execute.
+ * @param {Function} func Function to execute.
+ * @returns {void}
  */
 function ready(func) {
     readyFunc = func;
@@ -117,7 +121,8 @@ function ready(func) {
 
 /**
  * Start the app.
- * @param {*} settings - Settings for the app.
+ * @param {*} settings Settings for the app.
+ * @returns {void}
  */
 function start(settings) {
 

@@ -11,8 +11,8 @@ var $code = require('./code'),
 
 /**
  * Get page object meta data.
- * @param {string} name - Name of the page to get.
- * @returns {JQueryPromise}
+ * @param {string} name Name of the page to get.
+ * @returns {JQueryPromise} Promise to get the page meta data.
  */
 function page(name) {
     return $code.block(

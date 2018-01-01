@@ -6,7 +6,7 @@ var $util = require('../util'),
 
 /**
  * Page class.
- * @param {*} properties - Properties for the new page.
+ * @param {*} properties Properties for the new page.
  * @class
  */
 function Page(properties) {

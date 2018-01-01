@@ -47,6 +47,7 @@ var $settings = require('./settings'),
 
 /**
  * Animate the progress bar.
+ * @returns {void}
  */
 function animate() {
 
@@ -74,6 +75,7 @@ function animate() {
 
 /**
  * Start the animation.
+ * @returns {void}
  */
 function start() {
 
@@ -92,6 +94,7 @@ function start() {
 
 /**
  * Stop the animation.
+ * @returns {void}
  */
 function stop() {
 
@@ -103,6 +106,7 @@ function stop() {
 
 /**
  * Fadeout the loader.
+ * @returns {void}
  */
 function fadeOut() {
 
@@ -128,7 +132,7 @@ function fadeOut() {
 
 /**
  * Compile and add the style to the DOM.
- * @returns {boolean}
+ * @returns {boolean} Returns true if the style is added to the DOM.
  */
 function createStyle() {
 
@@ -148,6 +152,7 @@ function createStyle() {
 
 /**
  * Show the loader.
+ * @returns {void}
  */
 function show() {
 
