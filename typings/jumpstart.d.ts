@@ -19,7 +19,6 @@ declare namespace Jumpstart {
     }
 
     interface Util {        
-        noThrow?(func: Function): void;
     }
 
     interface Window {

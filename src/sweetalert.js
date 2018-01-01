@@ -52,14 +52,10 @@ function onClosed() {
  * @returns {string} Alert message
  */
 function fixMessage(msg) {
-
-    $util.noThrow(function() {
-        if (msg.message) {
+    if (msg.message)
         msg = msg.message;
-        }
+    if ($util.isString(msg))
         msg = msg.replace(/\n/g, '<br />');
-    });
-
     return msg;
 }
 
@@ -87,9 +83,8 @@ function show(msg, callback, title, icon) {
             type: 'error',
             width: ($util.width() < 438 ? $util.width() - 60 : null)
         },
-            function() {
-                $util.noThrow(callback);
-            });
+            callback
+        );
 
     } else {
 
@@ -110,9 +105,8 @@ function show(msg, callback, title, icon) {
             imageUrl: icon,
             width: ($util.width() < 438 ? $util.width() - 60 : null)
         },
-            function() {
-                $util.noThrow(callback);
-            });
+            callback
+        );
     }
 }
 

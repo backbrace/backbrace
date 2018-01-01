@@ -97,16 +97,9 @@ function forEach(obj, iterator, context) {
 }
 
 /**
- * Run a function and silence any errors.
- * @param {function} func - Function to run.
+ * Bind a message event listener to the window.
+ * @returns {void}
  */
-function noThrow(func) {
-  try {
-    return func && func();
-  } catch (e) { /* empty */ }
-}
-
-// Bind a message event listener to the window.
 function bindMessageEvent() {
   var window = $window.get();
   window.addEventListener('message', function(event) {

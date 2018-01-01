@@ -28,10 +28,12 @@ function write(msg, type) {
     var console = window.console || { log: $util.noop },
         consoleFn = console[type] || console.log || $util.noop;
 
-    $util.noThrow(function() {
+    try {
         consoleFn(msg);
-    });
+    } catch (e) {
+        // Sometimes the above function will error.
     }
+}
 
 /**
  * Turn on/off debug messages.
