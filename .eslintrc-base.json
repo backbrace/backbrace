@@ -1,7 +1,5 @@
 {
-    "rules": {
-        // Rules are divided into sections from http://eslint.org/docs/rules/
-        // Possible errors
+    "rules": {        
         "comma-dangle": [
             "error",
             "never"
@@ -39,7 +37,6 @@
         "no-unsafe-finally": "error",
         "valid-typeof": "error",
         "no-unexpected-multiline": "error",
-        // Best practices
         "accessor-pairs": "error",
         "array-callback-return": "error",
         "eqeqeq": [
@@ -85,12 +82,10 @@
             "error",
             "inside"
         ],
-        // Strict mode
         "strict": [
             "error",
             "global"
         ],
-        // Variables
         "no-delete-var": "error",
         "no-label-var": "error",
         "no-restricted-globals": [
@@ -107,9 +102,7 @@
                 "args": "none"
             }
         ],
-        // Node.js
         "handle-callback-err": "error",
-        // Stylistic issues
         "array-bracket-spacing": [
             "error",
             "never"
@@ -166,6 +159,8 @@
             "error",
             "single"
         ],
+        "camelcase": "error",
+        "valid-jsdoc": "error",
         "semi-spacing": "error",
         "semi": "error",
         "space-before-blocks": [
