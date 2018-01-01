@@ -6,7 +6,7 @@
 
 var $log = require('./log'),
     $util = require('./util'),
-    $window = require('./Providers/window'),
+    $window = require('./providers/window'),
     packages = [],
     loadedPackages = [],
     loadedComponents = [];

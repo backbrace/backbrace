@@ -6,7 +6,7 @@
 
 var $log = require('./log'),
     $util = require('./util'),
-    CodeThread = require('./Classes/CodeThread'),
+    CodeThread = require('./classes/codethread'),
     testMode = false;
 
 /** @type {CodeThread} */

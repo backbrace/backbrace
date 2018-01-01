@@ -15,14 +15,14 @@ var $settings = require('./settings'),
 function mergeConfig(val) {
 
     // Loop through the style config.
-    $util.forEach($settings.style, function(style_item, style_key) {
+    $util.forEach($settings.style, function(styleitem, stylekey) {
 
         // Loop though the sub config (colors,images,etc).
-        $util.forEach(style_item, function(item, key) {
+        $util.forEach(styleitem, function(item, key) {
 
             // Check for a merge field and replace.
-            if (val.indexOf('%' + style_key + ':' + key + '%') !== -1)
-                val = val.replace('%' + style_key + ':' + key + '%', item);
+            if (val.indexOf('%' + stylekey + ':' + key + '%') !== -1)
+                val = val.replace('%' + stylekey + ':' + key + '%', item);
         });
     });
 

@@ -24,7 +24,7 @@ CodeThread.prototype.createQueue = function() {
     // Create a new queue.
     var $ = require('../../external/jquery'),
         queue = [],
-        _self = this;
+        self = this;
 
     // Add the function blocks to the new queue if they are not null.
     queue = $.grep(arguments, function(v) {
@@ -39,7 +39,7 @@ CodeThread.prototype.createQueue = function() {
 
     // Resolve the first function in the queue.
     $util.setZeroTimeout(function() {
-        _self.resolveQueue(null);
+        self.resolveQueue(null);
     });
 };
 
@@ -53,7 +53,7 @@ CodeThread.prototype.resolveQueue = function(result) {
         i = this.queue.length - 1,
         arr = [result],
         func,
-        _self = this;
+        self = this;
 
     if (this.queue.length === 0)
         return;
@@ -88,7 +88,7 @@ CodeThread.prototype.resolveQueue = function(result) {
             // Run the function.
             func.apply(null, arr)
         ).then(function(result2) {
-            _self.runNextFunction(result2);
+            self.runNextFunction(result2);
         });
 
     } catch (e) {
@@ -105,30 +105,30 @@ CodeThread.prototype.resolveQueue = function(result) {
 
 CodeThread.prototype.runNextFunction = function(result) {
 
-    var _self = this;
+    var self = this;
 
     $log.debug('Finished function.');
 
     if (this.queue.length > 0) {
         this.queue[this.queue.length - 1].shift();
         $util.setZeroTimeout(function() {
-            _self.resolveQueue(result);
+            self.resolveQueue(result);
         });
     }
 };
 
 CodeThread.prototype.run = function(callback) {
 
-    var _self = this;
+    var self = this;
 
     $log.debug($util.formatString('Started Thread: #{0}.', this.id));
 
     this.createQueue(
 
-        _self.func,
+        self.func,
 
         function() {
-            $log.debug($util.formatString('Finished Thread: #{0}.', _self.id));
+            $log.debug($util.formatString('Finished Thread: #{0}.', self.id));
             if (callback)
                 callback();
         }

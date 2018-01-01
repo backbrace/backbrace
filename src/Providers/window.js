@@ -4,14 +4,14 @@
  */
 'use strict';
 
-var window_instance = window;
+var instance = window;
 
 /**
  * Get the browser window.
  * @returns {Window}
  */
 function get() {
-    return window_instance;
+    return instance;
 }
 
 /**
@@ -19,7 +19,7 @@ function get() {
  * @param {(Window|Object)} win
  */
 function set(win) {
-    window_instance = win;
+    instance = win;
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
 /**
- * Show a content loading animation.
+ * Show a progress bar (native).
  * @module
  */
 'use strict';
@@ -7,7 +7,7 @@
 var $settings = require('./settings'),
     $jss = require('./jss'),
     $util = require('./util'),
-    $window = require('./Providers/window'),
+    $window = require('./providers/window'),
     progressbar,
     progressbarbg,
     progressblocker,
@@ -52,16 +52,16 @@ function animate() {
 
     var window = $window.get(),
         id = window.setInterval(frame, 10),
-        client_width = window.innerWidth || window.document.documentElement.clientWidth ||
+        clientwidth = window.innerWidth || window.document.documentElement.clientWidth ||
             window.document.body.clientWidth,
-        bar_width = parseInt($settings.style.loader.barwidth, 10),
-        fromLeft = -bar_width;
+        barwidth = parseInt($settings.style.loader.barwidth, 10),
+        fromLeft = -barwidth;
 
     function frame() {
         if (inProgress) {
-            if (fromLeft > bar_width + client_width) {
-                progressbar.style.left = -bar_width + 'px';
-                fromLeft = -bar_width;
+            if (fromLeft > barwidth + clientwidth) {
+                progressbar.style.left = -barwidth + 'px';
+                fromLeft = -barwidth;
             } else {
                 fromLeft += 10;
                 progressbar.style.left = fromLeft + 'px';
@@ -134,15 +134,15 @@ function createStyle() {
 
     var window = $window.get(),
         css = $jss.compile(style),
-        head_element = window.document.head || window.document.getElementsByTagName('head')[0],
-        style_element = window.document.createElement('style');
+        headElement = window.document.head || window.document.getElementsByTagName('head')[0],
+        styleElement = window.document.createElement('style');
 
     // Create the style.
-    style_element.type = 'text/css';
-    style_element.appendChild(window.document.createTextNode(css));
+    styleElement.type = 'text/css';
+    styleElement.appendChild(window.document.createTextNode(css));
 
     // Add the style to the head.
-    head_element.appendChild(style_element);
+    headElement.appendChild(styleElement);
     return true;
 }
 

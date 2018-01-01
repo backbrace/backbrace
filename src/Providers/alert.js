@@ -17,19 +17,22 @@ var $window = require('./window');
  */
 
 /** @type {JSAlertInstance} */
-var alert_instance = {
+var instance = {
+
     message: function(msg, callback, title) {
         var window = $window.get();
         window.alert(msg);
         if (callback)
             callback();
     },
+
     confirm: function(msg, callback, title, yescaption, nocaption) {
         var window = $window.get(),
             ret = window.confirm(msg);
         if (callback)
             callback(ret);
     },
+
     error: function(msg) {
         var window = $window.get();
         // Add error to body if it is loaded...
@@ -47,7 +50,7 @@ var alert_instance = {
  * @returns {JSAlertInstance}
  */
 function get() {
-    return alert_instance;
+    return instance;
 }
 
 /**
@@ -55,7 +58,7 @@ function get() {
  * @param {JSAlertInstance} ai
  */
 function set(ai) {
-    alert_instance = ai;
+    instance = ai;
 }
 
 module.exports = {

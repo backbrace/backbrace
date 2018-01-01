@@ -4,16 +4,16 @@
  */
 'use strict';
 
-var $alert = require('./Providers/alert'),
+var $alert = require('./providers/alert'),
     $code = require('./code'),
     $settings = require('./settings'),
     $jss = require('./jss'),
     $log = require('./log'),
     $package = require('./package'),
     $util = require('./util'),
-    $window = require('./Providers/window'),
-    loader = require('./content-loader'),
-    packages = require('./packages'),
+    $window = require('./providers/window'),
+    $$packages = require('./packages'),
+    $$progress = require('./progress'),
     readyFunc = null,
     suppressNextError = false;
 
@@ -90,7 +90,7 @@ function error(msg, args) {
         msg = $util.formatString.apply(null, arr);
     }
 
-    loader.hide();
+    $$progress.hide();
 
     $log.error('Application Error: ' + msg);
 
@@ -169,7 +169,7 @@ function start(settings) {
         }, window.document.head);
     }
 
-    loader.show();
+    $$progress.show();
 
     // Update title.
     window.document.title = $settings.title;
@@ -180,7 +180,7 @@ function start(settings) {
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Load JQuery.
-    $package.loadScript(packages.jQuery(), function() {
+    $package.loadScript($$packages.jQuery(), function() {
 
         // JQuery wasn't loaded :(
         if (typeof jQuery === 'undefined')
@@ -194,26 +194,26 @@ function start(settings) {
         }
 
         // Load all other packages.
-        $package.add(packages.jQueryUI());
-        $package.add(packages.common());
+        $package.add($$packages.jQueryUI());
+        $package.add($$packages.common());
         $package.load(function() {
 
             var $ = require('../external/jquery'),
-                sweetalert = require('./sweetalert'),
-                AppComponent = require('./Components/AppComponent');
+                $$sweetalert = require('./sweetalert'),
+                AppComponent = require('./components/app');
 
-            // Compile app JSS and load into a style tag.
-            var css = $jss.compile($settings.app_jss);
+            // Compile JSS and load into a style tag.
+            var css = $jss.compile($settings.jss);
             $('<style>')
                 .append(css)
                 .appendTo($('head'));
 
             // Lets upgrade alerts...
             $alert.set({
-                message: sweetalert.show,
-                confirm: sweetalert.show,
+                message: $$sweetalert.show,
+                confirm: $$sweetalert.show,
                 error: function(msg) {
-                    sweetalert.show(msg, null, 'Application Error');
+                    $$sweetalert.show(msg, null, 'Application Error');
                 }
             });
 
@@ -223,12 +223,12 @@ function start(settings) {
 
                     function() {
                         // Load base application component.
-                        var app_component = new AppComponent();
-                        return app_component.load($settings.mobile ? $('.ui-page') : $('body'));
+                        var app = new AppComponent();
+                        return app.load($settings.mobile ? $('.ui-page') : $('body'));
                     },
 
                     function() {
-                        loader.hide();
+                        $$progress.hide();
                         if (readyFunc) readyFunc();
                     }
                 );

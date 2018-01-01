@@ -2,7 +2,7 @@
 
 var $settings = require('../settings'),
   $ = require('../../external/jquery'),
-  HeaderComponent = require('./HeaderComponent');
+  HeaderComponent = require('./header');
 
 /**
  * Base application component.

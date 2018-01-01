@@ -4,7 +4,7 @@
  */
 'use strict';
 
-var $window = require('./Providers/window'),
+var $window = require('./providers/window'),
   uid = 1,
   timeouts = [],
   messageName = 'ztm';

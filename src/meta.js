@@ -7,7 +7,7 @@
 var $code = require('./code'),
     $settings = require('./settings'),
     $http = require('./http'),
-    Page = require('./Classes/Page');
+    Page = require('./classes/page');
 
 /**
  * Get page object meta data.

@@ -1,8 +1,8 @@
 'use strict';
 
 var $util = require('../util'),
-    PageField = require('./PageField'),
-    PageAction = require('./PageAction');
+    PageField = require('./pagefield'),
+    PageAction = require('./pageaction');
 
 /**
  * Page class.
@@ -11,7 +11,7 @@ var $util = require('../util'),
  */
 function Page(properties) {
 
-    var _self = this;
+    var self = this;
 
     this.caption = '';
     this.type = '';
@@ -39,13 +39,13 @@ function Page(properties) {
         // Extend the page fields.
         this.fields = [];
         $util.forEach(properties.fields, function(field) {
-            _self.fields.push(new PageField(field));
+            self.fields.push(new PageField(field));
         });
 
         // Extend the page actions.
         this.actions = [];
         $util.forEach(properties.actions, function(action) {
-            _self.actions.push(new PageAction(action));
+            self.actions.push(new PageAction(action));
         });
     }
 }

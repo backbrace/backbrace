@@ -13,7 +13,7 @@ function HeaderComponent() {
 
 HeaderComponent.prototype.load = function(container) {
 
-    var _self = this;
+    var self = this;
 
     $('<header class="header">'
         + '<nav class="navbar"><div class="navbar-inner">'
@@ -40,7 +40,7 @@ HeaderComponent.prototype.load = function(container) {
         $('.menu').show().animate({
             left: '0px'
         }, null, function() {
-            _self.menuExtended = true;
+            self.menuExtended = true;
         });
     });
 
@@ -50,7 +50,7 @@ HeaderComponent.prototype.load = function(container) {
                 left: '-300px'
             }, null, function() {
                 $('.menu').hide();
-                _self.menuExtended = false;
+                self.menuExtended = false;
             });
         }
     });

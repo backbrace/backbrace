@@ -1,11 +1,17 @@
 'use strict';
 
-// Get styles.
-var jss_styles = {
-    flat: require('./Styles/flat')
-};
+var flat = require('./styles/flat');
 
 module.exports = {
+
+    /**
+     * Version info for JumpStart.
+     * @type {object}
+     */
+    VERSION_INFO: {
+        // These placeholder strings will be replaced by grunt's `build` task.
+        full: '"JS_VERSION_FULL"'
+    },
 
     /**
      * App name.
@@ -16,15 +22,6 @@ module.exports = {
      * App version.
      */
     version: '0.1.0',
-
-    /**
-     * Version info for JumpStart.
-     * @type {object}
-     */
-    js_version: {
-        // These placeholder strings will be replaced by grunt's `build` task.
-        full: '"JS_VERSION_FULL"'
-    },
 
     /**
      * App tite (displays in browser window).
@@ -57,14 +54,9 @@ module.exports = {
     autoSwitch: true,
 
     /**
-     * JSS styles.
+     * JSS style.
      */
-    jss: jss_styles,
-
-    /**
-     * App JSS style.
-     */
-    app_jss: jss_styles.flat,
+    jss: flat,
 
     meta: {
 

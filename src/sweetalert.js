@@ -5,7 +5,7 @@
 'use strict';
 
 var $util = require('./util'),
-    $window = require('./Providers/window'),
+    $window = require('./providers/window'),
     swal = require('../external/swal'),
     queue = [],
     isOpen = false,
