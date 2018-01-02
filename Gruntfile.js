@@ -75,7 +75,7 @@ module.exports = function(grunt) {
         src: ['src/*.js','src/*/*.js','README.md'],
         options: {
           destination: 'docs',
-          template: 'node_modules/@pixi/jsdoc-template',
+          template: 'node_modules/jumpstartjs-jsdoc-template',
           config: 'jsdoc.conf.json'
         }
       }
