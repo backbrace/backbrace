@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 
     //Clean build directories.
     clean: {
-      build: ['build'],
+      build: ['build', 'docs'],
       tmp: ['tmp']
     },
 
@@ -51,13 +51,13 @@ module.exports = function(grunt) {
     },
 
     'webpack-dev-server': {
-			options: {
+      options: {
         webpack: webpackConfig,
         publicPath: '/scripts',
         contentBase: 'website/'
-			},
+      },
       start: {}
-		},
+    },
 
     uglify: {
       options: {
@@ -68,17 +68,34 @@ module.exports = function(grunt) {
           'build/jumpstart.min.js': ['build/jumpstart.js']
         }
       }
+    },
+
+    jsdoc: {
+      dist: {
+        src: ['src/*.js','src/*/*.js','README.md'],
+        options: {
+          destination: 'docs',
+          template: 'node_modules/@pixi/jsdoc-template',
+          config: 'jsdoc.conf.json'
+        }
+      }
     }
 
   });
 
   grunt.loadNpmTasks('grunt-webpack');
 
+  grunt.registerTask('docs', ['jsdoc:dist']);
   grunt.registerTask('startdev', ['webpack-dev-server:start']);
   grunt.registerTask('pack', ['webpack:build']);
   grunt.registerTask('package', ['clean', 'pack', 'uglify']);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
-  grunt.registerTask('test', 'Run tests', ['eslint', 'package', 'test:core']);
-  grunt.registerTask('default', ['test']);
+  grunt.registerTask('build', [
+    'eslint',
+    'package',
+    'test:core',
+    'docs'
+  ]);
+  grunt.registerTask('default', ['build']);
 
 };
