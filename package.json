@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/JumpStartJS/jumpstart.js.git"
+    "url": "https://github.com/ZoomLabs/jumpstart.js.git"
   },
   "dependencies": {
     "grunt": "^1.0.1",
