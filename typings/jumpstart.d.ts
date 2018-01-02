@@ -18,7 +18,8 @@ declare namespace Jumpstart {
         object?(msg: Object): void;
     }
 
-    interface Util {        
+    interface Util {
+        isString?(val: any): boolean;
     }
 
     interface Window {
