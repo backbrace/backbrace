@@ -6,6 +6,7 @@ var $log = require('../log'),
 /**
  * Code Thread class.
  * @class
+ * @private
  * @param {Function} func Thread function to execute.
  * @param {number} [id] Unique id of the thread.
  */

@@ -7,6 +7,7 @@ var $settings = require('../settings'),
 /**
  * Base application component.
  * @class
+ * @private
  */
 function AppComponent() {
   this.header = new HeaderComponent();

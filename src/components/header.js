@@ -6,6 +6,7 @@ var $settings = require('../settings'),
 /**
  * Header component.
  * @class
+ * @private
  */
 function HeaderComponent() {
     this.menuExtended = false;
