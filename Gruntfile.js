@@ -65,7 +65,7 @@ module.exports = function(grunt) {
       },
       jumpStart: {
         files: {
-          'build/JumpStart.min.js': ['build/JumpStart.js']
+          'build/jumpstart.min.js': ['build/jumpstart.js']
         }
       }
     }

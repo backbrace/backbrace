@@ -4,7 +4,7 @@ var path = require('path');
 module.exports = {
     cache: true,
     entry: {
-        JumpStart: './src/jumpstart.js'
+        jumpstart: './src/jumpstart.js'
     },
     output: {
         path: path.join(__dirname, 'build'),
