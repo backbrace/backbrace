@@ -34,6 +34,15 @@ function html5Check() {
 }
 
 /**
+ * Determines if a reference is a `string`.
+ * @param {*} val Reference to check.
+ * @returns {boolean} `True` is val is a `string`.
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
  * Format a string.
  * @param {string} str String to format.
  * @returns {string} Formatted string.
@@ -174,6 +183,7 @@ module.exports = {
   noop: noop,
   nextID: nextID,
   html5Check: html5Check,
+  isString: isString,
   formatString: formatString,
   extend: extend,
   forEach: forEach,
