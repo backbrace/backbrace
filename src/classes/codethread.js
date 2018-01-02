@@ -8,7 +8,6 @@ var $log = require('../log'),
  * @class
  * @param {Function} func Thread function to execute.
  * @param {number} [id] Unique id of the thread.
- * @returns {void}
  */
 function CodeThread(func, id) {
 
