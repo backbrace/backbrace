@@ -1,7 +1,15 @@
 declare namespace Jumpstart {
 
+    interface AlertInstance {
+        message(msg:string, callbackFn?: () => void, title?: string): void;
+        confirm(msg: string, callbackFn: (ret: boolean) => void, title?: string, yescaption?: string, nocaption?: string): void;
+        error(msg: (string|Error|Exception|DOMException)): void;
+    }
+
     interface App {
-        confirm?(msg: string, callback: (ret: boolean) => void, title?: string, yescaption?: string, nocaption?: string): void;
+        confirm?(msg: string, callbackFn: (ret: boolean) => void, title?: string, yescaption?: string, nocaption?: string): void;
+        error?(msg: (string|Error|Exception|DOMException)): void;
+        message?(msg: string, callbackFn?: () => void, title?: string): void;
         ready?(callback: Function): void;
     }
 
