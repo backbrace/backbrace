@@ -3,21 +3,21 @@ declare namespace Jumpstart {
     interface AlertInstance {
         message(msg:string, callbackFn?: () => void, title?: string): void;
         confirm(msg: string, callbackFn: (ret: boolean) => void, title?: string, yescaption?: string, nocaption?: string): void;
-        error(msg: (string|Error|Exception|DOMException)): void;
+        error(msg: (string|Error)): void;
     }
 
-    interface App {
+    interface AppModule {
         confirm?(msg: string, callbackFn: (ret: boolean) => void, title?: string, yescaption?: string, nocaption?: string): void;
-        error?(msg: (string|Error|Exception|DOMException)): void;
+        error?(msg: (string|Error)): void;
         message?(msg: string, callbackFn?: () => void, title?: string): void;
         ready?(callback: Function): void;
     }
 
-    interface Event {
+    interface EventModule {
         fire?(...args: any): void;
     }
 
-    interface Log {
+    interface LogModule {
         debugMode?(flag: boolean): void;
         info?(msg: string): void;
         error?(msg: string): void;
@@ -26,21 +26,25 @@ declare namespace Jumpstart {
         object?(msg: Object): void;
     }
 
-    interface Util {
-        isString?(val: any): boolean;
+    interface UtilModule {
+        isDefined?(val: any): boolean;
+        isError?(val: any): boolean;
+        isString?(val: any): boolean;        
+        noop?(): void;
+        toString?(val: any): string;
     }
 
-    interface Window {
+    interface WindowModule {
         get?(): Window;
         set?(win: (Window | Object)): void;
     }
 
-    interface Scope {
-        app: App;
-        event: Event;
-        log: Log;
-        util: Util;
-        window: Window;
+    interface ScopeModule {
+        app: AppModule;
+        event: EventModule;
+        log: LogModule;
+        util: UtilModule;
+        window: WindowModule;
     }
 }
 
@@ -48,4 +52,4 @@ declare namespace Jumpstart {
  * Jumpstart global function. Used externally to access Jumpstart modules, etc.
  * @param fn Callback function that will be passed the Jumpstart scope.
  */
-declare function jumpstart(fn: ((scope: Jumpstart.Scope) => void)): void;
+declare function jumpstart(fn: ((scope: Jumpstart.ScopeModule) => void)): void;

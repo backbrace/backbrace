@@ -7,7 +7,8 @@
 var $window = require('./providers/window'),
   uid = 1,
   timeouts = [],
-  messageName = 'ztm';
+  messageName = 'ztm',
+  toString = Object.prototype.toString;
 
 /**
  * A function that performs no operations.
@@ -40,6 +41,30 @@ function html5Check() {
  */
 function isString(val) {
   return typeof val === 'string';
+}
+
+/**
+ * Determines if a reference is an `Error`.
+ * @param {*} val Reference to check.
+ * @returns {boolean} `True` if val is an `Error`.
+ */
+function isError(val) {
+  var type = toString.call(val);
+  switch (type) {
+    case '[object Error]': return true;
+    case '[object Exception]': return true;
+    case '[object DOMException]': return true;
+    default: return type instanceof Error;
+  }
+}
+
+/**
+ * Determines if a reference is defined.
+ * @param {*} val Reference to check.
+ * @returns {boolean} `True` if val is defined.
+ */
+function isDefined(val) {
+  return typeof val !== 'undefined';
 }
 
 /**
@@ -183,7 +208,10 @@ module.exports = {
   noop: noop,
   nextID: nextID,
   html5Check: html5Check,
+  toString: toString,
   isString: isString,
+  isError: isError,
+  isDefined: isDefined,
   formatString: formatString,
   extend: extend,
   forEach: forEach,
