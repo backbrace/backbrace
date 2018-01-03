@@ -36,7 +36,7 @@ function html5Check() {
 /**
  * Determines if a reference is a `string`.
  * @param {*} val Reference to check.
- * @returns {boolean} `True` is val is a `string`.
+ * @returns {boolean} `True` if val is a `string`.
  */
 function isString(val) {
   return typeof val === 'string';

@@ -1,6 +1,6 @@
 /**
  * App module.
- * @module
+ * @module $app
  */
 'use strict';
 
@@ -19,6 +19,7 @@ var $alert = require('./providers/alert'),
 
 /**
  * Show a message dialog.
+ * @memberof module:$app
  * @param {string} msg Message to display.
  * @param {Function} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
@@ -41,14 +42,10 @@ function message(msg, callbackFn, title) {
 }
 
 /**
- * Alert confirm callback.
- * @typedef {function(boolean):void} JSConfirmCallback
- */
-
-/**
  * Show a confirmation dialog.
+ * @memberof module:$app
  * @param {string} msg Message to display.
- * @param {JSConfirmCallback} [callbackFn] Callback function to execute after the dialog is dismissed.
+ * @param {function(boolean)} callbackFn Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Confirmation"] Title of the dialog.
  * @param {string} [yescaption="OK"] Caption of the "yes" button.
  * @param {string} [nocaption="Cancel"] Caption of the "no" button.
@@ -73,25 +70,29 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
 /**
  * Display an error and kill the current execution.
- * @param {*} msg Message to display.
- * @param {...*} [args] Arguments to merge into message.
+ * @memberof module:$app
+ * @param {string|Error} err Error to display.
  * @returns {void}
  */
-function error(msg, args) {
+function error(err) {
 
-    var alert = $alert.get();
+    var alert = $alert.get(),
+        msg = '';
 
-    msg = msg.message || msg;
+    // Get the message.
+    if (typeof err === 'string') {
+        msg = err;
+    } else {
+        msg = err.message;
+    }
 
     // Merge string.
-    if (typeof msg === 'string') {
-        var arr = [msg];
-        $util.forEach(arguments, function(a, i) {
-            if (i > 0)
-                arr.push(a);
-        });
-        msg = $util.formatString.apply(null, arr);
-    }
+    var arr = [msg];
+    $util.forEach(arguments, function(a, i) {
+        if (i > 0)
+            arr.push(a);
+    });
+    msg = $util.formatString.apply(null, arr);
 
     $$progress.hide();
 
@@ -112,6 +113,7 @@ function error(msg, args) {
 
 /**
  * Execute a function after the app is loaded.
+ * @memberof module:$app
  * @param {Function} func Function to execute.
  * @returns {void}
  */
@@ -121,7 +123,8 @@ function ready(func) {
 
 /**
  * Start the app.
- * @param {*} settings Settings for the app.
+ * @memberof module:$app
+ * @param {Object} settings Settings for the app.
  * @returns {void}
  */
 function start(settings) {
@@ -253,6 +256,8 @@ module.exports = {
 
     /**
      * Suppress the next error thrown.
+     * @type {boolean}
+     * @private
      */
     suppressNextError: suppressNextError,
 

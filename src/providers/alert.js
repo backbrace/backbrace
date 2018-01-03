@@ -1,22 +1,15 @@
 /**
  * Alert box provider.
- * @module
+ * @module $alert
  */
 'use strict';
 
 var $window = require('./window');
 
 /**
- * Alert confirm callback.
- * @typedef {function(boolean):void} JSConfirmCallback
+ * @type {Jumpstart.AlertInstance}
+ * @private
  */
-
-/**
- * Alert instance.
- * @typedef {{message:function(string,Function,string):void,confirm:function(string,JSConfirmCallback,string,string,string):void,error:function(string):void}} JSAlertInstance
- */
-
-/** @type {JSAlertInstance} */
 var instance = {
 
     message: function(msg, callback, title) {
@@ -47,19 +40,32 @@ var instance = {
 
 /**
  * Get the alert box instance.
- * @returns {JSAlertInstance} Returns the alert instance.
+ * @memberof module:$alert
+ * @returns {Jumpstart.AlertInstance} Returns the alert instance.
  */
 function get() {
     return instance;
 }
 
 /**
- * Set the alert box instance.
- * @param {JSAlertInstance} ai Alert instance to set.
+ * @memberof module:$alert
+ * @description
+ * Set the alert instance. The following object signature is required:
+ * ```js
+ * {
+ *  message: function(msg, callback, title) {
+ *  },
+ *  confirm: function(msg, callback, title, yescaption, nocaption) {
+ *  },
+ *  error: function(msg) {
+ *  }
+ * }
+ * ```
+ * @param {Jumpstart.AlertInstance} ref Alert instance to set.
  * @returns {void}
  */
-function set(ai) {
-    instance = ai;
+function set(ref) {
+    instance = ref;
 }
 
 module.exports = {
