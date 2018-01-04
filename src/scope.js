@@ -1,3 +1,7 @@
+/**
+ * Scope object. Passed into the jumpstart function.
+ * @module scope
+ */
 'use strict';
 
 // Export public modules to the JumpStart scope.
