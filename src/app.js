@@ -13,6 +13,8 @@ var $alert = require('./providers/alert'),
     $util = require('./util'),
     $window = require('./providers/window'),
     $$progress = require('./progress'),
+    AppComponent = require('./components/app'),
+    baseComponent = null,
     readyFunc = null,
     suppressNextError = false;
 
@@ -20,7 +22,7 @@ var $alert = require('./providers/alert'),
  * Show a message dialog.
  * @memberof module:$app
  * @param {string} msg Message to display.
- * @param {Function} [callbackFn] Callback function to execute after the dialog is dismissed.
+ * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
  * @returns {void}
  */
@@ -121,6 +123,17 @@ function ready(func) {
 }
 
 /**
+ * Get the base component.
+ *
+ * NOTE: The base component will be `null` until the `$app.start` function is called.
+ * @memberof module:$app
+ * @returns {AppComponent} Returns the base component.
+ */
+function component() {
+    return baseComponent;
+}
+
+/**
  * Start the app.
  * @memberof module:$app
  * @param {Object} settings Settings for the app.
@@ -206,8 +219,7 @@ function start(settings) {
         $package.load(function() {
 
             var $ = require('../external/jquery'),
-                $$sweetalert = require('./sweetalert'),
-                AppComponent = require('./components/app');
+                $$sweetalert = require('./sweetalert');
 
             // Compile JSS and load into a style tag.
             var css = $jss.compile($settings.jss);
@@ -218,7 +230,11 @@ function start(settings) {
             // Lets upgrade alerts...
             $alert.set({
                 message: $$sweetalert.show,
-                confirm: $$sweetalert.show,
+                confirm: function(msg, callback, title, yescaption, nocaption) {
+                    $$sweetalert.show(msg, function() {
+                        callback(true);
+                    });
+                },
                 error: function(msg) {
                     $$sweetalert.show(msg, null, 'Application Error');
                 }
@@ -230,8 +246,8 @@ function start(settings) {
 
                     function() {
                         // Load base application component.
-                        var app = new AppComponent();
-                        return app.load($settings.mobile ? $('.ui-page') : $('body'));
+                        baseComponent = new AppComponent();
+                        return baseComponent.load($settings.mobile ? $('.ui-page') : $('body'));
                     },
 
                     function() {
@@ -264,5 +280,6 @@ module.exports = {
     confirm: confirm,
     error: error,
     ready: ready,
+    component: component,
     start: start
 };
