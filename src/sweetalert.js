@@ -49,21 +49,21 @@ function onClosed() {
 
 /**
  * Fix alert messages.
- * @param {Object} msg Alert message to fix.
+ * @param {string} msg Alert message to fix.
  * @returns {string} Alert message
  */
 function fixMessage(msg) {
-    if (msg.message)
-        msg = msg.message;
-    if ($util.isString(msg))
-        msg = msg.replace(/\n/g, '<br />');
+
+    // Replace new lines with line breaks.
+    msg = msg.replace(/\n/g, '<br />');
+
     return msg;
 }
 
 /**
  * Shows a sweet alert. Queues the alert if an alert is already displayed.
  * @param {string} msg Message to display
- * @param {Function} [callback] Callback function to execute after the dialog is dismissed.
+ * @param {function():void} [callback] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Confirmation"] Title of the dialog.
  * @param {string} [icon] Icon URL to display in the dialog.
  * @returns {void}

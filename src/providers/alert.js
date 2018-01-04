@@ -1,5 +1,5 @@
 /**
- * Alert box provider.
+ * Alert box provider. By default, it uses native gui to show alerts.
  * @module $alert
  */
 'use strict';
@@ -7,7 +7,7 @@
 var $window = require('./window');
 
 /**
- * @type {Jumpstart.AlertInstance}
+ * @type {Jumpstart.AlertProviderInstance}
  * @private
  */
 var instance = {
@@ -39,9 +39,9 @@ var instance = {
 };
 
 /**
- * Get the alert box instance.
+ * Get the alert provider instance.
  * @memberof module:$alert
- * @returns {Jumpstart.AlertInstance} Returns the alert instance.
+ * @returns {Jumpstart.AlertProviderInstance} Returns the alert provider instance.
  */
 function get() {
     return instance;
@@ -50,7 +50,7 @@ function get() {
 /**
  * @memberof module:$alert
  * @description
- * Set the alert instance. The following object signature is required:
+ * Set the alert provider instance. The following object signature is required:
  * ```js
  * {
  *  message: function(msg, callback, title) {
@@ -61,7 +61,7 @@ function get() {
  *  }
  * }
  * ```
- * @param {Jumpstart.AlertInstance} ref Alert instance to set.
+ * @param {Jumpstart.AlertProviderInstance} ref Alert provider instance to set.
  * @returns {void}
  */
 function set(ref) {
