@@ -7,20 +7,20 @@
 var instance = window;
 
 /**
- * Get the browser window instance.
- * @returns {Window} Returns the window instance.
+ * Get the window provider instance.
+ * @returns {Window} Returns the window provider instance.
  */
 function get() {
     return instance;
 }
 
 /**
- * Set the browser window instance.
- * @param {(Window|Object)} win Window instance to set.
+ * Set the window provider instance.
+ * @param {(Window|Object)} val Window provider instance to set.
  * @returns {void}
  */
-function set(win) {
-    instance = win;
+function set(val) {
+    instance = val;
 }
 
 module.exports = {
