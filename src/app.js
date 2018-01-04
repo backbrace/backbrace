@@ -12,7 +12,6 @@ var $alert = require('./providers/alert'),
     $package = require('./package'),
     $util = require('./util'),
     $window = require('./providers/window'),
-    $$packages = require('./packages'),
     $$progress = require('./progress'),
     readyFunc = null,
     suppressNextError = false;
@@ -188,7 +187,7 @@ function start(settings) {
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Load JQuery.
-    $package.loadScript($$packages.jQuery(), function() {
+    $package.loadScript($settings.packages.jQuery(), function() {
 
         // JQuery wasn't loaded :(
         if (typeof jQuery === 'undefined')
@@ -202,8 +201,8 @@ function start(settings) {
         }
 
         // Load all other packages.
-        $package.add($$packages.jQueryUI());
-        $package.add($$packages.common());
+        $package.add($settings.packages.jQueryUI());
+        $package.add($settings.packages.common());
         $package.load(function() {
 
             var $ = require('../external/jquery'),
