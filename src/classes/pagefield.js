@@ -25,8 +25,6 @@ function PageField(properties) {
     this.sort = 0;
     this.optionString = '';
     this.optionCaption = '';
-    this.onValidate = '';
-    this.onLookup = '';
     this.lookupTable = '';
     this.lookupField = '';
     this.lookupFilters = '';

@@ -17,6 +17,7 @@ function Page(properties) {
     this.caption = '';
     this.type = '';
     this.sourceID = '';
+    this.controller = '';
     this.icon = '';
     /** @type {PageField[]} */
     this.fields = [];

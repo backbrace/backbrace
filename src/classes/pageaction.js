@@ -11,9 +11,10 @@ var $util = require('../util');
 function PageAction(properties) {
 
     this.name = '';
+    this.text = '';
     this.type = '';
-    this.onclick = null;
     this.icon = '';
+    this.classname = '';
     this.recordRequired = false;
     this.pageName = '';
     this.pageView = '';
@@ -24,6 +25,7 @@ function PageAction(properties) {
     if (typeof properties !== 'undefined') {
         // Extend the page action.
         $util.extend(this, properties);
+        this.text = this.text || this.name;
     }
 }
 

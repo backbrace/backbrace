@@ -130,13 +130,14 @@ module.exports = {
     color: '#000'
   },
   '.actions-bar': {
-    padding: '5px'
+    'padding-bottom': '5px'
   },
   '.action-button': {
     display: 'inline-block',
-    'font-size': '16px',
-    padding: '3px',
-    margin: '2px'
+    'font-size': '12px',
+    padding: '5px',
+    margin: '2px',
+    cursor: 'pointer'
   },
   '.action-button:hover': {
     background: '%colors:hover%',
