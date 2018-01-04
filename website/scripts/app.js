@@ -1,23 +1,13 @@
 'use strict';
 
-jumpstart(function (scope) {
+jumpstart(function(scope) {
 
     var $app = scope.app,
-        $code = scope.code,
-        $meta = scope.meta,
-        $util = scope.util;
+        $code = scope.code;
 
-    $app.ready(function () {
-        $app.confirm('Load home?', function (ret) {
-            $code.thread(function () {
-                return $code.block(
-                    function () {
-                        return $meta.page('test');
-                    },
-                    function (pge) {
-                    }
-                );
-            });
+    $app.ready(function() {
+        $code.thread(function() {
+            return $app.component().loadMenu().loadPage('test');
         });
     });
 

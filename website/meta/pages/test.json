@@ -1,3 +1,13 @@
 {
-    "caption": "Test Page" 
+    "caption": "Test Page",
+    "controller": "test.js",
+    "actions": [
+        {
+            "name": "New"
+        },
+        {
+            "name": "Delete",
+            "icon": "close-circle"
+        }
+    ]
 }
