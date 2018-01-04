@@ -4,6 +4,7 @@
 module.exports = {
     app: require('./app'),
     code: require('./code'),
+    controller: require('./controller'),
     event: require('./event'),
     log: require('./log'),
     meta: require('./meta'),
