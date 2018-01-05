@@ -2,7 +2,8 @@
 
 var $util = require('../util'),
     PageField = require('./pagefield'),
-    PageAction = require('./pageaction');
+    PageAction = require('./pageaction'),
+    PageTab = require('./pagetab');
 
 /**
  * Page class.
@@ -15,7 +16,7 @@ function Page(properties) {
     var self = this;
 
     this.caption = '';
-    this.type = '';
+    this.type = 'Card';
     this.sourceID = '';
     this.controller = '';
     this.icon = '';
@@ -23,10 +24,11 @@ function Page(properties) {
     this.fields = [];
     /** @type {PageAction[]} */
     this.actions = [];
+    /** @type {PageTab[]} */
+    this.tabs = [];
     this.view = '';
     this.deleteAllowed = false;
     this.insertAllowed = false;
-    this.tabList = [];
     this.showFilters = false;
     this.runFunctionOnCancel = false;
     this.runDblClickOnNew = false;
@@ -48,6 +50,12 @@ function Page(properties) {
         this.actions = [];
         $util.forEach(properties.actions, function(action) {
             self.actions.push(new PageAction(action));
+        });
+
+        // Extend the page tabs.
+        this.tabs = [];
+        $util.forEach(properties.tabs, function(tab) {
+            self.tabs.push(new PageTab(tab));
         });
     }
 }

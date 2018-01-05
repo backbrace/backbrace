@@ -8,7 +8,6 @@ var $icons = require('../providers/icons').get(),
 /**
  * Window component.
  * @class
- * @private
  * @param {Object} settings Window settings.
  */
 function WindowComponent(settings) {
@@ -29,7 +28,6 @@ function WindowComponent(settings) {
 
 /**
  * Load the component into the container.
- * @private
  * @param {JQuery} container JQuery element to load the component into.
  * @returns {WindowComponent} Returns itself for chaining.
  */
@@ -94,7 +92,7 @@ WindowComponent.prototype.addAction = function(action) {
 };
 
 /**
- * Get a window button by name.
+ * Get a window action button by name.
  * @param {string} name Name of the button to get.
  * @returns {JQuery} Button as a `JQuery` object. If the button is not found, `null`
  * is returned.

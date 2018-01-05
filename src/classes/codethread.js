@@ -116,7 +116,7 @@ CodeThread.prototype.runNextFunction = function(result) {
 
     if (this.queue.length > 0) {
         this.queue[this.queue.length - 1].shift();
-        $util.setZeroTimeout(function() {
+        $util.setZeroTimeout(function runNextFunction() {
             self.resolveQueue(result);
         });
     }

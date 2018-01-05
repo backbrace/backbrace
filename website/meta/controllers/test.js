@@ -6,7 +6,7 @@ jumpstart(function(scope) {
 
     scope.controller.create('test.js', function(page) {
 
-        page.action('New').click(function() {
+        page.window.action('New').click(function() {
             $app.message('New Clicked');
         });
 

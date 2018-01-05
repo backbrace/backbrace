@@ -6,6 +6,7 @@ var $app = require('../app'),
     $meta = require('../meta'),
     $ = require('../../external/jquery'),
     Page = require('../classes/page'),
+    CardComponent = require('./card'),
     WindowComponent = require('./window');
 
 /**
@@ -15,9 +16,21 @@ var $app = require('../app'),
  */
 function PageComponent(name) {
     this.name = name;
-    /** @type {Page} */
+    /**
+     * Page meta data.
+     * @type {Page}
+     */
     this.page = null;
+    /**
+     * The page's window component.
+     * @type {WindowComponent}
+     */
     this.window = new WindowComponent({});
+    /**
+     * The component that renders over the entire window.
+     * @type {CardComponent}
+     */
+    this.pageComponent = null;
 }
 
 /**
@@ -31,12 +44,16 @@ PageComponent.prototype.load = function(container) {
 
     return $code.block(
 
-        function() {
+        function getMetadata() {
             // Get the page meta data.
             return $meta.page(self.name);
         },
 
-        function(/** @type {Page} */page) {
+        /**
+         * @param {Page} page Page meta data.
+         * @returns {void|JQueryPromise} Promise to return after we load the component.
+         */
+        function loadComponent(page) {
 
             // Page meta data not found.
             if (page === null)
@@ -45,19 +62,27 @@ PageComponent.prototype.load = function(container) {
             self.page = page;
 
             // Load the window and set the title.
-            self.window.load(container).setTitle(self.page.caption);
+            self.window.load(container).setTitle(page.caption);
 
             // Add actions.
-            $.each(self.page.actions, function(i, action) {
+            $.each(page.actions, function(i, action) {
                 self.window.addAction(action);
             });
+
+            if (page.type === 'Card') {
+                self.pageComponent = new CardComponent();
+                return self.pageComponent.load(container, page);
+            }
+        },
+
+        function getController() {
 
             // Get the page contoller (from file).
             if (self.page.controller !== '')
                 return $controller.load(self.page.controller);
         },
 
-        function() {
+        function executeController() {
 
             // Execute the controller.
             if (self.page.controller !== '')
@@ -68,16 +93,6 @@ PageComponent.prototype.load = function(container) {
         }
 
     );
-};
-
-/**
- * Get a window button by name.
- * @param {string} name Name of the button to get.
- * @returns {JQuery} Button as a `JQuery` object. If the button is not found, `null`
- * is returned.
- */
-PageComponent.prototype.action = function(name) {
-    return this.window.action(name);
 };
 
 module.exports = PageComponent;

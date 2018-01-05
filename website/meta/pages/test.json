@@ -9,5 +9,13 @@
             "name": "Delete",
             "icon": "close-circle"
         }
+    ],
+    "tabs": [
+        {
+            "name": "Tab1"
+        },
+        {
+            "name": "Tab2"
+        }
     ]
 }
