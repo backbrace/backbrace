@@ -20,6 +20,10 @@ declare namespace Jumpstart {
     }
 
     interface PageComponent {
+        window: WindowComponent;
+    }
+
+    interface WindowComponent {
         action?(name: string): JQuery;
     }
 
