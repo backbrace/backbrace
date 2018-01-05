@@ -55,6 +55,39 @@ function block() {
 }
 
 /**
+ * Loop through an array using `$code.block`.
+ * @param {Array} obj Array to iterate through.
+ * @param {function(any,number,any)} iterator Iterator function to call.
+ * @param {Object} [context] Context to run the iterator function.
+ * @returns {JQueryPromise} Promise to return after we are done looping.
+ */
+function each(obj, iterator, context) {
+
+    var func = function(key) {
+        return block(
+
+            function() {
+                return iterator.call(context, obj[key], key, obj);
+            },
+
+            function(ret) {
+                if (key < obj.length - 1)
+                    return func(key + 1);
+                return ret;
+            }
+
+        );
+    };
+
+    if (func.length > 0)
+        return block(
+            function() {
+                return func(0);
+            }
+        );
+}
+
+/**
  * Start a new code thread to execute code when possible.
  * @param {Function} func Function to execute when possible.
  * @param {number} [id] Unique ID of the thread.
@@ -86,6 +119,7 @@ module.exports = {
     currentThread: currentThread,
     testMode: testMode,
     block: block,
+    each: each,
     thread: thread,
     reset: reset
 };
