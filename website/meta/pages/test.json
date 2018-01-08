@@ -12,7 +12,8 @@
     ],
     "tabs": [
         {
-            "name": "Tab1"
+            "name": "Tab1",
+            "options": ""
         },
         {
             "name": "Tab2"

@@ -1,7 +1,7 @@
 'use strict';
 
 var $settings = require('../settings'),
-    $ = require('../../external/jquery');
+    $ = require('../../external/jquery')();
 
 /**
  * Header component.
@@ -9,6 +9,9 @@ var $settings = require('../settings'),
  * @private
  */
 function HeaderComponent() {
+
+    $ = $ || require('../../external/jquery')();
+
     this.menuExtended = false;
 }
 

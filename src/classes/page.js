@@ -27,6 +27,7 @@ function Page(properties) {
     /** @type {PageTab[]} */
     this.tabs = [];
     this.view = '';
+    this.options = '';
     this.deleteAllowed = false;
     this.insertAllowed = false;
     this.showFilters = false;

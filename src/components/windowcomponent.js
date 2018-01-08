@@ -1,8 +1,9 @@
 'use strict';
 
-var $icons = require('../providers/icons').get(),
+var $code = require('../code'),
+    $icons = require('../providers/icons').get(),
     $util = require('../util'),
-    $ = require('../../external/jquery'),
+    $ = require('../../external/jquery')(),
     PageAction = require('../classes/pageaction');
 
 /**
@@ -12,9 +13,14 @@ var $icons = require('../providers/icons').get(),
  */
 function WindowComponent(settings) {
 
+    $ = $ || require('../../external/jquery')();
+
     this.settings = {
-        style: 'window-width-full window-height-half',
-        parent: null
+        style: 'window-width-full',
+        hasParent: false,
+        closeBtn: true,
+        /** @type {Function} */
+        onClose: null
     };
 
     // Merge settings.
@@ -27,19 +33,34 @@ function WindowComponent(settings) {
 }
 
 /**
+ * Unload the component.
+ * @returns {void}
+ */
+WindowComponent.prototype.unload = function() {
+    // Unload DOM.
+    $('#window' + this.id).remove();
+};
+
+/**
  * Load the component into the container.
  * @param {JQuery} container JQuery element to load the component into.
  * @returns {WindowComponent} Returns itself for chaining.
  */
 WindowComponent.prototype.load = function(container) {
 
-    var titlebar = $('<div class="title-bar unselectable" />');
+    var self = this,
+        titlebar = $('<div class="title-bar unselectable" />');
 
-    if (!this.settings.parent)
-        titlebar.append('<span id="title' + this.id + '" class="title unselectable" />');
+    titlebar.append('<span id="title' + this.id + '" class="title ' +
+        (this.settings.hasParent ? 'alt' : '') + ' unselectable" />');
 
-    // Add close button.
-    //titlebar.append('<i class="fa fa-times title-icon" aria-hidden="true"></i>');
+    if (this.settings.closeBtn === true && !this.settings.hasParent) {
+        $('<i class="mdi mdi-close unselectable title-icon"></i>')
+            .appendTo(titlebar)
+            .click(function() {
+                self.settings.onClose();
+            });
+    }
 
     $('<div id="window' + this.id + '" class="window" />')
         .addClass(this.settings.style)

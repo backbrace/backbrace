@@ -7,6 +7,14 @@
 
 module.exports = {
 
+  '.unselectable': {
+    '-webkit-touch-callout': 'none',
+    '-webkit-user-select': 'none',
+    '-khtml-user-select': 'none',
+    '-moz-user-select': 'none',
+    '-ms-user-select': 'none',
+    'user-select': 'none'
+  },
   'body': {
     margin: '0px'
   },
@@ -121,10 +129,14 @@ module.exports = {
   '.title.mobile': {
     'overflow-y': 'hidden'
   },
+  '.title.alt': {
+    'font-size': '18px'
+  },
   '.title-icon': {
     float: 'right',
     'font-size': '16px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    'margin-right': '3px'
   },
   '.title-icon:hover': {
     color: '#000'
@@ -181,6 +193,16 @@ module.exports = {
   '.window-height-half': {
     'min-height': '200px',
     'height': '50%'
+  },
+  '.main-container': {
+    width: '100%',
+    display: 'inline-block',
+    'vertical-align': 'top'
+  },
+  '.side-container': {
+    display: 'none',
+    width: '30%',
+    'vertical-align': 'top'
   },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
