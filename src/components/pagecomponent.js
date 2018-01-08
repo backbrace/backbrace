@@ -2,6 +2,7 @@
 
 var $code = require('../code'),
     $controller = require('../controller'),
+    $icons = require('../providers/icons').get(),
     $meta = require('../meta'),
     $settings = require('../settings'),
     $util = require('../util'),
@@ -33,11 +34,17 @@ function PageComponent(name, settings) {
     this.name = name;
 
     /**
+     * Page title.
+     * @type {string}
+     */
+    this.title = '';
+
+    /**
      * Page component settings.
-     * @type {Object}
      */
     this.settings = {
-        factbox: false
+        factbox: false,
+        hasParent: false
     };
 
     // Merge settings.
@@ -87,6 +94,7 @@ PageComponent.prototype.unload = function() {
     // Unload DOM.
     this.mainContainer.remove();
     this.sideContainer.remove();
+    $('#win' + this.id).remove();
 };
 
 /**
@@ -129,14 +137,27 @@ PageComponent.prototype.load = function(container) {
                 && !$settings.mobile)
                 cont = self.sideContainer;
 
-            // Load the window and set the title.
-            self.window.load(cont).setTitle(page.caption);
+            // Load the window.
+            self.window.load(cont);
+
+            // Add the page to the windows toolbar.
+            if ($settings.windowMode && !self.settings.hasParent) {
+                var closeBtn = $($icons.get('close'))
+                    .click(function() {
+                        self.close();
+                    })
+                    .css('padding-left', '5px');
+                $('<div id="win' + self.id + '" class="main-windows-btn"></div>')
+                    .appendTo($app.component().windows)
+                    .append('<span />')
+                    .append(closeBtn);
+            }
+
+            self.setTitle(page.caption);
 
             // Add close function.
             self.window.settings.onClose = function() {
-                $code.thread(function closePage() {
-                    return $app.component().closePage(self.id);
-                });
+                self.close();
             };
 
             // Add actions.
@@ -144,6 +165,7 @@ PageComponent.prototype.load = function(container) {
                 self.window.addAction(action);
             });
 
+            // Load the page component.
             if (page.type === 'Card') {
                 self.pageComponent = new CardComponent(self);
                 return self.pageComponent.load();
@@ -163,16 +185,64 @@ PageComponent.prototype.load = function(container) {
             if (self.page.controller !== '')
                 $controller.get(self.page.controller)(self);
 
-            // Show the window.
-            self.window.show();
+            // Show the page.
+            self.show();
         }
 
     );
 };
 
+/**
+ * Show the page.
+ * @returns {PageComponent} Returns itself for chaining.
+ */
+PageComponent.prototype.show = function() {
+
+    this.window.show();
+    $('#win' + this.id).addClass('active');
+
+    // Show the page component.
+    if (this.pageComponent instanceof CardComponent) {
+        this.pageComponent.show();
+    }
+    return this;
+};
+
+/**
+ * Close the page.
+ * @returns {void}
+ */
+PageComponent.prototype.close = function() {
+    var self = this,
+        $app = require('../app');
+    $code.thread(function closePage() {
+        return $app.component().closePage(self.id);
+    });
+};
+
+/**
+ * Set the title of the page.
+ * @param {string} [title] Title to change to.
+ * @returns {PageComponent} Returns itself for chaining.
+ */
+PageComponent.prototype.setTitle = function(title) {
+    this.title = title || this.title;
+    this.window.setTitle(this.title);
+    $('#win' + this.id + '>span').html($util.formatString('{0} {1}',
+        $icons.get(this.page.icon),
+        this.title
+    ));
+    return this;
+};
+
+/**
+ * Show the side container.
+ * @returns {PageComponent} Returns itself for chaining.
+ */
 PageComponent.prototype.showSide = function() {
     this.sideContainer.css('display', 'inline-block');
     this.mainContainer.css('width', '70%');
+    return this;
 };
 
 module.exports = PageComponent;

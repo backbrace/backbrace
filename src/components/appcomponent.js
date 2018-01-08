@@ -28,6 +28,12 @@ function AppComponent() {
   this.main = null;
 
   /**
+   * Windows toolbar (if using window mode).
+   * @type {JQuery}
+   */
+  this.windows = null;
+
+  /**
    * Loaded pages (`PageComponent` ID as key).
    * @type {Object}
    */
@@ -43,6 +49,10 @@ function AppComponent() {
 AppComponent.prototype.load = function(container) {
 
   this.main = $('<div class="main"></div>').appendTo(container);
+
+  // Add window toolbar.
+  if ($settings.windowMode)
+    this.windows = $('<div class="main-windows"></div>').appendTo(this.main);
 
   $('body').addClass($settings.mobile ? 'mobile-app' : 'desktop-app');
 

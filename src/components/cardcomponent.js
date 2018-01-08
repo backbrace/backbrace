@@ -80,10 +80,23 @@ CardComponent.prototype.loadTabs = function() {
             var win = new WindowComponent({
                 hasParent: true
             });
-            win.load(cont).setTitle(tab.text).show();
+            win.load(cont).setTitle(tab.text);
             self.subwindows.push(win);
         }
     });
+};
+
+/**
+ * Show the card component.
+ * @returns {CardComponent} Returns itself for chaining.
+ */
+CardComponent.prototype.show = function() {
+    // Show the sub windows.
+    $util.forEach(this.subwindows,
+        function(/** @type {WindowComponent} */win) {
+            win.show();
+        });
+    return this;
 };
 
 module.exports = CardComponent;

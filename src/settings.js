@@ -60,6 +60,11 @@ module.exports = {
      */
     jss: flat,
 
+    /**
+     * Use window mode?
+     */
+    windowMode: true,
+
     meta: {
 
         dir: './meta/'

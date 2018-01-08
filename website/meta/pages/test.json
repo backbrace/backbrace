@@ -1,6 +1,7 @@
 {
     "caption": "Test Page",
     "controller": "test.js",
+    "icon": "tablet-ipad",
     "actions": [
         {
             "name": "New"

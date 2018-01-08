@@ -105,6 +105,22 @@ module.exports = {
     'margin-top': '50px',
     height: 'calc(100vh - 65px)'
   },
+  '.main-windows': {
+    width: '100%',
+    padding: '5px',
+    display: 'inline-block',
+    'padding-bottom': '0px'
+  },
+  '.main-windows-btn': {
+    display: 'inline-block',
+    padding: '4px',
+    'background-color': '#FFF',
+    cursor: 'pointer',
+    border: '1px solid transparent'
+  },
+  '.main-windows-btn.active': {
+    border: '1px solid %colors:header%'
+  },
   '.window': {
     border: '1px solid #f1f1f1',
     'box-sizing': 'border-box',
