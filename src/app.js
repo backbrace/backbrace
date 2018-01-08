@@ -218,7 +218,7 @@ function start(settings) {
         $package.add($settings.packages.common());
         $package.load(function() {
 
-            var $ = require('../external/jquery'),
+            var $ = require('../external/jquery')(),
                 $$sweetalert = require('./sweetalert');
 
             // Compile JSS and load into a style tag.

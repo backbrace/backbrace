@@ -26,6 +26,8 @@
  */
 'use strict';
 
+var $ = require('../external/jquery')();
+
 /**
  * Send a HTTP get request.
  * @memberof module:$http
@@ -35,7 +37,7 @@
  */
 function get(url) {
 
-    var $ = require('../external/jquery');
+    $ = $ || require('../external/jquery')();
 
     var d = $.Deferred();
 

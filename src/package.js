@@ -63,7 +63,7 @@ function loadCSS(url, onsuccess, onerror) {
  */
 function add(pack) {
 
-    var $ = require('../external/jquery');
+    var $ = require('../external/jquery')();
 
     $.each(pack, function(i, urls) {
         $.each(urls || [], function(j, url) {
@@ -84,7 +84,7 @@ function add(pack) {
  */
 function load(onsuccess, onerror) {
 
-    var $ = require('../external/jquery'),
+    var $ = require('../external/jquery')(),
         urls = packages.shift(),
         styles = [],
         scripts = [],
