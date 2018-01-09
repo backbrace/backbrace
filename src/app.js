@@ -190,7 +190,7 @@ function start(settings) {
     $$progress.show();
 
     // Update title.
-    window.document.title = $settings.title;
+    window.document.title = $settings.app.title;
 
     // Check for HTML5.
     if (!$util.html5Check())

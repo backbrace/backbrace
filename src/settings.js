@@ -13,21 +13,6 @@ var flat = require('./styles/flat'),
         },
 
         /**
-         * App name (displays in header if there is no logo image).
-         */
-        name: 'Jumpstart App',
-
-        /**
-         * App version.
-         */
-        version: '0.1.0',
-
-        /**
-         * App tite (displays in browser window).
-         */
-        title: 'New Jumpstart App',
-
-        /**
          * Set the app to debug mode.
          */
         debug: false,
@@ -61,6 +46,24 @@ var flat = require('./styles/flat'),
          * Use window mode?
          */
         windowMode: true,
+
+        app: {
+
+            /**
+             * App name (displays in header if there is no logo image).
+             */
+            name: 'Jumpstart App',
+
+            /**
+             * App version.
+             */
+            version: '0.1.0',
+
+            /**
+             * App tite (displays in browser window).
+             */
+            title: 'New Jumpstart App'
+        },
 
         meta: {
 
