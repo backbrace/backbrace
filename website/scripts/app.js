@@ -11,5 +11,13 @@ jumpstart(function(scope) {
         });
     });
 
+    var settings = {
+        style: {
+            images: {
+                logo: 'https://cdn.jumpstartjs.org/images/logo-light.png',
+                blocker: 'https://cdn.jumpstartjs.org/images/logo-portrait.png'
+            }
+        }
+    };
     $app.start();
 });

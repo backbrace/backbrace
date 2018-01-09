@@ -42,8 +42,9 @@ module.exports = {
   '.navbar-brand': {
     float: 'left',
     'font-size': '20px',
-    'line-height': '1',
-    margin: '8px 80px 0 8px'
+    'font-weight': 'normal',
+    'line-height': '32px',
+    margin: '8px 80px 0 8px'    
   },
   '.navbar-logo': {
     'max-height': '35px'

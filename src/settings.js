@@ -16,9 +16,9 @@ module.exports = {
     },
 
     /**
-     * App name.
+     * App name (displays in header if there is no logo image).
      */
-    name: 'jumpstartapp',
+    name: 'Jumpstart App',
 
     /**
      * App version.
@@ -91,9 +91,9 @@ module.exports = {
         },
 
         images: {
-            logo: 'https://cdn.jumpstartjs.org/images/logo-light.png',
-            menuLogo: 'https://cdn.jumpstartjs.org/images/logo-dark.png',
-            blocker: 'https://cdn.jumpstartjs.org/images/logo-portrait.png'
+            logo: '',
+            menuLogo: '',
+            blocker: ''
         },
 
         colors: {
@@ -115,12 +115,22 @@ module.exports = {
     packages: {
 
         /**
+         * CDN URL's.
+         */
+        CDN: {
+            CLOUD_FLARE: 'https://cdnjs.cloudflare.com/ajax/libs',
+            GOOGLE: 'https://ajax.googleapis.com/ajax/libs',
+            JUMPSTART: 'https://cdn.jumpstartjs.org',
+            MATERIAL_ICONS: 'https://cdn.materialdesignicons.com'
+        },
+
+        /**
         * JQuery Package.
         * @returns {string} JQuery script URL.
         */
         jQuery: function() {
             var min = (minify ? '.min' : '');
-            return 'https://ajax.googleapis.com/ajax/libs/jquery/' +
+            return this.CDN.GOOGLE + '/jquery/' +
                 (mobile ? '2.1.0' : '3.2.1') + '/jquery' + min + '.js';
         },
 
@@ -132,16 +142,12 @@ module.exports = {
             var min = (minify ? '.min' : '');
             if (mobile)
                 return [[
-                    'https://ajax.googleapis.com/ajax/libs/jquerymobile/' +
-                    '1.4.5/jquery.mobile' + min + '.js',
-                    'https://ajax.googleapis.com/ajax/libs/jquerymobile/' +
-                    '1.4.5/jquery.mobile.min.css'
+                    this.CDN.GOOGLE + '/jquerymobile/1.4.5/jquery.mobile' + min + '.js',
+                    this.CDN.GOOGLE + '/jquerymobile/1.4.5/jquery.mobile.min.css'
                 ]];
             return [[
-                'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1' +
-                '/jquery-ui' + min + '.js',
-                'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1' +
-                '/themes/smoothness/jquery-ui.css'
+                this.CDN.GOOGLE + '/jqueryui/1.12.1/jquery-ui' + min + '.js',
+                this.CDN.GOOGLE + '/jqueryui/1.12.1/themes/smoothness/jquery-ui.css'
             ]];
         },
 
@@ -153,16 +159,16 @@ module.exports = {
             var min = (minify ? '.min' : '');
             return [
                 [
-                    'https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons' + min + '.css',
-                    'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment' + min + '.js',
-                    'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert' +
+                    this.CDN.MATERIAL_ICONS + '/2.1.19/css/materialdesignicons' + min + '.css',
+                    this.CDN.CLOUD_FLARE + '/moment.js/2.18.1/moment' + min + '.js',
+                    this.CDN.CLOUD_FLARE + '/sweetalert/1.1.3/sweetalert' +
                     (minify ? '.min' : '-dev') + '.js',
-                    'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert' + min + '.css'
+                    this.CDN.CLOUD_FLARE + '/sweetalert/1.1.3/sweetalert' + min + '.css'
                 ],
                 [
-                    'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/en-au.js',
-                    'https://cdn.jumpstartjs.org/jquery-ripple/0.2.1/jquery.ripple.js',
-                    'https://cdn.jumpstartjs.org/jquery-ripple/0.2.1/jquery.ripple.css'
+                    this.CDN.CLOUD_FLARE + '/moment.js/2.18.1/locale/en-au.js',
+                    this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.js',
+                    this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.css'
                 ]
             ];
         }

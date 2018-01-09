@@ -23,7 +23,7 @@ HeaderComponent.prototype.load = function(container) {
         + '<nav class="navbar"><div class="navbar-inner">'
         + '<div class="menu-icon" data-ripple><div class="menu-icon-bar1" />'
         + '<div class="menu-icon-bar2" /><div class="menu-icon-bar3" /></div>'
-        + '<h1 class="navbar-brand"><img class="navbar-logo" /></h1>'
+        + '<h1 class="navbar-brand unselectable"><img class="navbar-logo" /></h1>'
         + '</div></nav></header>'
         + '<div class="menu" >'
         + '<div class="menu-brand"><img class="menu-logo" /></div>'
@@ -38,7 +38,11 @@ HeaderComponent.prototype.load = function(container) {
         $('.navbar-inner').append('<img id="imgProfile" class="circle-img profile-img" />');
     }
 
-    $('.navbar-logo').attr('src', $settings.style.images.logo);
+    if ($settings.style.images.logo !== '') {
+        $('.navbar-logo').attr('src', $settings.style.images.logo);
+    } else {
+        $('.navbar-brand').html($settings.name);
+    }
 
     $('.menu-icon').ripple().on('click', function() {
         $('.menu').show().animate({
