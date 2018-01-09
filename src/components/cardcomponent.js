@@ -99,4 +99,17 @@ CardComponent.prototype.show = function() {
     return this;
 };
 
+/**
+ * Hide the card component.
+ * @returns {CardComponent} Returns itself for chaining.
+ */
+CardComponent.prototype.hide = function() {
+    // Hide the sub windows.
+    $util.forEach(this.subwindows,
+        function(/** @type {WindowComponent} */win) {
+            win.hide();
+        });
+    return this;
+};
+
 module.exports = CardComponent;

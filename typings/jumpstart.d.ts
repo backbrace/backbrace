@@ -16,7 +16,7 @@ declare namespace Jumpstart {
 
     interface AppComponent {
         loadMenu?(): AppComponent;
-        loadPage?(name: string): JQueryPromise;
+        loadPage?(name: string, settings?: Object): JQueryPromise;
     }
 
     interface PageComponent {

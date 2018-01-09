@@ -38,6 +38,12 @@ function AppComponent() {
    * @type {Object}
    */
   this.pages = {};
+
+  /**
+   * Current active page.
+   * @type {number}
+   */
+  this.activePage = 0;
 }
 
 /**
@@ -72,12 +78,13 @@ AppComponent.prototype.loadMenu = function() {
 /**
  * Load a page.
  * @param {string} name Name of the page to load.
+ * @param {Object} [settings] Page settings.
  * @returns {JQueryPromise} Promise to load the page.
  */
-AppComponent.prototype.loadPage = function(name) {
+AppComponent.prototype.loadPage = function(name, settings) {
 
   var self = this,
-    pge = new PageComponent(name, {});
+    pge = new PageComponent(name, settings || {});
 
   return $code.block(
     function() {
@@ -85,8 +92,14 @@ AppComponent.prototype.loadPage = function(name) {
       return pge.load(self.main);
     },
     function() {
+
+      // Hide the currently active page.
+      if (self.activePage > 0 && self.pages[self.activePage])
+        self.pages[self.activePage].hide();
+
       // Add the page to the loaded pages.
       self.pages[pge.id] = pge;
+      self.activePage = pge.id;
     }
   );
 };
@@ -101,16 +114,56 @@ AppComponent.prototype.closePage = function(id) {
     $app = require('../app');
   return $code.block(
     function() {
+
       // Unload the page.
       /** @type {PageComponent} */
       var pge = self.pages[id];
       if (!$util.isDefined(pge))
         $app.error('Cannot find page by id: {0}', id);
       pge.unload();
+
       // Remove the page from the loaded pages.
-      self.pages[id] = null;
+      delete self.pages[id];
+      if (self.activePage === id)
+        self.activePage = 0;
+
+      // Open next page.
+      var keys = Object.keys(self.pages);
+      if (keys.length > 0) {
+        /** @type {PageComponent} */
+        var nextpge = self.pages[keys[keys.length - 1]];
+        nextpge.show();
+        self.activePage = nextpge.id;
+      }
+
     }
   );
+};
+
+/**
+ * Show a loaded page.
+ * @param {number} id ID of the page to show.
+ * @returns {void}
+ */
+AppComponent.prototype.showPage = function(id) {
+
+  var $app = require('../app');
+
+  if (id === this.activePage)
+    return;
+
+  // Hide the currently active page.
+  if (this.activePage > 0 && this.pages[this.activePage])
+    this.pages[this.activePage].hide();
+
+  // Show the page.
+  /** @type {PageComponent} */
+  var pge = this.pages[id];
+  if (!$util.isDefined(pge))
+    $app.error('Cannot find page by id: {0}', id);
+
+  pge.show();
+  this.activePage = pge.id;
 };
 
 module.exports = AppComponent;

@@ -130,9 +130,11 @@ module.exports = {
   '.main-windows-btn': {
     display: 'inline-block',
     padding: '4px',
+    'margin-right': '3px',
     'background-color': '#FFF',
     cursor: 'pointer',
-    border: '1px solid transparent'
+    border: '1px solid transparent',
+    'font-size': '13px'
   },
   '.main-windows-btn.active': {
     border: '1px solid %colors:header%'
@@ -153,7 +155,7 @@ module.exports = {
     padding: '10px'
   },
   '.title': {
-    'font-size': '21px'    
+    'font-size': '21px'
   },
   '.title.mobile': {
     'overflow-y': 'hidden'

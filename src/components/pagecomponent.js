@@ -43,6 +43,7 @@ function PageComponent(name, settings) {
      * Page component settings.
      */
     this.settings = {
+        title: null,
         factbox: false,
         hasParent: false
     };
@@ -147,13 +148,16 @@ PageComponent.prototype.load = function(container) {
                         self.close();
                     })
                     .css('padding-left', '5px');
-                $('<div id="win' + self.id + '" class="main-windows-btn"></div>')
+                $('<div id="win' + self.id + '" class="main-windows-btn unselectable"></div>')
                     .appendTo($app.component().windows)
                     .append('<span />')
-                    .append(closeBtn);
+                    .append(closeBtn)
+                    .click(function() {
+                        $app.component().showPage(self.id);
+                    });
             }
 
-            self.setTitle(page.caption);
+            self.setTitle(self.settings.title || page.caption);
 
             // Add close function.
             self.window.settings.onClose = function() {
@@ -204,6 +208,22 @@ PageComponent.prototype.show = function() {
     // Show the page component.
     if (this.pageComponent instanceof CardComponent) {
         this.pageComponent.show();
+    }
+    return this;
+};
+
+/**
+ * Hide the page.
+ * @returns {PageComponent} Returns itself for chaining.
+ */
+PageComponent.prototype.hide = function() {
+
+    this.window.hide();
+    $('#win' + this.id).removeClass('active');
+
+    // Hide the page component.
+    if (this.pageComponent instanceof CardComponent) {
+        this.pageComponent.hide();
     }
     return this;
 };

@@ -87,6 +87,18 @@ WindowComponent.prototype.show = function() {
 };
 
 /**
+ * Hide the window.
+ * @returns {WindowComponent} Returns itself for chaining.
+ */
+WindowComponent.prototype.hide = function() {
+
+    this.visible = false;
+    $('#window' + this.id).hide();
+    return this;
+};
+
+
+/**
  * Set the window's title.
  * @param {string} title Title to set.
  * @returns {WindowComponent} Returns itself for chaining.
