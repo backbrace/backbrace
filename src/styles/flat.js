@@ -15,6 +15,11 @@ module.exports = {
     '-ms-user-select': 'none',
     'user-select': 'none'
   },
+  '.cuttext': {
+    'white-space': 'nowrap',
+    'overflow-x': 'hidden',
+    'text-overflow': 'ellipsis'
+  },
   'body': {
     margin: '0px'
   },
@@ -39,12 +44,22 @@ module.exports = {
     'padding-left': '0px',
     'padding-right': '0px'
   },
-  '.navbar-brand': {
+  '.desktop-app .navbar-brand': {
     float: 'left',
     'font-size': '20px',
     'font-weight': 'normal',
     'line-height': '32px',
-    margin: '8px 80px 0 8px'    
+    margin: '8px 80px 0 8px'
+  },
+  '.mobile-app .navbar-brand': {
+    width: 'calc(100vw - 100px)',
+    display: 'inline-block',
+    'text-align': 'center',
+    'font-size': '14px',
+    'line-height': '50px',
+    'overflow-y': 'hidden',
+    'font-weight': 'normal',
+    'text-shadow': 'none'
   },
   '.navbar-logo': {
     'max-height': '35px'
@@ -138,10 +153,7 @@ module.exports = {
     padding: '10px'
   },
   '.title': {
-    'font-size': '21px',
-    'white-space': 'nowrap',
-    'overflow-x': 'hidden',
-    'text-overflow': 'ellipsis'
+    'font-size': '21px'    
   },
   '.title.mobile': {
     'overflow-y': 'hidden'

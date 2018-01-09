@@ -51,7 +51,7 @@ AppComponent.prototype.load = function(container) {
   this.main = $('<div class="main"></div>').appendTo(container);
 
   // Add window toolbar.
-  if ($settings.windowMode)
+  if ($settings.windowMode && !$settings.mobile)
     this.windows = $('<div class="main-windows"></div>').appendTo(this.main);
 
   $('body').addClass($settings.mobile ? 'mobile-app' : 'desktop-app');

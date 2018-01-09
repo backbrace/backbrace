@@ -23,7 +23,7 @@ HeaderComponent.prototype.load = function(container) {
         + '<nav class="navbar"><div class="navbar-inner">'
         + '<div class="menu-icon" data-ripple><div class="menu-icon-bar1" />'
         + '<div class="menu-icon-bar2" /><div class="menu-icon-bar3" /></div>'
-        + '<h1 class="navbar-brand unselectable"><img class="navbar-logo" /></h1>'
+        + '<div class="navbar-brand unselectable cuttext"><img class="navbar-logo" /></div>'
         + '</div></nav></header>'
         + '<div class="menu" >'
         + '<div class="menu-brand"><img class="menu-logo" /></div>'
