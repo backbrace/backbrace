@@ -20,6 +20,9 @@ module.exports = {
     'overflow-x': 'hidden',
     'text-overflow': 'ellipsis'
   },
+  '.fixed': {
+    position: 'fixed'
+  },
   'body': {
     margin: '0px'
   },
@@ -35,7 +38,6 @@ module.exports = {
     top: '0px',
     left: '0px',
     right: '0px',
-    position: 'fixed',
     'z-index': '3000'
   },
   '.navbar-inner': {
@@ -76,21 +78,20 @@ module.exports = {
     height: '40px'
   },
   '.menu-icon': {
-    display: 'none',
+    display: 'inline-block',
     cursor: 'pointer',
     float: 'left',
-    padding: '12px'
+    width: '50px',
+    padding: '5px',
+    'box-sizing': 'border-box',
+    'text-align': 'center'
   },
-  '.menu-icon-bar1,.menu-icon-bar2,.menu-icon-bar3': {
-    width: '25px',
-    height: '3px',
-    'background': '%colors:menuicon%',
-    margin: '4px 0',
-    transition: '0.4s'
+  '.desktop-app .menu-icon': {
+    padding: '8px'
   },
   '.menu': {
     display: 'none',
-    position: 'absolute',
+    position: 'fixed',
     top: '0px',
     left: '-300px',
     width: '300px',
@@ -120,6 +121,10 @@ module.exports = {
     background: 'whitesmoke',
     'margin-top': '50px',
     height: 'calc(100vh - 65px)'
+  },
+  '.mobile-app .main': {
+    'margin-top': '0px',
+    height: 'calc(100vh)'
   },
   '.main-windows': {
     width: '100%',
@@ -225,10 +230,20 @@ module.exports = {
     'min-height': '200px',
     'height': '50%'
   },
-  '.main-container': {
+  '.desktop-app .main-container': {
     width: '100%',
     display: 'inline-block',
     'vertical-align': 'top'
+  },
+  '.mobile-app .main-container': {
+    height: '100vh',
+    position: 'absolute',
+    left: '0px',
+    top: '0px',
+    width: '100vw'
+  },
+  '.main-container.pad': {
+    'margin-top': '50px'
   },
   '.side-container': {
     display: 'none',

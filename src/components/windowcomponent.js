@@ -50,10 +50,12 @@ WindowComponent.prototype.unload = function() {
 WindowComponent.prototype.load = function(container) {
 
     var self = this,
+        showTitle = !$settings.mobile || this.settings.hasParent,
         titlebar = $('<div class="title-bar unselectable" />');
 
-    titlebar.append('<span id="title' + this.id + '" class="title ' +
-        (this.settings.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
+    if (showTitle)
+        titlebar.append('<span id="title' + this.id + '" class="title ' +
+            (this.settings.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
 
     if (this.settings.closeBtn === true && !this.settings.hasParent && !$settings.mobile) {
         $('<i class="mdi mdi-close unselectable title-icon"></i>')
@@ -65,7 +67,7 @@ WindowComponent.prototype.load = function(container) {
 
     $('<div id="window' + this.id + '" class="window" />')
         .addClass(this.settings.style)
-        .append(titlebar)
+        .append(showTitle ? titlebar : null)
         .append('<div id="actions' + this.id + '" class="actions-bar unselectable" />')
         .appendTo(container);
 

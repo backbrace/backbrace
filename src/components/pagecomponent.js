@@ -9,6 +9,7 @@ var $code = require('../code'),
     $ = require('../../external/jquery')(),
     Page = require('../classes/page'),
     CardComponent = require('./cardcomponent'),
+    HeaderComponent = require('./headercomponent'),
     WindowComponent = require('./windowcomponent');
 
 /**
@@ -20,6 +21,12 @@ var $code = require('../code'),
 function PageComponent(name, settings) {
 
     $ = $ || require('../../external/jquery')();
+
+    /**
+     * Header component (mobile only).
+     * @type {HeaderComponent}
+     */
+    this.header = null;
 
     /**
      * Unique ID of the page component.
@@ -45,7 +52,8 @@ function PageComponent(name, settings) {
     this.settings = {
         title: null,
         factbox: false,
-        hasParent: false
+        hasParent: false,
+        first: false
     };
 
     // Merge settings.
@@ -92,6 +100,8 @@ PageComponent.prototype.unload = function() {
     this.pageComponent = null;
     this.window.unload();
     this.window = null;
+    if (this.header)
+        this.header.unload();
     // Unload DOM.
     this.mainContainer.remove();
     this.sideContainer.remove();
@@ -111,7 +121,24 @@ PageComponent.prototype.load = function(container) {
     this.mainContainer = $('<div class="main-container"></div>')
         .appendTo(container);
     this.sideContainer = $('<div class="side-container"></div>')
-        .appendTo(container);
+        .appendTo(!$settings.mobile ? container : null);
+
+    // Load header.
+    if ($settings.mobile) {
+
+        // Move the container over so we can animate it in.
+        this.mainContainer.css('left', '100vw');
+
+        if (!this.header) {
+            this.header = new HeaderComponent({
+                menuIcon: 'keyboard-backspace',
+                menuOnClick: function() {
+                    self.close();
+                }
+            });
+        }
+        this.header.load(this.mainContainer);
+    }
 
     return $code.block(
 
@@ -209,6 +236,9 @@ PageComponent.prototype.show = function() {
     if (this.pageComponent instanceof CardComponent) {
         this.pageComponent.show();
     }
+
+    this.animateIn();
+
     return this;
 };
 
@@ -218,6 +248,11 @@ PageComponent.prototype.show = function() {
  */
 PageComponent.prototype.hide = function() {
 
+    if ($settings.mobile) {
+        this.animateOut();
+        return this;
+    }
+
     this.window.hide();
     $('#win' + this.id).removeClass('active');
 
@@ -225,6 +260,7 @@ PageComponent.prototype.hide = function() {
     if (this.pageComponent instanceof CardComponent) {
         this.pageComponent.hide();
     }
+
     return this;
 };
 
@@ -242,16 +278,18 @@ PageComponent.prototype.close = function() {
 
 /**
  * Set the title of the page.
- * @param {string} [title] Title to change to.
+ * @param {string} title Title to change to.
  * @returns {PageComponent} Returns itself for chaining.
  */
 PageComponent.prototype.setTitle = function(title) {
-    this.title = title || this.title;
-    this.window.setTitle(this.title);
+    this.title = title;
+    this.window.setTitle(title);
     $('#win' + this.id + '>span').html($util.formatString('{0} {1}',
         $icons.get(this.page.icon),
-        this.title
+        title
     ));
+    if (this.header && !this.settings.first)
+        this.header.setTitle(title);
     return this;
 };
 
@@ -262,6 +300,31 @@ PageComponent.prototype.setTitle = function(title) {
 PageComponent.prototype.showSide = function() {
     this.sideContainer.css('display', 'inline-block');
     this.mainContainer.css('width', '70%');
+    return this;
+};
+
+PageComponent.prototype.animateIn = function() {
+    var self = this;
+    if (!$settings.mobile)
+        return this;
+    self.mainContainer.animate({
+        left: '0px'
+    }, null, null, function() {
+        self.header.navbar.addClass('fixed');
+        self.mainContainer.addClass('pad');
+    });
+    return this;
+};
+
+PageComponent.prototype.animateOut = function() {
+    var self = this;
+    if (!$settings.mobile)
+        return;
+    self.header.navbar.removeClass('fixed');
+    self.mainContainer.removeClass('pad');
+    self.mainContainer.animate({
+        left: '-100vw'
+    });
     return this;
 };
 

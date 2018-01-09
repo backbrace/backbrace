@@ -16,10 +16,10 @@ function AppComponent() {
   $ = $ || require('../../external/jquery')();
 
   /**
-   * Header component.
+   * Header component (desktop only).
    * @type {HeaderComponent}
    */
-  this.header = new HeaderComponent();
+  this.header = new HeaderComponent({});
 
   /**
    * Main container for sub components.
@@ -63,7 +63,13 @@ AppComponent.prototype.load = function(container) {
   $('body').addClass($settings.mobile ? 'mobile-app' : 'desktop-app');
 
   // Load components.
-  this.header.load(this.main);
+  this.header.setTitle($settings.style.images.logo !== '' ?
+    '<img class="navbar-logo" src="' + $settings.style.images.logo + '" />' :
+    $settings.app.name);
+  if (!$settings.mobile) {
+    this.header.load(this.main);
+    this.header.navbar.addClass('fixed');
+  }
 };
 
 /**
@@ -85,6 +91,10 @@ AppComponent.prototype.loadPage = function(name, settings) {
 
   var self = this,
     pge = new PageComponent(name, settings || {});
+
+  pge.settings.first = Object.keys(this.pages).length === 0;
+  if (pge.settings.first && $settings.mobile)
+    pge.header = this.header;
 
   return $code.block(
     function() {
