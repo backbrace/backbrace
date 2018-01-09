@@ -54,6 +54,8 @@ function AppComponent() {
  */
 AppComponent.prototype.load = function(container) {
 
+  var self = this;
+
   this.main = $('<div class="main"></div>').appendTo(container);
 
   // Add window toolbar.
@@ -69,6 +71,9 @@ AppComponent.prototype.load = function(container) {
   if (!$settings.mobile) {
     this.header.load(this.main);
     this.header.navbar.addClass('fixed');
+    this.header.menuIcon.click(function() {
+      self.header.showMenu();
+    });
   }
 };
 
@@ -133,6 +138,7 @@ AppComponent.prototype.closePage = function(id) {
       pge.unload();
 
       // Remove the page from the loaded pages.
+      self.pages[id] = null;
       delete self.pages[id];
       if (self.activePage === id)
         self.activePage = 0;

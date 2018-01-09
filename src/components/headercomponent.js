@@ -16,8 +16,7 @@ function HeaderComponent(settings) {
 
     this.settings = {
         menuIcon: 'menu',
-        /** @type {Function} */
-        menuOnClick: null
+        attachMenu: true
     };
 
     // Merge settings.
@@ -38,6 +37,16 @@ function HeaderComponent(settings) {
     /**
      * @type {JQuery}
      */
+    this.menuIcon = null;
+
+    /**
+     * @type {JQuery}
+     */
+    this.titleBar = null;
+
+    /**
+     * @type {JQuery}
+     */
     this.profileImage = null;
 
     this.menuExtended = false;
@@ -52,9 +61,10 @@ function HeaderComponent(settings) {
 
 HeaderComponent.prototype.unload = function() {
     // Unload the DOM.
+    this.menuIcon.remove();
+    this.menuIcon = null;
     this.container.remove();
-    if (this.menu)
-        this.menu.remove();
+    this.container = null;
 };
 
 HeaderComponent.prototype.load = function(container) {
@@ -64,21 +74,19 @@ HeaderComponent.prototype.load = function(container) {
     this.container = $('<header class="header"></header>').appendTo(container);
 
     this.navbar = $('<nav class="navbar"><div class="navbar-inner">'
-        + '<div id="mnu' + this.id + '" class="menu-icon" data-ripple></div>'
-        + '<div id="title' + this.id + '" class="navbar-brand unselectable cuttext">'
-        + this.title + '</div>'
         + '</div></nav>').appendTo(this.container);
 
     // Setup the menu icon.
-    $('#mnu' + this.id)
+    this.menuIcon = $('<div class="menu-icon" data-ripple></div>')
+        .appendTo(this.navbar.children())
         .html($icons.get(this.settings.menuIcon, 30))
-        .ripple()
-        .on('click', function() {
-            var func = self.settings.menuOnClick || self.showMenu;
-            func.call(self);
-        });
+        .ripple();
 
-    if (!this.settings.menuOnClick) {
+    // Setup title bar.
+    this.titleBar = $('<div class="navbar-brand unselectable cuttext">'
+        + this.title + '</div>').appendTo(this.navbar.children());
+
+    if (this.settings.attachMenu) {
 
         // Add a menu.
         this.menu = $('<div class="menu">'
@@ -104,7 +112,6 @@ HeaderComponent.prototype.load = function(container) {
 };
 
 HeaderComponent.prototype.loadMenu = function() {
-    $('#mnu' + this.id).show();
 };
 
 HeaderComponent.prototype.loadProfileImage = function(url) {
@@ -132,7 +139,8 @@ HeaderComponent.prototype.hideMenu = function() {
 
 HeaderComponent.prototype.setTitle = function(title) {
     this.title = title;
-    $('#title' + this.id).html(title);
+    if (this.titleBar)
+        this.titleBar.html(title);
 };
 
 module.exports = HeaderComponent;

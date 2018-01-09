@@ -102,6 +102,7 @@ PageComponent.prototype.unload = function() {
     this.window = null;
     if (this.header)
         this.header.unload();
+    this.header = null;
     // Unload DOM.
     this.mainContainer.remove();
     this.sideContainer.remove();
@@ -132,12 +133,18 @@ PageComponent.prototype.load = function(container) {
         if (!this.header) {
             this.header = new HeaderComponent({
                 menuIcon: 'keyboard-backspace',
-                menuOnClick: function() {
-                    self.close();
-                }
+                attachMenu: false
+            });
+            this.header.load(this.mainContainer);
+            this.header.menuIcon.click(function() {
+                self.close();
+            });
+        } else {
+            this.header.load(this.mainContainer);
+            this.header.menuIcon.click(function() {
+                self.header.showMenu();
             });
         }
-        this.header.load(this.mainContainer);
     }
 
     return $code.block(
@@ -169,7 +176,7 @@ PageComponent.prototype.load = function(container) {
             self.window.load(cont);
 
             // Add the page to the windows toolbar.
-            if ($settings.windowMode && !self.settings.hasParent) {
+            if (!$settings.mobile && $settings.windowMode && !self.settings.hasParent) {
                 var closeBtn = $($icons.get('close'))
                     .click(function() {
                         self.close();
@@ -269,10 +276,10 @@ PageComponent.prototype.hide = function() {
  * @returns {void}
  */
 PageComponent.prototype.close = function() {
-    var self = this,
+    var id = this.id,
         $app = require('../app');
     $code.thread(function closePage() {
-        return $app.component().closePage(self.id);
+        return $app.component().closePage(id);
     });
 };
 
