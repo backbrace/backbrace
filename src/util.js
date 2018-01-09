@@ -27,11 +27,20 @@ function nextID() {
 
 /**
  * Check for HTML5 compatability.
- * @returns {boolean} Returns true if the current environment is HTML5 compatable.
+ * @returns {boolean} `True` if the current environment is HTML5 compatable.
  */
 function html5Check() {
   var window = $window.get();
   return typeof window.document.addEventListener !== 'undefined';
+}
+
+/**
+ * Check if we are on a mobile/tablet device.
+ * @returns {boolean} `True` if we are using a mobile/tablet device.
+ */
+function mobileCheck() {
+  return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
+            .test(window.navigator.userAgent.toLowerCase());
 }
 
 /**
@@ -226,6 +235,7 @@ module.exports = {
   noop: noop,
   nextID: nextID,
   html5Check: html5Check,
+  mobileCheck: mobileCheck,
   toString: toString,
   isString: isString,
   isError: isError,

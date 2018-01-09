@@ -159,9 +159,7 @@ function start(settings) {
         .innerHTML = 'body{font-family: ' + $settings.style.font.family + '}';
 
     // Set mobile mode.
-    if ($settings.autoSwitch &&
-        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
-            .test(window.navigator.userAgent.toLowerCase()))
+    if ($settings.autoSwitch && $util.mobileCheck())
         $settings.mobile = true;
 
     // Add mobile head tags.
