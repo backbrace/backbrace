@@ -83,7 +83,7 @@ WindowComponent.prototype.show = function() {
     this.visible = true;
 
     if (!this.hidden)
-        $('#window' + this.id).css('display', 'inline-block');
+        $('#window' + this.id).slideDown(300);
 
     return this;
 };

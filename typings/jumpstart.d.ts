@@ -14,6 +14,13 @@ declare namespace Jumpstart {
         get(name: string, size?: number): string;
     }
 
+    interface Component {
+        load?(): JQueryPromise;
+        unload?(): void;
+        show?(): Component;
+        hide?(): Component;
+    }
+
     interface AppComponent {
         loadMenu?(): AppComponent;
         loadPage?(name: string, settings?: Object): JQueryPromise;

@@ -44,7 +44,8 @@ module.exports = {
     'background': '%colors:header%',
     height: '50px',
     'padding-left': '0px',
-    'padding-right': '0px'
+    'padding-right': '0px',
+    'box-shadow': '0 2px 5px rgba(0,0,0,.26)'
   },
   '.desktop-app .navbar-brand': {
     float: 'left',
@@ -65,6 +66,9 @@ module.exports = {
   },
   '.navbar-logo': {
     'max-height': '35px'
+  },
+  '.mobile-app .navbar-logo': {
+    'margin-top': '7px'
   },
   '.profile-img': {
     display: 'none',
@@ -130,12 +134,13 @@ module.exports = {
     width: '100%',
     padding: '5px',
     display: 'inline-block',
-    'padding-bottom': '0px'
+    'padding-bottom': '0px',
+    'min-height': '36px'
   },
   '.main-windows-btn': {
     display: 'inline-block',
     padding: '4px',
-    'margin-right': '3px',
+    margin: '3px 3px 0px 0px',
     'background-color': '#FFF',
     cursor: 'pointer',
     border: '1px solid transparent',

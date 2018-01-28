@@ -8,7 +8,6 @@ var $code = require('../code'),
     $util = require('../util'),
     $ = require('../../external/jquery')(),
     Page = require('../classes/page'),
-    CardComponent = require('./cardcomponent'),
     HeaderComponent = require('./headercomponent'),
     WindowComponent = require('./windowcomponent');
 
@@ -73,7 +72,7 @@ function PageComponent(name, settings) {
 
     /**
      * The component that renders over the entire window.
-     * @type {CardComponent}
+     * @type {Jumpstart.Component}
      */
     this.pageComponent = null;
 
@@ -183,12 +182,14 @@ PageComponent.prototype.load = function(container) {
                     })
                     .css('padding-left', '5px');
                 $('<div id="win' + self.id + '" class="main-windows-btn unselectable"></div>')
+                    .hide()
                     .appendTo($app.component().windows)
                     .append('<span />')
                     .append(closeBtn)
                     .click(function() {
                         $app.component().showPage(self.id);
-                    });
+                    })
+                    .fadeIn(300);
             }
 
             self.setTitle(self.settings.title || page.caption);
@@ -205,6 +206,7 @@ PageComponent.prototype.load = function(container) {
 
             // Load the page component.
             if (page.type === 'Card') {
+                var CardComponent = require('./cardcomponent');
                 self.pageComponent = new CardComponent(self);
                 return self.pageComponent.load();
             }
@@ -240,9 +242,7 @@ PageComponent.prototype.show = function() {
     $('#win' + this.id).addClass('active');
 
     // Show the page component.
-    if (this.pageComponent instanceof CardComponent) {
-        this.pageComponent.show();
-    }
+    this.pageComponent.show();
 
     this.animateIn();
 
@@ -264,9 +264,7 @@ PageComponent.prototype.hide = function() {
     $('#win' + this.id).removeClass('active');
 
     // Hide the page component.
-    if (this.pageComponent instanceof CardComponent) {
-        this.pageComponent.hide();
-    }
+    this.pageComponent.hide();
 
     return this;
 };
