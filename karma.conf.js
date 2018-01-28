@@ -10,7 +10,7 @@ module.exports = function(config) {
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
     files: [
-      'build/jumpstart.js',
+      'build/jumpstart.min.js',
       'test/**/*.js'
     ]
   });
