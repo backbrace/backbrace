@@ -12,6 +12,7 @@ jumpstart(function(scope) {
     });
 
     var settings = {
+        minify: false,
         style: {
             images: {
                 logo: 'https://cdn.jumpstartjs.org/images/logo-light.png',
@@ -19,5 +20,5 @@ jumpstart(function(scope) {
             }
         }
     };
-    $app.start();
+    $app.start(settings);
 });
