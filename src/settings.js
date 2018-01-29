@@ -120,7 +120,7 @@ var flat = require('./styles/flat'),
             CDN: {
                 CLOUD_FLARE: 'https://cdnjs.cloudflare.com/ajax/libs',
                 GOOGLE: 'https://ajax.googleapis.com/ajax/libs',
-                JUMPSTART: 'https://cdn.jumpstartjs.org',
+                JUMPSTART: 'https://labs.zoomapps.com.au/JumpstartCDN',
                 MATERIAL_ICONS: 'https://cdn.materialdesignicons.com'
             },
 
