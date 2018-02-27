@@ -66,7 +66,8 @@ AppComponent.prototype.load = function(container) {
 
   // Load components.
   this.header.setTitle($settings.style.images.logo !== '' ?
-    '<img class="navbar-logo" src="' + $settings.style.images.logo + '" />' :
+    '<img class="navbar-logo" alt="' + $settings.app.name + '" src="' +
+    $settings.style.images.logo + '" />' :
     $settings.app.name);
   if (!$settings.mobile) {
     this.header.load(this.main);

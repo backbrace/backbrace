@@ -131,7 +131,7 @@ var flat = require('./styles/flat'),
             jQuery: function() {
                 var min = (settings.minify ? '.min' : '');
                 return this.CDN.GOOGLE + '/jquery/' +
-                    (settings.mobile ? '2.1.0' : '3.2.1') + '/jquery' + min + '.js';
+                    (settings.mobile ? '2.1.1' : '3.2.1') + '/jquery' + min + '.js';
             },
 
             /**
