@@ -245,7 +245,7 @@ function start(settings) {
                     function() {
                         // Load base application component.
                         baseComponent = new AppComponent();
-                        return baseComponent.load($settings.mobile ? $('.ui-page') : $('body'));
+                        return baseComponent.load($('body'));
                     },
 
                     function() {

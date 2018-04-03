@@ -86,7 +86,7 @@ var flat = require('./styles/flat'),
             },
 
             font: {
-                url: 'https://fonts.googleapis.com/css?family=Roboto:400,500',
+                url: 'https://labs.zoomapps.com.au/JumpstartCDN/fonts/roboto/roboto.css',
                 family: '\'Roboto\', sans-serif'
             },
 
@@ -118,10 +118,8 @@ var flat = require('./styles/flat'),
              * CDN URL's.
              */
             CDN: {
-                CLOUD_FLARE: 'https://cdnjs.cloudflare.com/ajax/libs',
                 GOOGLE: 'https://ajax.googleapis.com/ajax/libs',
-                JUMPSTART: 'https://labs.zoomapps.com.au/JumpstartCDN',
-                MATERIAL_ICONS: 'https://cdn.materialdesignicons.com'
+                JUMPSTART: 'https://labs.zoomapps.com.au/JumpstartCDN'
             },
 
             /**
@@ -130,8 +128,7 @@ var flat = require('./styles/flat'),
             */
             jQuery: function() {
                 var min = (settings.minify ? '.min' : '');
-                return this.CDN.GOOGLE + '/jquery/' +
-                    (settings.mobile ? '2.1.1' : '3.2.1') + '/jquery' + min + '.js';
+                return this.CDN.JUMPSTART + '/jquery/3.3.1/jquery' + min + '.js';
             },
 
             /**
@@ -140,14 +137,8 @@ var flat = require('./styles/flat'),
              */
             jQueryUI: function() {
                 var min = (settings.minify ? '.min' : '');
-                if (settings.mobile)
-                    return [[
-                        this.CDN.GOOGLE + '/jquerymobile/1.4.5/jquery.mobile' + min + '.js',
-                        this.CDN.GOOGLE + '/jquerymobile/1.4.5/jquery.mobile.min.css'
-                    ]];
                 return [[
-                    this.CDN.GOOGLE + '/jqueryui/1.12.1/jquery-ui' + min + '.js',
-                    this.CDN.GOOGLE + '/jqueryui/1.12.1/themes/smoothness/jquery-ui.css'
+                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.js'
                 ]];
             },
 
@@ -159,14 +150,13 @@ var flat = require('./styles/flat'),
                 var min = (settings.minify ? '.min' : '');
                 return [
                     [
-                        this.CDN.MATERIAL_ICONS + '/2.1.19/css/materialdesignicons' + min + '.css',
-                        this.CDN.CLOUD_FLARE + '/moment.js/2.18.1/moment' + min + '.js',
-                        this.CDN.CLOUD_FLARE + '/sweetalert/1.1.3/sweetalert' +
-                        (settings.minify ? '.min' : '-dev') + '.js',
-                        this.CDN.CLOUD_FLARE + '/sweetalert/1.1.3/sweetalert' + min + '.css'
+                        this.CDN.JUMPSTART + '/materialdesignicons/2.2.43/css/materialdesignicons' + min + '.css',
+                        this.CDN.JUMPSTART + '/moment.js/2.22.0/moment' + min + '.js',
+                        this.CDN.JUMPSTART + '/sweetalert/1.1.3/sweetalert' + min + '.js',
+                        this.CDN.JUMPSTART + '/sweetalert/1.1.3/sweetalert' + min + '.css'
                     ],
                     [
-                        this.CDN.CLOUD_FLARE + '/moment.js/2.18.1/locale/en-au.js',
+                        this.CDN.JUMPSTART + '/moment.js/2.22.0/locale/en-au.js',
                         this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.js',
                         this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.css'
                     ]
