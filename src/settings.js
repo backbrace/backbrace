@@ -62,7 +62,12 @@ var flat = require('./styles/flat'),
             /**
              * App tite (displays in browser window).
              */
-            title: 'New Jumpstart App'
+            title: 'New Jumpstart App',
+
+            /**
+             * App description.
+             */
+            description: 'Web App powered by Jumpstart'
         },
 
         meta: {
@@ -138,7 +143,9 @@ var flat = require('./styles/flat'),
             jQueryUI: function() {
                 var min = (settings.minify ? '.min' : '');
                 return [[
-                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.js'
+                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.js',
+                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.css',
+                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui.theme' + min + '.css'
                 ]];
             },
 
@@ -150,7 +157,8 @@ var flat = require('./styles/flat'),
                 var min = (settings.minify ? '.min' : '');
                 return [
                     [
-                        this.CDN.JUMPSTART + '/materialdesignicons/2.2.43/css/materialdesignicons' + min + '.css',
+                        this.CDN.JUMPSTART + '/materialdesignicons/2.2.43/css/materialdesignicons'
+                        + min + '.css',
                         this.CDN.JUMPSTART + '/moment.js/2.22.0/moment' + min + '.js',
                         this.CDN.JUMPSTART + '/sweetalert/1.1.3/sweetalert' + min + '.js',
                         this.CDN.JUMPSTART + '/sweetalert/1.1.3/sweetalert' + min + '.css'

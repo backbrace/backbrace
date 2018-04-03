@@ -154,6 +154,11 @@ function start(settings) {
         'rel': 'stylesheet'
     }, window.document.head);
 
+    $util.addElement('meta', {
+        'name': 'Description',
+        'content': $settings.app.description
+    }, window.document.head);
+
     // Add font family to body tag.
     $util.addElement('style', {}, window.document.head)
         .innerHTML = 'body{font-family: ' + $settings.style.font.family + '}';
@@ -172,8 +177,7 @@ function start(settings) {
 
         $util.addElement('meta', {
             'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1, maximum-scale=1, ' +
-                'user-scalable=no, minimal-ui'
+            'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
         }, window.document.head);
 
         $util.addElement('meta', {
