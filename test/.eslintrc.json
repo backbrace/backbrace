@@ -7,9 +7,6 @@
   },
 
   "rules": {
-    // Some rules are not that important in tests and conflict with
-    // Jasmine or would make it easier to write some tests; we disable
-    // those ones here.
     "no-invalid-this": "off",
     "no-throw-literal": "off",
     "no-unused-vars": "off"
@@ -17,7 +14,7 @@
 
   "globals": {
     "window": false,
-    "jumpstart": false
+    "Jumpstart": false
   }
 
 }

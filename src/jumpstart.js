@@ -1,13 +1,28 @@
 'use strict';
 
-var scope = require('./scope');
+var $log = require('./log'),
+    $settings = require('./settings'),
+    $window = require('./providers/window');
 
 /**
- * The jumpstart function. This is used to access the jumpstart scope.
- * @method jumpstart
- * @param {function(Jumpstart.Scope)} fn Callback function that is provided the jumpstart scope.
- * @returns {void}
+ * @module Jumpstart
  */
-window['jumpstart'] = function(fn) {
-    if (fn) fn(scope);
+window['Jumpstart'] = {
+
+    /**
+     * Log an info message.
+     * @memberof module:Jumpstart
+     * @method
+     * @param {string} msg Message to log.
+     * @param {...*} [args] Arguments to merge into the message.
+     * @returns {void}
+     */
+    logInfo: $log.info,
+    logWarning: $log.warning,
+    logError: $log.error,
+    logDebug: $log.debug,
+
+    settings: $settings,
+    window: $window
+
 };

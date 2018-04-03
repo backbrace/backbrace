@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var $util = require('./util'),
-    $window = require('./providers/window'),
-    debugFlag = false;
+var $settings = require('./settings'),
+    $util = require('./util'),
+    $window = require('./providers/window');
 
 /**
  * Write to the console.
@@ -33,15 +33,6 @@ function write(msg, type) {
     } catch (e) {
         // Sometimes the above function will error.
     }
-}
-
-/**
- * Turn on/off debug messages.
- * @param {boolean} flag Flag debug messages on or off.
- * @returns {void}
- */
-function debugMode(flag) {
-    debugFlag = flag;
 }
 
 /**
@@ -80,7 +71,7 @@ function warning(msg) {
  * @returns {void}
  */
 function debug(msg) {
-    if (debugFlag) {
+    if ($settings.debug) {
         msg = $util.formatString.apply(null, arguments);
         write(msg, 'debug');
     }
@@ -101,7 +92,6 @@ function object(obj) {
 }
 
 module.exports = {
-    debugMode: debugMode,
     info: info,
     error: error,
     warning: warning,

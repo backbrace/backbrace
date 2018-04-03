@@ -6,8 +6,7 @@
 
 var $code = require('./code'),
     $settings = require('./settings'),
-    $http = require('./http'),
-    Page = require('./classes/page');
+    $http = require('./http');
 
 /**
  * Get page object meta data.
@@ -19,11 +18,6 @@ function page(name) {
         function() {
             // Get the page from a JSON file.
             return $http.get($settings.meta.dir + 'pages/' + name + '.json');
-        },
-        function(data) {
-            if (data) {
-                return new Page(data);
-            }
         }
     );
 }
