@@ -4,8 +4,7 @@ var $code = require('../code'),
     $icons = require('../providers/icons').get(),
     $settings = require('../settings'),
     $util = require('../util'),
-    $ = require('../../external/jquery')(),
-    PageAction = require('../classes/pageaction');
+    $ = require('../../external/jquery')();
 
 /**
  * Window component.
@@ -112,13 +111,13 @@ WindowComponent.prototype.setTitle = function(title) {
 
 /**
  * Add an action button to the window.
- * @param {PageAction} action Window action settings
+ * @param {PageActionMeta} action Window action settings
  * @returns {WindowComponent} Returns itself for chaining.
  */
 WindowComponent.prototype.addAction = function(action) {
     var id = this.id + 'action' + $util.nextID();
     var btn = $('<div id="' + id + '" class="action-button unselectable" ' +
-        'data-ripple>' + $icons.get(action.icon) + ' ' + action.text + '</div>');
+        'data-ripple>' + $icons.get(action.icon) + ' ' + (action.text || action.name) + '</div>');
     if (action.classname)
         btn.addClass(action.classname);
     btn.ripple();

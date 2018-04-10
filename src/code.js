@@ -89,22 +89,17 @@ function each(obj, iterator, context) {
 
 /**
  * Start a new code thread to execute code when possible.
- * @param {Function} func Function to execute when possible.
- * @param {number} [id] Unique ID of the thread.
  * @returns {void}
  */
-function thread(func, id) {
+function thread() {
 
-    var thread = new CodeThread(func, id);
-    $log.debug($util.formatString('Created new thread: #{0}', thread.id));
+    var args = arguments,
+        func = function(){
+            return block.apply(this,args);
+        },
+        thread = new CodeThread(func);
 
-    // Check if thread already exists.
-    if (id)
-        for (var i = 0; i < threads.length; i++)
-            if (threads[i].id === id) {
-                $log.debug($util.formatString('Thread {0} already exists.', id));
-                return;
-            }
+    $log.debug('Created new thread');
 
     // Add the thread to the queue.
     threads.push(thread);

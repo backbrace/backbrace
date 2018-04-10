@@ -210,24 +210,6 @@ function width() {
     window.document.body.clientWidth;
 }
 
-/**
- * Check an option string for a particular option value.
- * @param {string} opts Option string to check. Option string is semi-colon delimited.
- * @param {string} key Option value to check for.
- * @returns {boolean} `True` if the `key` is in option string.
- */
-function hasOption(opts, key) {
-  opts = opts || '';
-  var options = opts.split(';'),
-    found = false;
-  forEach(options, function(option) {
-    if (option === key)
-      found = true;
-      return;
-  });
-  return found;
-}
-
 // Bind the message event to the browser window.
 bindMessageEvent();
 
@@ -246,6 +228,5 @@ module.exports = {
   clearTimeouts: clearTimeouts,
   setZeroTimeout: setZeroTimeout,
   addElement: addElement,
-  width: width,
-  hasOption: hasOption
+  width: width
 };

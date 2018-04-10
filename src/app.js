@@ -14,8 +14,13 @@ var $alert = require('./providers/alert'),
     $util = require('./util'),
     $window = require('./providers/window'),
     $$progress = require('./progress'),
-    AppComponent = require('./components/appcomponent'),
-    baseComponent = null,
+    header = null,
+    /** @type {JQuery} */
+    main = null,
+    /** @type {JQuery} */
+    windows = null,
+    pages = {},
+    activePage = 0,
     readyFunc = null,
     suppressNextError = false;
 
@@ -115,23 +120,14 @@ function error(err) {
 
 /**
  * Execute a function after the app is loaded.
- * @memberof module:$app
+ * @memberof module:Jumpstart
  * @param {Function} func Function to execute.
  * @returns {void}
  */
 function ready(func) {
-    readyFunc = func;
-}
-
-/**
- * Get the base component.
- *
- * NOTE: The base component will be `null` until the `$app.start` function is called.
- * @memberof module:$app
- * @returns {AppComponent} Returns the base component.
- */
-function component() {
-    return baseComponent;
+    readyFunc = function() {
+        $code.thread(func);
+    };
 }
 
 /**
@@ -239,19 +235,11 @@ function start() {
 
             $code.thread(function() {
 
-                return $code.block(
+                load($('body'));
 
-                    function() {
-                        // Load base application component.
-                        baseComponent = new AppComponent();
-                        return baseComponent.load($('body'));
-                    },
+                $$progress.hide();
+                if (readyFunc) readyFunc();
 
-                    function() {
-                        $$progress.hide();
-                        if (readyFunc) readyFunc();
-                    }
-                );
             });
 
         }, packageError);
@@ -264,12 +252,162 @@ function start() {
 
 }
 
+/**
+ * Load the app into a container.
+ * @private
+ * @param {JQuery} container JQuery element to load the app into.
+ * @returns {void}
+ */
+function load(container) {
+
+    var $ = require('../external/jquery')(),
+        HeaderComponent = require('./components/headercomponent');
+
+    main = $('<div class="main"></div>').appendTo(container);
+
+    // Add window toolbar.
+    if ($settings.windowMode && !$settings.mobile)
+        windows = $('<div class="main-windows"></div>').appendTo(main);
+
+    $('body').addClass($settings.mobile ? 'mobile-app' : 'desktop-app');
+
+    // Load components.
+    header = new HeaderComponent({});
+    header.setTitle($settings.style.images.logo !== '' ?
+        '<img class="navbar-logo" alt="' + $settings.app.name + '" src="' +
+        $settings.style.images.logo + '" />' :
+        $settings.app.name);
+    if (!$settings.mobile) {
+        header.load(main);
+        header.navbar.addClass('fixed');
+        header.menuIcon.click(function() {
+            header.showMenu();
+        });
+    }
+}
+
+/**
+ * Load a page.
+ * @memberof module:Jumpstart
+ * @param {string} name Name of the page to load.
+ * @param {Object} [settings] Page settings.
+ * @returns {void}
+ */
+function loadPage(name, settings) {
+
+    var PageComponent = require('./components/pagecomponent'),
+        pge = new PageComponent(name, settings || {});
+
+    pge.settings.first = Object.keys(pages).length === 0;
+    if (pge.settings.first && $settings.mobile)
+        pge.header = header;
+
+    $code.thread(
+        function() {
+            // Load the page component.
+            return pge.load(main);
+        },
+        function() {
+
+            // Hide the currently active page.
+            if (activePage > 0 && pages[activePage])
+                pages[activePage].hide();
+
+            // Add the page to the loaded pages.
+            pages[pge.id] = pge;
+            activePage = pge.id;
+        }
+    );
+};
+
+/**
+ * Add a window to the windows toolbar.
+ * @param {number} id ID of the window.
+ */
+function addWindowToToolbar(id) {
+    var $icons = require('./providers/icons').get(),
+        closeBtn = $($icons.get('close'))
+            .click(function() {
+                self.close();
+            })
+            .css('padding-left', '5px');
+    $('<div id="win' + id + '" class="main-windows-btn unselectable"></div>')
+        .hide()
+        .appendTo(windows)
+        .append('<span />')
+        .append(closeBtn)
+        .click(function() {
+            showPage(id);
+        })
+        .fadeIn(300);
+};
+
+/**
+ * Close an opened page.
+ * @param {number} id ID of the page to close.
+ * @returns {void}
+ */
+function closePage(id) {
+    $code.thread(function() {
+
+        // Unload the page.
+        /** @type {Component} */
+        var pge = pages[id];
+        if (!$util.isDefined(pge))
+            error('Cannot find page by id: {0}', id);
+        pge.unload();
+
+        // Remove the page from the loaded pages.
+        pages[id] = null;
+        delete pages[id];
+        if (activePage === id)
+            activePage = 0;
+
+        // Open next page.
+        var keys = Object.keys(pages);
+        if (keys.length > 0) {
+            /** @type {Component} */
+            var nextpge = pages[keys[keys.length - 1]];
+            nextpge.show();
+            activePage = nextpge.id;
+        }
+
+    });
+};
+
+/**
+ * Show a loaded page.
+ * @param {number} id ID of the page to show.
+ * @returns {void}
+ */
+function showPage(id) {
+
+    if (id === activePage)
+        return;
+
+    // Hide the currently active page.
+    if (activePage > 0 && pages[activePage])
+        pages[activePage].hide();
+
+    // Show the page.
+    /** @type {Component} */
+    var pge = pages[id];
+    if (!$util.isDefined(pge))
+        error('Cannot find page by id: {0}', id);
+
+    pge.show();
+    activePage = pge.id;
+};
+
 module.exports = {
     suppressNextError: suppressNextError,
     message: message,
     confirm: confirm,
     error: error,
     ready: ready,
-    component: component,
-    start: start
+    start: start,
+    loadPage: loadPage,
+    closePage: closePage,
+    showPage: showPage,
+    addWindowToToolbar: addWindowToToolbar
 };

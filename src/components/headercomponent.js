@@ -12,8 +12,6 @@ var $icons = require('../providers/icons').get(),
  */
 function HeaderComponent(settings) {
 
-    $ = $ || require('../../external/jquery')();
-
     this.settings = {
         menuIcon: 'menu',
         attachMenu: true

@@ -8,11 +8,8 @@ var $log = require('../log'),
  * @class
  * @private
  * @param {Function} func Thread function to execute.
- * @param {number} [id] Unique id of the thread.
  */
-function CodeThread(func, id) {
-
-    this.id = id || $util.nextID();
+function CodeThread(func) {
     this.func = func;
     this.queue = [];
 }

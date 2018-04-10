@@ -1,6 +1,7 @@
 /**
  * Meta data module. Get object meta data from cache, JSON files or data.
- * @module
+ * @module meta
+ * @private
  */
 'use strict';
 

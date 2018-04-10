@@ -1,13 +1,13 @@
 'use strict';
 
-var $code = require('../code'),
+var $app = require('../app'),
+    $code = require('../code'),
     $controller = require('../controller'),
     $icons = require('../providers/icons').get(),
     $meta = require('../meta'),
     $settings = require('../settings'),
     $util = require('../util'),
     $ = require('../../external/jquery')(),
-    Page = require('../classes/page'),
     HeaderComponent = require('./headercomponent'),
     WindowComponent = require('./windowcomponent');
 
@@ -18,8 +18,6 @@ var $code = require('../code'),
  * @param {Object} settings Page Settings.
  */
 function PageComponent(name, settings) {
-
-    $ = $ || require('../../external/jquery')();
 
     /**
      * Header component (mobile only).
@@ -60,7 +58,7 @@ function PageComponent(name, settings) {
 
     /**
      * Page meta data.
-     * @type {Page}
+     * @type {PageMeta}
      */
     this.page = null;
 
@@ -72,7 +70,7 @@ function PageComponent(name, settings) {
 
     /**
      * The component that renders over the entire window.
-     * @type {Jumpstart.Component}
+     * @type {Component}
      */
     this.pageComponent = null;
 
@@ -115,8 +113,7 @@ PageComponent.prototype.unload = function() {
  */
 PageComponent.prototype.load = function(container) {
 
-    var self = this,
-        $app = require('../app');
+    var self = this;
 
     this.mainContainer = $('<div class="main-container"></div>')
         .appendTo(container);
@@ -154,8 +151,8 @@ PageComponent.prototype.load = function(container) {
         },
 
         /**
-         * @param {Page} page Page meta data.
-         * @returns {void|JQueryPromise} Promise to return after we load the component.
+         * @param {PageMeta} page Page meta data.
+         * @returns {(void|JQueryPromise)} Promise to return after we load the component.
          */
         function loadComponent(page) {
 
@@ -167,7 +164,7 @@ PageComponent.prototype.load = function(container) {
 
             // Load into main or side container?
             var cont = self.mainContainer;
-            if ((self.settings.factbox === true || $util.hasOption(page.options, 'factbox'))
+            if ((self.settings.factbox === true || page.factbox)
                 && !$settings.mobile)
                 cont = self.sideContainer;
 
@@ -176,20 +173,7 @@ PageComponent.prototype.load = function(container) {
 
             // Add the page to the windows toolbar.
             if (!$settings.mobile && $settings.windowMode && !self.settings.hasParent) {
-                var closeBtn = $($icons.get('close'))
-                    .click(function() {
-                        self.close();
-                    })
-                    .css('padding-left', '5px');
-                $('<div id="win' + self.id + '" class="main-windows-btn unselectable"></div>')
-                    .hide()
-                    .appendTo($app.component().windows)
-                    .append('<span />')
-                    .append(closeBtn)
-                    .click(function() {
-                        $app.component().showPage(self.id);
-                    })
-                    .fadeIn(300);
+                $app.addWindowToToolbar(self.id)
             }
 
             self.setTitle(self.settings.title || page.caption);
@@ -274,11 +258,9 @@ PageComponent.prototype.hide = function() {
  * @returns {void}
  */
 PageComponent.prototype.close = function() {
-    var id = this.id,
-        $app = require('../app');
-    $code.thread(function closePage() {
-        return $app.component().closePage(id);
-    });
+    var self = this,
+        id = this.id;
+    $app.closePage(id);
 };
 
 /**

@@ -95,6 +95,7 @@ function debug(msg) {
  * @returns {void}
  */
 function object(obj) {
+    obj = obj || {};
     var window = $window.get();
     if (window.console && window.console.dir) {
         write(obj, 'dir');

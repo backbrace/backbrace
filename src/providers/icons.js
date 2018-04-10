@@ -5,7 +5,6 @@
  */
 'use strict';
 
-/** @type {Jumpstart.IconProviderInstance} */
 var instance = {
     get: function(name, size) {
 
@@ -24,7 +23,7 @@ var instance = {
 /**
  * Get the icon provider instance.
  * @memberof module:$icons
- * @returns {Jumpstart.IconProviderInstance} Returns the icon provider instance.
+ * @returns {Object} Returns the icon provider instance.
  */
 function get() {
     return instance;
@@ -33,7 +32,7 @@ function get() {
 /**
  * Set the icon provider instance.
  * @memberof module:$icons
- * @param {Jumpstart.IconProviderInstance} val Icon provider instance to set.
+ * @param {Object} val Icon provider instance to set.
  * @returns {void}
  */
 function set(val) {
