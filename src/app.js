@@ -26,7 +26,6 @@ var $alert = require('./providers/alert'),
 
 /**
  * Show a message dialog.
- * @memberof module:$app
  * @param {string} msg Message to display.
  * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
@@ -50,7 +49,6 @@ function message(msg, callbackFn, title) {
 
 /**
  * Show a confirmation dialog.
- * @memberof module:$app
  * @param {string} msg Message to display.
  * @param {function(boolean)} callbackFn Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Confirmation"] Title of the dialog.
@@ -77,7 +75,6 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
 /**
  * Display an error and kill the current execution.
- * @memberof module:$app
  * @param {string|Error} err Error to display.
  * @returns {void}
  */

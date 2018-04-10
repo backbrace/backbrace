@@ -1,6 +1,6 @@
 'use strict';
 
-var $app = require('../app'),
+var app = require('../app'),
     $code = require('../code'),
     $controller = require('../controller'),
     $icons = require('../providers/icons').get(),
@@ -134,7 +134,7 @@ PageComponent.prototype.load = function(container) {
             });
             this.header.load(this.mainContainer);
             this.header.menuIcon.click(function() {
-                $app.closePage(self.id);
+                app.closePage(self.id);
             });
         } else {
             this.header.load(this.mainContainer);
@@ -159,7 +159,7 @@ PageComponent.prototype.load = function(container) {
 
             // Page meta data not found.
             if (page === null)
-                $app.error('Cannot find page meta data: {0}', self.name);
+                app.error('Cannot find page meta data: {0}', self.name);
 
             self.page = page;
 
@@ -174,14 +174,14 @@ PageComponent.prototype.load = function(container) {
 
             // Add the page to the windows toolbar.
             if (!$settings.mobile && $settings.windowMode && !self.settings.hasParent) {
-                $app.addWindowToToolbar(self.id);
+                app.addWindowToToolbar(self.id);
             }
 
             self.setTitle(self.settings.title || page.caption);
 
             // Add close function.
             self.window.settings.onClose = function() {
-                $app.closePage(self.id);
+                app.closePage(self.id);
             };
 
             // Add actions.

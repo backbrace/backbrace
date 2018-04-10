@@ -1,6 +1,6 @@
 'use strict';
 
-var $app = require('./app'),
+var app = require('./app'),
     $code = require('./code'),
     $controller = require('./controller'),
     $log = require('./log'),
@@ -35,9 +35,9 @@ window['Jumpstart'] = {
     controller: $controller.create,
 
     // App module.
-    start: $app.start,
-    ready: $app.ready,
-    loadPage: $app.loadPage,
+    start: app.start,
+    ready: app.ready,
+    loadPage: app.loadPage,
 
     // Window provider.
     setWindow: function(val) {

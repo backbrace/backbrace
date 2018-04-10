@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $app = require('./app'),
+var app = require('./app'),
     $package = require('./package'),
     $settings = require('./settings'),
     $util = require('./util'),
@@ -21,7 +21,7 @@ var $app = require('./app'),
  */
 function create(name, definition) {
     if ($util.isDefined(controllers[name]))
-        $app.error('Controller is already defined: {0}', name);
+        app.error('Controller is already defined: {0}', name);
     controllers[name] = definition;
 }
 
@@ -32,7 +32,7 @@ function create(name, definition) {
  */
 function get(name) {
     if (!$util.isDefined(controllers[name]))
-        $app.error('Controller is not defined: {0}', name);
+        app.error('Controller is not defined: {0}', name);
     return controllers[name];
 }
 
@@ -60,7 +60,7 @@ function load(name) {
                 d.resolve();
             },
             function() {
-                $app.error('Cannot find contoller: {0}', name);
+                app.error('Cannot find contoller: {0}', name);
             });
         return d.promise();
     }

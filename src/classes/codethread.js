@@ -99,8 +99,8 @@ CodeThread.prototype.resolveQueue = function(result) {
         // Check if the error has been handled.
         var msg = e.message || e;
         if (msg !== 'ERROR_HANDLED') {
-            var $app = require('../app');
-            $app.error(e);
+            var app = require('../app');
+            app.error(e);
         }
     }
 };
