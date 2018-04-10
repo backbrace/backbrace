@@ -12,6 +12,9 @@ var $code = require('../code'),
  * @param {PageComponent} parent Parent page component.
  */
 function CardComponent(parent) {
+
+    this.id = $util.nextID();
+
     /**
      * Parent page component.
      * @type {PageComponent}

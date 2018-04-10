@@ -133,7 +133,7 @@ PageComponent.prototype.load = function(container) {
             });
             this.header.load(this.mainContainer);
             this.header.menuIcon.click(function() {
-                self.close();
+                $app.closePage(self.id);
             });
         } else {
             this.header.load(this.mainContainer);
@@ -173,14 +173,14 @@ PageComponent.prototype.load = function(container) {
 
             // Add the page to the windows toolbar.
             if (!$settings.mobile && $settings.windowMode && !self.settings.hasParent) {
-                $app.addWindowToToolbar(self.id)
+                $app.addWindowToToolbar(self.id);
             }
 
             self.setTitle(self.settings.title || page.caption);
 
             // Add close function.
             self.window.settings.onClose = function() {
-                self.close();
+                $app.closePage(self.id);
             };
 
             // Add actions.
@@ -251,16 +251,6 @@ PageComponent.prototype.hide = function() {
     this.pageComponent.hide();
 
     return this;
-};
-
-/**
- * Close the page.
- * @returns {void}
- */
-PageComponent.prototype.close = function() {
-    var self = this,
-        id = this.id;
-    $app.closePage(id);
 };
 
 /**

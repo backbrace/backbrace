@@ -318,17 +318,19 @@ function loadPage(name, settings) {
             activePage = pge.id;
         }
     );
-};
+}
 
 /**
  * Add a window to the windows toolbar.
  * @param {number} id ID of the window.
+ * @returns {void}
  */
 function addWindowToToolbar(id) {
     var $icons = require('./providers/icons').get(),
+        $ = require('../external/jquery')(),
         closeBtn = $($icons.get('close'))
             .click(function() {
-                self.close();
+                closePage(id);
             })
             .css('padding-left', '5px');
     $('<div id="win' + id + '" class="main-windows-btn unselectable"></div>')
@@ -340,7 +342,7 @@ function addWindowToToolbar(id) {
             showPage(id);
         })
         .fadeIn(300);
-};
+}
 
 /**
  * Close an opened page.
@@ -373,7 +375,7 @@ function closePage(id) {
         }
 
     });
-};
+}
 
 /**
  * Show a loaded page.
@@ -397,7 +399,7 @@ function showPage(id) {
 
     pge.show();
     activePage = pge.id;
-};
+}
 
 module.exports = {
     suppressNextError: suppressNextError,

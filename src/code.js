@@ -94,8 +94,8 @@ function each(obj, iterator, context) {
 function thread() {
 
     var args = arguments,
-        func = function(){
-            return block.apply(this,args);
+        func = function() {
+            return block.apply(this, args);
         },
         thread = new CodeThread(func);
 
