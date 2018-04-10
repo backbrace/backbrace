@@ -8,7 +8,7 @@
 var $alert = require('./providers/alert'),
     code = require('./code'),
     $settings = require('./settings'),
-    $jss = require('./jss'),
+    jss = require('./jss'),
     $log = require('./log'),
     $package = require('./package'),
     $util = require('./util'),
@@ -212,7 +212,7 @@ function start() {
                 $$sweetalert = require('./sweetalert');
 
             // Compile JSS and load into a style tag.
-            var css = $jss.compile($settings.jss);
+            var css = jss.compile($settings.jss);
             $('<style>')
                 .append(css)
                 .appendTo($('head'));

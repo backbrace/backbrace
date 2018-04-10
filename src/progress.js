@@ -6,7 +6,7 @@
 'use strict';
 
 var $settings = require('./settings'),
-    $jss = require('./jss'),
+    jss = require('./jss'),
     $util = require('./util'),
     $window = require('./providers/window'),
     progressbar,
@@ -138,7 +138,7 @@ function fadeOut() {
 function createStyle() {
 
     var window = $window.get(),
-        css = $jss.compile(style),
+        css = jss.compile(style),
         headElement = window.document.head || window.document.getElementsByTagName('head')[0],
         styleElement = window.document.createElement('style');
 
