@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $log = require('./log'),
+var log = require('./log'),
     $util = require('./util'),
     $window = require('./providers/window'),
     packages = [],
@@ -23,7 +23,7 @@ function loadScript(url, onsuccess, onerror) {
 
     var window = $window.get();
 
-    $log.debug('Loading script: ' + url);
+    log.debug('Loading script: ' + url);
 
     var script = window.document.createElement('script');
     script.src = url;
@@ -45,7 +45,7 @@ function loadCSS(url, onsuccess, onerror) {
 
     var window = $window.get();
 
-    $log.debug('Loading css: ' + url);
+    log.debug('Loading css: ' + url);
 
     var css = window.document.createElement('link');
     css.type = 'text/css';

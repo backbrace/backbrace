@@ -3,7 +3,7 @@
 var app = require('./app'),
     code = require('./code'),
     controller = require('./controller'),
-    $log = require('./log'),
+    log = require('./log'),
     $settings = require('./settings'),
     $util = require('./util'),
     $window = require('./providers/window');
@@ -25,11 +25,11 @@ window['Jumpstart'] = {
     },
 
     // Log module.
-    logInfo: $log.info,
-    logWarning: $log.warning,
-    logError: $log.error,
-    logDebug: $log.debug,
-    logObject: $log.object,
+    logInfo: log.info,
+    logWarning: log.warning,
+    logError: log.error,
+    logDebug: log.debug,
+    logObject: log.object,
 
     // Controller module.
     controller: controller.create,

@@ -9,7 +9,7 @@ var $alert = require('./providers/alert'),
     code = require('./code'),
     $settings = require('./settings'),
     jss = require('./jss'),
-    $log = require('./log'),
+    log = require('./log'),
     $package = require('./package'),
     $util = require('./util'),
     $window = require('./providers/window'),
@@ -100,7 +100,7 @@ function error(err) {
 
     $$progress.hide();
 
-    $log.error('Application Error: ' + msg);
+    log.error('Application Error: ' + msg);
 
     // Run error handling.
     if (!suppressNextError) {

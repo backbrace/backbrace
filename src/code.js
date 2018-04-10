@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $log = require('./log'),
+var log = require('./log'),
     $util = require('./util'),
     CodeThread = require('./classes/codethread'),
     testMode = false;
@@ -22,7 +22,7 @@ function reset() {
         currentThread.queue = [];
 
     // Kill off all threads.
-    $log.debug('Clearing all threads.');
+    log.debug('Clearing all threads.');
     threads = [];
     currentThread = null;
 
@@ -100,7 +100,7 @@ function thread() {
         },
         thread = new CodeThread(func);
 
-    $log.debug('Created new thread');
+    log.debug('Created new thread');
 
     // Add the thread to the queue.
     threads.push(thread);

@@ -1,6 +1,6 @@
 'use strict';
 
-var $log = require('../log'),
+var log = require('../log'),
     $util = require('../util');
 
 /**
@@ -33,7 +33,7 @@ CodeThread.prototype.createQueue = function() {
     // Add to the queue.
     this.queue.push(queue);
 
-    $log.debug($util.formatString('Created new queue: #{0} with {1} functions.',
+    log.debug($util.formatString('Created new queue: #{0} with {1} functions.',
         (this.queue.length - 1), queue.length));
 
     // Resolve the first function in the queue.
@@ -58,29 +58,29 @@ CodeThread.prototype.resolveQueue = function(result) {
     if (this.queue.length === 0)
         return;
 
-    $log.debug($util.formatString('Attempting next function in Queue #{0}.', i));
+    log.debug($util.formatString('Attempting next function in Queue #{0}.', i));
 
     func = this.queue[i][0];
 
     if (this.queue[i].length <= 1) {
-        $log.debug($util.formatString('Last function in Queue #{0}.', i));
+        log.debug($util.formatString('Last function in Queue #{0}.', i));
         // Remove a level.
         this.queue.splice(this.queue.length - 1, 1);
     }
 
     // Don't run null functions.
     if (func == null) {
-        $log.debug('No function! Running next function.');
+        log.debug('No function! Running next function.');
         this.runNextFunction();
         return;
     }
 
-    $log.debug(func.toString());
+    log.debug(func.toString());
 
     try {
 
         if (func.toString().indexOf('return') === -1) {
-            $log.debug('Skipping $.when...');
+            log.debug('Skipping $.when...');
             return this.runNextFunction(func.apply(null, arr));
         }
 
@@ -94,7 +94,7 @@ CodeThread.prototype.resolveQueue = function(result) {
     } catch (e) {
 
         // Log the method for debugging purposes.
-        $log.object(func);
+        log.object(func);
 
         // Check if the error has been handled.
         var msg = e.message || e;
@@ -109,7 +109,7 @@ CodeThread.prototype.runNextFunction = function(result) {
 
     var self = this;
 
-    $log.debug('Finished function.');
+    log.debug('Finished function.');
 
     if (this.queue.length > 0) {
         this.queue[this.queue.length - 1].shift();
@@ -123,14 +123,14 @@ CodeThread.prototype.run = function(callback) {
 
     var self = this;
 
-    $log.debug($util.formatString('Started Thread: #{0}.', this.id));
+    log.debug($util.formatString('Started Thread: #{0}.', this.id));
 
     this.createQueue(
 
         self.func,
 
         function() {
-            $log.debug($util.formatString('Finished Thread: #{0}.', self.id));
+            log.debug($util.formatString('Finished Thread: #{0}.', self.id));
             if (callback)
                 callback();
         }
