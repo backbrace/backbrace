@@ -9,7 +9,6 @@ var $ = require('../external/jquery')();
 
 /**
  * Send a HTTP get request.
- * @memberof module:$http
  * @param {string} url Absolute or relative URL to get.
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
  * found, it will return `null`.
