@@ -4,7 +4,7 @@ var app = require('../app'),
     code = require('../code'),
     controller = require('../controller'),
     $icons = require('../providers/icons').get(),
-    $meta = require('../meta'),
+    meta = require('../meta'),
     $settings = require('../settings'),
     $util = require('../util'),
     $ = require('../../external/jquery')(),
@@ -148,7 +148,7 @@ PageComponent.prototype.load = function(container) {
 
         function getMetadata() {
             // Get the page meta data.
-            return $meta.page(self.name);
+            return meta.page(self.name);
         },
 
         /**
