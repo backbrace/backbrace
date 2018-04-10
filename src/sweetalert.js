@@ -1,6 +1,6 @@
 /**
  * Sweet alert module. Includes a queue for the sweet alert library.
- * @module
+ * @module sweetalert
  * @private
  */
 'use strict';

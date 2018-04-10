@@ -9,6 +9,7 @@ var $code = require('../code'),
 /**
  * Card component class.
  * @class
+ * @private
  * @param {PageComponent} parent Parent page component.
  */
 function CardComponent(parent) {

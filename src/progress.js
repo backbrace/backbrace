@@ -1,6 +1,6 @@
 /**
  * Show a progress bar (native).
- * @module
+ * @module progress
  * @private
  */
 'use strict';

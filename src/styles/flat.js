@@ -1,6 +1,6 @@
 /**
  * Flat style.
- * @module
+ * @module flatstyle
  * @private
  */
 'use strict';

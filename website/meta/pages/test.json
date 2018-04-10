@@ -1,7 +1,6 @@
 {
     "caption": "Test Page",
     "controller": "test.js",
-    "type": "Card",
     "icon": "tablet-ipad",
     "actions": [
         {

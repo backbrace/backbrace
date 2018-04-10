@@ -1,7 +1,8 @@
 /**
  * Icons provider module. By default, it gets icons from Material Design Icons Webfont
  * (https://materialdesignicons.com/).
- * @module $icons
+ * @module iconsprovider
+ * @private
  */
 'use strict';
 
@@ -22,7 +23,6 @@ var instance = {
 
 /**
  * Get the icon provider instance.
- * @memberof module:$icons
  * @returns {Object} Returns the icon provider instance.
  */
 function get() {
@@ -31,7 +31,6 @@ function get() {
 
 /**
  * Set the icon provider instance.
- * @memberof module:$icons
  * @param {Object} val Icon provider instance to set.
  * @returns {void}
  */

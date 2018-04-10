@@ -14,6 +14,7 @@ var $app = require('../app'),
 /**
  * Page component. Used to display a page.
  * @class
+ * @private
  * @param {string} name Page name.
  * @param {Object} settings Page Settings.
  */

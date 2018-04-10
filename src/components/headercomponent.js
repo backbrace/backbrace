@@ -8,6 +8,7 @@ var $icons = require('../providers/icons').get(),
 /**
  * Header component.
  * @class
+ * @private
  * @param {Object} settings Header settings.
  */
 function HeaderComponent(settings) {

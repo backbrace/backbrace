@@ -1,6 +1,7 @@
 /**
  * Utility functions.
- * @module
+ * @module util
+ * @private
  */
 'use strict';
 

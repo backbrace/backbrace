@@ -1,6 +1,6 @@
 /**
  * Browser window provider module. Allows the window to be mocked for testing.
- * @module window
+ * @module windowprovider
  * @private
  */
 'use strict';

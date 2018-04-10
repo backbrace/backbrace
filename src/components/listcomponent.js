@@ -3,6 +3,7 @@
 /**
  * List component.
  * @class
+ * @private
  */
 function ListComponent() {
 }

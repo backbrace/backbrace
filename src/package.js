@@ -1,6 +1,7 @@
 /**
  * Package manager module. Handles the loading of external packages.
- * @module
+ * @module package
+ * @private
  */
 'use strict';
 

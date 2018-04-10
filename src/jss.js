@@ -1,12 +1,12 @@
 /**
  * Implimentation of JSS (using javascript to describe styles). Compiles to CSS at runtime.
- * @module
+ * @module jss
+ * @private
  */
 'use strict';
 
 var $settings = require('./settings'),
     $util = require('./util');
-
 
 /**
  * Merge the JSS with the config.

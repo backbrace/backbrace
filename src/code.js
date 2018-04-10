@@ -1,6 +1,7 @@
 /**
  * Code execution module. Handles execution of async code.
- * @module
+ * @module code
+ * @private
  */
 'use strict';
 

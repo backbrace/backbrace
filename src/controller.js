@@ -1,6 +1,7 @@
 /**
  * Controller module.
- * @module $controller
+ * @module controller
+ * @private
  */
 'use strict';
 

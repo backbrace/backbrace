@@ -1,6 +1,7 @@
 /**
  * Event module. Allows events to be defined and subscribed to.
- * @module
+ * @module event
+ * @private
  */
 'use strict';
 

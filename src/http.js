@@ -1,28 +1,7 @@
 /**
  * Send various HTTP requests.
- * @module $http
- *
- * @description
- * ### Overview
- * The `$http` module is used to send various types of HTTP requests (like `GET,POST`,etc).
- *
- * The `$http` module is simply a wrapper for the
- * [JQuery AJAX api](http://api.jquery.com/jquery.ajax). The JQuery AJAX calls are wrapped in a
- * `JQueryPromise` so we can inject these functions directly into a `$code.block`.
- *
- * ### General use
- * ```js
- *  // Simple GET request with a $code.block:
- *  return $code.block(
- *      function(){
- *          return $http.get('/someurl');
- *      },
- *      function(data){
- *          // data from the GET request. NOTE: If the request
- *          // failed, data will be `null`
- *      }
- *  );
- * ```
+ * @module http
+ * @private
  */
 'use strict';
 

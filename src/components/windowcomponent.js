@@ -9,6 +9,7 @@ var $code = require('../code'),
 /**
  * Window component.
  * @class
+ * @private
  * @param {Object} settings Window settings.
  */
 function WindowComponent(settings) {
