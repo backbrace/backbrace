@@ -1,6 +1,6 @@
 'use strict';
 
-var $code = require('../code'),
+var code = require('../code'),
     $settings = require('../settings'),
     $util = require('../util'),
     PageComponent = require('./pagecomponent'),
@@ -48,7 +48,7 @@ CardComponent.prototype.unload = function() {
  */
 CardComponent.prototype.load = function() {
     var self = this;
-    return $code.block(
+    return code.block(
         function loadPageTabs() {
             return self.loadTabs();
         }
@@ -63,7 +63,7 @@ CardComponent.prototype.loadTabs = function() {
 
     var self = this;
 
-    return $code.each(self.parent.page.tabs, function loadTab(/** @type {PageTabMeta} */tab) {
+    return code.each(self.parent.page.tabs, function loadTab(/** @type {PageTabMeta} */tab) {
 
         // Check if the tab is mobile or desktop only.
         if ($settings.mobile && tab.desktopOnly)

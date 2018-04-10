@@ -1,6 +1,6 @@
 'use strict';
 
-var $code = require('../code'),
+var code = require('../code'),
     $icons = require('../providers/icons').get(),
     $settings = require('../settings'),
     $util = require('../util'),

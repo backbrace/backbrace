@@ -1,7 +1,7 @@
 'use strict';
 
 var app = require('./app'),
-    $code = require('./code'),
+    code = require('./code'),
     $controller = require('./controller'),
     $log = require('./log'),
     $settings = require('./settings'),

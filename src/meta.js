@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $code = require('./code'),
+var code = require('./code'),
     $settings = require('./settings'),
     $http = require('./http');
 
@@ -15,7 +15,7 @@ var $code = require('./code'),
  * @returns {JQueryPromise} Promise to get the page meta data.
  */
 function page(name) {
-    return $code.block(
+    return code.block(
         function() {
             // Get the page from a JSON file.
             return $http.get($settings.meta.dir + 'pages/' + name + '.json');

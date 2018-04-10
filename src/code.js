@@ -56,7 +56,7 @@ function block() {
 }
 
 /**
- * Loop through an array using `$code.block`.
+ * Loop through an array using `code.block`.
  * @param {Array} obj Array to iterate through.
  * @param {Function} iterator Iterator function to call.
  * @param {Object} [context] Context to run the iterator function.

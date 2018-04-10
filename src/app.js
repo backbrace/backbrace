@@ -6,7 +6,7 @@
 'use strict';
 
 var $alert = require('./providers/alert'),
-    $code = require('./code'),
+    code = require('./code'),
     $settings = require('./settings'),
     $jss = require('./jss'),
     $log = require('./log'),
@@ -123,7 +123,7 @@ function error(err) {
  */
 function ready(func) {
     readyFunc = function() {
-        $code.thread(func);
+        code.thread(func);
     };
 }
 
@@ -230,7 +230,7 @@ function start() {
                 }
             });
 
-            $code.thread(function() {
+            code.thread(function() {
 
                 load($('body'));
 
@@ -299,7 +299,7 @@ function loadPage(name, settings) {
     if (pge.settings.first && $settings.mobile)
         pge.header = header;
 
-    $code.thread(
+    code.thread(
         function() {
             // Load the page component.
             return pge.load(main);
@@ -347,7 +347,7 @@ function addWindowToToolbar(id) {
  * @returns {void}
  */
 function closePage(id) {
-    $code.thread(function() {
+    code.thread(function() {
 
         // Unload the page.
         /** @type {Component} */

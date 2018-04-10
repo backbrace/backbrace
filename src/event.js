@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $code = require('./code'),
+var code = require('./code'),
     event = {};
 
 function exists(name) {
@@ -36,9 +36,9 @@ function fireWait() {
         var ref = event[name];
 
         if (ref.length > 0)
-            return $code.loop(function(i) {
+            return code.loop(function(i) {
 
-                return $code.block(
+                return code.block(
 
                     function() {
                         handler = ref[i];
@@ -47,7 +47,7 @@ function fireWait() {
 
                     function() {
                         if (i < ref.length - 1)
-                            return $code.next;
+                            return code.next;
                     }
                 );
 

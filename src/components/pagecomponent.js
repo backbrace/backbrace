@@ -1,7 +1,7 @@
 'use strict';
 
 var app = require('../app'),
-    $code = require('../code'),
+    code = require('../code'),
     $controller = require('../controller'),
     $icons = require('../providers/icons').get(),
     $meta = require('../meta'),
@@ -144,7 +144,7 @@ PageComponent.prototype.load = function(container) {
         }
     }
 
-    return $code.block(
+    return code.block(
 
         function getMetadata() {
             // Get the page meta data.
