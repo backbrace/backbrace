@@ -7,7 +7,7 @@
 
 var settings = require('./settings'),
     jss = require('./jss'),
-    $util = require('./util'),
+    util = require('./util'),
     $window = require('./providers/window'),
     progressbar,
     progressbarbg,
@@ -167,11 +167,11 @@ function show() {
         styleAdded = createStyle();
 
     // Add the elements.
-    progressblocker = $util.addElement('div', { 'class': 'progressbar-blocker' },
+    progressblocker = util.addElement('div', { 'class': 'progressbar-blocker' },
         window.document.body);
-    progressbarbg = $util.addElement('div', { 'class': 'progressbar-bg' },
+    progressbarbg = util.addElement('div', { 'class': 'progressbar-bg' },
         progressblocker);
-    progressbar = $util.addElement('div', { 'class': 'progressbar' },
+    progressbar = util.addElement('div', { 'class': 'progressbar' },
         progressblocker);
 
     // Start the animation.

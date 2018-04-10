@@ -6,7 +6,7 @@
 'use strict';
 
 var log = require('./log'),
-    $util = require('./util'),
+    util = require('./util'),
     CodeThread = require('./classes/codethread'),
     testMode = false;
 

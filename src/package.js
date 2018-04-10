@@ -6,7 +6,7 @@
 'use strict';
 
 var log = require('./log'),
-    $util = require('./util'),
+    util = require('./util'),
     $window = require('./providers/window'),
     packages = [],
     loadedPackages = [],
@@ -91,7 +91,7 @@ function load(onsuccess, onerror) {
         scripts = [],
         loadedResources = 0;
 
-    onsuccess = onsuccess || $util.noop;
+    onsuccess = onsuccess || util.noop;
 
     if (!urls)
         return onsuccess();

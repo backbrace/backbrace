@@ -6,7 +6,7 @@
 'use strict';
 
 var settings = require('./settings'),
-    $util = require('./util'),
+    util = require('./util'),
     $window = require('./providers/window');
 
 /**
@@ -23,12 +23,12 @@ function write(msg, type) {
 
     // Add date and time to string.
     if (typeof msg === 'string' && dte.toISOString)
-        msg = $util.formatString('{0} {1}',
+        msg = util.formatString('{0} {1}',
             dte.toISOString(), msg);
 
     // Write to the console if available.
-    var console = window.console || { log: $util.noop },
-        consoleFn = console[type] || console.log || $util.noop;
+    var console = window.console || { log: util.noop },
+        consoleFn = console[type] || console.log || util.noop;
 
     try {
         consoleFn(msg);
@@ -45,7 +45,7 @@ function write(msg, type) {
  * @returns {void}
  */
 function info(msg) {
-    msg = $util.formatString.apply(null, arguments);
+    msg = util.formatString.apply(null, arguments);
     write(msg, 'info');
 }
 
@@ -57,7 +57,7 @@ function info(msg) {
  * @returns {void}
  */
 function error(msg) {
-    msg = $util.formatString.apply(null, arguments);
+    msg = util.formatString.apply(null, arguments);
     write(msg, 'error');
 }
 
@@ -69,7 +69,7 @@ function error(msg) {
  * @returns {void}
  */
 function warning(msg) {
-    msg = $util.formatString.apply(null, arguments);
+    msg = util.formatString.apply(null, arguments);
     write(msg, 'warn');
 }
 
@@ -82,7 +82,7 @@ function warning(msg) {
  */
 function debug(msg) {
     if (settings.debug) {
-        msg = $util.formatString.apply(null, arguments);
+        msg = util.formatString.apply(null, arguments);
         write(msg, 'debug');
     }
 }

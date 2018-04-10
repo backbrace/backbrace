@@ -6,7 +6,7 @@ var app = require('../app'),
     $icons = require('../providers/icons').get(),
     meta = require('../meta'),
     settings = require('../settings'),
-    $util = require('../util'),
+    util = require('../util'),
     $ = require('../../external/jquery')(),
     HeaderComponent = require('./headercomponent'),
     WindowComponent = require('./windowcomponent');
@@ -30,7 +30,7 @@ function PageComponent(name, settings) {
      * Unique ID of the page component.
      * @type {number}
      */
-    this.id = $util.nextID();
+    this.id = util.nextID();
 
     /**
      * Name of the page.
@@ -262,7 +262,7 @@ PageComponent.prototype.hide = function() {
 PageComponent.prototype.setTitle = function(title) {
     this.title = title;
     this.window.setTitle(title);
-    $('#win' + this.id + '>span').html($util.formatString('{0} {1}',
+    $('#win' + this.id + '>span').html(util.formatString('{0} {1}',
         $icons.get(this.page.icon),
         title
     ));

@@ -1,7 +1,7 @@
 'use strict';
 
 var log = require('../log'),
-    $util = require('../util');
+    util = require('../util');
 
 /**
  * Code Thread class.
@@ -33,11 +33,11 @@ CodeThread.prototype.createQueue = function() {
     // Add to the queue.
     this.queue.push(queue);
 
-    log.debug($util.formatString('Created new queue: #{0} with {1} functions.',
+    log.debug(util.formatString('Created new queue: #{0} with {1} functions.',
         (this.queue.length - 1), queue.length));
 
     // Resolve the first function in the queue.
-    $util.setZeroTimeout(function() {
+    util.setZeroTimeout(function() {
         self.resolveQueue(null);
     });
 };
@@ -58,12 +58,12 @@ CodeThread.prototype.resolveQueue = function(result) {
     if (this.queue.length === 0)
         return;
 
-    log.debug($util.formatString('Attempting next function in Queue #{0}.', i));
+    log.debug(util.formatString('Attempting next function in Queue #{0}.', i));
 
     func = this.queue[i][0];
 
     if (this.queue[i].length <= 1) {
-        log.debug($util.formatString('Last function in Queue #{0}.', i));
+        log.debug(util.formatString('Last function in Queue #{0}.', i));
         // Remove a level.
         this.queue.splice(this.queue.length - 1, 1);
     }
@@ -113,7 +113,7 @@ CodeThread.prototype.runNextFunction = function(result) {
 
     if (this.queue.length > 0) {
         this.queue[this.queue.length - 1].shift();
-        $util.setZeroTimeout(function runNextFunction() {
+        util.setZeroTimeout(function runNextFunction() {
             self.resolveQueue(result);
         });
     }
@@ -123,14 +123,14 @@ CodeThread.prototype.run = function(callback) {
 
     var self = this;
 
-    log.debug($util.formatString('Started Thread: #{0}.', this.id));
+    log.debug(util.formatString('Started Thread: #{0}.', this.id));
 
     this.createQueue(
 
         self.func,
 
         function() {
-            log.debug($util.formatString('Finished Thread: #{0}.', self.id));
+            log.debug(util.formatString('Finished Thread: #{0}.', self.id));
             if (callback)
                 callback();
         }

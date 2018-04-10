@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $util = require('./util'),
+var util = require('./util'),
     $window = require('./providers/window'),
     swal = require('../external/swal'),
     queue = [],
@@ -82,7 +82,7 @@ function show(msg, callback, title, icon) {
             title: title,
             text: msg,
             type: 'error',
-            width: ($util.width() < 438 ? $util.width() - 60 : null)
+            width: (util.width() < 438 ? util.width() - 60 : null)
         },
             callback
         );
@@ -104,7 +104,7 @@ function show(msg, callback, title, icon) {
             text: msg,
             type: (icon ? null : type),
             imageUrl: icon,
-            width: ($util.width() < 438 ? $util.width() - 60 : null)
+            width: (util.width() < 438 ? util.width() - 60 : null)
         },
             callback
         );

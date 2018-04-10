@@ -3,7 +3,7 @@
 var code = require('../code'),
     $icons = require('../providers/icons').get(),
     settings = require('../settings'),
-    $util = require('../util'),
+    util = require('../util'),
     $ = require('../../external/jquery')();
 
 /**
@@ -27,7 +27,7 @@ function WindowComponent(settings) {
     // Merge settings.
     $.extend(this.settings, settings);
 
-    this.id = $util.nextID();
+    this.id = util.nextID();
     this.visible = false;
     this.hidden = false;
     this.actions = {};
@@ -116,7 +116,7 @@ WindowComponent.prototype.setTitle = function(title) {
  * @returns {WindowComponent} Returns itself for chaining.
  */
 WindowComponent.prototype.addAction = function(action) {
-    var id = this.id + 'action' + $util.nextID();
+    var id = this.id + 'action' + util.nextID();
     var btn = $('<div id="' + id + '" class="action-button unselectable" ' +
         'data-ripple>' + $icons.get(action.icon) + ' ' + (action.text || action.name) + '</div>');
     if (action.classname)

@@ -8,7 +8,7 @@
 var app = require('./app'),
     package = require('./package'),
     settings = require('./settings'),
-    $util = require('./util'),
+    util = require('./util'),
     controllers = {};
 
 /**
@@ -20,7 +20,7 @@ var app = require('./app'),
  * @returns {void};
  */
 function create(name, definition) {
-    if ($util.isDefined(controllers[name]))
+    if (util.isDefined(controllers[name]))
         app.error('Controller is already defined: {0}', name);
     controllers[name] = definition;
 }
@@ -31,7 +31,7 @@ function create(name, definition) {
  * @returns {function(*)} Returns the controller definition.
  */
 function get(name) {
-    if (!$util.isDefined(controllers[name]))
+    if (!util.isDefined(controllers[name]))
         app.error('Controller is not defined: {0}', name);
     return controllers[name];
 }
@@ -42,7 +42,7 @@ function get(name) {
  * @returns {boolean} `True` if the controller exists.
  */
 function exists(name) {
-    return $util.isDefined(controllers[name]);
+    return util.isDefined(controllers[name]);
 }
 
 /**

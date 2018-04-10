@@ -2,7 +2,7 @@
 
 var $icons = require('../providers/icons').get(),
     settings = require('../settings'),
-    $util = require('../util'),
+    util = require('../util'),
     $ = require('../../external/jquery')();
 
 /**
@@ -21,7 +21,7 @@ function HeaderComponent(settings) {
     // Merge settings.
     $.extend(this.settings, settings);
 
-    this.id = $util.nextID();
+    this.id = util.nextID();
 
     /**
      * @type {JQuery}

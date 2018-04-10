@@ -11,7 +11,7 @@ var $alert = require('./providers/alert'),
     jss = require('./jss'),
     log = require('./log'),
     package = require('./package'),
-    $util = require('./util'),
+    util = require('./util'),
     $window = require('./providers/window'),
     progress = require('./progress'),
     header = null,
@@ -38,7 +38,7 @@ function message(msg, callbackFn, title) {
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
         if (callbackFn)
-            $util.setZeroTimeout(callbackFn);
+            util.setZeroTimeout(callbackFn);
         return;
     }
 
@@ -63,7 +63,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
         if (callbackFn)
-            $util.setZeroTimeout(callbackFn);
+            util.setZeroTimeout(callbackFn);
         return;
     }
 
@@ -92,11 +92,11 @@ function error(err) {
 
     // Merge string.
     var arr = [msg];
-    $util.forEach(arguments, function(a, i) {
+    util.forEach(arguments, function(a, i) {
         if (i > 0)
             arr.push(a);
     });
-    msg = $util.formatString.apply(null, arr);
+    msg = util.formatString.apply(null, arr);
 
     progress.hide();
 
@@ -137,43 +137,43 @@ function start() {
     var window = $window.get();
 
     // Add font css.
-    $util.addElement('link', {
+    util.addElement('link', {
         'href': settings.style.font.url,
         'rel': 'stylesheet'
     }, window.document.head);
 
-    $util.addElement('meta', {
+    util.addElement('meta', {
         'name': 'Description',
         'content': settings.app.description
     }, window.document.head);
 
     // Add font family to body tag.
-    $util.addElement('style', {}, window.document.head)
+    util.addElement('style', {}, window.document.head)
         .innerHTML = 'body{font-family: ' + settings.style.font.family + '}';
 
     // Set mobile mode.
-    if (settings.autoSwitch && $util.mobileCheck())
+    if (settings.autoSwitch && util.mobileCheck())
         settings.mobile = true;
 
     // Add mobile head tags.
     if (settings.mobile) {
 
-        $util.addElement('meta', {
+        util.addElement('meta', {
             'http-equiv': 'X-UA-Compatible',
             'content': 'IE=Edge'
         }, window.document.head);
 
-        $util.addElement('meta', {
+        util.addElement('meta', {
             'name': 'viewport',
             'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
         }, window.document.head);
 
-        $util.addElement('meta', {
+        util.addElement('meta', {
             'name': 'apple-mobile-web-app-capable',
             'content': 'yes'
         }, window.document.head);
 
-        $util.addElement('meta', {
+        util.addElement('meta', {
             'name': 'mobile-web-app-capable',
             'content': 'yes'
         }, window.document.head);
@@ -185,7 +185,7 @@ function start() {
     window.document.title = settings.app.title;
 
     // Check for HTML5.
-    if (!$util.html5Check())
+    if (!util.html5Check())
         error('This app requires a HTML5 browser. We recommend chrome: ' +
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
@@ -352,7 +352,7 @@ function closePage(id) {
         // Unload the page.
         /** @type {Component} */
         var pge = pages[id];
-        if (!$util.isDefined(pge))
+        if (!util.isDefined(pge))
             error('Cannot find page by id: {0}', id);
         pge.unload();
 
@@ -391,7 +391,7 @@ function showPage(id) {
     // Show the page.
     /** @type {Component} */
     var pge = pages[id];
-    if (!$util.isDefined(pge))
+    if (!util.isDefined(pge))
         error('Cannot find page by id: {0}', id);
 
     pge.show();

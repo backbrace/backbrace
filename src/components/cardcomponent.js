@@ -2,7 +2,7 @@
 
 var code = require('../code'),
     settings = require('../settings'),
-    $util = require('../util'),
+    util = require('../util'),
     PageComponent = require('./pagecomponent'),
     WindowComponent = require('./windowcomponent');
 
@@ -14,7 +14,7 @@ var code = require('../code'),
  */
 function CardComponent(parent) {
 
-    this.id = $util.nextID();
+    this.id = util.nextID();
 
     /**
      * Parent page component.
@@ -36,7 +36,7 @@ function CardComponent(parent) {
 CardComponent.prototype.unload = function() {
     // Unload sub components.
     this.parent = null;
-    $util.forEach(this.subwindows, function unloadSubWindows(/** @type {WindowComponent} */win) {
+    util.forEach(this.subwindows, function unloadSubWindows(/** @type {WindowComponent} */win) {
         win.unload();
     });
     this.subwindows = null;
@@ -95,7 +95,7 @@ CardComponent.prototype.loadTabs = function() {
  */
 CardComponent.prototype.show = function() {
     // Show the sub windows.
-    $util.forEach(this.subwindows,
+    util.forEach(this.subwindows,
         function(/** @type {WindowComponent} */win) {
             win.show();
         });
@@ -108,7 +108,7 @@ CardComponent.prototype.show = function() {
  */
 CardComponent.prototype.hide = function() {
     // Hide the sub windows.
-    $util.forEach(this.subwindows,
+    util.forEach(this.subwindows,
         function(/** @type {WindowComponent} */win) {
             win.hide();
         });
