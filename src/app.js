@@ -13,7 +13,7 @@ var $alert = require('./providers/alert'),
     package = require('./package'),
     $util = require('./util'),
     $window = require('./providers/window'),
-    $$progress = require('./progress'),
+    progress = require('./progress'),
     header = null,
     /** @type {JQuery} */
     main = null,
@@ -98,7 +98,7 @@ function error(err) {
     });
     msg = $util.formatString.apply(null, arr);
 
-    $$progress.hide();
+    progress.hide();
 
     log.error('Application Error: ' + msg);
 
@@ -179,7 +179,7 @@ function start() {
         }, window.document.head);
     }
 
-    $$progress.show();
+    progress.show();
 
     // Update title.
     window.document.title = $settings.app.title;
@@ -234,7 +234,7 @@ function start() {
 
                 load($('body'));
 
-                $$progress.hide();
+                progress.hide();
                 if (readyFunc) readyFunc();
 
             });
