@@ -209,7 +209,7 @@ function start() {
         package.load(function() {
 
             var $ = require('../external/jquery')(),
-                $$sweetalert = require('./sweetalert');
+                sweetalert = require('./sweetalert');
 
             // Compile JSS and load into a style tag.
             var css = jss.compile(settings.jss);
@@ -219,14 +219,14 @@ function start() {
 
             // Lets upgrade alerts...
             $alert.set({
-                message: $$sweetalert.show,
+                message: sweetalert.show,
                 confirm: function(msg, callback, title, yescaption, nocaption) {
-                    $$sweetalert.show(msg, function() {
+                    sweetalert.show(msg, function() {
                         callback(true);
                     });
                 },
                 error: function(msg) {
-                    $$sweetalert.show(msg, null, 'Application Error');
+                    sweetalert.show(msg, null, 'Application Error');
                 }
             });
 
