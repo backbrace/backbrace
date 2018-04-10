@@ -13,17 +13,17 @@ describe('log module', function() {
         error = function() { logger += 'error;'; };
         debug = function() { logger += 'debug;'; };
 
-        Jumpstart.settings.debug = true;
+        Jumpstart.settings({debug:true});
     });
 
     afterEach(function() {
         // Reset the window.
-        Jumpstart.window.set(window);
-        Jumpstart.settings.debug = false;
+        Jumpstart.setWindow(window);
+        Jumpstart.settings({debug:false});
     });
 
     it('should use console if present', function() {
-        Jumpstart.window.set({
+        Jumpstart.setWindow({
             navigator: { userAgent: window.navigator.userAgent },
             document: {},
             console: {
@@ -42,7 +42,7 @@ describe('log module', function() {
     });
 
     it('should use console.log() if other not present', function() {
-        Jumpstart.window.set({
+        Jumpstart.setWindow({
             navigator: { userAgent: window.navigator.userAgent },
             document: {},
             console: {
@@ -57,7 +57,7 @@ describe('log module', function() {
     });
 
     it('should use noop if there is no console', function() {
-        Jumpstart.window.set({
+        Jumpstart.setWindow({
             navigator: { userAgent: window.navigator.userAgent },
             document: {}
         });

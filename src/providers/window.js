@@ -1,6 +1,7 @@
 /**
  * Browser window provider module. Allows the window to be mocked for testing.
- * @module
+ * @module window
+ * @private
  */
 'use strict';
 
@@ -16,6 +17,8 @@ function get() {
 
 /**
  * Set the window provider instance.
+ * @method setWindow
+ * @memberof module:Jumpstart
  * @param {(Window|Object)} val Window provider instance to set.
  * @returns {void}
  */

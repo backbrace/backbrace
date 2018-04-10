@@ -72,7 +72,7 @@ module.exports = function(grunt) {
 
     jsdoc: {
       dist: {
-        src: ['src/jumpstart.js','README.md'],
+        src: ['src/*.js','src/*/*.js','README.md'],
         options: {
           destination: 'docs',
           template: 'node_modules/jumpstartjs-jsdoc-template',

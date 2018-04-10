@@ -1,86 +1,35 @@
 'use strict';
 
+/**
+ * App settings.
+ * @module settings
+ * @private
+ */
+
 var flat = require('./styles/flat'),
     settings = {
 
-        /**
-         * Version info for JumpStart.
-         * @type {object}
-         */
         VERSION_INFO: {
             // These placeholder strings will be replaced by grunt's `build` task.
             full: '"JS_VERSION_FULL"'
         },
-
-        /**
-         * Set the app to debug mode.
-         */
         debug: false,
-
-        /**
-         * Load minified packages.
-         */
         minify: true,
-
-        /**
-         * Mobile mode flag.
-         */
         mobile: false,
-
-        /**
-         * GUI allowed flag.
-         */
         guiAllowed: true,
-
-        /**
-         * Auto switch to mobile mode if detected.
-         */
         autoSwitch: true,
-
-        /**
-         * JSS style.
-         */
         jss: flat,
-
-        /**
-         * Use window mode?
-         */
         windowMode: true,
-
         app: {
-
-            /**
-             * App name (displays in header if there is no logo image).
-             */
             name: 'Jumpstart App',
-
-            /**
-             * App version.
-             */
             version: '0.1.0',
-
-            /**
-             * App tite (displays in browser window).
-             */
             title: 'New Jumpstart App',
-
-            /**
-             * App description.
-             */
             description: 'Web App powered by Jumpstart'
         },
-
         meta: {
-
             dir: './meta/'
-
         },
-
-        /**
-         * App style settings.
-         */
         style: {
-
             loader: {
                 zindex: '1000',
                 barheight: '10px',
@@ -89,18 +38,15 @@ var flat = require('./styles/flat'),
                 progresscolor: '#3498DB',
                 blockerbackground: '#ECF0F1'
             },
-
             font: {
                 url: 'https://labs.zoomapps.com.au/JumpstartCDN/fonts/roboto/roboto.css',
                 family: '\'Roboto\', sans-serif'
             },
-
             images: {
                 logo: '',
                 menuLogo: '',
                 blocker: ''
             },
-
             colors: {
                 header: '#3498db',
                 headertext: '#FFF',
@@ -116,7 +62,6 @@ var flat = require('./styles/flat'),
                 alertbuttontext: '#FFF'
             }
         },
-
         packages: {
 
             /**

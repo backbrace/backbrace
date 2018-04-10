@@ -1,6 +1,7 @@
 /**
  * App module.
- * @module $app
+ * @module app
+ * @private
  */
 'use strict';
 
@@ -135,18 +136,12 @@ function component() {
 
 /**
  * Start the app.
- * @memberof module:$app
- * @param {Object} settings Settings for the app.
+ * @memberof module:Jumpstart
  * @returns {void}
  */
-function start(settings) {
+function start() {
 
     var window = $window.get();
-
-    // Extend the config.
-    $util.extend($settings, settings);
-
-    $log.debugMode($settings.debug);
 
     // Add font css.
     $util.addElement('link', {
@@ -270,14 +265,7 @@ function start(settings) {
 }
 
 module.exports = {
-
-    /**
-     * Suppress the next error thrown.
-     * @type {boolean}
-     * @private
-     */
     suppressNextError: suppressNextError,
-
     message: message,
     confirm: confirm,
     error: error,
