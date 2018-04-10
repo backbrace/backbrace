@@ -2,7 +2,7 @@
 
 var code = require('../code'),
     $icons = require('../providers/icons').get(),
-    $settings = require('../settings'),
+    settings = require('../settings'),
     $util = require('../util'),
     $ = require('../../external/jquery')();
 
@@ -50,14 +50,14 @@ WindowComponent.prototype.unload = function() {
 WindowComponent.prototype.load = function(container) {
 
     var self = this,
-        showTitle = !$settings.mobile || this.settings.hasParent,
+        showTitle = !settings.mobile || this.settings.hasParent,
         titlebar = $('<div class="title-bar unselectable" />');
 
     if (showTitle)
         titlebar.append('<span id="title' + this.id + '" class="title ' +
             (this.settings.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
 
-    if (this.settings.closeBtn === true && !this.settings.hasParent && !$settings.mobile) {
+    if (this.settings.closeBtn === true && !this.settings.hasParent && !settings.mobile) {
         $('<i class="mdi mdi-close unselectable title-icon"></i>')
             .appendTo(titlebar)
             .click(function() {

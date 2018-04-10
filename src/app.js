@@ -7,7 +7,7 @@
 
 var $alert = require('./providers/alert'),
     code = require('./code'),
-    $settings = require('./settings'),
+    settings = require('./settings'),
     jss = require('./jss'),
     log = require('./log'),
     package = require('./package'),
@@ -36,7 +36,7 @@ function message(msg, callbackFn, title) {
     var alert = $alert.get();
 
     // If there is no gui, just run the callback.
-    if (!$settings.guiAllowed) {
+    if (!settings.guiAllowed) {
         if (callbackFn)
             $util.setZeroTimeout(callbackFn);
         return;
@@ -61,7 +61,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
     var alert = $alert.get();
 
     // If there is no gui, just run the callback.
-    if (!$settings.guiAllowed) {
+    if (!settings.guiAllowed) {
         if (callbackFn)
             $util.setZeroTimeout(callbackFn);
         return;
@@ -138,25 +138,25 @@ function start() {
 
     // Add font css.
     $util.addElement('link', {
-        'href': $settings.style.font.url,
+        'href': settings.style.font.url,
         'rel': 'stylesheet'
     }, window.document.head);
 
     $util.addElement('meta', {
         'name': 'Description',
-        'content': $settings.app.description
+        'content': settings.app.description
     }, window.document.head);
 
     // Add font family to body tag.
     $util.addElement('style', {}, window.document.head)
-        .innerHTML = 'body{font-family: ' + $settings.style.font.family + '}';
+        .innerHTML = 'body{font-family: ' + settings.style.font.family + '}';
 
     // Set mobile mode.
-    if ($settings.autoSwitch && $util.mobileCheck())
-        $settings.mobile = true;
+    if (settings.autoSwitch && $util.mobileCheck())
+        settings.mobile = true;
 
     // Add mobile head tags.
-    if ($settings.mobile) {
+    if (settings.mobile) {
 
         $util.addElement('meta', {
             'http-equiv': 'X-UA-Compatible',
@@ -182,7 +182,7 @@ function start() {
     progress.show();
 
     // Update title.
-    window.document.title = $settings.app.title;
+    window.document.title = settings.app.title;
 
     // Check for HTML5.
     if (!$util.html5Check())
@@ -190,7 +190,7 @@ function start() {
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Load JQuery.
-    package.loadScript($settings.packages.jQuery(), function() {
+    package.loadScript(settings.packages.jQuery(), function() {
 
         // JQuery wasn't loaded :(
         if (typeof jQuery === 'undefined')
@@ -204,15 +204,15 @@ function start() {
         }
 
         // Load all other packages.
-        package.add($settings.packages.jQueryUI());
-        package.add($settings.packages.common());
+        package.add(settings.packages.jQueryUI());
+        package.add(settings.packages.common());
         package.load(function() {
 
             var $ = require('../external/jquery')(),
                 $$sweetalert = require('./sweetalert');
 
             // Compile JSS and load into a style tag.
-            var css = jss.compile($settings.jss);
+            var css = jss.compile(settings.jss);
             $('<style>')
                 .append(css)
                 .appendTo($('head'));
@@ -263,18 +263,18 @@ function load(container) {
     main = $('<div class="main"></div>').appendTo(container);
 
     // Add window toolbar.
-    if ($settings.windowMode && !$settings.mobile)
+    if (settings.windowMode && !settings.mobile)
         windows = $('<div class="main-windows"></div>').appendTo(main);
 
-    $('body').addClass($settings.mobile ? 'mobile-app' : 'desktop-app');
+    $('body').addClass(settings.mobile ? 'mobile-app' : 'desktop-app');
 
     // Load components.
     header = new HeaderComponent({});
-    header.setTitle($settings.style.images.logo !== '' ?
-        '<img class="navbar-logo" alt="' + $settings.app.name + '" src="' +
-        $settings.style.images.logo + '" />' :
-        $settings.app.name);
-    if (!$settings.mobile) {
+    header.setTitle(settings.style.images.logo !== '' ?
+        '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
+        settings.style.images.logo + '" />' :
+        settings.app.name);
+    if (!settings.mobile) {
         header.load(main);
         header.navbar.addClass('fixed');
         header.menuIcon.click(function() {
@@ -296,7 +296,7 @@ function loadPage(name, settings) {
         pge = new PageComponent(name, settings || {});
 
     pge.settings.first = Object.keys(pages).length === 0;
-    if (pge.settings.first && $settings.mobile)
+    if (pge.settings.first && settings.mobile)
         pge.header = header;
 
     code.thread(

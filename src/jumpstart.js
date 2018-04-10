@@ -4,7 +4,7 @@ var app = require('./app'),
     code = require('./code'),
     controller = require('./controller'),
     log = require('./log'),
-    $settings = require('./settings'),
+    settings = require('./settings'),
     $util = require('./util'),
     $window = require('./providers/window');
 
@@ -20,8 +20,8 @@ window['Jumpstart'] = {
      * @returns {Settings} Returns the app settings.
      */
     settings: function(settings) {
-        $util.extend($settings, settings);
-        return $settings;
+        $util.extend(settings, settings);
+        return settings;
     },
 
     // Log module.

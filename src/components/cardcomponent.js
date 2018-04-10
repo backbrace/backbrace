@@ -1,7 +1,7 @@
 'use strict';
 
 var code = require('../code'),
-    $settings = require('../settings'),
+    settings = require('../settings'),
     $util = require('../util'),
     PageComponent = require('./pagecomponent'),
     WindowComponent = require('./windowcomponent');
@@ -66,15 +66,15 @@ CardComponent.prototype.loadTabs = function() {
     return code.each(self.parent.page.tabs, function loadTab(/** @type {PageTabMeta} */tab) {
 
         // Check if the tab is mobile or desktop only.
-        if ($settings.mobile && tab.desktopOnly)
+        if (settings.mobile && tab.desktopOnly)
             return;
-        if (!$settings.mobile && tab.mobileOnly)
+        if (!settings.mobile && tab.mobileOnly)
             return;
 
         if (tab.pageName === '') { // Not a sub page.
 
             var cont = self.parent.mainContainer;
-            if (tab.factbox && !$settings.mobile) {
+            if (tab.factbox && !settings.mobile) {
                 cont = self.parent.sideContainer;
                 self.parent.showSide();
             }

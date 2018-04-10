@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $settings = require('./settings'),
+var settings = require('./settings'),
     jss = require('./jss'),
     $util = require('./util'),
     $window = require('./providers/window'),
@@ -56,7 +56,7 @@ function animate() {
         id = window.setInterval(frame, 10),
         clientwidth = window.innerWidth || window.document.documentElement.clientWidth ||
             window.document.body.clientWidth,
-        barwidth = parseInt($settings.style.loader.barwidth, 10),
+        barwidth = parseInt(settings.style.loader.barwidth, 10),
         fromLeft = -barwidth;
 
     function frame() {

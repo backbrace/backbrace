@@ -5,7 +5,7 @@ var app = require('../app'),
     controller = require('../controller'),
     $icons = require('../providers/icons').get(),
     meta = require('../meta'),
-    $settings = require('../settings'),
+    settings = require('../settings'),
     $util = require('../util'),
     $ = require('../../external/jquery')(),
     HeaderComponent = require('./headercomponent'),
@@ -119,10 +119,10 @@ PageComponent.prototype.load = function(container) {
     this.mainContainer = $('<div class="main-container"></div>')
         .appendTo(container);
     this.sideContainer = $('<div class="side-container"></div>')
-        .appendTo(!$settings.mobile ? container : null);
+        .appendTo(!settings.mobile ? container : null);
 
     // Load header.
-    if ($settings.mobile) {
+    if (settings.mobile) {
 
         // Move the container over so we can animate it in.
         this.mainContainer.css('left', '100vw');
@@ -166,14 +166,14 @@ PageComponent.prototype.load = function(container) {
             // Load into main or side container?
             var cont = self.mainContainer;
             if ((self.settings.factbox === true || page.factbox)
-                && !$settings.mobile)
+                && !settings.mobile)
                 cont = self.sideContainer;
 
             // Load the window.
             self.window.load(cont);
 
             // Add the page to the windows toolbar.
-            if (!$settings.mobile && $settings.windowMode && !self.settings.hasParent) {
+            if (!settings.mobile && settings.windowMode && !self.settings.hasParent) {
                 app.addWindowToToolbar(self.id);
             }
 
@@ -240,7 +240,7 @@ PageComponent.prototype.show = function() {
  */
 PageComponent.prototype.hide = function() {
 
-    if ($settings.mobile) {
+    if (settings.mobile) {
         this.animateOut();
         return this;
     }
@@ -283,7 +283,7 @@ PageComponent.prototype.showSide = function() {
 
 PageComponent.prototype.animateIn = function() {
     var self = this;
-    if (!$settings.mobile)
+    if (!settings.mobile)
         return this;
     self.mainContainer.animate({
         left: '0px'
@@ -296,7 +296,7 @@ PageComponent.prototype.animateIn = function() {
 
 PageComponent.prototype.animateOut = function() {
     var self = this;
-    if (!$settings.mobile)
+    if (!settings.mobile)
         return;
     self.header.navbar.removeClass('fixed');
     self.mainContainer.removeClass('pad');

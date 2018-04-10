@@ -6,7 +6,7 @@
 'use strict';
 
 var code = require('./code'),
-    $settings = require('./settings'),
+    settings = require('./settings'),
     http = require('./http');
 
 /**
@@ -18,7 +18,7 @@ function page(name) {
     return code.block(
         function() {
             // Get the page from a JSON file.
-            return http.get($settings.meta.dir + 'pages/' + name + '.json');
+            return http.get(settings.meta.dir + 'pages/' + name + '.json');
         }
     );
 }

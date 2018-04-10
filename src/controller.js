@@ -7,7 +7,7 @@
 
 var app = require('./app'),
     package = require('./package'),
-    $settings = require('./settings'),
+    settings = require('./settings'),
     $util = require('./util'),
     controllers = {};
 
@@ -55,7 +55,7 @@ function load(name) {
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
         var $ = require('../external/jquery')(),
             d = $.Deferred();
-        package.loadScript($settings.meta.dir + 'controllers/' + name,
+        package.loadScript(settings.meta.dir + 'controllers/' + name,
             function() {
                 d.resolve();
             },

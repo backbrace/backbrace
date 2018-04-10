@@ -1,7 +1,7 @@
 'use strict';
 
 var $icons = require('../providers/icons').get(),
-    $settings = require('../settings'),
+    settings = require('../settings'),
     $util = require('../util'),
     $ = require('../../external/jquery')();
 
@@ -90,15 +90,15 @@ HeaderComponent.prototype.load = function(container) {
         // Add a menu.
         this.menu = $('<div class="menu">'
             + '<div class="menu-brand">'
-            + (!$settings.mobile && $settings.style.images.menuLogo !== '' ?
-                '<img class="menu-logo" src="' + $settings.style.images.menuLogo + '" />' :
+            + (!settings.mobile && settings.style.images.menuLogo !== '' ?
+                '<img class="menu-logo" src="' + settings.style.images.menuLogo + '" />' :
                 '')
             + '</div>'
             + '<ul id="mnuMain" /></div>').appendTo(this.container);
 
         // Add profile image.
         this.profileImage = $('<img class="circle-img profile-img" />')
-            .appendTo($settings.mobile ? $('.menu-brand') : $('.navbar-inner'));
+            .appendTo(settings.mobile ? $('.menu-brand') : $('.navbar-inner'));
 
         $(window.document).on('click', function(event) {
             if (!$(event.target).closest('.menu-icon').length) {

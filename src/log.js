@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $settings = require('./settings'),
+var settings = require('./settings'),
     $util = require('./util'),
     $window = require('./providers/window');
 
@@ -81,7 +81,7 @@ function warning(msg) {
  * @returns {void}
  */
 function debug(msg) {
-    if ($settings.debug) {
+    if (settings.debug) {
         msg = $util.formatString.apply(null, arguments);
         write(msg, 'debug');
     }
