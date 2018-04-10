@@ -2,7 +2,7 @@
 
 var app = require('../app'),
     code = require('../code'),
-    $controller = require('../controller'),
+    controller = require('../controller'),
     $icons = require('../providers/icons').get(),
     $meta = require('../meta'),
     $settings = require('../settings'),
@@ -201,14 +201,14 @@ PageComponent.prototype.load = function(container) {
 
             // Get the page contoller (from file).
             if (self.page.controller !== '')
-                return $controller.load(self.page.controller);
+                return controller.load(self.page.controller);
         },
 
         function executeController() {
 
             // Execute the controller.
             if (self.page.controller !== '')
-                $controller.get(self.page.controller)(self);
+                controller.get(self.page.controller)(self);
 
             // Show the page.
             self.show();

@@ -2,7 +2,7 @@
 
 var app = require('./app'),
     code = require('./code'),
-    $controller = require('./controller'),
+    controller = require('./controller'),
     $log = require('./log'),
     $settings = require('./settings'),
     $util = require('./util'),
@@ -32,7 +32,7 @@ window['Jumpstart'] = {
     logObject: $log.object,
 
     // Controller module.
-    controller: $controller.create,
+    controller: controller.create,
 
     // App module.
     start: app.start,
