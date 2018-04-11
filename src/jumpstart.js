@@ -16,11 +16,11 @@ window['Jumpstart'] = {
     /**
      * Get/Set the application settings.
      * @memberof module:Jumpstart
-     * @param {Settings} [settings] Settings to set.
+     * @param {Settings} [newsettings] Settings to set.
      * @returns {Settings} Returns the app settings.
      */
-    settings: function(settings) {
-        util.extend(settings, settings);
+    settings: function(newsettings) {
+        util.extend(settings, newsettings);
         return settings;
     },
 
