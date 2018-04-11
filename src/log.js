@@ -7,7 +7,7 @@
 
 var settings = require('./settings'),
     util = require('./util'),
-    $window = require('./providers/window');
+    windowprovider = require('./providers/window');
 
 /**
  * Write to the console.
@@ -18,7 +18,7 @@ var settings = require('./settings'),
  */
 function write(msg, type) {
 
-    var window = $window.get(),
+    var window = windowprovider.get(),
         dte = new Date();
 
     // Add date and time to string.
@@ -96,7 +96,7 @@ function debug(msg) {
  */
 function object(obj) {
     obj = obj || {};
-    var window = $window.get();
+    var window = windowprovider.get();
     if (window.console && window.console.dir) {
         write(obj, 'dir');
         return;

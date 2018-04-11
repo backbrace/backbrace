@@ -8,7 +8,7 @@
 var settings = require('./settings'),
     jss = require('./jss'),
     util = require('./util'),
-    $window = require('./providers/window'),
+    windowprovider = require('./providers/window'),
     progressbar,
     progressbarbg,
     progressblocker,
@@ -52,7 +52,7 @@ var settings = require('./settings'),
  */
 function animate() {
 
-    var window = $window.get(),
+    var window = windowprovider.get(),
         id = window.setInterval(frame, 10),
         clientwidth = window.innerWidth || window.document.documentElement.clientWidth ||
             window.document.body.clientWidth,
@@ -80,7 +80,7 @@ function animate() {
  */
 function start() {
 
-    var window = $window.get();
+    var window = windowprovider.get();
 
     if (!fadingOut) {
         inProgress = true;
@@ -111,7 +111,7 @@ function stop() {
  */
 function fadeOut() {
 
-    var window = $window.get(),
+    var window = windowprovider.get(),
         op = 1;
 
     fadingOut = true;
@@ -137,7 +137,7 @@ function fadeOut() {
  */
 function createStyle() {
 
-    var window = $window.get(),
+    var window = windowprovider.get(),
         css = jss.compile(style),
         headElement = window.document.head || window.document.getElementsByTagName('head')[0],
         styleElement = window.document.createElement('style');
@@ -160,7 +160,7 @@ function show() {
     if (inProgress)
         return;
 
-    var window = $window.get();
+    var window = windowprovider.get();
 
     // Compile and add the style
     if (!styleAdded)

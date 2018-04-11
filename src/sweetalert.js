@@ -6,7 +6,7 @@
 'use strict';
 
 var util = require('./util'),
-    $window = require('./providers/window'),
+    windowprovider = require('./providers/window'),
     swal = require('../external/swal'),
     queue = [],
     isOpen = false,
@@ -15,7 +15,7 @@ var util = require('./util'),
 
 //Overwrite the close function.
 swal.close = function() {
-    var window = $window.get();
+    var window = windowprovider.get();
     isClosing = true;
     originalClose();
     isOpen = false;

@@ -6,7 +6,7 @@ var app = require('./app'),
     log = require('./log'),
     settings = require('./settings'),
     util = require('./util'),
-    $window = require('./providers/window');
+    windowprovider = require('./providers/window');
 
 /**
  * @module Jumpstart
@@ -41,7 +41,7 @@ window['Jumpstart'] = {
 
     // Window provider.
     setWindow: function(val) {
-        $window.set(val);
+        windowprovider.set(val);
     }
 
 };

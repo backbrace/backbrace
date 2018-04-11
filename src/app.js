@@ -12,7 +12,7 @@ var $alert = require('./providers/alert'),
     log = require('./log'),
     package = require('./package'),
     util = require('./util'),
-    $window = require('./providers/window'),
+    windowprovider = require('./providers/window'),
     progress = require('./progress'),
     header = null,
     /** @type {JQuery} */
@@ -134,7 +134,7 @@ function ready(func) {
  */
 function start() {
 
-    var window = $window.get();
+    var window = windowprovider.get();
 
     // Add font css.
     util.addElement('link', {

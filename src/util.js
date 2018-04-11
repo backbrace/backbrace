@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $window = require('./providers/window'),
+var windowprovider = require('./providers/window'),
   uid = 1,
   timeouts = [],
   messageName = 'ztm',
@@ -31,7 +31,7 @@ function nextID() {
  * @returns {boolean} `True` if the current environment is HTML5 compatable.
  */
 function html5Check() {
-  var window = $window.get();
+  var window = windowprovider.get();
   return typeof window.document.addEventListener !== 'undefined';
 }
 
@@ -145,7 +145,7 @@ function forEach(obj, iterator, context) {
  * @returns {void}
  */
 function bindMessageEvent() {
-  var window = $window.get();
+  var window = windowprovider.get();
   window.addEventListener('message', function(event) {
     if (event.source === window && event.data === messageName) {
       event.stopPropagation();
@@ -169,7 +169,7 @@ function clearTimeouts() {
  * @returns {void}
  */
 function setZeroTimeout(fn) {
-  var window = $window.get();
+  var window = windowprovider.get();
   timeouts.push(fn);
   window.postMessage(messageName, '*');
 }
@@ -190,7 +190,7 @@ function parseDate(str) {
  */
 function addElement(type, attributes, parentElement) {
 
-  var window = $window.get(),
+  var window = windowprovider.get(),
     element = window.document.createElement(type);
 
   if (attributes)
@@ -206,7 +206,7 @@ function addElement(type, attributes, parentElement) {
  * @returns {number} Width of the window.
  */
 function width() {
-  var window = $window.get();
+  var window = windowprovider.get();
   return window.innerWidth || window.document.documentElement.clientWidth ||
     window.document.body.clientWidth;
 }

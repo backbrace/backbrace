@@ -5,26 +5,26 @@
  */
 'use strict';
 
-var $window = require('./window');
+var windowprovider = require('./window');
 
 var instance = {
 
     message: function(msg, callback, title) {
-        var window = $window.get();
+        var window = windowprovider.get();
         window.alert(msg);
         if (callback)
             callback();
     },
 
     confirm: function(msg, callback, title, yescaption, nocaption) {
-        var window = $window.get(),
+        var window = windowprovider.get(),
             ret = window.confirm(msg);
         if (callback)
             callback(ret);
     },
 
     error: function(msg) {
-        var window = $window.get();
+        var window = windowprovider.get();
         // Add error to body if it is loaded...
         if (window.document.body) {
             window.document.body.innerHTML = '<div style="padding: 30px; ' +
