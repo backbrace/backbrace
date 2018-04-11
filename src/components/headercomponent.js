@@ -1,6 +1,6 @@
 'use strict';
 
-var $icons = require('../providers/icons').get(),
+var icons = require('../providers/icons').get(),
     settings = require('../settings'),
     util = require('../util'),
     $ = require('../../external/jquery')();
@@ -78,7 +78,7 @@ HeaderComponent.prototype.load = function(container) {
     // Setup the menu icon.
     this.menuIcon = $('<div class="menu-icon" data-ripple></div>')
         .appendTo(this.navbar.children())
-        .html($icons.get(this.settings.menuIcon, 30))
+        .html(icons.get(this.settings.menuIcon, 30))
         .ripple();
 
     // Setup title bar.

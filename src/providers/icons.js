@@ -6,6 +6,7 @@
  */
 'use strict';
 
+/** @type {IconsInstance} */
 var instance = {
     get: function(name, size) {
 
@@ -23,7 +24,7 @@ var instance = {
 
 /**
  * Get the icon provider instance.
- * @returns {Object} Returns the icon provider instance.
+ * @returns {IconsInstance} Returns the icon provider instance.
  */
 function get() {
     return instance;

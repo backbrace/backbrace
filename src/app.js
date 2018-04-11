@@ -323,9 +323,9 @@ function loadPage(name, settings) {
  * @returns {void}
  */
 function addWindowToToolbar(id) {
-    var $icons = require('./providers/icons').get(),
+    var icons = require('./providers/icons').get(),
         $ = require('../external/jquery')(),
-        closeBtn = $($icons.get('close'))
+        closeBtn = $(icons.get('close'))
             .click(function() {
                 closePage(id);
             })

@@ -1,7 +1,7 @@
 'use strict';
 
 var code = require('../code'),
-    $icons = require('../providers/icons').get(),
+    icons = require('../providers/icons').get(),
     settings = require('../settings'),
     util = require('../util'),
     $ = require('../../external/jquery')();
@@ -118,7 +118,7 @@ WindowComponent.prototype.setTitle = function(title) {
 WindowComponent.prototype.addAction = function(action) {
     var id = this.id + 'action' + util.nextID();
     var btn = $('<div id="' + id + '" class="action-button unselectable" ' +
-        'data-ripple>' + $icons.get(action.icon) + ' ' + (action.text || action.name) + '</div>');
+        'data-ripple>' + icons.get(action.icon) + ' ' + (action.text || action.name) + '</div>');
     if (action.classname)
         btn.addClass(action.classname);
     btn.ripple();

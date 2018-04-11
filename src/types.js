@@ -21,6 +21,12 @@
  * @property {function(string):void} error Show an error message box.
  */
 
+ /**
+  * Icons instance.
+  * @typedef IconsInstance
+  * @property {function(string,number):string} get Get an icon by name.
+  */
+
 /**
  * App configuration.
  * @typedef AppConfig

@@ -3,7 +3,7 @@
 var app = require('../app'),
     code = require('../code'),
     controller = require('../controller'),
-    $icons = require('../providers/icons').get(),
+    icons = require('../providers/icons').get(),
     meta = require('../meta'),
     settings = require('../settings'),
     util = require('../util'),
@@ -263,7 +263,7 @@ PageComponent.prototype.setTitle = function(title) {
     this.title = title;
     this.window.setTitle(title);
     $('#win' + this.id + '>span').html(util.formatString('{0} {1}',
-        $icons.get(this.page.icon),
+        icons.get(this.page.icon),
         title
     ));
     if (this.header && !this.settings.first)
