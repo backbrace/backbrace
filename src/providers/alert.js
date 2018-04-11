@@ -7,6 +7,7 @@
 
 var windowprovider = require('./window');
 
+/** @type {AlertInstance} */
 var instance = {
 
     message: function(msg, callback, title) {
@@ -37,8 +38,7 @@ var instance = {
 
 /**
  * Get the alert provider instance.
- * @memberof module:$alert
- * @returns {Object} Returns the alert provider instance.
+ * @returns {AlertInstance} Returns the alert provider instance.
  */
 function get() {
     return instance;
@@ -46,7 +46,7 @@ function get() {
 
 /**
  * Set the alert provider instance.
- * @param {Object} ref Alert provider instance to set.
+ * @param {AlertInstance} ref Alert provider instance to set.
  * @returns {void}
  */
 function set(ref) {

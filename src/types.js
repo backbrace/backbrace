@@ -13,6 +13,14 @@
  * @property {string} full Full version number. eg: 0.1.0
  */
 
+ /**
+ * Alert instance.
+ * @typedef AlertInstance
+ * @property {function(string,Function,string):void} message Show a message box.
+ * @property {function(string,Function,string,string,string):void} confirm Show a confirmation box.
+ * @property {function(string):void} error Show an error message box.
+ */
+
 /**
  * App configuration.
  * @typedef AppConfig

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-var $alert = require('./providers/alert'),
+var alertprovider = require('./providers/alert'),
     code = require('./code'),
     settings = require('./settings'),
     jss = require('./jss'),
@@ -33,7 +33,7 @@ var $alert = require('./providers/alert'),
  */
 function message(msg, callbackFn, title) {
 
-    var alert = $alert.get();
+    var alert = alertprovider.get();
 
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
@@ -58,7 +58,7 @@ function message(msg, callbackFn, title) {
  */
 function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
-    var alert = $alert.get();
+    var alert = alertprovider.get();
 
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
@@ -80,7 +80,7 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
  */
 function error(err) {
 
-    var alert = $alert.get(),
+    var alert = alertprovider.get(),
         msg = '';
 
     // Get the message.
@@ -218,7 +218,7 @@ function start() {
                 .appendTo($('head'));
 
             // Lets upgrade alerts...
-            $alert.set({
+            alertprovider.set({
                 message: sweetalert.show,
                 confirm: function(msg, callback, title, yescaption, nocaption) {
                     sweetalert.show(msg, function() {
