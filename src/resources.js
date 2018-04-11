@@ -1,13 +1,13 @@
 /**
- * Package manager module. Handles the loading of external packages.
- * @module package
+ * Resource manager module. Handles the loading of external resources.
+ * @module resources
  * @private
  */
 'use strict';
 
 var log = require('./log'),
     util = require('./util'),
-    $window = require('./providers/window'),
+    windowprovider = require('./providers/window'),
     packages = [],
     loadedPackages = [],
     loadedComponents = [];
@@ -21,7 +21,7 @@ var log = require('./log'),
  */
 function loadScript(url, onsuccess, onerror) {
 
-    var window = $window.get();
+    var window = windowprovider.get();
 
     log.debug('Loading script: ' + url);
 
@@ -43,7 +43,7 @@ function loadScript(url, onsuccess, onerror) {
  */
 function loadCSS(url, onsuccess, onerror) {
 
-    var window = $window.get();
+    var window = windowprovider.get();
 
     log.debug('Loading css: ' + url);
 

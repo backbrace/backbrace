@@ -10,7 +10,7 @@ var $alert = require('./providers/alert'),
     settings = require('./settings'),
     jss = require('./jss'),
     log = require('./log'),
-    package = require('./package'),
+    resources = require('./resources'),
     util = require('./util'),
     windowprovider = require('./providers/window'),
     progress = require('./progress'),
@@ -190,7 +190,7 @@ function start() {
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Load JQuery.
-    package.loadScript(settings.packages.jQuery(), function() {
+    resources.loadScript(settings.packages.jQuery(), function() {
 
         // JQuery wasn't loaded :(
         if (typeof jQuery === 'undefined')
@@ -204,9 +204,9 @@ function start() {
         }
 
         // Load all other packages.
-        package.add(settings.packages.jQueryUI());
-        package.add(settings.packages.common());
-        package.load(function() {
+        resources.add(settings.packages.jQueryUI());
+        resources.add(settings.packages.common());
+        resources.load(function() {
 
             var $ = require('../external/jquery')(),
                 sweetalert = require('./sweetalert');
