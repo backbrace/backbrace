@@ -123,9 +123,7 @@ function error(err) {
  * @returns {void}
  */
 function ready(func) {
-    readyFunc = function() {
-        code.thread(func);
-    };
+    readyFunc = func;
 }
 
 /**
@@ -205,41 +203,41 @@ function start() {
         }
 
         // Load startup packages.
-        resources.add(packages.startup());
-        resources.load(function() {
+        code.thread(function() {
 
-            var $ = require('../external/jquery')(),
-                sweetalert = require('./sweetalert');
+            resources.add(packages.startup());
+            resources.load(function() {
 
-            // Compile JSS and load into a style tag.
-            var css = jss.compile(settings.jss);
-            $('<style>')
-                .append(css)
-                .appendTo($('head'));
+                var $ = require('../external/jquery')(),
+                    sweetalert = require('./sweetalert');
 
-            // Lets upgrade alerts...
-            alertprovider.set({
-                message: sweetalert.show,
-                confirm: function(msg, callback, title, yescaption, nocaption) {
-                    sweetalert.show(msg, function() {
-                        callback(true);
-                    });
-                },
-                error: function(msg) {
-                    sweetalert.show(msg, null, 'Application Error');
-                }
-            });
+                // Compile JSS and load into a style tag.
+                var css = jss.compile(settings.jss);
+                $('<style>')
+                    .append(css)
+                    .appendTo($('head'));
 
-            code.thread(function() {
+                // Lets upgrade alerts...
+                alertprovider.set({
+                    message: sweetalert.show,
+                    confirm: function(msg, callback, title, yescaption, nocaption) {
+                        sweetalert.show(msg, function() {
+                            callback(true);
+                        });
+                    },
+                    error: function(msg) {
+                        sweetalert.show(msg, null, 'Application Error');
+                    }
+                });
 
                 load($('body'));
 
                 progress.hide();
-                if (readyFunc) readyFunc();
+                if (readyFunc)
+                    return readyFunc();
 
-            });
-
-        }, packageError);
+            }, packageError);
+        });
 
     }, function() {
 

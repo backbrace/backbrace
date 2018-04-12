@@ -5,7 +5,8 @@
  */
 'use strict';
 
-var log = require('./log'),
+var code = require('./code'),
+    log = require('./log'),
     util = require('./util'),
     windowprovider = require('./providers/window'),
     packages = [],
@@ -83,6 +84,31 @@ function add(pack) {
  * @returns {void}
  */
 function load(onsuccess, onerror) {
+    var $ = require('../external/jquery')();
+    code.insert(
+        function() {
+            'inserted';
+            var d = $.Deferred();
+            loadpackages(function() {
+                d.resolve();
+            }, onerror);
+            return d.promise();
+        },
+        function() {
+            'inserted';
+            onsuccess();
+        }
+    );
+}
+
+/**
+ * Load pending packages (private).
+ * @private
+ * @param {Function} onsuccess On success function.
+ * @param {Function} onerror On error function.
+ * @returns {void}
+ */
+function loadpackages(onsuccess, onerror) {
 
     var $ = require('../external/jquery')(),
         urls = packages.shift(),
@@ -106,14 +132,14 @@ function load(onsuccess, onerror) {
     $.each(scripts, function(i, script) {
         loadScript(script, function() {
             if (++loadedResources === urls.length)
-                load(onsuccess, onerror);
+                loadpackages(onsuccess, onerror);
         }, onerror);
     });
 
     $.each(styles, function(i, style) {
         loadCSS(style, function() {
             if (++loadedResources === urls.length)
-                load(onsuccess, onerror);
+                loadpackages(onsuccess, onerror);
         }, onerror);
     });
 }
