@@ -14,8 +14,6 @@ var code = require('../code'),
  */
 function WindowComponent(options) {
 
-    $ = $ || require('../../external/jquery')();
-
     this.options = {
         style: 'window-width-full',
         hasParent: false,
@@ -30,9 +28,10 @@ function WindowComponent(options) {
     this.id = util.nextID();
     this.visible = false;
     this.hidden = false;
-    this.actions = {};
     /** @type {JQuery} */
     this.main = null;
+    /** @type {JQuery} */
+    this.toolbar = null;
 }
 
 /**
@@ -68,11 +67,12 @@ WindowComponent.prototype.load = function(container) {
     }
 
     this.main = $('<div class="window-main" />');
+    this.toolbar = $('<div />');
 
     $('<div id="window' + this.id + '" class="window" />')
         .addClass(this.options.style)
         .append(showTitle ? titlebar : null)
-        .append('<div id="actions' + this.id + '" class="actions-bar unselectable" />')
+        .append(this.toolbar)
         .append(this.main)
         .appendTo(container);
 
@@ -113,33 +113,6 @@ WindowComponent.prototype.hide = function() {
 WindowComponent.prototype.setTitle = function(title) {
     $('#title' + this.id).html(title);
     return this;
-};
-
-/**
- * Add an action button to the window.
- * @param {PageActionMeta} action Window action.
- * @returns {WindowComponent} Returns itself for chaining.
- */
-WindowComponent.prototype.addAction = function(action) {
-    var id = this.id + 'action' + util.nextID();
-    var btn = $('<div id="' + id + '" class="action-button unselectable" ' +
-        'data-ripple>' + icons.get(action.icon) + ' ' + (action.text || action.name) + '</div>');
-    if (action.classname)
-        btn.addClass(action.classname);
-    btn.ripple();
-    $('#actions' + this.id).append(btn);
-    this.actions[action.name] = btn;
-    return this;
-};
-
-/**
- * Get a window action button by name.
- * @param {string} name Name of the button to get.
- * @returns {JQuery} Button as a `JQuery` object. If the button is not found, `null`
- * is returned.
- */
-WindowComponent.prototype.action = function(name) {
-    return this.actions[name] || null;
 };
 
 module.exports = WindowComponent;

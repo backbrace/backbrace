@@ -26,6 +26,13 @@ module.exports = {
   'body': {
     margin: '0px'
   },
+  '.mobile-app': {
+    margin: '0',
+    'overflow-x': 'visible',
+    '-webkit-text-size-adjust': '100%',
+    '-ms-text-size-adjust': 'none',
+    '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
+  },
   '.header': {
     display: 'block'
   },
@@ -185,15 +192,37 @@ module.exports = {
   '.title-icon:hover': {
     color: '#000'
   },
-  '.actions-bar': {
+  '.desktop-app .actions-bar': {
     'padding-bottom': '5px'
   },
-  '.action-button': {
+  '.desktop-app .action-button': {
     display: 'inline-block',
     'font-size': '12px',
     padding: '5px',
     margin: '2px',
     cursor: 'pointer'
+  },
+  '.mobile-app .actions-bar': {
+    position: 'fixed',
+    bottom: '-999px',
+    'background-color': '#2c3e50',
+    left: '0px',
+    width: '100vw',
+    'box-sizing': 'border-box',
+    height: 'auto',
+    color: 'white',
+    'z-index': '29001'
+  },
+  '.mobile-app .action-button': {
+    'border-width': '0px',
+    padding: '10px',
+    'line-height': '21px',
+    'font-size': '10px',
+    'text-align': 'center',
+    width: '25vw',
+    'box-sizing': 'border-box',
+    height: '60px',
+    display: 'inline-block'
   },
   '.action-button:hover': {
     background: '%colors:hover%',

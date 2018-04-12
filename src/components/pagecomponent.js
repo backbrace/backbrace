@@ -8,6 +8,7 @@ var app = require('../app'),
     settings = require('../settings'),
     util = require('../util'),
     $ = require('../../external/jquery')(),
+    ActionsComponent = require('./actionscomponent'),
     HeaderComponent = require('./headercomponent'),
     WindowComponent = require('./windowcomponent');
 
@@ -70,6 +71,11 @@ function PageComponent(name, options) {
     this.window = new WindowComponent({});
 
     /**
+     * Page actions component.
+     */
+    this.actions = new ActionsComponent();
+
+    /**
      * The component that renders over the entire window.
      * @type {Component}
      */
@@ -96,6 +102,8 @@ PageComponent.prototype.unload = function() {
     // Unload sub components.
     this.pageComponent.unload();
     this.pageComponent = null;
+    this.actions.unload();
+    this.actions = null;
     this.window.unload();
     this.window = null;
     if (this.header)
@@ -185,8 +193,9 @@ PageComponent.prototype.load = function(container) {
             };
 
             // Add actions.
+            self.actions.load(self.window.toolbar);
             $.each(page.actions, function(i, action) {
-                self.window.addAction(action);
+                self.actions.addAction(action, self.runAction);
             });
 
             // Load the page component.
@@ -218,6 +227,21 @@ PageComponent.prototype.load = function(container) {
 };
 
 /**
+ * Run a page action.
+ * @param {PageActionMeta} action Action meta data.
+ * @param {Function} func Function to run.
+ * @returns {void}
+ */
+PageComponent.prototype.runAction = function(action, func) {
+
+    code.thread(
+        func ? function() {
+            return func();
+        } : null
+    );
+};
+
+/**
  * Show the page.
  * @returns {PageComponent} Returns itself for chaining.
  */
@@ -226,7 +250,7 @@ PageComponent.prototype.show = function() {
     this.window.show();
     $('#win' + this.id).addClass('active');
 
-    // Show the page component.
+    // Show components.
     this.pageComponent.show();
 
     this.animateIn();
@@ -241,6 +265,7 @@ PageComponent.prototype.show = function() {
 PageComponent.prototype.hide = function() {
 
     if (settings.mobile) {
+        this.actions.hide();
         this.animateOut();
         return this;
     }
@@ -248,7 +273,7 @@ PageComponent.prototype.hide = function() {
     this.window.hide();
     $('#win' + this.id).removeClass('active');
 
-    // Hide the page component.
+    // Hide components.
     this.pageComponent.hide();
 
     return this;
@@ -290,6 +315,7 @@ PageComponent.prototype.animateIn = function() {
     }, null, null, function() {
         self.header.navbar.addClass('fixed');
         self.mainContainer.addClass('pad');
+        self.actions.show();
     });
     return this;
 };
