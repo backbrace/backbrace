@@ -20,6 +20,8 @@ function noop() {
 
 /**
  * Get the next unique id.
+ * @method id
+ * @memberof module:js
  * @returns {number} Returns a unique ID.
  */
 function nextID() {

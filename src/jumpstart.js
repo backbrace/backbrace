@@ -24,6 +24,9 @@ window['js'] = {
         return settings;
     },
 
+    // Utility module.
+    id: util.nextID,
+
     // Log module.
     logInfo: log.info,
     logWarning: log.warning,

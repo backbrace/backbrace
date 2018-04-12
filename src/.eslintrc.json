@@ -3,13 +3,9 @@
   "extends": "../.eslintrc-browser.json",
 
   "globals": {
-    
-    // Browser.    
     "window": false,
-
-    // CommonJS.
+    "js": false,
     "module": false,
     "require": false
-
   }
 }
