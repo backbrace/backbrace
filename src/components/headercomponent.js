@@ -9,17 +9,17 @@ var icons = require('../providers/icons').get(),
  * Header component.
  * @class
  * @private
- * @param {Object} settings Header settings.
+ * @param {Object} options Header options.
  */
-function HeaderComponent(settings) {
+function HeaderComponent(options) {
 
-    this.settings = {
+    this.options = {
         menuIcon: 'menu',
         attachMenu: true
     };
 
-    // Merge settings.
-    $.extend(this.settings, settings);
+    // Merge options.
+    $.extend(this.options, options);
 
     this.id = util.nextID();
 
@@ -78,14 +78,14 @@ HeaderComponent.prototype.load = function(container) {
     // Setup the menu icon.
     this.menuIcon = $('<div class="menu-icon" data-ripple></div>')
         .appendTo(this.navbar.children())
-        .html(icons.get(this.settings.menuIcon, 30))
+        .html(icons.get(this.options.menuIcon, 30))
         .ripple();
 
     // Setup title bar.
     this.titleBar = $('<div class="navbar-brand unselectable cuttext">'
         + this.title + '</div>').appendTo(this.navbar.children());
 
-    if (this.settings.attachMenu) {
+    if (this.options.attachMenu) {
 
         // Add a menu.
         this.menu = $('<div class="menu">'

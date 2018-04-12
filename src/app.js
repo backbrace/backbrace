@@ -199,7 +199,7 @@ function start() {
         function packageError() {
             var url = this.src || this.href || '';
             error('Unable to load ' + url +
-                '<br/><br/><a href="" onclick="$js.window.location.reload();">' +
+                '<br/><br/><a href="" onclick="window.location.reload();">' +
                 'Click here to reload</a>');
         }
 
@@ -287,16 +287,16 @@ function load(container) {
  * Load a page.
  * @memberof module:Jumpstart
  * @param {string} name Name of the page to load.
- * @param {Object} [settings] Page settings.
+ * @param {Object} [options] Page options.
  * @returns {void}
  */
-function loadPage(name, settings) {
+function loadPage(name, options) {
 
     var PageComponent = require('./components/pagecomponent'),
-        pge = new PageComponent(name, settings || {});
+        pge = new PageComponent(name, options || {});
 
-    pge.settings.first = Object.keys(pages).length === 0;
-    if (pge.settings.first && settings.mobile)
+    pge.options.first = Object.keys(pages).length === 0;
+    if (pge.options.first && settings.mobile)
         pge.header = header;
 
     code.thread(

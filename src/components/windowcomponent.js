@@ -10,13 +10,13 @@ var code = require('../code'),
  * Window component.
  * @class
  * @private
- * @param {Object} settings Window settings.
+ * @param {Object} options Window options.
  */
-function WindowComponent(settings) {
+function WindowComponent(options) {
 
     $ = $ || require('../../external/jquery')();
 
-    this.settings = {
+    this.options = {
         style: 'window-width-full',
         hasParent: false,
         closeBtn: true,
@@ -24,8 +24,8 @@ function WindowComponent(settings) {
         onClose: null
     };
 
-    // Merge settings.
-    $.extend(this.settings, settings);
+    // Merge options.
+    $.extend(this.options, options);
 
     this.id = util.nextID();
     this.visible = false;
@@ -50,23 +50,23 @@ WindowComponent.prototype.unload = function() {
 WindowComponent.prototype.load = function(container) {
 
     var self = this,
-        showTitle = !settings.mobile || this.settings.hasParent,
+        showTitle = !settings.mobile || this.options.hasParent,
         titlebar = $('<div class="title-bar unselectable" />');
 
     if (showTitle)
         titlebar.append('<span id="title' + this.id + '" class="title ' +
-            (this.settings.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
+            (this.options.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
 
-    if (this.settings.closeBtn === true && !this.settings.hasParent && !settings.mobile) {
+    if (this.options.closeBtn === true && !this.options.hasParent && !settings.mobile) {
         $('<i class="mdi mdi-close unselectable title-icon"></i>')
             .appendTo(titlebar)
             .click(function() {
-                self.settings.onClose();
+                self.options.onClose();
             });
     }
 
     $('<div id="window' + this.id + '" class="window" />')
-        .addClass(this.settings.style)
+        .addClass(this.options.style)
         .append(showTitle ? titlebar : null)
         .append('<div id="actions' + this.id + '" class="actions-bar unselectable" />')
         .appendTo(container);
@@ -112,7 +112,7 @@ WindowComponent.prototype.setTitle = function(title) {
 
 /**
  * Add an action button to the window.
- * @param {PageActionMeta} action Window action settings
+ * @param {PageActionMeta} action Window action.
  * @returns {WindowComponent} Returns itself for chaining.
  */
 WindowComponent.prototype.addAction = function(action) {

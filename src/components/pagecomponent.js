@@ -16,9 +16,9 @@ var app = require('../app'),
  * @class
  * @private
  * @param {string} name Page name.
- * @param {Object} settings Page Settings.
+ * @param {Object} options Page options.
  */
-function PageComponent(name, settings) {
+function PageComponent(name, options) {
 
     /**
      * Header component (mobile only).
@@ -45,17 +45,17 @@ function PageComponent(name, settings) {
     this.title = '';
 
     /**
-     * Page component settings.
+     * Page component options.
      */
-    this.settings = {
+    this.options = {
         title: null,
         factbox: false,
         hasParent: false,
         first: false
     };
 
-    // Merge settings.
-    $.extend(this.settings, settings);
+    // Merge options.
+    $.extend(this.options, options);
 
     /**
      * Page meta data.
@@ -165,7 +165,7 @@ PageComponent.prototype.load = function(container) {
 
             // Load into main or side container?
             var cont = self.mainContainer;
-            if ((self.settings.factbox === true || page.factbox)
+            if ((self.options.factbox === true || page.factbox)
                 && !settings.mobile)
                 cont = self.sideContainer;
 
@@ -173,14 +173,14 @@ PageComponent.prototype.load = function(container) {
             self.window.load(cont);
 
             // Add the page to the windows toolbar.
-            if (!settings.mobile && settings.windowMode && !self.settings.hasParent) {
+            if (!settings.mobile && settings.windowMode && !self.options.hasParent) {
                 app.addWindowToToolbar(self.id);
             }
 
-            self.setTitle(self.settings.title || page.caption);
+            self.setTitle(self.options.title || page.caption);
 
             // Add close function.
-            self.window.settings.onClose = function() {
+            self.window.options.onClose = function() {
                 app.closePage(self.id);
             };
 
@@ -266,7 +266,7 @@ PageComponent.prototype.setTitle = function(title) {
         icons.get(this.page.icon),
         title
     ));
-    if (this.header && !this.settings.first)
+    if (this.header && !this.options.first)
         this.header.setTitle(title);
     return this;
 };
