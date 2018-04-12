@@ -13,20 +13,10 @@ var code = require('../code'),
  * @param {PageComponent} parent Parent page component.
  */
 function CardComponent(parent) {
-
     this.id = util.nextID();
-
-    /**
-     * Parent page component.
-     * @type {PageComponent}
-     */
     this.parent = parent;
-
-    /**
-     * Sub windows.
-     * @type {WindowComponent[]}
-     */
     this.subwindows = {};
+    this.controls = {};
 }
 
 /**
@@ -40,6 +30,10 @@ CardComponent.prototype.unload = function() {
         win.unload();
     });
     this.subwindows = null;
+    util.forEach(this.controls, function unloadControls(/** @type {Component} */cont) {
+        cont.unload();
+    });
+    this.controls = null;
 };
 
 /**
@@ -115,7 +109,8 @@ CardComponent.prototype.loadFields = function() {
             var Control = require('./controls/' + comp + '.js');
 
             /** @type {Component} */
-            var cont = new Control();
+            var cont = new Control(self, field);
+            self.controls[field.name] = cont;
             return cont.load(self.parent.window.main);
         }
     });
