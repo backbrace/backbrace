@@ -59,7 +59,8 @@ WindowComponent.prototype.load = function(container) {
             (this.options.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
 
     if (this.options.closeBtn === true && !this.options.hasParent && !settings.mobile) {
-        $('<i class="mdi mdi-close unselectable title-icon"></i>')
+        $(icons.get('close'))
+            .addClass('unselectable title-icon')
             .appendTo(titlebar)
             .click(function() {
                 self.options.onClose();
