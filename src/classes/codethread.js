@@ -10,6 +10,7 @@ var log = require('../log'),
  * @param {Function} func Thread function to execute.
  */
 function CodeThread(func) {
+    this.id = util.nextID();
     this.func = func;
     this.queue = [];
 }
@@ -123,7 +124,7 @@ CodeThread.prototype.run = function(callback) {
 
     var self = this;
 
-    log.debug(util.formatString('Started Thread: #{0}.', this.id));
+    log.debug(util.formatString('Started Thread', this.id));
 
     this.createQueue(
 
@@ -136,6 +137,33 @@ CodeThread.prototype.run = function(callback) {
         }
 
     );
+};
+
+CodeThread.prototype.insert = function() {
+
+    //Create a queue if one does not exist.
+    if (this.queue.length == 0)
+        this.queue[this.queue.length] = [];
+
+    var currQueue = this.queue[this.queue.length - 1];
+
+    //Find insert point in current block.
+    var index = 0;
+    for (index = 1; index < currQueue.length; index++) {
+        var method = currQueue[index];
+        if (method != null)
+            if (method.toString().indexOf("'inserted';") == -1)
+                break;
+    }
+
+    if (index == 0)
+        index += 1;
+
+    //Add the async functions to the existing queue.
+    for (var i = 0; i < arguments.length; i++) {
+        currQueue.splice(index, 0, arguments[i]);
+        index += 1;
+    };
 };
 
 module.exports = CodeThread;

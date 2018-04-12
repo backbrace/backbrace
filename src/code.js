@@ -56,6 +56,20 @@ function block() {
 }
 
 /**
+ * Insert code into the current codeblock.
+ * @returns {void}
+ */
+function insert() {
+
+    var app = require('./app');
+
+    if (!currentThread)
+        app.error('Attempted to insert into a codeblock without a thread');
+
+    CodeThread.prototype.insert.apply(currentThread, arguments);
+}
+
+/**
  * Loop through an array using `code.block`.
  * @param {Array} obj Array to iterate through.
  * @param {Function} iterator Iterator function to call.
@@ -117,5 +131,6 @@ module.exports = {
     block: block,
     each: each,
     thread: thread,
-    reset: reset
+    reset: reset,
+    insert: insert
 };
