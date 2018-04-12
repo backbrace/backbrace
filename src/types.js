@@ -118,6 +118,7 @@
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
  * @property {string} component Custom component to use for the field.
+ * @property {boolean} password If `true` display a password field.
  * @property {boolean} desktopOnly Only show in desktop mode.
  * @property {boolean} mobileOnly Only show in mobile mode.
  */

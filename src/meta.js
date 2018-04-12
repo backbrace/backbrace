@@ -29,7 +29,8 @@ var code = require('./code'),
             type: 'Text',
             component: '',
             desktopOnly: false,
-            mobileOnly: false
+            mobileOnly: false,
+            password: false
         },
         /** @type {PageActionMeta} */
         pageaction: {
