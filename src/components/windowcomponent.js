@@ -31,6 +31,8 @@ function WindowComponent(options) {
     this.visible = false;
     this.hidden = false;
     this.actions = {};
+    /** @type {JQuery} */
+    this.main = null;
 }
 
 /**
@@ -65,10 +67,13 @@ WindowComponent.prototype.load = function(container) {
             });
     }
 
+    this.main = $('<div class="window-main" />');
+
     $('<div id="window' + this.id + '" class="window" />')
         .addClass(this.options.style)
         .append(showTitle ? titlebar : null)
         .append('<div id="actions' + this.id + '" class="actions-bar unselectable" />')
+        .append(this.main)
         .appendTo(container);
 
     return this;
@@ -83,7 +88,7 @@ WindowComponent.prototype.show = function() {
     this.visible = true;
 
     if (!this.hidden)
-        $('#window' + this.id).slideDown(300);
+        $('#window' + this.id).show();
 
     return this;
 };
