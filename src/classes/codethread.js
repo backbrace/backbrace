@@ -142,7 +142,7 @@ CodeThread.prototype.run = function(callback) {
 CodeThread.prototype.insert = function() {
 
     //Create a queue if one does not exist.
-    if (this.queue.length == 0)
+    if (this.queue.length === 0)
         this.queue[this.queue.length] = [];
 
     var currQueue = this.queue[this.queue.length - 1];
@@ -151,19 +151,19 @@ CodeThread.prototype.insert = function() {
     var index = 0;
     for (index = 1; index < currQueue.length; index++) {
         var method = currQueue[index];
-        if (method != null)
-            if (method.toString().indexOf("'inserted';") == -1)
+        if (method !== null)
+            if (method.toString().indexOf('\'inserted\';') === -1)
                 break;
     }
 
-    if (index == 0)
+    if (index === 0)
         index += 1;
 
     //Add the async functions to the existing queue.
     for (var i = 0; i < arguments.length; i++) {
         currQueue.splice(index, 0, arguments[i]);
         index += 1;
-    };
+    }
 };
 
 module.exports = CodeThread;

@@ -14,7 +14,7 @@
 
   "globals": {
     "window": false,
-    "Jumpstart": false
+    "js": false
   }
 
 }

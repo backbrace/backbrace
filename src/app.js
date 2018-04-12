@@ -118,7 +118,7 @@ function error(err) {
 
 /**
  * Execute a function after the app is loaded.
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {Function} func Function to execute.
  * @returns {void}
  */
@@ -128,7 +128,7 @@ function ready(func) {
 
 /**
  * Start the app.
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @returns {void}
  */
 function start() {
@@ -283,7 +283,7 @@ function load(container) {
 
 /**
  * Load a page.
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {string} name Name of the page to load.
  * @param {Object} [options] Page options.
  * @returns {void}

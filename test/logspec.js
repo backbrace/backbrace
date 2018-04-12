@@ -13,17 +13,17 @@ describe('log module', function() {
         error = function() { logger += 'error;'; };
         debug = function() { logger += 'debug;'; };
 
-        Jumpstart.settings({debug:true});
+        js.settings({debug:true});
     });
 
     afterEach(function() {
         // Reset the window.
-        Jumpstart.setWindow(window);
-        Jumpstart.settings({debug:false});
+        js.setWindow(window);
+        js.settings({debug:false});
     });
 
     it('should use console if present', function() {
-        Jumpstart.setWindow({
+        js.setWindow({
             navigator: { userAgent: window.navigator.userAgent },
             document: {},
             console: {
@@ -34,37 +34,37 @@ describe('log module', function() {
                 debug: debug
             }
         });
-        Jumpstart.logInfo('message');
-        Jumpstart.logWarning('message');
-        Jumpstart.logError('message');
-        Jumpstart.logDebug('message');
+        js.logInfo('message');
+        js.logWarning('message');
+        js.logError('message');
+        js.logDebug('message');
         expect(logger).toBe('info;warn;error;debug;');
     });
 
     it('should use console.log() if other not present', function() {
-        Jumpstart.setWindow({
+        js.setWindow({
             navigator: { userAgent: window.navigator.userAgent },
             document: {},
             console: {
                 log: log
             }
         });
-        Jumpstart.logInfo('message');
-        Jumpstart.logWarning('message');
-        Jumpstart.logError('message');
-        Jumpstart.logDebug('message');
+        js.logInfo('message');
+        js.logWarning('message');
+        js.logError('message');
+        js.logDebug('message');
         expect(logger).toBe('log;log;log;log;');
     });
 
     it('should use noop if there is no console', function() {
-        Jumpstart.setWindow({
+        js.setWindow({
             navigator: { userAgent: window.navigator.userAgent },
             document: {}
         });
-        Jumpstart.logInfo('message');
-        Jumpstart.logWarning('message');
-        Jumpstart.logError('message');
-        Jumpstart.logDebug('message');
+        js.logInfo('message');
+        js.logWarning('message');
+        js.logError('message');
+        js.logDebug('message');
         expect(logger).toBe('');
     });
 });

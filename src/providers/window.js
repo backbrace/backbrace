@@ -18,7 +18,7 @@ function get() {
 /**
  * Set the window provider instance.
  * @method setWindow
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {(Window|Object)} val Window provider instance to set.
  * @returns {void}
  */

@@ -9,13 +9,13 @@ var app = require('./app'),
     windowprovider = require('./providers/window');
 
 /**
- * @module Jumpstart
+ * @module js
  */
-window['Jumpstart'] = {
+window['js'] = {
 
     /**
      * Get/Set the application settings.
-     * @memberof module:Jumpstart
+     * @memberof module:js
      * @param {Settings} [newsettings] Settings to set.
      * @returns {Settings} Returns the app settings.
      */

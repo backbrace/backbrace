@@ -14,7 +14,7 @@ var app = require('./app'),
 /**
  * Create a controller.
  * @method controller
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {string} name Name of the controller to create.
  * @param {function(*)} definition Definition of the controller.
  * @returns {void};

@@ -1,5 +1,5 @@
 'use strict';
 
-Jumpstart.controller('test.js', function(page) {
+js.controller('test.js', function(page) {
 
 });

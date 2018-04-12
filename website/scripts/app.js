@@ -1,6 +1,6 @@
 'use strict';
 
-Jumpstart.settings({
+js.settings({
     minify: false,
     debug: true,
     style: {
@@ -11,8 +11,8 @@ Jumpstart.settings({
     }
 });
 
-Jumpstart.ready(function(){
-    Jumpstart.loadPage('test');
+js.ready(function(){
+    js.loadPage('test');
 });
 
-Jumpstart.start();
+js.start();

@@ -14,7 +14,7 @@
     "tabs": [
         {
             "name": "Tab1",
-            "options": "factbox"
+            "factbox": true
         },
         {
             "name": "Tab2"

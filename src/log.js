@@ -40,7 +40,7 @@ function write(msg, type) {
 /**
  * Log an info message.
  * @method logInfo
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -52,7 +52,7 @@ function info(msg) {
 /**
  * Log an error message.
  * @method logError
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -64,7 +64,7 @@ function error(msg) {
 /**
  * Log a warning message.
  * @method logWarning
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -76,7 +76,7 @@ function warning(msg) {
 /**
  * Log a debug message (If debug mode is turned on).
  * @method logDebug
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -90,7 +90,7 @@ function debug(msg) {
 /**
  * Log an object.
  * @method logObject
- * @memberof module:Jumpstart
+ * @memberof module:js
  * @param {Object} obj Object to log.
  * @returns {void}
  */
