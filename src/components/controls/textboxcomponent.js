@@ -2,7 +2,8 @@
 
 var code = require('../../code'),
     settings = require('../../settings'),
-    util = require('../../util');
+    util = require('../../util'),
+    $ = require('../../../external/jquery')();
 
 /**
  * Textbox component class.
