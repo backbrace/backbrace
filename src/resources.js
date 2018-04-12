@@ -9,8 +9,7 @@ var log = require('./log'),
     util = require('./util'),
     windowprovider = require('./providers/window'),
     packages = [],
-    loadedPackages = [],
-    loadedComponents = [];
+    loadedPackages = [];
 
 /**
  * Load an external script (native).

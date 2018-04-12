@@ -10,10 +10,11 @@ var alertprovider = require('./providers/alert'),
     settings = require('./settings'),
     jss = require('./jss'),
     log = require('./log'),
+    packages = require('./packages'),
+    progress = require('./progress'),
     resources = require('./resources'),
     util = require('./util'),
     windowprovider = require('./providers/window'),
-    progress = require('./progress'),
     header = null,
     /** @type {JQuery} */
     main = null,
@@ -190,7 +191,7 @@ function start() {
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Load JQuery.
-    resources.loadScript(settings.packages.jQuery(), function() {
+    resources.loadScript(packages.jQuery(), function() {
 
         // JQuery wasn't loaded :(
         if (typeof jQuery === 'undefined')
@@ -203,9 +204,8 @@ function start() {
                 'Click here to reload</a>');
         }
 
-        // Load all other packages.
-        resources.add(settings.packages.jQueryUI());
-        resources.add(settings.packages.common());
+        // Load startup packages.
+        resources.add(packages.startup());
         resources.load(function() {
 
             var $ = require('../external/jquery')(),
