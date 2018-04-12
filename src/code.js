@@ -94,7 +94,7 @@ function each(obj, iterator, context) {
         );
     };
 
-    if (func.length > 0)
+    if (obj.length > 0)
         return block(
             function() {
                 return func(0);
