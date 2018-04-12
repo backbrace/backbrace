@@ -159,6 +159,9 @@ module.exports = {
   '.desktop-app .window': {
     'vertical-align': 'top'
   },
+  '.window-main': {
+    padding: '10px'
+  },
   '.title-bar': {
     'background': '%colors:title%',
     color: '%colors:titletext%',
@@ -254,6 +257,21 @@ module.exports = {
     display: 'none',
     width: '30%',
     'vertical-align': 'top'
+  },
+  '.control-container': {
+    width: '100%'
+  },
+  '.control-label': {
+    display: 'inline-block',
+    width: '50%',
+    'font-size': '14px'
+  },
+  '.control-input': {
+    display: 'inline-block',
+    width: '50%',
+    'font-size': '14px',
+    padding: '3px',
+    border: '1px solid gainsboro'
   },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
