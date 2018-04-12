@@ -18,8 +18,18 @@ var code = require('./code'),
             controller: '',
             icon: '',
             factbox: false,
+            fields: [],
             actions: [],
             tabs: []
+        },
+        /** @type {PageFieldMeta} */
+        pagefield:{
+            name: '',
+            caption: '',
+            type: 'Text',
+            component: '',
+            desktopOnly: false,
+            mobileOnly: false
         },
         /** @type {PageActionMeta} */
         pageaction: {
@@ -57,21 +67,29 @@ function page(name) {
             // Merge the json with default values.
             var $ = require('../external/jquery')();
 
+            json.caption = json.caption || json.name;
+
             // Extend the page.
             /** @type {PageMeta} */
-            json.caption = json.caption || json.name;
             var pge = $.extend({}, defaults.page, json);
+
+            // Extend the page fields.
+            pge.fields = [];
+            util.forEach(json.fields, function(/** @type {PageFieldMeta} */field) {
+                field.caption = field.caption || field.name;
+                pge.fields.push($.extend({}, defaults.pagefield, field));
+            });
 
             // Extend the page actions.
             pge.actions = [];
-            util.forEach(json.actions, function(action) {
+            util.forEach(json.actions, function(/** @type {PageActionMeta} */action) {
                 action.text = action.text || action.name;
                 pge.actions.push($.extend({}, defaults.pageaction, action));
             });
 
             // Extend the page tabs.
             pge.tabs = [];
-            util.forEach(json.tabs, function(tab) {
+            util.forEach(json.tabs, function(/** @type {PageTabMeta} */tab) {
                 tab.text = tab.text || tab.name;
                 pge.tabs.push($.extend({}, defaults.pagetab, tab));
             });

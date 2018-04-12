@@ -2,6 +2,11 @@
     "caption": "Test Page",
     "controller": "test.js",
     "icon": "tablet-ipad",
+    "fields": [
+        {
+            "name": "Field 1"
+        }
+    ],
     "actions": [
         {
             "name": "New"

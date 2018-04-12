@@ -112,6 +112,16 @@
  * @property {StyleConfig} style Style config.
  */
 
+ /**
+ * @typedef PageFieldMeta
+ * @property {string} name Name of the field.
+ * @property {string} caption Caption of the field.
+ * @property {string} type  Data type for the field.
+ * @property {string} component Custom component to use for the field.
+ * @property {boolean} desktopOnly Only show in desktop mode.
+ * @property {boolean} mobileOnly Only show in mobile mode.
+ */
+
 /**
  * @typedef PageActionMeta
  * @property {string} name Name of the action.
@@ -140,6 +150,7 @@
  * @property {string} controller Page controller.
  * @property {string} icon Icon to use for the page.
  * @property {boolean} factbox Display in the factbox area.
+ * @property {PageFieldMeta[]} fields Page fields.
  * @property {PageActionMeta[]} actions Page actions.
  * @property {PageTabMeta[]} tabs Page tabs.
  */

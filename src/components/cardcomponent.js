@@ -26,7 +26,7 @@ function CardComponent(parent) {
      * Sub windows.
      * @type {WindowComponent[]}
      */
-    this.subwindows = [];
+    this.subwindows = {};
 }
 
 /**
@@ -51,6 +51,9 @@ CardComponent.prototype.load = function() {
     return code.block(
         function loadPageTabs() {
             return self.loadTabs();
+        },
+        function loadPageFields() {
+            return self.loadFields();
         }
     );
 };
@@ -61,9 +64,10 @@ CardComponent.prototype.load = function() {
  */
 CardComponent.prototype.loadTabs = function() {
 
-    var self = this;
+    var self = this,
+        page = self.parent.page;
 
-    return code.each(self.parent.page.tabs, function loadTab(/** @type {PageTabMeta} */tab) {
+    return code.each(page.tabs, function loadTab(/** @type {PageTabMeta} */tab) {
 
         // Check if the tab is mobile or desktop only.
         if (settings.mobile && tab.desktopOnly)
@@ -84,7 +88,35 @@ CardComponent.prototype.loadTabs = function() {
                 hasParent: true
             });
             win.load(cont).setTitle(tab.text);
-            self.subwindows.push(win);
+            self.subwindows[tab.name] = win;
+        }
+    });
+};
+
+CardComponent.prototype.loadFields = function() {
+
+    var self = this,
+        page = self.parent.page;
+
+    return code.each(page.fields, function loadField(/** @type {PageFieldMeta} */field) {
+
+        // Check if the field is mobile or desktop only.
+        if (settings.mobile && field.desktopOnly)
+            return;
+        if (!settings.mobile && field.mobileOnly)
+            return;
+
+        var comp = field.component;
+        if (comp === '') {
+            comp = 'textboxcomponent';
+        }
+        if (comp.indexOf('.js') === -1) {
+
+            var Control = require('./controls/' + comp + '.js');
+
+            /** @type {Component} */
+            var cont = new Control();
+            return cont.load(self.parent.window.main);
         }
     });
 };
