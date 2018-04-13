@@ -35,10 +35,11 @@ TextboxComponent.prototype.load = function(container) {
         type = 'password"';
     this.container = $('<div class="control-container">')
         .appendTo(container);
-    this.label = $('<label class="control-label"></label>')
+    this.label = $('<label for="cont' + this.id + '" class="control-label"></label>')
         .text(this.field.caption)
         .appendTo(this.container);
-    this.control = $('<input type="' + type + '" class="control-input"></input>')
+    this.control = $('<input id="cont' + this.id + '" type="' + type +
+        '" class="control-input"></input>')
         .appendTo(this.container);
 };
 
