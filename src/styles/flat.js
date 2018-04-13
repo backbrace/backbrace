@@ -93,6 +93,8 @@ module.exports = {
     cursor: 'pointer',
     float: 'left',
     width: '50px',
+    height: '50px',
+    'max-height': '50px',
     padding: '5px',
     'box-sizing': 'border-box',
     'text-align': 'center'

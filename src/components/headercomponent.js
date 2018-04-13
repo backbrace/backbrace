@@ -78,7 +78,7 @@ HeaderComponent.prototype.load = function(container) {
     // Setup the menu icon.
     this.menuIcon = $('<div class="menu-icon" data-ripple></div>')
         .appendTo(this.navbar.children())
-        .html(icons.get(this.options.menuIcon, 30))
+        .html(icons.get(this.options.menuIcon, 35))
         .ripple();
 
     // Setup title bar.
