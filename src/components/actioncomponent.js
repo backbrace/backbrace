@@ -40,8 +40,8 @@ ActionComponent.prototype.load = function(container) {
     var self = this;
 
     this.button = $('<div id="' + this.id + '" class="action-button unselectable" ' +
-        'data-ripple>' + icons.get(this.action.icon, (settings.mobile ? 25 : null)) +
-        (settings.mobile ? '<br/>' : ' ') + this.action.text + '</div>');
+        'data-ripple>' + (settings.mobile ? icons.get(this.action.icon, 25) + '<br/>' : ' ') +
+        this.action.text + '</div>');
     if (settings.mobile)
         this.button.addClass('cuttext');
     if (this.action.className)

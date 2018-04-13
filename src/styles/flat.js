@@ -146,18 +146,6 @@ module.exports = {
     'padding-bottom': '0px',
     'min-height': '36px'
   },
-  '.main-windows-btn': {
-    display: 'inline-block',
-    padding: '4px',
-    margin: '3px 3px 0px 0px',
-    'background-color': '#FFF',
-    cursor: 'pointer',
-    border: '1px solid transparent',
-    'font-size': '13px'
-  },
-  '.main-windows-btn.active': {
-    border: '1px solid %colors:header%'
-  },
   '.window': {
     border: '1px solid #f1f1f1',
     'box-sizing': 'border-box',
@@ -169,7 +157,8 @@ module.exports = {
     'vertical-align': 'top'
   },
   '.window-main': {
-    padding: '10px'
+    padding: '10px',
+    'margin-top': '-20px'
   },
   '.title-bar': {
     'background': '%colors:title%',
@@ -197,12 +186,48 @@ module.exports = {
   '.desktop-app .actions-bar': {
     'padding-bottom': '5px'
   },
-  '.desktop-app .action-button': {
+  '.desktop-app .action-button,.main-windows-btn': {
+    'text-decoration': 'none',
+    color: '#000',
+    'background-color': '#FFF',
+    'text-align': 'center',
+    'letter-spacing': '.5px',
+    '-webkit-transition': 'background-color .2s ease-out',
+    transition: 'background-color .2s ease-out',
+    border: 'none',
+    'border-radius': '2px',
     display: 'inline-block',
+    height: '26px',
+    'line-height': '28px',
+    padding: '0 16px',
+    'text-transform': 'uppercase',
+    'vertical-align': 'middle',
+    '-webkit-tap-highlight-color': 'transparent',
+    margin: '5px',
     'font-size': '12px',
-    padding: '5px',
-    margin: '2px',
+    'font-weight': '400',
+    'box-shadow':
+      '0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2)',
     cursor: 'pointer'
+  },
+  '.action-button:hover': {
+    background: '%colors:hover%',
+    color: '%colors:hovertext%'
+  },
+  '.desktop-app .button-danger': {
+    color: '#FFF',
+    'background-color': '#F44336'
+  },
+  '.desktop-app .button-danger:hover': {
+    background: '#E53935'
+  },
+  '.main-windows-btn': {
+    height: '30px',
+    padding: '0 4px'
+  },
+  '.main-windows-btn.active': {
+    background: '%colors:hover%',
+    color: '%colors:hovertext%'
   },
   '.mobile-app .actions-bar': {
     position: 'fixed',
@@ -225,10 +250,6 @@ module.exports = {
     'box-sizing': 'border-box',
     height: '60px',
     display: 'inline-block'
-  },
-  '.action-button:hover': {
-    background: '%colors:hover%',
-    color: '%colors:hovertext%'
   },
   '.desktop-app .window-width-full': {
     margin: '5px 0px 0px 5px',
@@ -290,19 +311,36 @@ module.exports = {
     'vertical-align': 'top'
   },
   '.control-container': {
-    width: '100%'
+    width: '100%',
+    'font-size': '16px'
   },
   '.control-label': {
-    display: 'inline-block',
-    width: '50%',
-    'font-size': '14px'
+    display: 'block',
+    color: 'rgba(0, 0, 0, 0.54)',
+    'font-weight': '400',
+    'line-height': '15px',
+    'margin-top': '20px',
+    'font-size': '0.8rem'
   },
   '.control-input': {
-    display: 'inline-block',
-    width: '50%',
-    'font-size': '14px',
-    padding: '3px',
-    border: '1px solid gainsboro'
+    '-webkit-box-sizing': 'border-box',
+    'box-sizing': 'border-box',
+    display: 'block',
+    'background-color': 'transparent',
+    color: 'rgba(0, 0, 0, 0.87)',
+    border: 'none',
+    'border-bottom': '1px solid rgba(0, 0, 0, 0.26)',
+    outline: 'none',
+    width: '100%',
+    padding: '0',
+    'font-size': '1rem',
+    'line-height': 'inherit',
+    margin: '0px',
+    'min-height': '2.2em'
+  },
+  '.control-input:focus': {
+    'border-color': '#2196F3',
+    'border-width': '2px'
   },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
