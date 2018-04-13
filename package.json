@@ -1,5 +1,6 @@
 {
   "name": "jumpstartjs",
+  "version": "0.1.0",
   "branchVersion": "^0.1.0",
   "branchPattern": "0.1.*",
   "license": "MIT",
@@ -11,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ZoomLabs/jumpstart.js.git"
+    "url": "https://zoomapps.visualstudio.com/Zoom%20Apps/_git/Jumpstart.js"
   },
   "dependencies": {
     "grunt": "^1.0.1",
@@ -27,6 +28,7 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.1",
     "load-grunt-tasks": "^3.5.2",
+    "npm": "^5.8.0",
     "npm-run": "^4.1.2",
     "semver": "^5.4.1",
     "shelljs": "^0.7.8",
