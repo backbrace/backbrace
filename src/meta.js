@@ -37,7 +37,7 @@ var code = require('./code'),
             name: '',
             text: '',
             icon: '',
-            classname: '',
+            className: '',
             desktopOnly: false,
             mobileOnly: false
         },

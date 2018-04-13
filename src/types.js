@@ -128,7 +128,7 @@
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
- * @property {string} classname Classes to add to the button.
+ * @property {string} className Classes to add to the button.
  * @property {boolean} desktopOnly Only show in desktop mode.
  * @property {boolean} mobileOnly Only show in mobile mode.
  */

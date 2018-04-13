@@ -44,8 +44,8 @@ ActionComponent.prototype.load = function(container) {
         (settings.mobile ? '<br/>' : ' ') + this.action.text + '</div>');
     if (settings.mobile)
         this.button.addClass('cuttext');
-    if (this.action.classname)
-        this.button.addClass(this.action.classname);
+    if (this.action.className)
+        this.button.addClass(this.action.className);
     this.button.ripple().click(function() {
         self.onrun(self.action, self.onclick);
     });
