@@ -50,6 +50,25 @@ var settings = require('./settings'),
                     this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.css'
                 ]
             ];
+        },
+
+        /**
+         * JQGrid.
+         * @returns {Array.<string[]>} JQGrid scripts and CSS URLS.
+         */
+        jqgrid: function() {
+            if (settings.mobile) // Dont load in mobile.
+                return [];
+            var min = (settings.minify ? '.min' : '');
+            return [
+                [
+                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/en-au' + min + '.js'
+                ],
+                [
+                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/jqgrid' + min + '.js',
+                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/jqgrid' + min + '.css'
+                ]
+            ]
         }
     };
 
