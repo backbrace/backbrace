@@ -203,9 +203,10 @@ PageComponent.prototype.load = function(container) {
             });
 
             // Load the page component.
-            if (page.type === 'Card') {
-                var CardComponent = require('./cardcomponent');
-                self.pageComponent = new CardComponent(self);
+            var comp = page.component;
+            if (comp.indexOf('.js') === -1) {
+                var Control = require('./' + comp + '.js');
+                self.pageComponent = new Control(self);
                 return self.pageComponent.load();
             }
         },

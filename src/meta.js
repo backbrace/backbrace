@@ -14,7 +14,7 @@ var code = require('./code'),
         page: {
             name: '',
             caption: '',
-            type: 'Card',
+            component: 'cardcomponent',
             controller: '',
             icon: '',
             factbox: false,

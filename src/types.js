@@ -161,7 +161,7 @@
  * @typedef PageMeta
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
- * @property {string} type Type of page (`Card` or `List`).
+ * @property {string} component Component for the whole page (defaults to `CardComponent`).
  * @property {string} controller Page controller.
  * @property {string} icon Icon to use for the page.
  * @property {boolean} factbox Display in the factbox area.
