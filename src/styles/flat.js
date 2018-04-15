@@ -131,11 +131,12 @@ module.exports = {
     'border-spacing': '0px'
   },
   '.main': {
-    background: 'whitesmoke',
+    background: '#FFF',
     'margin-top': '50px',
     height: 'calc(100vh - 65px)'
   },
   '.mobile-app .main': {
+    background: 'whitesmoke',
     'margin-top': '0px',
     height: 'calc(100vh)'
   },
@@ -143,10 +144,8 @@ module.exports = {
     width: '100%',
     padding: '5px',
     display: 'inline-block',
-    'padding-bottom': '5px',
-    'min-height': '36px',
-    'border-bottom': '1px solid gainsboro',
-    background: '#FFF'
+    'padding-bottom': '0px',
+    'min-height': '36px'
   },
   '.window': {
     border: '1px solid #f1f1f1',
@@ -157,9 +156,7 @@ module.exports = {
   },
   '.desktop-app .window': {
     'vertical-align': 'top',
-    border: '1px solid gainsboro',
-    'border-left': 'none',
-    'border-top': 'none'
+    border: 'none'
   },
   '.window-main': {
     padding: '10px',
@@ -256,13 +253,25 @@ module.exports = {
     height: '60px',
     display: 'inline-block'
   },
-  '.window-width-full': {
+  '.desktop-app .window-width-full': {
+    margin: '5px 0px 0px 5px',
+    width: '100%',
+    'max-width': ['98%',
+      '-webkit-calc(100% - 10px)',
+      '-moz-calc(100% - 10px)',
+      'calc(100% - 10px)']
+  },
+  '.mobile-app .window-width-full': {
     width: '100%',
     'max-width': '100%'
   },
   '.desktop-app .window-width-half': {
+    margin: '5px 0px 0px 5px',
     width: '100%',
-    'max-width': '50%'
+    'max-width': ['48%',
+      '-webkit-calc(50% - 10px)',
+      '-moz-calc(50% - 10px)',
+      'calc(50% - 10px)']
   },
   '.mobile-app .window-width-half': {
     width: '100%',
