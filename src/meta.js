@@ -23,14 +23,18 @@ var code = require('./code'),
             tabs: []
         },
         /** @type {PageFieldMeta} */
-        pagefield:{
+        pagefield: {
             name: '',
             caption: '',
             type: 'Text',
             component: '',
+            tab: '',
+            hidden: false,
             desktopOnly: false,
             mobileOnly: false,
-            password: false
+            password: false,
+            leftColumn: false,
+            rightColumn: false
         },
         /** @type {PageActionMeta} */
         pageaction: {
@@ -46,6 +50,7 @@ var code = require('./code'),
             name: '',
             text: '',
             pageName: '',
+            icon: '',
             desktopOnly: false,
             mobileOnly: false,
             factbox: false

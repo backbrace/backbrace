@@ -162,6 +162,21 @@ module.exports = {
     padding: '10px',
     'margin-top': '-20px'
   },
+  '.window-column': {
+    width: '50%',
+    display: 'inline-block',
+    'vertical-align': 'top',
+    'padding-right': '30px',
+    'box-sizing': 'border-box'
+  },
+  '.mobile-app .window-column': {
+    width: '100%',
+    padding: '0'
+  },
+  '.single-column .window-column': {
+    width: '100%',
+    padding: '0'
+  },
   '.title-bar': {
     'background': '%colors:title%',
     color: '%colors:titletext%',
@@ -322,7 +337,7 @@ module.exports = {
     'font-weight': '400',
     'line-height': '15px',
     'margin-top': '20px',
-    'font-size': '0.8rem'
+    'font-size': '0.7rem'
   },
   '.control-input': {
     '-webkit-box-sizing': 'border-box',

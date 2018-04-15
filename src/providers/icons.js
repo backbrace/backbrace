@@ -8,7 +8,7 @@
 
 /** @type {IconsInstance} */
 var instance = {
-    get: function(name, size) {
+    get: function(name, size, color) {
 
         // Set defaults.
         name = name || 'alert';
@@ -18,7 +18,8 @@ var instance = {
         if (name.indexOf('mdi-') !== 0)
             name = 'mdi-' + name;
 
-        return '<i class="mdi ' + name + '" style="font-size: ' + size + 'px" />';
+        return '<i class="mdi ' + name + '" style="font-size: ' + size + 'px'
+            + (color ? ';color: ' + color : '') + '" />';
     }
 };
 

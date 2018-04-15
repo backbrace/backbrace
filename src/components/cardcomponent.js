@@ -16,6 +16,7 @@ function CardComponent(parent) {
     this.id = util.nextID();
     this.parent = parent;
     this.subwindows = {};
+    this.subpages = {};
     this.controls = {};
 }
 
@@ -30,6 +31,10 @@ CardComponent.prototype.unload = function() {
         win.unload();
     });
     this.subwindows = null;
+    util.forEach(this.subpages, function unloadControls(/** @type {PageComponent} */page) {
+        page.unload();
+    });
+    this.subpages = null;
     util.forEach(this.controls, function unloadControls(/** @type {Component} */cont) {
         cont.unload();
     });
@@ -43,11 +48,11 @@ CardComponent.prototype.unload = function() {
 CardComponent.prototype.load = function() {
     var self = this;
     return code.block(
+        function loadMainTab() {
+            return self.loadFields('');
+        },
         function loadPageTabs() {
             return self.loadTabs();
-        },
-        function loadPageFields() {
-            return self.loadFields();
         }
     );
 };
@@ -69,38 +74,70 @@ CardComponent.prototype.loadTabs = function() {
         if (!settings.mobile && tab.mobileOnly)
             return;
 
-        if (tab.pageName === '') { // Not a sub page.
+        var cont = self.parent.mainContainer,
+            classes = 'window-width-full';
+        if (tab.factbox && !settings.mobile) {
+            cont = self.parent.sideContainer;
+            classes = 'window-width-full single-column';
+            self.parent.showSide();
+        }
 
-            var cont = self.parent.mainContainer;
-            if (tab.factbox && !settings.mobile) {
-                cont = self.parent.sideContainer;
-                self.parent.showSide();
-            }
+        if (tab.pageName === '') { // Not a sub page.
 
             // Create the window.
             var win = new WindowComponent({
+                className: classes,
+                hasParent: true,
+                icon: tab.icon
+            });
+            win.load(cont)
+                .setTitle(tab.text);
+
+            self.subwindows[tab.name] = win;
+            return self.loadFields(tab.name);
+
+        } else {
+
+            // Create sub page.
+            var page = new PageComponent(tab.pageName, {
                 hasParent: true
             });
-            win.load(cont).setTitle(tab.text);
-            self.subwindows[tab.name] = win;
+            self.subpages[tab.name] = page;
+            return page.load(cont);
         }
     });
 };
 
-CardComponent.prototype.loadFields = function() {
+CardComponent.prototype.loadFields = function(tab) {
 
-    var self = this,
-        page = self.parent.page;
+    var $ = require('../../external/jquery')(),
+        self = this,
+        page = self.parent.page,
+        left = false,
+        fields = $.grep(page.fields, function(field) {
+            return field.tab === tab;
+        }),
+        half = Math.round(fields.length / 2);
 
-    return code.each(page.fields, function loadField(/** @type {PageFieldMeta} */field) {
+    return code.each(fields, function loadField(/** @type {PageFieldMeta} */field, i) {
 
         // Check if the field is mobile or desktop only.
-        if (settings.mobile && field.desktopOnly)
-            return;
-        if (!settings.mobile && field.mobileOnly)
-            return;
+        if ((settings.mobile && field.desktopOnly) ||
+            (!settings.mobile && field.mobileOnly))
+            field.hidden = true;
 
-        var comp = field.component;
+        var comp = field.component,
+            win = self.parent.window;
+
+        if (tab !== '' && self.subwindows[tab])
+            win = self.subwindows[tab];
+
+        left = false;
+        if (i + 1 <= half || field.leftColumn)
+            left = true;
+        if (field.rightColumn)
+            left = false;
+
         if (comp === '') {
             comp = 'textboxcomponent';
         }
@@ -111,7 +148,8 @@ CardComponent.prototype.loadFields = function() {
             /** @type {Component} */
             var cont = new Control(self, field);
             self.controls[field.name] = cont;
-            return cont.load(self.parent.window.main);
+            return cont.load(left ? win.leftColumn :
+                win.rightColumn);
         }
     });
 };
@@ -121,11 +159,19 @@ CardComponent.prototype.loadFields = function() {
  * @returns {CardComponent} Returns itself for chaining.
  */
 CardComponent.prototype.show = function() {
+
+    // Show the sub pages.
+    util.forEach(this.subpages,
+        function(/** @type {PageComponent} */page) {
+            page.show();
+        });
+
     // Show the sub windows.
     util.forEach(this.subwindows,
         function(/** @type {WindowComponent} */win) {
             win.show();
         });
+
     return this;
 };
 
@@ -134,11 +180,19 @@ CardComponent.prototype.show = function() {
  * @returns {CardComponent} Returns itself for chaining.
  */
 CardComponent.prototype.hide = function() {
+
+    // Hide the sub pages.
+    util.forEach(this.subpages,
+        function(/** @type {PageComponent} */page) {
+            page.hide();
+        });
+
     // Hide the sub windows.
     util.forEach(this.subwindows,
         function(/** @type {WindowComponent} */win) {
             win.hide();
         });
+
     return this;
 };
 

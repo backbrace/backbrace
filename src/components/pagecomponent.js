@@ -178,6 +178,10 @@ PageComponent.prototype.load = function(container) {
                 cont = self.sideContainer;
 
             // Load the window.
+            if (self.options.hasParent) {
+                self.window.options.hasParent = true;
+                self.window.options.icon = page.icon;
+            }
             self.window.load(cont);
 
             // Add the page to the windows toolbar.
@@ -288,7 +292,7 @@ PageComponent.prototype.setTitle = function(title) {
     this.title = title;
     this.window.setTitle(title);
     $('#win' + this.id + '>span').html(util.formatString('{0} {1}',
-        icons.get(this.page.icon,12),
+        icons.get(this.page.icon, 12),
         title
     ));
     if (this.header && !this.options.first)

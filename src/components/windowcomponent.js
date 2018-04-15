@@ -10,14 +10,16 @@ var code = require('../code'),
  * Window component.
  * @class
  * @private
- * @param {Object} options Window options.
+ * @param {WindowOptions} options Window options.
  */
 function WindowComponent(options) {
 
+    /** @type {WindowOptions} */
     this.options = {
-        style: 'window-width-full',
+        className: 'window-width-full',
         hasParent: false,
         closeBtn: true,
+        icon: null,
         /** @type {Function} */
         onClose: null
     };
@@ -30,6 +32,10 @@ function WindowComponent(options) {
     this.hidden = false;
     /** @type {JQuery} */
     this.main = null;
+    /** @type {JQuery} */
+    this.leftColumn = null;
+    /** @type {JQuery} */
+    this.rightColumn = null;
     /** @type {JQuery} */
     this.toolbar = null;
 }
@@ -71,11 +77,16 @@ WindowComponent.prototype.load = function(container) {
     this.toolbar = $('<div />');
 
     $('<div id="window' + this.id + '" class="window" />')
-        .addClass(this.options.style)
+        .addClass(this.options.className)
         .append(showTitle ? titlebar : null)
         .append(this.toolbar)
         .append(this.main)
         .appendTo(container);
+
+    this.leftColumn = $('<div class="window-column" />')
+        .appendTo(this.main);
+    this.rightColumn = $('<div class="window-column" />')
+        .appendTo(this.main);
 
     return this;
 };
@@ -112,7 +123,9 @@ WindowComponent.prototype.hide = function() {
  * @returns {WindowComponent} Returns itself for chaining.
  */
 WindowComponent.prototype.setTitle = function(title) {
-    $('#title' + this.id).html(title);
+    $('#title' + this.id).html(
+        (this.options.icon ? icons.get(this.options.icon, 14, '#666') + ' ' : '')
+        + title);
     return this;
 };
 

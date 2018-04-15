@@ -24,7 +24,7 @@
  /**
   * Icons instance.
   * @typedef IconsInstance
-  * @property {function(string,number):string} get Get an icon by name.
+  * @property {function(string,number,string):string} get Get an icon by name.
   */
 
 /**
@@ -113,14 +113,27 @@
  */
 
  /**
+  * @typedef WindowOptions
+  * @property {string} [className] Window class style.
+  * @property {string} [icon] Window icon.
+  * @property {Function} [onClose] On close function of the window.
+  * @property {boolean} [hasParent] If `true` sets the window as a child window.
+  * @property {boolean} [closeBtn] Add a close button to the window.
+  */
+
+ /**
  * @typedef PageFieldMeta
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
  * @property {string} component Custom component to use for the field.
+ * @property {string} tab Tab to show the field in.
+ * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} password If `true` display a password field.
  * @property {boolean} desktopOnly Only show in desktop mode.
  * @property {boolean} mobileOnly Only show in mobile mode.
+ * @property {boolean} leftColumn Force field to show in left column.
+ * @property {boolean} rightColumn Force field to show in right column.
  */
 
 /**
@@ -138,6 +151,7 @@
  * @property {string} name Name of the tab.
  * @property {string} text Caption of the tab.
  * @property {string} pageName Display a subpage in this tab.
+ * @property {string} icon Tab icon.
  * @property {boolean} desktopOnly Only show in desktop mode.
  * @property {boolean} mobileOnly Only show in mobile mode.
  * @property {boolean} factbox Display in the factbox area.
