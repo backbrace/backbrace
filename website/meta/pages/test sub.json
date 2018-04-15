@@ -1,0 +1,19 @@
+{
+    "caption": "Test Sub Page",
+    "component": "listcomponent",
+    "icon": "facebook-box",
+    "fields": [
+        {
+            "name": "Field 1"
+        },
+        {
+            "name": "Field 2",
+            "width": "400"
+        }
+    ],
+    "actions": [
+        {
+            "name": "New Line Action"
+        }
+    ]
+}

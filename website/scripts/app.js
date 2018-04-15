@@ -12,7 +12,7 @@ js.settings({
 });
 
 js.ready(function(){
-    js.loadPage('test');
+    js.loadPage('test sub');
 });
 
 js.start();

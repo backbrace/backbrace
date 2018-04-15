@@ -5,6 +5,24 @@
     "fields": [
         {
             "name": "Field 1"
+        },
+        {
+            "name": "Field 2"
+        },
+        {
+            "name": "Field 3"
+        },
+        {
+            "name": "Field 4",
+            "tab": "Tab1"
+        },
+        {
+            "name": "Field 5",
+            "tab": "Tab1"
+        },
+        {
+            "name": "Field 6",
+            "tab": "Tab1"
         }
     ],
     "actions": [
@@ -19,10 +37,12 @@
     "tabs": [
         {
             "name": "Tab1",
-            "factbox": true
+            "factbox": true,
+            "icon": "book"
         },
         {
-            "name": "Tab2"
+            "name": "Tab2",
+            "pageName": "test sub"
         }
     ]
 }
