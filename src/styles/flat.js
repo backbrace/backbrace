@@ -171,13 +171,13 @@ module.exports = {
     padding: '10px'
   },
   '.title': {
-    'font-size': '21px'
+    'font-size': '16px'
   },
   '.title.mobile': {
     'overflow-y': 'hidden'
   },
   '.title.alt': {
-    'font-size': '18px'
+    'font-size': '14px'
   },
   '.title-icon': {
     float: 'right',
