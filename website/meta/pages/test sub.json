@@ -1,5 +1,6 @@
 {
     "caption": "Test Sub Page",
+    "controller": "test.js",
     "component": "listcomponent",
     "icon": "facebook-box",
     "fields": [
@@ -8,12 +9,12 @@
         },
         {
             "name": "Field 2",
-            "width": "400"
+            "width": "600"
         }
     ],
     "actions": [
         {
-            "name": "New Line Action"
+            "name": "New"
         }
     ]
 }
