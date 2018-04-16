@@ -162,12 +162,13 @@ module.exports = {
   },
   '.window-main': {
     padding: '10px',
+    width: '100%',
+    'box-sizing': 'border-box',
     'margin-top': '-10px'
   },
   '.window-main.list-component': {
-    padding: '0',
-    'margin-top': '0',
-    'padding-left': '5px'
+    padding: '0 5px 0 5px',
+    'margin-top': '0'
   },
   '.window-column': {
     width: '50%',
@@ -366,9 +367,24 @@ module.exports = {
     'border-color': '#2196F3',
     'border-width': '2px'
   },
+  '.grid-container': {
+    'width': '100%',
+    overflow: 'auto',
+    border: '1px solid gainsboro'
+  },
+  /* JQuery UI Overrides */
+  '.ui-widget': {
+    'font-family': '%font:family%',
+    'font-size': '.8em',
+    'font-weight': '400'
+  },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
     'background-color': '%colors:alertbutton% !important',
     color: '%colors:alertbuttontext% !important'
+  },
+  /* JQGrid Overrides */
+  '.ui-jqgrid': {
+    border: '0'
   }
 };
