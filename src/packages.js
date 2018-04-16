@@ -65,11 +65,9 @@ var settings = require('./settings'),
             var min = (settings.minify ? '.min' : '');
             return [
                 [
-                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/en-au' + min + '.js'
-                ],
-                [
-                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/jqgrid' + min + '.js',
-                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/jqgrid' + min + '.css'
+                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/jquery.jqGrid' + min + '.js',
+                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/ui.jqgrid' + min + '.css',
+                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/i18n/grid.locale-en.js'
                 ]
             ];
         }
