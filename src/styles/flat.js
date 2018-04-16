@@ -162,6 +162,11 @@ module.exports = {
     padding: '10px',
     'margin-top': '-20px'
   },
+  '.window-main.list-component': {
+    padding: '0',
+    'margin-top': '0',
+    'padding-left': '5px'
+  },
   '.window-column': {
     width: '50%',
     display: 'inline-block',

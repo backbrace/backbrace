@@ -128,7 +128,9 @@
  * @property {string} type  Data type for the field.
  * @property {string} component Custom component to use for the field.
  * @property {string} tab Tab to show the field in.
+ * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
+ * @property {boolean} editable Readonly field.
  * @property {boolean} password If `true` display a password field.
  * @property {boolean} desktopOnly Only show in desktop mode.
  * @property {boolean} mobileOnly Only show in mobile mode.
