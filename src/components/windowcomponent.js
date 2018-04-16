@@ -31,6 +31,8 @@ function WindowComponent(options) {
     this.visible = false;
     this.hidden = false;
     /** @type {JQuery} */
+    this.container = null;
+    /** @type {JQuery} */
     this.main = null;
     /** @type {JQuery} */
     this.leftColumn = null;
@@ -76,7 +78,7 @@ WindowComponent.prototype.load = function(container) {
     this.main = $('<div class="window-main" />');
     this.toolbar = $('<div />');
 
-    $('<div id="window' + this.id + '" class="window" />')
+    this.container = $('<div id="window' + this.id + '" class="window" />')
         .addClass(this.options.className)
         .append(showTitle ? titlebar : null)
         .append(this.toolbar)

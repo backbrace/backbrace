@@ -50,6 +50,8 @@ interface JQueryJqGridColumn {
      */
     editable?: boolean;
 
+    editoptions?: object;
+
     edittype?: string;
 
     fixed?: boolean;

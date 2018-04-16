@@ -1,6 +1,7 @@
 'use strict';
 
 var app = require('../app'),
+    code = require('../code'),
     icons = require('../providers/icons').get(),
     packages = require('../packages'),
     packagemanager = require('../packagemanager'),
@@ -47,6 +48,48 @@ ListComponent.prototype.load = function() {
     }
 
     /**
+     * Remove the mandatory placeholder.
+     * @param {string} value Cell value.
+     * @returns {string} Converted cell value.
+     */
+    function mandatoryRevert(value) {
+        if (value && value.indexOf('Mandatory</span>') !== -1)
+            return '';
+        return value;
+    }
+
+    /**
+     * Find the input editor.
+     * @param {JQuery} elem Element to search.
+     * @returns {JQuery} Returns the editor if found.
+     */
+    function findInput(elem) {
+
+        for (var i = 0; i < elem.children().length; i++) {
+            if (elem.children()[i].nodeName === 'INPUT'
+                || elem.children()[i].nodeName === 'TEXTAREA') {
+                if (elem.children()[i].className !== 'noinput')
+                    return $(elem.children()[i]);
+            }
+            var v = findInput($(elem.children()[i]));
+            if (v !== null)
+                return v;
+        }
+
+        return null;
+    }
+
+    function customValue(elem, op, value) {
+        var editor = findInput($(elem));
+        if (op === 'set' && editor) {
+            editor.val(value);
+        }
+        if (!editor)
+            return null;
+        return editor.val();
+    }
+
+    /**
      * Add a column to the grid.
      * @param {PageFieldMeta} field Page field meta data.
      * @returns {void}
@@ -76,6 +119,29 @@ ListComponent.prototype.load = function() {
             align: (field.type === 'Integer' || field.type === 'Decimal' ? 'right' : 'left'),
             formatter: function(cellvalue, options, rowObject) {
                 return cellvalue;
+            },
+            editoptions: {
+                custom_element: function(value, options) {
+
+                    value = mandatoryRevert(value);
+
+                    var Control = require('./controls/textboxcomponent'),
+                        cont = new Control(self, field),
+                        span = $('<span>');
+
+                    code.thread(
+                        function() {
+                            cont.load(span);
+                        },
+                        function() {
+                            cont.control.val(value);
+                            cont.control.focus();
+                        }
+                    );
+
+                    return span;
+                },
+                custom_value: customValue
             }
         });
     }
@@ -118,16 +184,16 @@ ListComponent.prototype.load = function() {
 
             // Create the grid.
             self.grid = $('<table style="border: none"></table>');
-            self.container = $('<div />')
+            self.container = $('<div class="grid-container" />')
                 .append(self.grid)
                 .appendTo(self.parent.window.main);
 
             self.grid.jqGrid({
                 datatype: 'local',
                 data: [],
-                autowidth: false,
+                autowidth: true,
                 height: 'auto',
-                width: '100vw',
+                width: 'auto',
                 colNames: self.colNames,
                 colModel: self.columns,
                 shrinkToFit: false,
@@ -149,6 +215,15 @@ ListComponent.prototype.load = function() {
             self.grid.addRowData('RowId', [{ 'RowId': 4, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
             self.grid.addRowData('RowId', [{ 'RowId': 5, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
             self.grid.addRowData('RowId', [{ 'RowId': 6, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
+
+        } else {
+
+            // Create the grid.
+            self.grid = $('<table style="border: none"></table>');
+            self.container = $('<div />')
+                .append(self.grid)
+                .appendTo(self.parent.window.main);
+
         }
 
     }, packageError);
