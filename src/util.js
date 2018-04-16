@@ -43,7 +43,7 @@ function html5Check() {
  */
 function mobileCheck() {
   return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
-            .test(window.navigator.userAgent.toLowerCase());
+    .test(window.navigator.userAgent.toLowerCase());
 }
 
 /**
@@ -213,6 +213,48 @@ function width() {
     window.document.body.clientWidth;
 }
 
+/**
+ * Decode HTML.
+ * @param {string} str HTML string to decode.
+ * @returns {string} Returns the decoded string.
+ */
+var decodeHTML = (function() {
+
+  var window = windowprovider.get(),
+    element = window.document.createElement('textarea');
+
+  function decodeHTMLEntities(str) {
+    if (str && typeof str === 'string') {
+      str = str.replace(/</g, '&lt;');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+function sanitizeString(input) {
+
+  if (input === null || typeof input !== 'string') //Only sanitize strings.
+    return input;
+
+  //Decode loop.
+  var oldinput = '';
+  do {
+    oldinput = input;
+    input = decodeHTML(input);
+  } while (oldinput !== input);
+
+  return input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+    replace(/<[/!]*?[^<>]*?>/gi, '').
+    replace(/<style[^>]*?>.*?<\/style>/gi, '').
+    replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
+}
+
 // Bind the message event to the browser window.
 bindMessageEvent();
 
@@ -231,5 +273,7 @@ module.exports = {
   clearTimeouts: clearTimeouts,
   setZeroTimeout: setZeroTimeout,
   addElement: addElement,
-  width: width
+  width: width,
+  decodeHTML: decodeHTML,
+  sanitizeString: sanitizeString
 };

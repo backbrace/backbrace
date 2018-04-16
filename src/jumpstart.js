@@ -26,6 +26,8 @@ window['js'] = {
 
     // Utility module.
     id: util.nextID,
+    decodeHTML: util.decodeHTML,
+    sanitizeString: util.sanitizeString,
 
     // Log module.
     logInfo: log.info,
