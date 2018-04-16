@@ -33,6 +33,9 @@ var settings = require('./settings'),
             var min = (settings.minify ? '.min' : '');
             return [
                 [
+                    this.CDN.JUMPSTART + '/resetcss/2.0.0/reset.css'
+                ],
+                [
                     this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.js',
                     this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.css',
                     this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui.theme' + min + '.css'
