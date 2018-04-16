@@ -39,7 +39,8 @@ var flat = require('./styles/flat'),
             },
             font: {
                 url: 'https://labs.zoomapps.com.au/JumpstartCDN/fonts/roboto/roboto.css',
-                family: '\'Roboto\', sans-serif'
+                family: '\'Roboto\', sans-serif',
+                size: '16px'
             },
             images: {
                 logo: '',

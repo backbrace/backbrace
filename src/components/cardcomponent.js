@@ -98,12 +98,15 @@ CardComponent.prototype.loadTabs = function() {
 
         } else {
 
-            // Create sub page.
-            var page = new PageComponent(tab.pageName, {
-                hasParent: true
-            });
-            self.subpages[tab.name] = page;
-            return page.load(cont);
+            if (!settings.mobile) {
+
+                // Create sub page.
+                var page = new PageComponent(tab.pageName, {
+                    hasParent: true
+                });
+                self.subpages[tab.name] = page;
+                return page.load(cont);
+            }
         }
     });
 };

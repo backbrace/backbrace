@@ -24,7 +24,7 @@
  /**
   * Icons instance.
   * @typedef IconsInstance
-  * @property {function(string,number,string):string} get Get an icon by name.
+  * @property {function(string,string,string):string} get Get an icon by name.
   */
 
 /**

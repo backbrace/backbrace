@@ -293,7 +293,7 @@ PageComponent.prototype.setTitle = function(title) {
     this.title = title;
     this.window.setTitle(title);
     $('#win' + this.id + '>span').html(util.formatString('{0} {1}',
-        icons.get(this.page.icon, 12),
+        icons.get(this.page.icon),
         title
     ));
     if (this.header && !this.options.first)

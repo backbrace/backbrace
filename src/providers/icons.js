@@ -12,13 +12,13 @@ var instance = {
 
         // Set defaults.
         name = name || 'alert';
-        size = size || 15;
+        size = size || '1em';
 
         // Prepend mdi- if missing.
         if (name.indexOf('mdi-') !== 0)
             name = 'mdi-' + name;
 
-        return '<i class="mdi ' + name + '" style="font-size: ' + size + 'px'
+        return '<i class="mdi ' + name + '" style="font-size: ' + size
             + (color ? ';color: ' + color : '') + '" />';
     }
 };

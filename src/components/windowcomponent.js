@@ -124,7 +124,7 @@ WindowComponent.prototype.hide = function() {
  */
 WindowComponent.prototype.setTitle = function(title) {
     $('#title' + this.id).html(
-        (this.options.icon ? icons.get(this.options.icon, 14, '#666') + ' ' : '')
+        (this.options.icon ? icons.get(this.options.icon, null, '#666') + ' ' : '')
         + title);
     return this;
 };
