@@ -24,7 +24,8 @@ module.exports = {
     position: 'fixed'
   },
   'body': {
-    margin: '0px'
+    margin: '0px',
+    'font-family': '%font:family%'
   },
   '.mobile-app': {
     margin: '0',

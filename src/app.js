@@ -146,10 +146,6 @@ function start() {
         'content': settings.app.description
     }, window.document.head);
 
-    // Add font family to body tag.
-    util.addElement('style', {}, window.document.head)
-        .innerHTML = 'body{font-family: ' + settings.style.font.family + '}';
-
     // Set mobile mode.
     if (settings.autoSwitch && util.mobileCheck())
         settings.mobile = true;
