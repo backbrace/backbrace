@@ -2,7 +2,7 @@
 
 var app = require('../app'),
     packages = require('../packages'),
-    resources = require('../resources');
+    packagemanager = require('../packagemanager');
 
 /**
  * List component.
@@ -22,10 +22,10 @@ ListComponent.prototype.load = function() {
         app.error('Unable to load ' + url);
     }
 
-    resources.add(packages.jqgrid());
-    resources.load(function(){
+    packagemanager.add(packages.jqgrid());
+    packagemanager.load(function() {
 
-    },packageError);
+    }, packageError);
 
 };
 

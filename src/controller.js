@@ -6,7 +6,7 @@
 'use strict';
 
 var app = require('./app'),
-    resources = require('./resources'),
+    packagemanager = require('./packagemanager'),
     settings = require('./settings'),
     util = require('./util'),
     controllers = {};
@@ -55,7 +55,7 @@ function load(name) {
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
         var $ = require('../external/jquery')(),
             d = $.Deferred();
-        resources.loadScript(settings.meta.dir + 'controllers/' + name,
+        packagemanager.loadScript(settings.meta.dir + 'controllers/' + name,
             function() {
                 d.resolve();
             },

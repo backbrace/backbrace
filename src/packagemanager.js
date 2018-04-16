@@ -1,6 +1,6 @@
 /**
- * Resource manager module. Handles the loading of external resources.
- * @module resources
+ * Package manager module. Handles the loading of external packages.
+ * @module packagemanager
  * @private
  */
 'use strict';
@@ -114,7 +114,7 @@ function loadpackages(onsuccess, onerror) {
         urls = packages.shift(),
         styles = [],
         scripts = [],
-        loadedResources = 0;
+        totalLoaded = 0;
 
     onsuccess = onsuccess || util.noop;
 
@@ -131,14 +131,14 @@ function loadpackages(onsuccess, onerror) {
 
     $.each(scripts, function(i, script) {
         loadScript(script, function() {
-            if (++loadedResources === urls.length)
+            if (++totalLoaded === urls.length)
                 loadpackages(onsuccess, onerror);
         }, onerror);
     });
 
     $.each(styles, function(i, style) {
         loadCSS(style, function() {
-            if (++loadedResources === urls.length)
+            if (++totalLoaded === urls.length)
                 loadpackages(onsuccess, onerror);
         }, onerror);
     });

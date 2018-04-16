@@ -68,7 +68,7 @@ var settings = require('./settings'),
                     this.CDN.JUMPSTART + '/jqgrid/4.5.4/jqgrid' + min + '.js',
                     this.CDN.JUMPSTART + '/jqgrid/4.5.4/jqgrid' + min + '.css'
                 ]
-            ]
+            ];
         }
     };
 
