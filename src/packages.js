@@ -37,8 +37,7 @@ var settings = require('./settings'),
                 ],
                 [
                     this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.js',
-                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.css',
-                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui.theme' + min + '.css'
+                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.css'
                 ],
                 [
                     this.CDN.JUMPSTART + '/materialdesignicons/2.2.43/css/materialdesignicons'
