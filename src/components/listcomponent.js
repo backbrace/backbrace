@@ -58,35 +58,24 @@ ListComponent.prototype.load = function() {
         return value;
     }
 
-    /**
-     * Find the input editor.
-     * @param {JQuery} elem Element to search.
-     * @returns {JQuery} Returns the editor if found.
-     */
-    function findInput(elem) {
-
-        for (var i = 0; i < elem.children().length; i++) {
-            if (elem.children()[i].nodeName === 'INPUT'
-                || elem.children()[i].nodeName === 'TEXTAREA') {
-                if (elem.children()[i].className !== 'noinput')
-                    return $(elem.children()[i]);
-            }
-            var v = findInput($(elem.children()[i]));
-            if (v !== null)
-                return v;
-        }
-
-        return null;
-    }
-
     function customValue(elem, op, value) {
-        var editor = findInput($(elem));
+        var editor = util.findInput($(elem));
         if (op === 'set' && editor) {
             editor.val(value);
         }
         if (!editor)
             return null;
         return editor.val();
+    }
+
+    /**
+     * On key press event handler for cell editors.
+     * @param {JQuery.Event} ev Key press event.
+     * @returns {boolean} Returns `false` to cancel bubbling.
+     */
+    function onKeyPress(ev) {
+        ev.preventDefault();
+        return false;
     }
 
     /**
@@ -120,6 +109,7 @@ ListComponent.prototype.load = function() {
             formatter: function(cellvalue, options, rowObject) {
                 return cellvalue;
             },
+            /*eslint-disable camelcase*/
             editoptions: {
                 custom_element: function(value, options) {
 
@@ -129,20 +119,21 @@ ListComponent.prototype.load = function() {
                         cont = new Control(self, field),
                         span = $('<span>');
 
-                    code.thread(
-                        function() {
-                            cont.load(span);
-                        },
-                        function() {
-                            cont.control.val(value);
-                            cont.control.focus();
-                        }
-                    );
+                    cont.load(span);
+                    cont.control.val(value);
+                    cont.control.keydown(function(ev) {
+                        return onKeyPress(ev);
+                    });
+
+                    window.setTimeout(function() {
+                        cont.control.focus();
+                    }, 10);
 
                     return span;
                 },
                 custom_value: customValue
             }
+            /*eslint-enable camelcase*/
         });
     }
 

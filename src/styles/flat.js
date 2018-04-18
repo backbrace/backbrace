@@ -369,14 +369,19 @@ module.exports = {
   },
   '.grid-container': {
     'width': '100%',
-    overflow: 'auto',
-    border: '1px solid gainsboro'
+    overflow: 'auto'
+  },
+  '.row-id': {
+    'font-size': '0px'
   },
   /* JQuery UI Overrides */
   '.ui-widget': {
     'font-family': '%font:family%',
     'font-size': '.8em',
     'font-weight': '400'
+  },
+  '.ui-widget.ui-widget-content': {
+    border: '0'
   },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
@@ -386,5 +391,8 @@ module.exports = {
   /* JQGrid Overrides */
   '.ui-jqgrid': {
     border: '0'
+  },
+  '.ui-jqgrid tr.jqgrow td': {
+    'vertical-align': 'middle'
   }
 };

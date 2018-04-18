@@ -36,26 +36,27 @@ TextboxComponent.prototype.load = function(container) {
 
     if (this.field.password)
         type = 'password"';
-    this.container = $('<div class="control-container">')
-        .appendTo(container);
-    if (parent === 'CardComponent')
+
+    if (parent === 'CardComponent') {
+        this.container = $('<div class="control-container">')
+            .appendTo(container);
         this.label = $('<label for="cont' + this.id + '" class="control-label"></label>')
             .text(this.field.caption)
             .appendTo(this.container);
+    }
+
     this.control = $('<input id="cont' + this.id + '" type="' + type +
         '" class="control-input"></input>')
-        .appendTo(this.container);
+        .appendTo(this.container || container);
 };
 
 TextboxComponent.prototype.unload = function(container) {
 
-    // Unload DOM.
-    this.container.remove();
+    (this.container || this.control).remove();
 
     this.container = null;
     this.control = null;
-    if (this.label)
-        this.label = null;
+    this.label = null;
 };
 
 TextboxComponent.prototype.show = function(container) {
