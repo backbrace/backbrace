@@ -53,7 +53,7 @@ function exists(name) {
 function load(name) {
     // Check if we are loading a js file and the controller doesn't exist.
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
-        var $ = require('../external/jquery')(),
+        var $ = require('../external/jquery'),
             d = $.Deferred();
         packagemanager.loadScript(settings.meta.dir + 'controllers/' + name,
             function() {

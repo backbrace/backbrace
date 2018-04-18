@@ -43,7 +43,7 @@ function runNextThread() {
 function block() {
 
     var app = require('./app'), // We require app down here so we don't get a dependency loop.
-        $ = require('../external/jquery')();
+        $ = require('../external/jquery');
 
     if (!currentThread)
         app.error('Attempted to start a codeblock without a thread');

@@ -4,7 +4,8 @@ var code = require('../code'),
     settings = require('../settings'),
     util = require('../util'),
     PageComponent = require('./pagecomponent'),
-    WindowComponent = require('./windowcomponent');
+    WindowComponent = require('./windowcomponent'),
+    $ = require('../../external/jquery');
 
 /**
  * Card component class.
@@ -113,8 +114,7 @@ CardComponent.prototype.loadTabs = function() {
 
 CardComponent.prototype.loadFields = function(tab) {
 
-    var $ = require('../../external/jquery')(),
-        self = this,
+    var self = this,
         page = self.parent.page,
         left = false,
         fields = $.grep(page.fields, function(field) {

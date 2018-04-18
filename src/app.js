@@ -204,7 +204,7 @@ function start() {
             packagemanager.add(packages.startup());
             packagemanager.load(function() {
 
-                var $ = require('../external/jquery')(),
+                var $ = require('../external/jquery'),
                     sweetalert = require('./sweetalert');
 
                 // Compile JSS and load into a style tag.
@@ -251,7 +251,7 @@ function start() {
  */
 function load(container) {
 
-    var $ = require('../external/jquery')(),
+    var $ = require('../external/jquery'),
         HeaderComponent = require('./components/headercomponent');
 
     main = $('<div class="main"></div>').appendTo(container);
@@ -318,7 +318,7 @@ function loadPage(name, options) {
  */
 function addWindowToToolbar(id) {
     var icons = require('./providers/icons').get(),
-        $ = require('../external/jquery')(),
+        $ = require('../external/jquery'),
         closeBtn = $(icons.get('close'))
             .click(function() {
                 closePage(id);

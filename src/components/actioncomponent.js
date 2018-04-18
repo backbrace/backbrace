@@ -4,7 +4,7 @@ var code = require('../code'),
     icons = require('../providers/icons').get(),
     settings = require('../settings'),
     util = require('../util'),
-    $ = require('../../external/jquery')();
+    $ = require('../../external/jquery');
 
 /**
  * Action button component.

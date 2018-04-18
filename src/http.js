@@ -5,8 +5,6 @@
  */
 'use strict';
 
-var $ = require('../external/jquery')();
-
 /**
  * Send a HTTP get request.
  * @param {string} url Absolute or relative URL to get.
@@ -15,7 +13,7 @@ var $ = require('../external/jquery')();
  */
 function get(url) {
 
-    $ = $ || require('../external/jquery')();
+    var $ = require('../external/jquery');
 
     var d = $.Deferred();
 

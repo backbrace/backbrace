@@ -7,7 +7,7 @@ var app = require('../app'),
     packagemanager = require('../packagemanager'),
     settings = require('../settings'),
     util = require('../util'),
-    $ = require('../../external/jquery')(),
+    $ = require('../../external/jquery'),
     PageComponent = require('./pagecomponent');
 
 /**
