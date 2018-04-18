@@ -53,7 +53,8 @@ function compile(obj) {
                 util.forEach(style, function(multistyle, msName) {
                     css += styleName + ': ' + mergeConfig(multistyle) + ';';
                 });
-            } else if (styleName.indexOf && styleName.indexOf('@media') === 0) {
+            } else if (typeof styleName === 'string'
+                && styleName.indexOf && styleName.indexOf('@media') === 0) {
                 othercss += styleName + '{' + className + '{';
                 util.forEach(style, function(otherstyle, osName) {
                     othercss += osName + ': ' + mergeConfig(otherstyle) + ';';

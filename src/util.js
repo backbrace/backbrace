@@ -94,9 +94,9 @@ function formatString(str) {
 
 /**
  * Extend an object with another object.
- * @param {Object} me Object to extend.
- * @param {Object} withthis Object to extend with.
- * @returns {Object} Extended object.
+ * @param {*} me Object to extend.
+ * @param {*} withthis Object to extend with.
+ * @returns {*} Extended object.
  */
 function extend(me, withthis) {
   if (withthis && me)
@@ -112,10 +112,11 @@ function extend(me, withthis) {
 
 /**
  * Iterate through an array or object.
- * @param {Array|Object} obj Object to iterate through.
- * @param {Function} iterator Iterator function to call.
- * @param {Object} [context] Context to run the iterator function.
- * @returns {Array|Object} Returned object for chaining.
+ * @template T
+ * @param {ArrayLike<T>} obj Object to iterate through.
+ * @param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.
+ * @param {*} [context] Context to run the iterator function.
+ * @returns {ArrayLike<T>} Returned object for chaining.
  */
 function forEach(obj, iterator, context) {
   var key, length;
@@ -127,8 +128,8 @@ function forEach(obj, iterator, context) {
           iterator.call(context, obj[key], key, obj);
         }
       }
-    } else if (obj.forEach && obj.forEach !== forEach) {
-      obj.forEach(iterator, context, obj);
+    } else if (Array.isArray(obj) && obj.forEach && obj.forEach !== forEach) {
+      obj.forEach(iterator, context);
     } else if (typeof obj.hasOwnProperty === 'function') {
       for (key in obj)
         if (obj.hasOwnProperty(key))

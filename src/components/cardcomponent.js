@@ -16,8 +16,11 @@ var code = require('../code'),
 function CardComponent(parent) {
     this.id = util.nextID();
     this.parent = parent;
+    /** @type {WindowComponent[]} */
     this.subwindows = {};
+    /** @type {PageComponent[]} */
     this.subpages = {};
+    /** @type {Component[]} */
     this.controls = {};
 }
 
@@ -26,17 +29,21 @@ function CardComponent(parent) {
  * @returns {void}
  */
 CardComponent.prototype.unload = function() {
+
     // Unload sub components.
     this.parent = null;
-    util.forEach(this.subwindows, function unloadSubWindows(/** @type {WindowComponent} */win) {
+
+    $.each(this.subwindows, function(index, win) {
         win.unload();
     });
     this.subwindows = null;
-    util.forEach(this.subpages, function unloadControls(/** @type {PageComponent} */page) {
+
+    $.each(this.subpages, function(index, page) {
         page.unload();
     });
     this.subpages = null;
-    util.forEach(this.controls, function unloadControls(/** @type {Component} */cont) {
+
+    $.each(this.controls, function(index, cont) {
         cont.unload();
     });
     this.controls = null;
@@ -67,7 +74,7 @@ CardComponent.prototype.loadTabs = function() {
     var self = this,
         page = self.parent.page;
 
-    return code.each(page.tabs, function loadTab(/** @type {PageTabMeta} */tab) {
+    return code.each(page.tabs, function loadTab(tab) {
 
         // Check if the tab is mobile or desktop only.
         if (settings.mobile && tab.desktopOnly)
@@ -122,7 +129,7 @@ CardComponent.prototype.loadFields = function(tab) {
         }),
         half = Math.round(fields.length / 2);
 
-    return code.each(fields, function loadField(/** @type {PageFieldMeta} */field, i) {
+    return code.each(fields, function loadField(field, i) {
 
         // Check if the field is mobile or desktop only.
         if ((settings.mobile && field.desktopOnly) ||
@@ -136,7 +143,7 @@ CardComponent.prototype.loadFields = function(tab) {
             win = self.subwindows[tab];
 
         left = false;
-        if (i + 1 <= half || field.leftColumn)
+        if (typeof i === 'number' && i + 1 <= half || field.leftColumn)
             left = true;
         if (field.rightColumn)
             left = false;
@@ -164,16 +171,14 @@ CardComponent.prototype.loadFields = function(tab) {
 CardComponent.prototype.show = function() {
 
     // Show the sub pages.
-    util.forEach(this.subpages,
-        function(/** @type {PageComponent} */page) {
-            page.show();
-        });
+    $.each(this.subpages, function(index, page) {
+        page.show();
+    });
 
     // Show the sub windows.
-    util.forEach(this.subwindows,
-        function(/** @type {WindowComponent} */win) {
-            win.show();
-        });
+    $.each(this.subwindows, function(index, win) {
+        win.show();
+    });
 
     return this;
 };
@@ -185,16 +190,14 @@ CardComponent.prototype.show = function() {
 CardComponent.prototype.hide = function() {
 
     // Hide the sub pages.
-    util.forEach(this.subpages,
-        function(/** @type {PageComponent} */page) {
-            page.hide();
-        });
+    $.each(this.subpages, function(index, page) {
+        page.hide();
+    });
 
     // Hide the sub windows.
-    util.forEach(this.subwindows,
-        function(/** @type {WindowComponent} */win) {
-            win.hide();
-        });
+    $.each(this.subwindows, function(index, win) {
+        win.hide();
+    });
 
     return this;
 };

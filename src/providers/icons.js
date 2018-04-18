@@ -33,7 +33,7 @@ function get() {
 
 /**
  * Set the icon provider instance.
- * @param {Object} val Icon provider instance to set.
+ * @param {IconsInstance} val Icon provider instance to set.
  * @returns {void}
  */
 function set(val) {

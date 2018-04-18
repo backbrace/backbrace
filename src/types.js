@@ -1,4 +1,8 @@
 /**
+ * @typedef {(number|string)} Key
+ */
+
+/**
  * Component.
  * @typedef Component
  * @property {number} id ID of the component.
@@ -112,16 +116,31 @@
  * @property {StyleConfig} style Style config.
  */
 
- /**
-  * @typedef WindowOptions
-  * @property {string} [className] Window class style.
-  * @property {string} [icon] Window icon.
-  * @property {Function} [onClose] On close function of the window.
-  * @property {boolean} [hasParent] If `true` sets the window as a child window.
-  * @property {boolean} [closeBtn] Add a close button to the window.
-  */
+/**
+ * @typedef HeaderOptions
+ * @property {string} [menuIcon] Menu icon.
+ * @property {boolean} [attachMenu] Attach a menu to the header.
+ */
 
- /**
+/**
+ * @typedef PageOptions
+ * @property {string} [title] Page title.
+ * @property {boolean} [factbox] Show page in side container.
+ * @property {boolean} [hasParent] If `true` sets the page as a child page.
+ * @property {boolean} [first] If `true` sets as dashboard page.
+ * @property {boolean} [temp] If `true` the page uses temp data.
+ */
+
+/**
+ * @typedef WindowOptions
+ * @property {string} [className] Window class style.
+ * @property {string} [icon] Window icon.
+ * @property {Function} [onClose] On close function of the window.
+ * @property {boolean} [hasParent] If `true` sets the window as a child window.
+ * @property {boolean} [closeBtn] Add a close button to the window.
+ */
+
+/**
  * @typedef PageFieldMeta
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.

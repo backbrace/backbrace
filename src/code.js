@@ -71,9 +71,10 @@ function insert() {
 
 /**
  * Loop through an array using `code.block`.
- * @param {Array} obj Array to iterate through.
- * @param {Function} iterator Iterator function to call.
- * @param {Object} [context] Context to run the iterator function.
+ * @template T
+ * @param {ArrayLike<T>} obj Object to iterate through.
+ * @param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.
+ * @param {*} [context] Context to run the iterator function.
  * @returns {JQueryPromise} Promise to return after we are done looping.
  */
 function each(obj, iterator, context) {

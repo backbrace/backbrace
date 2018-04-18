@@ -70,7 +70,11 @@ function page(name) {
             // Get the page from a JSON file.
             return http.get(settings.meta.dir + 'pages/' + name + '.json');
         },
-        function(json) {
+        /**
+         * @param {PageMeta} json JSON object.
+         * @returns {PageMeta} Returns the merged page,
+         */
+        function mergePage(json) {
 
             // Merge the json with default values.
             var $ = require('../external/jquery');
@@ -78,26 +82,25 @@ function page(name) {
             json.caption = json.caption || json.name;
 
             // Extend the page.
-            /** @type {PageMeta} */
             var pge = $.extend({}, defaults.page, json);
 
             // Extend the page fields.
             pge.fields = [];
-            util.forEach(json.fields, function(/** @type {PageFieldMeta} */field) {
+            $.each(json.fields, function(index, field) {
                 field.caption = field.caption || field.name;
                 pge.fields.push($.extend({}, defaults.pagefield, field));
             });
 
             // Extend the page actions.
             pge.actions = [];
-            util.forEach(json.actions, function(/** @type {PageActionMeta} */action) {
+            $.each(json.actions, function(index, action) {
                 action.text = action.text || action.name;
                 pge.actions.push($.extend({}, defaults.pageaction, action));
             });
 
             // Extend the page tabs.
             pge.tabs = [];
-            util.forEach(json.tabs, function(/** @type {PageTabMeta} */tab) {
+            $.each(json.tabs, function(index, tab) {
                 tab.text = tab.text || tab.name;
                 pge.tabs.push($.extend({}, defaults.pagetab, tab));
             });

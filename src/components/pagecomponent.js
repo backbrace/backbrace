@@ -17,7 +17,7 @@ var app = require('../app'),
  * @class
  * @private
  * @param {string} name Page name.
- * @param {Object} options Page options.
+ * @param {PageOptions} options Page options.
  */
 function PageComponent(name, options) {
 
@@ -47,6 +47,7 @@ function PageComponent(name, options) {
 
     /**
      * Page component options.
+     * @type {PageOptions}
      */
     this.options = {
         title: null,

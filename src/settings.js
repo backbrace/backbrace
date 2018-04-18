@@ -29,6 +29,7 @@ var flat = require('./styles/flat'),
             dir: './meta/'
         },
         style: {
+            length: 4,
             loader: {
                 zindex: '1000',
                 barheight: '10px',

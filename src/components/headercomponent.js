@@ -9,10 +9,13 @@ var icons = require('../providers/icons').get(),
  * Header component.
  * @class
  * @private
- * @param {Object} options Header options.
+ * @param {HeaderOptions} options Header options.
  */
 function HeaderComponent(options) {
 
+    /**
+     * @type {HeaderOptions}
+     */
     this.options = {
         menuIcon: 'menu',
         attachMenu: true

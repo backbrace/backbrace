@@ -91,7 +91,7 @@ function debug(msg) {
  * Log an object.
  * @method logObject
  * @memberof module:js
- * @param {Object} obj Object to log.
+ * @param {*} obj Object to log.
  * @returns {void}
  */
 function object(obj) {

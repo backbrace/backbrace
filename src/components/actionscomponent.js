@@ -15,6 +15,7 @@ function ActionsComponent() {
     this.id = util.nextID();
     /** @type {JQuery} */
     this.bar = null;
+    /** @type {ActionComponent[]} */
     this.actions = {};
 }
 
@@ -23,7 +24,7 @@ function ActionsComponent() {
  * @returns {void}
  */
 ActionsComponent.prototype.unload = function() {
-    util.forEach(this.actions, function unloadButton(/** @type {ActionComponent} */btn) {
+    $.each(this.actions, function(index, btn) {
         btn.unload();
     });
     this.bar.remove();

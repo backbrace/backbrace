@@ -281,7 +281,7 @@ function load(container) {
  * Load a page.
  * @memberof module:js
  * @param {string} name Name of the page to load.
- * @param {Object} [options] Page options.
+ * @param {PageOptions} [options] Page options.
  * @returns {void}
  */
 function loadPage(name, options) {
