@@ -16,9 +16,7 @@ var alertprovider = require('./providers/alert'),
     util = require('./util'),
     windowprovider = require('./providers/window'),
     header = null,
-    /** @type {JQuery} */
     main = null,
-    /** @type {JQuery} */
     windows = null,
     pages = {},
     activePage = 0,
