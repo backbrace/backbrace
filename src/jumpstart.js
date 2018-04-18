@@ -28,6 +28,7 @@ window['js'] = {
     id: util.nextID,
     decodeHTML: util.decodeHTML,
     sanitizeString: util.sanitizeString,
+    findInput: util.findInput,
 
     // Log module.
     logInfo: log.info,

@@ -255,6 +255,29 @@ function sanitizeString(input) {
     replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
 }
 
+/**
+ * Find the input editor.
+ * @param {JQuery} elem Element to search.
+ * @returns {JQuery} Returns the editor if found.
+ */
+function findInput(elem) {
+
+  var $ = require('../external/jquery');
+
+  for (var i = 0; i < elem.children().length; i++) {
+    if (elem.children()[i].nodeName === 'INPUT'
+      || elem.children()[i].nodeName === 'TEXTAREA') {
+      if (elem.children()[i].className !== 'noinput')
+        return $(elem.children()[i]);
+    }
+    var v = findInput($(elem.children()[i]));
+    if (v !== null)
+      return v;
+  }
+
+  return null;
+}
+
 // Bind the message event to the browser window.
 bindMessageEvent();
 
@@ -275,5 +298,6 @@ module.exports = {
   addElement: addElement,
   width: width,
   decodeHTML: decodeHTML,
-  sanitizeString: sanitizeString
+  sanitizeString: sanitizeString,
+  findInput: findInput
 };
