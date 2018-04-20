@@ -1,6 +1,7 @@
 /build/
 /docs/
 /node_modules/
-.vscode
 npm-debug.log
 .DS_Store
+/server/bin/
+/server/obj/
