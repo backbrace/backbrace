@@ -1,0 +1,6 @@
+{
+    "editor.minimap.enabled": false,
+    "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+    "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "files.trimTrailingWhitespace": true
+}
