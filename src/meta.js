@@ -77,7 +77,7 @@ function page(name) {
         function mergePage(json) {
 
             // Merge the json with default values.
-            var $ = require('../external/jquery');
+            var $ = require('./external/jquery');
 
             json.caption = json.caption || json.name;
 

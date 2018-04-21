@@ -5,7 +5,7 @@ var code = require('../code'),
     util = require('../util'),
     PageComponent = require('./pagecomponent'),
     WindowComponent = require('./windowcomponent'),
-    $ = require('../../external/jquery');
+    $ = require('../external/jquery');
 
 /**
  * Card component class.

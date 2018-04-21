@@ -22,7 +22,7 @@ function CodeThread(func) {
 CodeThread.prototype.createQueue = function() {
 
     // Create a new queue.
-    var $ = require('../../external/jquery'),
+    var $ = require('../external/jquery'),
         queue = [],
         self = this;
 
@@ -50,7 +50,7 @@ CodeThread.prototype.createQueue = function() {
  */
 CodeThread.prototype.resolveQueue = function(result) {
 
-    var $ = require('../../external/jquery'),
+    var $ = require('../external/jquery'),
         i = this.queue.length - 1,
         arr = [result],
         func,

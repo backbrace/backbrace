@@ -178,7 +178,7 @@ function setZeroTimeout(fn) {
 }
 
 function parseDate(str) {
-  var moment = require('../external/moment');
+  var moment = require('./external/moment');
   if (str && str.indexOf('T') !== -1)
     return new Date(str);
   return moment(str, 'DD/MM/YYYY').toDate();
@@ -263,7 +263,7 @@ function sanitizeString(input) {
  */
 function findInput(elem) {
 
-  var $ = require('../external/jquery');
+  var $ = require('./external/jquery');
 
   for (var i = 0; i < elem.children().length; i++) {
     if (elem.children()[i].nodeName === 'INPUT'

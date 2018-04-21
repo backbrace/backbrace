@@ -7,7 +7,7 @@
 
 var util = require('./util'),
     windowprovider = require('./providers/window'),
-    swal = require('../external/swal'),
+    swal = require('./external/swal'),
     queue = [],
     isOpen = false,
     isClosing = false,

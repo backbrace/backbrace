@@ -13,7 +13,7 @@
  */
 function get(url) {
 
-    var $ = require('../external/jquery');
+    var $ = require('./external/jquery');
 
     var d = $.Deferred();
 
