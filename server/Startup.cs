@@ -34,7 +34,9 @@ namespace Jumpstart.Core
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseAuthentication();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.UseMvc();
         }
     }

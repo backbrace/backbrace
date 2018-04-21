@@ -54,7 +54,7 @@ module.exports = function(grunt) {
       options: {
         webpack: webpackConfig,
         publicPath: '/scripts',
-        contentBase: 'website/'
+        contentBase: 'server/wwwroot/'
       },
       start: {}
     },

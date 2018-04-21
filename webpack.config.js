@@ -13,6 +13,6 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: 'website/'
+        contentBase: 'server/wwwroot/'
     }
 };
