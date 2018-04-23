@@ -11,16 +11,6 @@
                 "kind": "build",
                 "isDefault": true
             }
-        },
-        {
-            "label": "build (server)",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "./server/server.csproj"
-            ],
-            "problemMatcher": "$msCompile"
         }
     ]
 }

@@ -5,48 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch (Server)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build (server)",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/server/bin/Debug/netcoreapp2.0/Jumpstart.Core.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/server",
-            "stopAtEntry": false,
-            "internalConsoleOptions": "openOnSessionStart",
-            "launchBrowser": {
-                "enabled": false,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/server/Views"
-            }
-        },
-        {
-            "name": "Attach (Server)",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        },
-        {
             "name": "Attach (JS)",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8080",
+            "url": "http://localhost:8081",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
         }
