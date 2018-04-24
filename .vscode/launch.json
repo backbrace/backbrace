@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach (JS)",
+            "name": "Attach",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8081",
+            "url": "http://localhost:8081/test",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
         }
