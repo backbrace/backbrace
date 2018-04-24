@@ -39,6 +39,11 @@ window['js'] = {
     logDebug: log.debug,
     logObject: log.object,
 
+    // Code module.
+    block: code.block,
+    thread: code.thread,
+    insert: code.insert,
+
     // Controller module.
     controller: controller.create,
 
