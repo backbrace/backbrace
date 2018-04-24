@@ -3,6 +3,7 @@
 var app = require('./app'),
     code = require('./code'),
     controller = require('./controller'),
+    http = require('./http'),
     log = require('./log'),
     settings = require('./settings'),
     util = require('./util'),
@@ -45,6 +46,10 @@ window['js'] = {
     start: app.start,
     ready: app.ready,
     loadPage: app.loadPage,
+
+    // HTTP module.
+    get: http.get,
+    post: http.post,
 
     // Server provider.
     server: function(){
