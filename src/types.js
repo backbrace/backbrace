@@ -17,6 +17,12 @@
  * @property {string} full Full version number. eg: 0.1.0
  */
 
+/**
+ * Server Instance
+ * @typedef ServerInstance
+ * @property {function():JQueryPromise} autoLogin Attempt to auto login.
+ */
+
  /**
  * Alert instance.
  * @typedef AlertInstance

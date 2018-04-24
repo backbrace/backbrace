@@ -6,6 +6,7 @@ var app = require('./app'),
     log = require('./log'),
     settings = require('./settings'),
     util = require('./util'),
+    serverprovider = require('./providers/server'),
     windowprovider = require('./providers/window');
 
 /**
@@ -44,6 +45,14 @@ window['js'] = {
     start: app.start,
     ready: app.ready,
     loadPage: app.loadPage,
+
+    // Server provider.
+    server: function(){
+        return serverprovider.get();
+    },
+    setServer: function(val) {
+        serverprovider.set(val);
+    },
 
     // Window provider.
     setWindow: function(val) {
