@@ -96,7 +96,7 @@ function load(onsuccess, onerror) {
         },
         function() {
             'inserted';
-            onsuccess();
+            return onsuccess();
         }
     );
 }
