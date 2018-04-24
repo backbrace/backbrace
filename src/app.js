@@ -5,8 +5,7 @@
  */
 'use strict';
 
-var alertprovider = require('./providers/alert'),
-    code = require('./code'),
+var code = require('./code'),
     settings = require('./settings'),
     jss = require('./jss'),
     log = require('./log'),
@@ -14,6 +13,8 @@ var alertprovider = require('./providers/alert'),
     progress = require('./progress'),
     packagemanager = require('./packagemanager'),
     util = require('./util'),
+    alertprovider = require('./providers/alert'),
+    serverprovider = require('./providers/server'),
     windowprovider = require('./providers/window'),
     header = null,
     main = null,
@@ -227,8 +228,17 @@ function start() {
                 load($('body'));
 
                 progress.hide();
-                if (readyFunc)
-                    return readyFunc();
+                return code.block(
+
+                    readyFunc,
+
+                    (settings.requireAuth === true ? function() {
+
+                        var server = serverprovider.get();
+                        return server.autoLogin();
+
+                    } : null)
+                );
 
             }, packageError);
         });

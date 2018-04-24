@@ -57,9 +57,6 @@ window['js'] = {
     post: http.post,
 
     // Server provider.
-    server: function(){
-        return serverprovider.get();
-    },
     setServer: function(val) {
         serverprovider.set(val);
     },

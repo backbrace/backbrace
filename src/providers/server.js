@@ -8,10 +8,10 @@ var instance = {
 
     autoLogin: function() {
         return code.block(
-            function(){
+            function() {
                 return false;
             }
-        )
+        );
     }
 };
 

@@ -19,6 +19,7 @@ var flat = require('./styles/flat'),
         autoSwitch: true,
         jss: flat,
         windowMode: true,
+        requireAuth: false,
         app: {
             name: 'Jumpstart App',
             version: '0.1.0',
