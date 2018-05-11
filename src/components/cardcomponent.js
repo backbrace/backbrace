@@ -158,6 +158,10 @@ CardComponent.prototype.loadFields = function(tab) {
             /** @type {Component} */
             var cont = new Control(self, field);
             self.controls[field.name] = cont;
+
+            win.leftColumn.show();
+            win.rightColumn.show();
+
             return cont.load(left ? win.leftColumn :
                 win.rightColumn);
         }

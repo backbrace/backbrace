@@ -86,9 +86,9 @@ WindowComponent.prototype.load = function(container) {
         .appendTo(container);
 
     this.leftColumn = $('<div class="window-column" />')
-        .appendTo(this.main);
+        .appendTo(this.main).hide();
     this.rightColumn = $('<div class="window-column" />')
-        .appendTo(this.main);
+        .appendTo(this.main).hide();
 
     return this;
 };
