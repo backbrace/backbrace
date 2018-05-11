@@ -133,7 +133,7 @@ module.exports = {
     'border-spacing': '0px'
   },
   '.main': {
-    background: '#FFF',
+    background: '#f5f7fb',
     'margin-top': '50px',
     height: 'calc(100vh - 65px)'
   },
@@ -144,21 +144,20 @@ module.exports = {
   },
   '.main-windows': {
     width: '100%',
-    padding: '5px',
+    background: '#FFF',
     display: 'inline-block',
-    'padding-bottom': '0px',
-    'min-height': '36px'
+    'padding-left': '3px',
+    'border-bottom': '1px solid #ecf0f1'
   },
   '.window': {
-    border: '1px solid #f1f1f1',
+    border: '1px solid #ecf0f1',
     'box-sizing': 'border-box',
     position: 'relative',
     display: 'none',
     background: 'white'
   },
   '.desktop-app .window': {
-    'vertical-align': 'top',
-    border: 'none'
+    'vertical-align': 'top'
   },
   '.window-main': {
     padding: '10px',
@@ -174,7 +173,7 @@ module.exports = {
     width: '50%',
     display: 'inline-block',
     'vertical-align': 'top',
-    'padding-right': '30px',
+    'padding-right': '10px',
     'box-sizing': 'border-box'
   },
   '.mobile-app .window-column': {
@@ -188,7 +187,8 @@ module.exports = {
   '.title-bar': {
     'background': '%colors:title%',
     color: '%colors:titletext%',
-    padding: '10px'
+    padding: '10px',
+    'border-bottom': '1px solid #ecf0f1'
   },
   '.title': {
     'font-size': '1em'
@@ -211,48 +211,22 @@ module.exports = {
   '.desktop-app .actions-bar': {
     'padding-bottom': '5px'
   },
-  '.desktop-app .action-button,.main-windows-btn': {
-    'text-decoration': 'none',
-    color: '#000',
-    'background-color': '#FFF',
-    'text-align': 'center',
-    'letter-spacing': '.5px',
-    '-webkit-transition': 'background-color .2s ease-out',
-    transition: 'background-color .2s ease-out',
-    border: 'none',
-    'border-radius': '2px',
-    display: 'inline-block',
-    height: '26px',
-    'line-height': '28px',
-    padding: '0 16px',
-    'text-transform': 'uppercase',
-    'vertical-align': 'middle',
-    '-webkit-tap-highlight-color': 'transparent',
-    margin: '5px',
-    'font-size': '.6em',
-    'font-weight': '400',
-    'box-shadow':
-      '0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2)',
-    cursor: 'pointer'
-  },
   '.action-button:hover': {
     background: '%colors:hover%',
     color: '%colors:hovertext%'
   },
-  '.desktop-app .button-danger': {
-    color: '#FFF',
-    'background-color': '#F44336'
-  },
-  '.desktop-app .button-danger:hover': {
-    background: '#E53935'
-  },
   '.main-windows-btn': {
-    padding: '0 4px',
-    'font-size': '.8em'
+    padding: '15px 5px 15px 5px',
+    'font-size': '.77em',
+    width: 'auto',
+    display: 'inline-block',
+    background: '#FFF',
+    color: '#7f8c8d',
+    'margin-right': '3px'
   },
   '.main-windows-btn.active': {
-    background: '%colors:hover%',
-    color: '%colors:hovertext%'
+    'border-bottom': '2px solid %colors:header%',
+    color: '%colors:header%'
   },
   '.mobile-app .actions-bar': {
     position: 'fixed',
@@ -265,6 +239,13 @@ module.exports = {
     color: 'white',
     'z-index': '29001'
   },
+  '.desktop-app .action-button':{
+    display: 'inline-block',
+    'font-size': '.75em',
+    padding: '5px',
+    margin: '2px',
+    cursor: 'pointer'
+  },
   '.mobile-app .action-button': {
     'border-width': '0px',
     padding: '10px',
@@ -275,6 +256,15 @@ module.exports = {
     'box-sizing': 'border-box',
     height: '60px',
     display: 'inline-block'
+  },
+  '.desktop-app .side-container .window': {
+    'margin-left': '0'
+  },
+  '.desktop-app .side-container .window-width-full': {
+    'max-width': ['98%',
+      '-webkit-calc(100% - 5px)',
+      '-moz-calc(100% - 5px)',
+      'calc(100% - 5px)']
   },
   '.desktop-app .window-width-full': {
     margin: '5px 0px 0px 5px',
@@ -347,7 +337,7 @@ module.exports = {
     'margin-top': '1.1em',
     'font-size': '.7em'
   },
-  '.control-input': {
+  '.mobile-app .control-input': {
     '-webkit-box-sizing': 'border-box',
     'box-sizing': 'border-box',
     display: 'block',
@@ -363,9 +353,22 @@ module.exports = {
     margin: '0px',
     'min-height': '1.8em'
   },
-  '.control-input:focus': {
+  '.mobile-app .control-input:focus': {
     'border-color': '#2196F3',
     'border-width': '2px'
+  },
+  '.desktop-app .control-input':{
+    display: 'inline-block',
+    width: '100%',
+    'box-sizing': 'border-box',
+    'border-radius': '3px',
+    border: '1px solid gainsboro',
+    'font-size': '.75em',
+    'font-weight': '200',
+    padding: '5px'
+  },
+  '.desktop-app .control-input:focus': {
+    'border-color': '#2196F3'
   },
   '.grid-container': {
     'width': '100%',

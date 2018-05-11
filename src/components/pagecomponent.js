@@ -259,6 +259,9 @@ PageComponent.prototype.show = function() {
     // Show components.
     this.pageComponent.show();
 
+    this.mainContainer.show();
+    this.sideContainer.show();
+
     this.animateIn();
 
     return this;
@@ -276,6 +279,8 @@ PageComponent.prototype.hide = function() {
         return this;
     }
 
+    this.mainContainer.hide();
+    this.sideContainer.hide();
     this.window.hide();
     $('#win' + this.id).removeClass('active');
 
