@@ -184,7 +184,7 @@ ListComponent.prototype.load = function() {
                 data: [],
                 autowidth: true,
                 height: 'auto',
-                width: 'auto',
+                width: null,
                 colNames: self.colNames,
                 colModel: self.columns,
                 shrinkToFit: false,

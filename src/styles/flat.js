@@ -147,7 +147,8 @@ module.exports = {
     background: '#FFF',
     display: 'inline-block',
     'padding-left': '3px',
-    'border-bottom': '1px solid #ecf0f1'
+    'border-bottom': '1px solid #ecf0f1',
+    'box-sizing': 'border-box'
   },
   '.window': {
     border: '1px solid #ecf0f1',
@@ -166,7 +167,7 @@ module.exports = {
     'margin-top': '-10px'
   },
   '.window-main.list-component': {
-    padding: '0 5px 0 5px',
+    padding: '0 5px 5px 5px',
     'margin-top': '0'
   },
   '.window-column': {
@@ -208,9 +209,6 @@ module.exports = {
   '.title-icon:hover': {
     color: '#000'
   },
-  '.desktop-app .actions-bar': {
-    'padding-bottom': '5px'
-  },
   '.action-button:hover': {
     background: '%colors:hover%',
     color: '%colors:hovertext%'
@@ -222,7 +220,8 @@ module.exports = {
     display: 'inline-block',
     background: '#FFF',
     color: '#7f8c8d',
-    'margin-right': '3px'
+    'margin-right': '3px',
+    cursor: 'pointer'
   },
   '.main-windows-btn.active': {
     'border-bottom': '2px solid %colors:header%',
@@ -243,7 +242,7 @@ module.exports = {
     display: 'inline-block',
     'font-size': '.75em',
     padding: '5px',
-    margin: '2px',
+    margin: '4px',
     cursor: 'pointer'
   },
   '.mobile-app .action-button': {
@@ -372,7 +371,8 @@ module.exports = {
   },
   '.grid-container': {
     'width': '100%',
-    overflow: 'auto'
+    overflow: 'auto',
+    'border-top': '1px solid #CCC'
   },
   '.row-id': {
     'font-size': '0px'
@@ -386,6 +386,9 @@ module.exports = {
   '.ui-widget.ui-widget-content': {
     border: '0'
   },
+  '.ui-widget-content': {
+    border: '0'
+  },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
     'background-color': '%colors:alertbutton% !important',
@@ -397,5 +400,14 @@ module.exports = {
   },
   '.ui-jqgrid tr.jqgrow td': {
     'vertical-align': 'middle'
+  },
+  '.ui-jqgrid .ui-jqgrid-htable th.ui-th-column, .ui-th-column': {
+    background: '#FFF'
+  },
+  '.ui-jqgrid tr.ui-row-ltr td': {
+    'border-right-color': '#CCC !important'
+  },
+  '.ui-jqgrid tr.jqfoot td,.ui-jqgrid tr.jqgroup td,.ui-jqgrid tr.jqgrow td': {
+    'border-bottom-color': '#CCC !important'
   }
 };
