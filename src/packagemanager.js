@@ -3,29 +3,36 @@
  * @module packagemanager
  * @private
  */
-'use strict';
 
-var code = require('./code'),
-    log = require('./log'),
-    util = require('./util'),
-    windowprovider = require('./providers/window'),
-    packages = [],
+import { codeinsert } from './code';
+import { debug as logDebug } from './log';
+import { get as getPackage, exists as packageExists } from './packages';
+import { noop } from './util';
+import { get as getJQuery } from './providers/jquery';
+import { get as getWindow } from './providers/window';
+
+const packages = [],
     loadedPackages = [];
 
 /**
  * Load an external script (native).
  * @param {string} url URL to load.
- * @param {*} onsuccess On success function.
- * @param {*} onerror On error function.
+ * @param {*} [onsuccess] On success function.
+ * @param {*} [onerror] On error function.
  * @returns {void}
  */
-function loadScript(url, onsuccess, onerror) {
+export function loadScript(url, onsuccess, onerror) {
 
-    var window = windowprovider.get();
+    const window = getWindow();
 
-    log.debug('Loading script: ' + url);
+    if (packageExists(url)) {
+        let pack = getPackage(url);
+        url = pack[0][0];
+    }
 
-    var script = window.document.createElement('script');
+    logDebug('Loading script: ' + url);
+
+    let script = window.document.createElement('script');
     script.src = url;
     script.async = true;
     script.onerror = onerror;
@@ -37,17 +44,17 @@ function loadScript(url, onsuccess, onerror) {
 /**
  * Load an external css style (native).
  * @param {string} url URL to load.
- * @param {*} onsuccess On success function.
- * @param {*} onerror On error function.
+ * @param {*} [onsuccess] On success function.
+ * @param {*} [onerror] On error function.
  * @returns {void}
  */
-function loadCSS(url, onsuccess, onerror) {
+export function loadCSS(url, onsuccess, onerror) {
 
-    var window = windowprovider.get();
+    const window = getWindow();
 
-    log.debug('Loading css: ' + url);
+    logDebug('Loading css: ' + url);
 
-    var css = window.document.createElement('link');
+    let css = window.document.createElement('link');
     css.type = 'text/css';
     css.rel = 'stylesheet';
     css.href = url;
@@ -59,19 +66,27 @@ function loadCSS(url, onsuccess, onerror) {
 
 /**
  * Add a package to be loaded.
- * @param {Array.<string[]>} pack Package to load.
+ * @param {(Array.<string[]>|string)} pack Package to load.
+ * @param {number} [offset] Level offset.
  * @returns {void}
  */
-function add(pack) {
+export function add(pack, offset) {
 
-    var $ = require('./external/jquery');
+    const $ = getJQuery();
 
+    if (typeof pack === 'string') {
+        if (!packageExists(pack))
+            throw Error(`Package not found: ${pack}`);
+        pack = getPackage(pack);
+    }
+
+    offset = offset || 0;
     $.each(pack, function(i, urls) {
         $.each(urls || [], function(j, url) {
             if (loadedPackages.indexOf(url) === -1) {
                 loadedPackages.push(url);
-                packages[i] = packages[i] || [];
-                packages[i].push(url);
+                packages[i + offset] = packages[i + offset] || [];
+                packages[i + offset].push(url);
             }
         });
     });
@@ -83,12 +98,12 @@ function add(pack) {
  * @param {Function} onerror On error function.
  * @returns {void}
  */
-function load(onsuccess, onerror) {
-    var $ = require('./external/jquery');
-    code.insert(
+export function load(onsuccess, onerror) {
+    const $ = getJQuery();
+    codeinsert(
         function() {
             'inserted';
-            var d = $.Deferred();
+            let d = $.Deferred();
             loadpackages(function() {
                 d.resolve();
             }, onerror);
@@ -108,15 +123,15 @@ function load(onsuccess, onerror) {
  * @param {Function} onerror On error function.
  * @returns {void}
  */
-function loadpackages(onsuccess, onerror) {
+export function loadpackages(onsuccess, onerror) {
 
-    var $ = require('./external/jquery'),
-        urls = packages.shift(),
-        styles = [],
+    const $ = getJQuery(),
+        urls = packages.shift();
+    let styles = [],
         scripts = [],
         totalLoaded = 0;
 
-    onsuccess = onsuccess || util.noop;
+    onsuccess = onsuccess || noop;
 
     if (!urls)
         return onsuccess();
@@ -143,10 +158,3 @@ function loadpackages(onsuccess, onerror) {
         }, onerror);
     });
 }
-
-module.exports = {
-    loadScript: loadScript,
-    loadCSS: loadCSS,
-    add: add,
-    load: load
-};

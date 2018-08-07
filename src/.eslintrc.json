@@ -1,11 +1,31 @@
 {
   "root": true,
   "extends": "../.eslintrc-browser.json",
-
+  "env": {
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
   "globals": {
     "window": false,
-    "js": false,
-    "module": false,
     "require": false
+  },
+  "rules": {
+    "require-jsdoc": [
+      "error",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": true,
+          "ClassDeclaration": true,
+          "ArrowFunctionExpression": false,
+          "FunctionExpression": false
+        }
+      }
+    ],
+    "valid-jsdoc": "error"
   }
 }

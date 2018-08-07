@@ -3,7 +3,8 @@
  * @module http
  * @private
  */
-'use strict';
+
+import { get as getJQuery } from './providers/jquery';
 
 /**
  * Send a HTTP get request.
@@ -11,11 +12,10 @@
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
  * found, it will return `null`.
  */
-function get(url) {
+export function get(url) {
 
-    var $ = require('./external/jquery');
-
-    var d = $.Deferred();
+    const $ = getJQuery(),
+        d = $.Deferred();
 
     $.get(url, function(data) {
         d.resolve(data);
@@ -32,24 +32,17 @@ function get(url) {
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
  * found, it will return `null`.
  */
-function post(url) {
+export function post(url) {
 
-    var $ = require('./external/jquery'),
-        app = require('./app');
+    const $ = getJQuery();
 
-    var d = $.Deferred();
+    let d = $.Deferred();
 
     $.post(url, function(data) {
         d.resolve(data);
     }).fail(function(xhr, status, error) {
-        app.error(xhr.responseText || error);
+        throw Error(xhr.responseText || error);
     });
 
     return d.promise();
 }
-
-module.exports = {
-    get: get,
-    post: post
-};
-

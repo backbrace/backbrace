@@ -3,33 +3,33 @@
  * @module alertprovider
  * @private
  */
-'use strict';
 
-var windowprovider = require('./window');
+import { get as getWindow } from './window';
+import { settings } from '../settings';
 
 /** @type {AlertInstance} */
-var instance = {
+let instance = {
 
     message: function(msg, callback, title) {
-        var window = windowprovider.get();
+        let window = getWindow();
         window.alert(msg);
         if (callback)
             callback();
     },
 
     confirm: function(msg, callback, title, yescaption, nocaption) {
-        var window = windowprovider.get(),
+        let window = getWindow(),
             ret = window.confirm(msg);
         if (callback)
             callback(ret);
     },
 
     error: function(msg) {
-        var window = windowprovider.get();
+        let window = getWindow();
         // Add error to body if it is loaded...
         if (window.document.body) {
-            window.document.body.innerHTML = '<div style="padding: 30px; ' +
-                'overflow-wrap: break-word;"><h1>Oops, we had an issue</h1>' + msg + '</div>';
+            window.document.body.innerHTML = `<div style="padding: 30px; font-family: ${settings.style.font.family};font-size: ${settings.style.font.size};` +
+                `overflow-wrap: break-word;"><h1 style="font-size: 120%;font-weight:bold;margin:8px 0 8px 0;">Oops, we had an issue</h1>${msg}</div>`;
         } else {
             window.alert(msg);
         }
@@ -40,7 +40,7 @@ var instance = {
  * Get the alert provider instance.
  * @returns {AlertInstance} Returns the alert provider instance.
  */
-function get() {
+export function get() {
     return instance;
 }
 
@@ -49,11 +49,6 @@ function get() {
  * @param {AlertInstance} ref Alert provider instance to set.
  * @returns {void}
  */
-function set(ref) {
+export function set(ref) {
     instance = ref;
 }
-
-module.exports = {
-    get: get,
-    set: set
-};

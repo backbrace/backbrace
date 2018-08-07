@@ -4,10 +4,9 @@
  * @module iconsprovider
  * @private
  */
-'use strict';
 
 /** @type {IconsInstance} */
-var instance = {
+let instance = {
     get: function(name, size, color) {
 
         // Set defaults.
@@ -27,7 +26,7 @@ var instance = {
  * Get the icon provider instance.
  * @returns {IconsInstance} Returns the icon provider instance.
  */
-function get() {
+export function get() {
     return instance;
 }
 
@@ -36,11 +35,6 @@ function get() {
  * @param {IconsInstance} val Icon provider instance to set.
  * @returns {void}
  */
-function set(val) {
+export function set(val) {
     instance = val;
 }
-
-module.exports = {
-    get: get,
-    set: set
-};

@@ -1,75 +1,84 @@
 /**
- * Resource packages.
  * @module packages
  * @private
  */
-'use strict';
 
-var settings = require('./settings'),
-    packages = {
+import { settings } from './settings';
+import { isDefined, deepMap, formatString } from './util';
 
-        /**
-         * CDN URL's.
-         */
-        CDN: {
-            GOOGLE: 'https://ajax.googleapis.com/ajax/libs',
-            JUMPSTART: 'https://labs.zoomapps.com.au/JumpstartCDN'
-        },
+export let cdn = 'https://labs.zoomapps.com.au/JumpstartCDN';
+const packages = {
+    'jqgrid': [
+        '4.5.4',
+        [
+            ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js']
+        ]
+    ],
+    'jquery': [
+        '3.3.1',
+        [
+            ['{0}.js']
+        ]
+    ],
+    'jquery-ripple': [
+        '0.2.1',
+        [
+            ['jquery.ripple.js', 'jquery.ripple.css']
+        ]
+    ],
+    'jquery-ui': [
+        '1.12.1',
+        [
+            ['{0}.js', '{0}.css']
+        ]
+    ],
+    'materialdesignicons': [
+        '2.2.43',
+        [
+            ['css/{0}.css']
+        ]
+    ],
+    'moment': [
+        '2.22.0',
+        [
+            ['{0}.js'],
+            ['locale/en-au.js']
+        ]
+    ],
+    'resetcss': [
+        '2.0.0',
+        [
+            ['reset.css']
+        ]
+    ],
+    'sweetalert': [
+        '1.1.3',
+        [
+            ['{0}.js', '{0}.css']
+        ]
+    ]
+};
 
-        /**
-        * JQuery Package.
-        * @returns {string} JQuery script URL.
-        */
-        jQuery: function() {
-            var min = (settings.minify ? '.min' : '');
-            return this.CDN.JUMPSTART + '/jquery/3.3.1/jquery' + min + '.js';
-        },
+/**
+ * Check if a package exists.
+ * @param {string} name Name of the package.
+ * @returns {boolean} Returns `true` if the package exists.
+ */
+export function exists(name) {
+    return isDefined(packages[name]);
+}
 
-        /**
-         * Startup packages.
-         * @returns {Array.<string[]>} Jumpstart startup scripts and CSS URLS.
-         */
-        startup: function() {
-            var min = (settings.minify ? '.min' : '');
-            return [
-                [
-                    this.CDN.JUMPSTART + '/resetcss/2.0.0/reset.css'
-                ],
-                [
-                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.js',
-                    this.CDN.JUMPSTART + '/jqueryui/1.12.1/jquery-ui' + min + '.css'
-                ],
-                [
-                    this.CDN.JUMPSTART + '/materialdesignicons/2.2.43/css/materialdesignicons'
-                    + min + '.css',
-                    this.CDN.JUMPSTART + '/moment.js/2.22.0/moment' + min + '.js',
-                    this.CDN.JUMPSTART + '/sweetalert/1.1.3/sweetalert' + min + '.js',
-                    this.CDN.JUMPSTART + '/sweetalert/1.1.3/sweetalert' + min + '.css'
-                ],
-                [
-                    this.CDN.JUMPSTART + '/moment.js/2.22.0/locale/en-au.js',
-                    this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.js',
-                    this.CDN.JUMPSTART + '/jquery-ripple/0.2.1/jquery.ripple.css'
-                ]
-            ];
-        },
-
-        /**
-         * JQGrid.
-         * @returns {Array.<string[]>} JQGrid scripts and CSS URLS.
-         */
-        jqgrid: function() {
-            if (settings.mobile) // Dont load in mobile.
-                return [];
-            var min = (settings.minify ? '.min' : '');
-            return [
-                [
-                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/jquery.jqGrid' + min + '.js',
-                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/ui.jqgrid' + min + '.css',
-                    this.CDN.JUMPSTART + '/jqgrid/4.5.4/i18n/grid.locale-en.js'
-                ]
-            ];
-        }
-    };
-
-module.exports = packages;
+/**
+ * Get a package.
+ * @param {string} name Name of the package.
+ * @returns {Array.<string[]>} Returns the package if found.
+ */
+export function get(name) {
+    if (isDefined(packages[name])) {
+        const p = packages[name],
+            v = p[0],
+            m = (settings.minify ? '.min' : '');
+        return deepMap(p[1], val => `${cdn}/${name}/${v}/${formatString(val, name + m)}`);
+    }
+    return null;
+}

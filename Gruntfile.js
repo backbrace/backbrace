@@ -1,26 +1,21 @@
 'use strict';
 
-var versionInfo = require('./lib/version-info/version-info.js');
-
 module.exports = function(grunt) {
 
   //Load grunt modules.
   require('load-grunt-tasks')(grunt);
   grunt.loadTasks('lib/grunt');
 
-  var webpackConfig = require('./webpack.config.js');
-
-  //Get the current version info.
-  var JS_VERSION = versionInfo.currentVersion;
+  var pkg = require('./package.json');
 
   //Project configuration.
   grunt.initConfig({
-    JS_VERSION: JS_VERSION,
 
     //Clean build directories.
     clean: {
-      build: ['build', 'docs'],
-      tmp: ['tmp']
+      build: ['build'],
+      tmp: ['tmp'],
+      deploy: ['docs']
     },
 
     //Lint javascript.
@@ -45,39 +40,62 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      options: webpackConfig,
-      build: {
-      }
+      dev: require('./dev.config.js'),
+      prod: require('./prod.config.js')
     },
 
     'webpack-dev-server': {
-      options: {
-        webpack: webpackConfig,
+      core: {
+        webpack: require('./dev.config.js'),
         publicPath: '/scripts',
-        contentBase: 'server/wwwroot/'
-      },
-      start: {}
-    },
-
-    uglify: {
-      options: {
-        mangle: false
-      },
-      jumpStart: {
-        files: {
-          'build/jumpstart.min.js': ['build/jumpstart.js']
-        }
+        contentBase: 'sample',
+        port: 8000
       }
     },
 
     jsdoc: {
       dist: {
-        src: ['src/*.js','src/*/*.js','README.md'],
+        src: ['src/*.js', 'src/*/*.js', 'src/*/*/*.js', 'README.md'],
         options: {
           destination: 'docs',
           template: 'node_modules/jumpstartjs-jsdoc-template',
           config: 'jsdoc.conf.json'
         }
+      },
+      typings: {
+        src: [
+          'src/types.js',
+          'src/classes/*.js',
+          'src/components/*.js',
+          'src/components/*/*.js',
+          'src/jumpstart.js',
+          'src/app.js',
+          'src/code.js',
+          'src/controller.js',
+          'src/log.js'
+        ],
+        options: {
+          private: false,
+          destination: 'typings',
+          template: 'node_modules/tsd-jsdoc/dist',
+          config: 'jsdoc.conf.json'
+        }
+      }
+    },
+
+    file_append: {
+      typings: {
+        files: [
+          {
+            prepend: "/**\n" +
+              "* Type definitions for " + pkg.name + "\n" +
+              "* Project: " + pkg.repository.url + "\n" +
+              "* Definitions by: tsd-doc\n" +
+              "*/\n\n",
+            input: './typings/types.d.ts',
+            output: './typings/types.d.ts'
+          }
+        ]
       }
     }
 
@@ -85,17 +103,32 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-webpack');
 
-  grunt.registerTask('docs', ['jsdoc:dist']);
-  grunt.registerTask('startdev', ['webpack-dev-server:start']);
-  grunt.registerTask('pack', ['webpack:build']);
-  grunt.registerTask('package', ['clean', 'pack', 'uglify']);
-  grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
-  grunt.registerTask('build', [
+  grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
     'package',
-    'test:core',
-    'docs'
+    'test:core'
   ]);
-  grunt.registerTask('default', ['build']);
+  grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
+  grunt.registerTask('docs', ['jsdoc:dist']);
+  grunt.registerTask('typings', [
+    'jsdoc:typings',
+    'file_append:typings'
+  ]);
+  grunt.registerTask('generate', 'Generate docs and typings', [
+    'docs',
+    'typings'
+  ]);
+  grunt.registerTask('build', [
+    'webpack:dev'
+  ]);
+  grunt.registerTask('webserver', ['webpack-dev-server:core']);
+  grunt.registerTask('package', [
+    'clean',
+    'build',
+    //'webpack:prod', Add this back in when they add support for extends
+    'docs',
+    'typings'
+  ]);
+  grunt.registerTask('default', ['package']);
 
 };

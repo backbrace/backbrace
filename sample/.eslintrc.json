@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "env": {
+    "browser": true
+  },
+  "extends": "../.eslintrc-base.json",
+  "globals": {
+    "window": false,
+    "js": false,
+    "PageComponent": false
+  }
+}

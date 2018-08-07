@@ -9,9 +9,18 @@ module.exports = function(config) {
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
+    reporters: ['spec'],
     files: [
-      'build/jumpstart.min.js',
       'test/**/*.js'
-    ]
+    ],
+    preprocessors: {
+      'test/**/*.js': ['webpack']
+    },
+    webpack: {
+      cache: true
+    },
+    webpackMiddleware: {
+      stats: 'errors-only'
+    }
   });
 };

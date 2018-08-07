@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-au">
+
+<head>
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+    <link rel="manifest" href="manifest.json" type="application/manifest">
+    <meta name="theme-color" content="#2c3e50" />
+</head>
+
+<body>
+    <script type="text/javascript" src='./scripts/jumpstart.js'></script>
+    <script type="text/javascript" src='./scripts/app.js'></script>
+    <script type="text/javascript">
+
+        if ('serviceWorker' in navigator)
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function(reg) { }).catch(function(err) { });
+
+    </script>
+    <noscript>
+        Please enable javascript in your browser.
+    </noscript>
+</body>
+
+</html>

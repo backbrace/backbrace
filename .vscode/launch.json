@@ -8,7 +8,7 @@
             "name": "Attach",
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8081/test",
+            "url": "http://localhost:8000",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}"
         }

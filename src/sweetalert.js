@@ -5,30 +5,42 @@
  */
 'use strict';
 
-var util = require('./util'),
-    windowprovider = require('./providers/window'),
-    swal = require('./external/swal'),
-    queue = [],
+import { width } from './util';
+import { get as getSwal } from './providers/swal';
+import { get as getWindow } from './providers/window';
+
+let queue = [],
     isOpen = false,
     isClosing = false,
-    originalClose = swal.close;
+    originalClose = null;
 
-//Overwrite the close function.
-swal.close = function() {
-    var window = windowprovider.get();
-    isClosing = true;
-    originalClose();
-    isOpen = false;
-    window.setTimeout(function() {
-        onClosed();
-    }, 400);
-};
+/**
+ * Load the module.
+ * @returns {void}
+ */
+function load() {
+
+    const swal = getSwal();
+
+    //Overwrite the close function.
+    originalClose = swal.close;
+    swal.close = function() {
+        const window = getWindow();
+        isClosing = true;
+        originalClose();
+        isOpen = false;
+        window.setTimeout(function() {
+            onClosed();
+        }, 400);
+    };
+}
 
 /**
  * Open a sweet alert or queue it if one is already open.
  * @returns {void}
  */
 function openSwal() {
+    const swal = getSwal();
     if (isOpen || isClosing) {
         queue.push(arguments);
     } else {
@@ -68,7 +80,11 @@ function fixMessage(msg) {
  * @param {string} [icon] Icon URL to display in the dialog.
  * @returns {void}
  */
-function show(msg, callback, title, icon) {
+export function show(msg, callback, title, icon) {
+
+    // Load the module.
+    if (originalClose === null)
+        load();
 
     msg = fixMessage(msg);
     title = title || '';
@@ -82,14 +98,14 @@ function show(msg, callback, title, icon) {
             title: title,
             text: msg,
             type: 'error',
-            width: (util.width() < 438 ? util.width() - 60 : null)
+            width: (width() < 438 ? width() - 60 : null)
         },
             callback
         );
 
     } else {
 
-        var type = 'warning';
+        let type = 'warning';
         if (msg.toLowerCase().indexOf('done') !== -1 ||
             msg.toLowerCase().indexOf('success') !== -1 ||
             title.toLowerCase().indexOf('done') !== -1 ||
@@ -104,13 +120,9 @@ function show(msg, callback, title, icon) {
             text: msg,
             type: (icon ? null : type),
             imageUrl: icon,
-            width: (util.width() < 438 ? util.width() - 60 : null)
+            width: (width() < 438 ? width() - 60 : null)
         },
             callback
         );
     }
 }
-
-module.exports = {
-    show: show
-};

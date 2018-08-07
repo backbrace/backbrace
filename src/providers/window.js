@@ -3,15 +3,14 @@
  * @module windowprovider
  * @private
  */
-'use strict';
 
-var instance = window;
+let instance = window;
 
 /**
  * Get the window provider instance.
  * @returns {Window} Returns the window provider instance.
  */
-function get() {
+export function get() {
     return instance;
 }
 
@@ -19,14 +18,9 @@ function get() {
  * Set the window provider instance.
  * @method setWindow
  * @memberof module:js
- * @param {(Window|Object)} val Window provider instance to set.
+ * @param {(Window|object)} val Window provider instance to set.
  * @returns {void}
  */
-function set(val) {
+export function set(val) {
     instance = val;
 }
-
-module.exports = {
-    get: get,
-    set: set
-};

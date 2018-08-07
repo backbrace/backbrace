@@ -1,0 +1,21 @@
+{
+    "caption": "Test Sub Page",
+    "controller": "test.js",
+    "component": "listpage",
+    "icon": "facebook-box",
+    "fields": [
+        {
+            "name": "Field 1"
+        },
+        {
+            "name": "Field 2",
+            "width": "100%"
+        }
+    ],
+    "actions": [
+        {
+            "name": "New",
+            "icon": "mdi-plus-circle"
+        }
+    ]
+}

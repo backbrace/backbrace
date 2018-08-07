@@ -1,13 +1,16 @@
-'use strict';
+/**
+ * Server provider module.
+ * @module serverprovider
+ * @private
+ */
 
-var code = require('../code'),
-    http = require('../http');
+import { codeblock } from '../code';
 
 /** @type {ServerInstance} */
-var instance = {
+let instance = {
 
     autoLogin: function() {
-        return code.block(
+        return codeblock(
             function() {
                 return false;
             }
@@ -19,7 +22,7 @@ var instance = {
  * Get the server provider instance.
  * @returns {ServerInstance} Returns the server provider instance.
  */
-function get() {
+export function get() {
     return instance;
 }
 
@@ -28,11 +31,6 @@ function get() {
  * @param {ServerInstance} ref Server provider instance to set.
  * @returns {void}
  */
-function set(ref) {
+export function set(ref) {
     instance = ref;
 }
-
-module.exports = {
-    get: get,
-    set: set
-};

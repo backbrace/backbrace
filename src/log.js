@@ -3,11 +3,11 @@
  * @module log
  * @private
  */
-'use strict';
 
-var settings = require('./settings'),
-    util = require('./util'),
-    windowprovider = require('./providers/window');
+import { settings } from './settings';
+import { formatString, noop } from './util';
+
+import { get as getWindow } from './providers/window';
 
 /**
  * Write to the console.
@@ -18,17 +18,16 @@ var settings = require('./settings'),
  */
 function write(msg, type) {
 
-    var window = windowprovider.get(),
-        dte = new Date();
+    const window = getWindow(),
+        dte = (new Date()).toISOString();
 
     // Add date and time to string.
-    if (typeof msg === 'string' && dte.toISOString)
-        msg = util.formatString('{0} {1}',
-            dte.toISOString(), msg);
+    if (typeof msg === 'string')
+        msg = `${dte} ${msg}`;
 
     // Write to the console if available.
-    var console = window.console || { log: util.noop },
-        consoleFn = console[type] || console.log || util.noop;
+    let console = window.console || { log: noop },
+        consoleFn = console[type] || console.log || noop;
 
     try {
         consoleFn(msg);
@@ -44,8 +43,8 @@ function write(msg, type) {
  * @param {string} msg Message to log.
  * @returns {void}
  */
-function info(msg) {
-    msg = util.formatString.apply(null, arguments);
+export function info(msg) {
+    msg = formatString.apply(null, arguments);
     write(msg, 'info');
 }
 
@@ -56,8 +55,8 @@ function info(msg) {
  * @param {string} msg Message to log.
  * @returns {void}
  */
-function error(msg) {
-    msg = util.formatString.apply(null, arguments);
+export function error(msg) {
+    msg = formatString.apply(null, arguments);
     write(msg, 'error');
 }
 
@@ -68,8 +67,8 @@ function error(msg) {
  * @param {string} msg Message to log.
  * @returns {void}
  */
-function warning(msg) {
-    msg = util.formatString.apply(null, arguments);
+export function warning(msg) {
+    msg = formatString.apply(null, arguments);
     write(msg, 'warn');
 }
 
@@ -80,9 +79,9 @@ function warning(msg) {
  * @param {string} msg Message to log.
  * @returns {void}
  */
-function debug(msg) {
+export function debug(msg) {
     if (settings.debug) {
-        msg = util.formatString.apply(null, arguments);
+        msg = formatString.apply(null, arguments);
         write(msg, 'debug');
     }
 }
@@ -94,20 +93,12 @@ function debug(msg) {
  * @param {*} obj Object to log.
  * @returns {void}
  */
-function object(obj) {
+export function object(obj) {
     obj = obj || {};
-    var window = windowprovider.get();
+    const window = getWindow();
     if (window.console && window.console.dir) {
         write(obj, 'dir');
         return;
     }
     write(JSON.stringify(obj), 'log');
 }
-
-module.exports = {
-    info: info,
-    error: error,
-    warning: warning,
-    debug: debug,
-    object: object
-};

@@ -3,48 +3,48 @@
  * @module progress
  * @private
  */
-'use strict';
 
-var settings = require('./settings'),
-    jss = require('./jss'),
-    util = require('./util'),
-    windowprovider = require('./providers/window'),
-    progressbar,
-    progressbarbg,
+import { compile } from './jss';
+import { settings } from './settings';
+import { addElement, isMobileDevice } from './util';
+import { get as getWindow } from './providers/window';
+
+const style = {
+    '.progressbar': {
+        display: 'block',
+        'z-index': '%loader:zindex%',
+        position: 'fixed',
+        width: '%loader:barwidth%',
+        height: '%loader:barheight%',
+        left: '-%loader:barwidth%',
+        top: '0px',
+        background: '%loader:progresscolor%'
+    },
+    '.progressbar-bg': {
+        position: 'fixed',
+        width: '100%',
+        height: '%loader:barheight%',
+        left: '0px',
+        top: '0px',
+        background: '%loader:progressbackground%'
+    },
+    '.progressbar-blocker': {
+        'z-index': '50000',
+        position: 'fixed',
+        width: '100%',
+        height: '100vh',
+        left: '0px',
+        top: '0px',
+        background: '%loader:blockerbackground% url(%images:blocker%) no-repeat center ' +
+            'center fixed'
+    }
+};
+
+let progressbar,
     progressblocker,
     inProgress = false,
     fadingOut = false,
-    styleAdded = false,
-    style = {
-        '.progressbar': {
-            display: 'block',
-            'z-index': '%loader:zindex%',
-            position: 'fixed',
-            width: '%loader:barwidth%',
-            height: '%loader:barheight%',
-            left: '-%loader:barwidth%',
-            top: '0px',
-            background: '%loader:progresscolor%'
-        },
-        '.progressbar-bg': {
-            position: 'fixed',
-            width: '100%',
-            height: '%loader:barheight%',
-            left: '0px',
-            top: '0px',
-            background: '%loader:progressbackground%'
-        },
-        '.progressbar-blocker': {
-            'z-index': '50000',
-            position: 'fixed',
-            width: '100%',
-            height: '100vh',
-            left: '0px',
-            top: '0px',
-            background: '%loader:blockerbackground% url(%images:blocker%) no-repeat center ' +
-                'center fixed'
-        }
-    };
+    styleAdded = false;
 
 /**
  * Animate the progress bar.
@@ -52,13 +52,18 @@ var settings = require('./settings'),
  */
 function animate() {
 
-    var window = windowprovider.get(),
+    const window = getWindow(),
         id = window.setInterval(frame, 10),
         clientwidth = window.innerWidth || window.document.documentElement.clientWidth ||
             window.document.body.clientWidth,
-        barwidth = parseInt(settings.style.loader.barwidth, 10),
-        fromLeft = -barwidth;
+        barwidth = parseInt(settings.style.loader.barwidth, 10);
 
+    let fromLeft = -barwidth;
+
+    /**
+     * Render a frame of the animation.
+     * @returns {void}
+     */
     function frame() {
         if (inProgress) {
             if (fromLeft > barwidth + clientwidth) {
@@ -80,7 +85,7 @@ function animate() {
  */
 function start() {
 
-    var window = windowprovider.get();
+    const window = getWindow();
 
     if (!fadingOut) {
         inProgress = true;
@@ -94,35 +99,31 @@ function start() {
 }
 
 /**
- * Stop the animation.
- * @returns {void}
- */
-function stop() {
-
-    if (inProgress) {
-        fadeOut();
-        inProgress = false;
-    }
-}
-
-/**
  * Fadeout the loader.
  * @returns {void}
  */
 function fadeOut() {
 
-    var window = windowprovider.get(),
-        op = 1;
+    const window = getWindow();
+    let op = 1,
+        removeBlocker = () => {
+            let element = window.document.getElementsByClassName('progressbar-blocker');
+            if (element.length > 0)
+                element[0].outerHTML = '';
+        };
+
+    if (isMobileDevice()) {
+        removeBlocker();
+        return;
+    }
 
     fadingOut = true;
-    var timer = window.setInterval(function() {
+    let timer = window.setInterval(function() {
         if (op <= 0.1) {
             progressblocker.style.opacity = 0;
             window.clearInterval(timer);
             fadingOut = false;
-            var element = window.document.getElementsByClassName('progressbar-blocker');
-            if (element.length > 0)
-                element[0].outerHTML = '';
+            removeBlocker();
         } else {
             progressblocker.style.opacity = op;
             progressblocker.style.filter = 'alpha(opacity=' + (op * 100) + ')';
@@ -137,8 +138,8 @@ function fadeOut() {
  */
 function createStyle() {
 
-    var window = windowprovider.get(),
-        css = jss.compile(style),
+    const window = getWindow(),
+        css = compile(style),
         headElement = window.document.head || window.document.getElementsByTagName('head')[0],
         styleElement = window.document.createElement('style');
 
@@ -155,30 +156,34 @@ function createStyle() {
  * Show the loader.
  * @returns {void}
  */
-function show() {
+export function show() {
 
     if (inProgress)
         return;
 
-    var window = windowprovider.get();
+    const window = getWindow();
 
     // Compile and add the style
     if (!styleAdded)
         styleAdded = createStyle();
 
     // Add the elements.
-    progressblocker = util.addElement('div', { 'class': 'progressbar-blocker' },
-        window.document.body);
-    progressbarbg = util.addElement('div', { 'class': 'progressbar-bg' },
-        progressblocker);
-    progressbar = util.addElement('div', { 'class': 'progressbar' },
-        progressblocker);
+    progressblocker = addElement('div', { 'class': 'progressbar-blocker' }, window.document.body);
+    addElement('div', { 'class': 'progressbar-bg' }, progressblocker);
+    progressbar = addElement('div', { 'class': 'progressbar' }, progressblocker);
 
     // Start the animation.
     start();
 }
 
-module.exports = {
-    show: show,
-    hide: stop
-};
+/**
+ * Stop the animation.
+ * @returns {void}
+ */
+export function hide() {
+
+    if (inProgress) {
+        fadeOut();
+        inProgress = false;
+    }
+}

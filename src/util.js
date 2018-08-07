@@ -5,63 +5,65 @@
  */
 'use strict';
 
-var windowprovider = require('./providers/window'),
-  uid = 1,
-  timeouts = [],
-  messageName = 'ztm',
+import { get as getJQuery } from './providers/jquery';
+import { get as getWindow } from './providers/window';
+
+let id = (new Date()).getTime(),
+  timeouts = [];
+const messageName = 'ztm',
   toString = Object.prototype.toString;
 
 /**
  * A function that performs no operations.
+ * @memberof module:js
  * @returns {void}
+ * @example
+ * var consoleFn = console.log || js.noop;
+ * consoleFn('Test message'); // Will not error if `console.log` is unavailable.
  */
-function noop() {
+export function noop() {
 }
 
 /**
- * Get the next unique id.
- * @method id
+ * Generate a unique id.
  * @memberof module:js
- * @returns {number} Returns a unique ID.
+ * @returns {number} Returns a unique id.
+ * @example
+ * var id = js.uid();
  */
-function nextID() {
-  return uid++;
+export function uid() {
+  return id++;
 }
 
 /**
  * Check for HTML5 compatability.
+ * @memberof module:js
  * @returns {boolean} `True` if the current environment is HTML5 compatable.
  */
-function html5Check() {
-  var window = windowprovider.get();
+export function isHtml5() {
+  const window = getWindow();
   return typeof window.document.addEventListener !== 'undefined';
 }
 
 /**
  * Check if we are on a mobile/tablet device.
+ * @memberof module:js
  * @returns {boolean} `True` if we are using a mobile/tablet device.
  */
-function mobileCheck() {
+export function isMobileDevice() {
+  const window = getWindow();
   return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
     .test(window.navigator.userAgent.toLowerCase());
 }
 
 /**
- * Determines if a reference is a `string`.
- * @param {*} val Reference to check.
- * @returns {boolean} `True` if val is a `string`.
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
  * Determines if a reference is an `Error`.
+ * @memberof module:js
  * @param {*} val Reference to check.
  * @returns {boolean} `True` if val is an `Error`.
  */
-function isError(val) {
-  var type = toString.call(val);
+export function isError(val) {
+  const type = toString.call(val);
   switch (type) {
     case '[object Error]': return true;
     case '[object Exception]': return true;
@@ -72,58 +74,106 @@ function isError(val) {
 
 /**
  * Determines if a reference is defined.
+ * @memberof module:js
  * @param {*} val Reference to check.
  * @returns {boolean} `True` if val is defined.
  */
-function isDefined(val) {
+export function isDefined(val) {
   return typeof val !== 'undefined';
 }
 
 /**
- * Format a string.
+ * Determines if a reference is a date.
+ * @param {*} val Reference to check.
+ * @returns {boolean} Returns `true` if val is a date.
+ */
+export function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Format a string. Merge fields are specified by the argument number wrapped in {}.
+ * @method formatString
+ * @memberof module:js
  * @param {string} str String to format.
  * @returns {string} Formatted string.
+ * @example
+ * var str = js.formatString('This is a {0} {1}.','test','message');
+ * // str = 'This is a test message'
  */
-function formatString(str) {
-  var a = arguments;
+export function formatString(str) {
+  const a = arguments;
   return str.replace(/{(\d+)}/g, function(match, number) {
     return typeof a[+number + 1] !== 'undefined'
-      ? a[+number + 1] : match;
+      ? a[+number + 1] : '';
   });
 }
 
 /**
- * Extend an object with another object.
- * @param {*} me Object to extend.
- * @param {*} withthis Object to extend with.
+ * Base extend.
+ * @param {*} dst Object to extend.
+ * @param {any[]} objs Objects to extend with.
+ * @param {boolean} [deep] Deep copy.
  * @returns {*} Extended object.
  */
-function extend(me, withthis) {
-  if (withthis && me)
-    for (var i in withthis) {
-      if (typeof withthis[i] === 'object') {
-        extend(me[i], withthis[i]);
+function baseExtend(dst, objs, deep) {
+
+  for (let i = 0, ii = objs.length; i < ii; ++i) {
+    let obj = objs[i];
+    if (typeof obj !== 'object' && typeof obj !== 'function') continue;
+    let keys = Object.keys(obj);
+    for (let j = 0, jj = keys.length; j < jj; j++) {
+      let key = keys[j],
+        src = obj[key];
+      if (deep && typeof src === 'object') {
+        if (isDate(src)) {
+          dst[key] = new Date(src.valueOf());
+        } else {
+          if (typeof dst[key] !== 'object') dst[key] = Array.isArray(src) ? [] : {};
+          baseExtend(dst[key], [src], true);
+        }
       } else {
-        me[i] = withthis[i];
+        dst[key] = src;
       }
     }
-  return me;
+  }
+  return dst;
+}
+
+/**
+ * Extend an object with another object.
+ * @internal
+ * @param {*} dst Destination object.
+ * @returns {*} Extended object.
+ */
+export function extend(dst) {
+  return baseExtend(dst, [].slice.call(arguments, 1), false);
+}
+
+/**
+ * Merge an object with another object.
+ * @internal
+ * @param {*} dst Destination object.
+ * @returns {*} Extended object.
+ */
+export function merge(dst) {
+  return baseExtend(dst, [].slice.call(arguments, 1), true);
 }
 
 /**
  * Iterate through an array or object.
+ * @internal
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
  * @param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {ArrayLike<T>} Returned object for chaining.
  */
-function forEach(obj, iterator, context) {
-  var key, length;
+export function forEach(obj, iterator, context) {
   if (obj) {
     if (Array.isArray(obj)) {
-      var isPrimitive = typeof obj !== 'object';
-      for (key = 0, length = obj.length; key < length; key++) {
+      const isPrimitive = typeof obj !== 'object';
+      for (let key = 0, length = obj.length; key < length; key++) {
         if (isPrimitive || key in obj) {
           iterator.call(context, obj[key], key, obj);
         }
@@ -131,11 +181,11 @@ function forEach(obj, iterator, context) {
     } else if (Array.isArray(obj) && obj.forEach && obj.forEach !== forEach) {
       obj.forEach(iterator, context);
     } else if (typeof obj.hasOwnProperty === 'function') {
-      for (key in obj)
+      for (let key in obj)
         if (obj.hasOwnProperty(key))
           iterator.call(context, obj[key], key, obj);
     } else {
-      for (key in obj)
+      for (let key in obj)
         if (Object.prototype.hasOwnProperty.call(obj, key))
           iterator.call(context, obj[key], key, obj);
     }
@@ -144,12 +194,42 @@ function forEach(obj, iterator, context) {
 }
 
 /**
+ * Deep map.
+ * @param {*} obj Object.
+ * @param {*} f Function.
+ * @param {*} [ctx] Context.
+ * @returns {*} Map.
+ */
+export function deepMap(obj, f, ctx) {
+  if (Array.isArray(obj)) {
+    return obj.map(function(val, key) {
+      return (typeof val === 'object') ? deepMap(val, f, ctx) : f.call(ctx, val, key);
+    });
+  } else if (typeof obj === 'object') {
+    let res = {},
+      key;
+    for (key in obj) {
+      let val = obj[key];
+      if (typeof val === 'object') {
+        res[key] = deepMap(val, f, ctx);
+      } else {
+        res[key] = f.call(ctx, val, key);
+      }
+    }
+    return res;
+  } else {
+    return obj;
+  }
+}
+
+/**
  * Bind a message event listener to the window.
+ * @private
  * @returns {void}
  */
-function bindMessageEvent() {
-  var window = windowprovider.get();
-  window.addEventListener('message', function(event) {
+export function bindMessageEvent() {
+  const window = getWindow();
+  window.addEventListener('message', function windowMessageEvent(event) {
     if (event.source === window && event.data === messageName) {
       event.stopPropagation();
       if (timeouts.length)
@@ -160,44 +240,40 @@ function bindMessageEvent() {
 
 /**
  * Clear all current message timeouts.
+ * @internal
  * @returns {void}
  */
-function clearTimeouts() {
+export function clearTimeouts() {
   timeouts = [];
 }
 
 /**
  * Run a function asyncroniously. Runs faster than setTimeout(fn, 0).
+ * @internal
  * @param {Function} fn Function to run after 0 seconds.
  * @returns {void}
  */
-function setZeroTimeout(fn) {
-  var window = windowprovider.get();
+export function setZeroTimeout(fn) {
+  const window = getWindow();
   timeouts.push(fn);
   window.postMessage(messageName, '*');
 }
 
-function parseDate(str) {
-  var moment = require('./external/moment');
-  if (str && str.indexOf('T') !== -1)
-    return new Date(str);
-  return moment(str, 'DD/MM/YYYY').toDate();
-}
-
 /**
  * Add an element (native).
+ * @internal
  * @param {string} type Element type to create.
- * @param {Object} attributes Attributes to add to the element.
+ * @param {*} attributes Attributes to add to the element.
  * @param {HTMLElement} parentElement Parent element to append to.
  * @returns {HTMLElement} Returns the new element created.
  */
-function addElement(type, attributes, parentElement) {
+export function addElement(type, attributes, parentElement) {
 
-  var window = windowprovider.get(),
+  const window = getWindow(),
     element = window.document.createElement(type);
 
   if (attributes)
-    for (var i in attributes)
+    for (let i in attributes)
       element.setAttribute(i, attributes[i]);
 
   parentElement.appendChild(element);
@@ -208,52 +284,10 @@ function addElement(type, attributes, parentElement) {
  * Get the width of the window.
  * @returns {number} Width of the window.
  */
-function width() {
-  var window = windowprovider.get();
+export function width() {
+  const window = getWindow();
   return window.innerWidth || window.document.documentElement.clientWidth ||
     window.document.body.clientWidth;
-}
-
-/**
- * Decode HTML.
- * @param {string} str HTML string to decode.
- * @returns {string} Returns the decoded string.
- */
-var decodeHTML = (function() {
-
-  var window = windowprovider.get(),
-    element = window.document.createElement('textarea');
-
-  function decodeHTMLEntities(str) {
-    if (str && typeof str === 'string') {
-      str = str.replace(/</g, '&lt;');
-      element.innerHTML = str;
-      str = element.textContent;
-      element.textContent = '';
-    }
-
-    return str;
-  }
-
-  return decodeHTMLEntities;
-})();
-
-function sanitizeString(input) {
-
-  if (input === null || typeof input !== 'string') //Only sanitize strings.
-    return input;
-
-  //Decode loop.
-  var oldinput = '';
-  do {
-    oldinput = input;
-    input = decodeHTML(input);
-  } while (oldinput !== input);
-
-  return input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
-    replace(/<[/!]*?[^<>]*?>/gi, '').
-    replace(/<style[^>]*?>.*?<\/style>/gi, '').
-    replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
 }
 
 /**
@@ -261,17 +295,17 @@ function sanitizeString(input) {
  * @param {JQuery} elem Element to search.
  * @returns {JQuery} Returns the editor if found.
  */
-function findInput(elem) {
+export function findInput(elem) {
 
-  var $ = require('./external/jquery');
+  const $ = getJQuery();
 
-  for (var i = 0; i < elem.children().length; i++) {
+  for (let i = 0; i < elem.children().length; i++) {
     if (elem.children()[i].nodeName === 'INPUT'
       || elem.children()[i].nodeName === 'TEXTAREA') {
       if (elem.children()[i].className !== 'noinput')
         return $(elem.children()[i]);
     }
-    var v = findInput($(elem.children()[i]));
+    let v = findInput($(elem.children()[i]));
     if (v !== null)
       return v;
   }
@@ -281,24 +315,3 @@ function findInput(elem) {
 
 // Bind the message event to the browser window.
 bindMessageEvent();
-
-module.exports = {
-  noop: noop,
-  nextID: nextID,
-  html5Check: html5Check,
-  mobileCheck: mobileCheck,
-  toString: toString,
-  isString: isString,
-  isError: isError,
-  isDefined: isDefined,
-  formatString: formatString,
-  extend: extend,
-  forEach: forEach,
-  clearTimeouts: clearTimeouts,
-  setZeroTimeout: setZeroTimeout,
-  addElement: addElement,
-  width: width,
-  decodeHTML: decodeHTML,
-  sanitizeString: sanitizeString,
-  findInput: findInput
-};

@@ -3,133 +3,205 @@
  */
 
 /**
- * Component.
- * @typedef Component
- * @property {number} id ID of the component.
- * @property {Function} load Load the component.
- * @property {Function} unload Unload the component.
- * @property {Function} show Show the component.
- * @property {Function} hide Hide the component.
+ * Alias for `Function`. Use this where you have repeatable function params.
+ * @typedef {Function} GenericFunction
+ * @param {...*} [args] Function arguments.
  */
 
 /**
- * @typedef VersionInfo
- * @property {string} full Full version number. eg: 0.1.0
+ * Error handler function.
+ * @typedef {Function} ErrorHandler
+ * @param {(string|Error)} msg Error message.
+ * @param {...*} [args] Function arguments.
+ */
+
+/**
+ * Action runner function.
+ * @typedef {Function} ActionRunner
+ * @param {PageActionMeta} action Action meta data.
+ * @param {Function} func Function to run.
+ * @returns {void}
+ */
+
+/**
+ * Alias for `ArrayLike`.
+ * @typedef {ArrayLike} ArrayLike
+ */
+
+/**
+ * JQuery library.
+ * @typedef {JQuery} JQuery
+ */
+
+/**
+ * JQuery promise.
+ * @typedef {JQueryPromise} JQueryPromise
  */
 
 /**
  * Server Instance
- * @typedef ServerInstance
- * @property {function():JQueryPromise} autoLogin Attempt to auto login.
+ * @typedef {object} ServerInstance
+ * @property {function():(JQueryPromise|void)} autoLogin Attempt to auto login.
  */
 
- /**
+/**
+ * @callback AlertInstanceMessage
+ * @param {string} msg Message to display.
+ * @param {function()} [callbackFn] Callback function to execute after the alert is dismissed.
+ * @param {string} [title] Title of the alert.
+ * @returns {void}
+ */
+
+/**
+ * @callback AlertInstanceConfirmCallback
+ * @param {boolean} ret `true` if the user clicked the `OK` button.
+ * @returns {void}
+ */
+
+/**
+ * @callback AlertInstanceConfirm
+ * @param {string} msg Message to display.
+ * @param {AlertInstanceConfirmCallback} callbackFn Callback function to execute after the alert is dismissed.
+ * @param {string} [title] Title of the alert.
+ * @param {string} [yescaption] Caption of the "yes" button.
+ * @param {string} [nocaption] Caption of the "no" button.
+ * @returns {void}
+ */
+
+/**
+ * @callback AlertInstanceError
+ * @param {string} msg Message to display.
+ * @returns {void}
+ */
+
+/**
  * Alert instance.
- * @typedef AlertInstance
- * @property {function(string,Function,string):void} message Show a message box.
- * @property {function(string,Function,string,string,string):void} confirm Show a confirmation box.
- * @property {function(string):void} error Show an error message box.
+ * @typedef {object} AlertInstance
+ * @property {AlertInstanceMessage} message Show a message box.
+ * @property {AlertInstanceConfirm} confirm Show a confirmation box.
+ * @property {AlertInstanceError} error Show an error message box.
+ */
+
+/**
+ * @callback IconsInstanceGet
+ * @param {string} [name] Name of the icon.
+ * @param {string} [size] Size of the icon.
+ * @param {string} [color] Color of the icon.
+ * @returns {string} Icon html string.
  */
 
  /**
   * Icons instance.
-  * @typedef IconsInstance
-  * @property {function(string,string,string):string} get Get an icon by name.
+  * @typedef {object} IconsInstance
+  * @property {IconsInstanceGet} get Get an icon by name.
   */
 
 /**
  * App configuration.
- * @typedef AppConfig
- * @property {string} name App name (displays in header if there is no logo image). Defaults to `Jumpstart App`.
- * @property {string} version App version. Defaults to `0.1.0`.
- * @property {string} title App tite (displays in browser window). Defaults to `New Jumpstart App`.
- * @property {string} description App description. Defaults to `Web App powered by Jumpstart`.
+ * @typedef {object} AppConfig
+ * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Jumpstart App`.
+ * @property {string} [version] App version. Defaults to `0.1.0`.
+ * @property {string} [title] App tite (displays in browser window). Defaults to `New Jumpstart App`.
+ * @property {string} [description] App description. Defaults to `Web App powered by Jumpstart`.
  */
 
 /**
  * Meta data configuration.
- * @typedef MetaConfig
- * @property {string} dir Meta data root directory. Defaults to `./meta`.
+ * @typedef {object} MetaConfig
+ * @property {string} [dir] Meta data root directory. Defaults to `./meta`.
  */
 
 /**
  * Loader style.
- * @typedef LoaderStyle
- * @property {string} zindex Loader bar z-index. Defaults to `1000`.
- * @property {string} barheight Loader bar height. Defaults to `10px`.
- * @property {string} barwidth Loader bar width. Defaults to `800px`.
- * @property {string} progressbackground Progress bar background. Defaults to `#A2CFEE`.
- * @property {string} progresscolor Progress bar foreground color. Defaults to `#3498DB`.
- * @property {string} blockerbackground Background for loader blocker. Defaults to `#ECF0F1`.
+ * @typedef {object} LoaderStyle
+ * @property {string} [zindex] Loader bar z-index. Defaults to `1000`.
+ * @property {string} [barheight] Loader bar height. Defaults to `10px`.
+ * @property {string} [barwidth] Loader bar width. Defaults to `800px`.
+ * @property {string} [progressbackground] Progress bar background. Defaults to `#A2CFEE`.
+ * @property {string} [progresscolor] Progress bar foreground color. Defaults to `#3498DB`.
+ * @property {string} [blockerbackground] Background for loader blocker. Defaults to `#ECF0F1`.
  */
 
 /**
  * Font style.
- * @typedef FontStyle
- * @property {string} url URL for the font. Defaults to Roboto font.
- * @property {string} family Font family to use for the app. Defaults to `'Roboto', sans-serif`.
+ * @typedef {object} FontStyle
+ * @property {string} [url] URL for the font. Defaults to Roboto font.
+ * @property {string} [family] Font family to use for the app. Defaults to `'Roboto', sans-serif`.
+ * @property {string} [size] Font size. Defaults to `16px`.
  */
 
 /**
  * Images style.
- * @typedef ImagesStyle
- * @property {string} logo URL for the logo image (displayed in the header).
- * @property {string} menuLogo URL for the menu logo image (displayed at the top of the main menu).
- * @property {string} blocker URL for the blocker image (displayed while the loader is shown).
+ * @typedef {object} ImagesStyle
+ * @property {string} [logo] URL for the logo image (displayed in the header).
+ * @property {string} [menuLogo] URL for the menu logo image (displayed at the top of the main menu).
+ * @property {string} [blocker] URL for the blocker image (displayed while the loader is shown).
  */
 
 /**
  * Colours style.
- * @typedef ColorsStyle
- * @property {string} header Header background color. Defaults to `#3498db`.
- * @property {string} headertext Header foreground color. Defaults to `#FFF`.
- * @property {string} headerborder Header border style. Defaults to `none`.
- * @property {string} title Window title background color. Defaults to `#FFF`.
- * @property {string} titletext Window title foreground color. Defaults to `#000`.
- * @property {string} menuicon Menu icon color. Defaults to `#FFF`.
- * @property {string} default Window background color. Defaults to `#FFF`.
- * @property {string} defaulttext Window foreground color. Defaults to `#000`.
- * @property {string} hover Hover background color. Defaults to `whitesmoke`.
- * @property {string} hovertext Hover foreground color. Defaults to `#000`.
- * @property {string} alertbutton Alert button background color. Defaults to `#3498db`.
- * @property {string} alertbuttontext Alert button foreground color. Defaults to `#FFF`.
+ * @typedef {object} ColorsStyle
+ * @property {string} [header] Header background color. Defaults to `#3498db`.
+ * @property {string} [headertext] Header foreground color. Defaults to `#FFF`.
+ * @property {string} [headerborder] Header border style. Defaults to `none`.
+ * @property {string} [title] Window title background color. Defaults to `#FFF`.
+ * @property {string} [titletext] Window title foreground color. Defaults to `#000`.
+ * @property {string} [menuicon] Menu icon color. Defaults to `#FFF`.
+ * @property {string} [default] Window background color. Defaults to `#FFF`.
+ * @property {string} [defaulttext] Window foreground color. Defaults to `#000`.
+ * @property {string} [hover] Hover background color. Defaults to `whitesmoke`.
+ * @property {string} [hovertext] Hover foreground color. Defaults to `#000`.
+ * @property {string} [alertbutton] Alert button background color. Defaults to `#3498db`.
+ * @property {string} [alertbuttontext] Alert button foreground color. Defaults to `#FFF`.
+ */
+
+/**
+ * Screen sizes.
+ * @typedef {object} ScreenSizes
+ * @property {number} [small] Mobile screen. Defaults to `600`.
+ * @property {number} [smallUp] Mobile screen upper. Defaults to `601`.
+ * @property {number} [medium] Tablet screen. Defaults to `992`.
+ * @property {number} [mediumUp] Tablet screen upper. Defaults to `993`.
+ * @property {number} [large] Desktop screen. Defaults to `1200`.
+ * @property {number} [largeUp] Desktop screen upper. Defaults to `1201`.
  */
 
 /**
  * App style configuration. Merged with the JSS style at run time.
  *
  * Example: The place holder `%colors:header%` will merge with the settings.style.colors.header value.
- * @typedef StyleConfig
- * @property {LoaderStyle} loader Loader style.
- * @property {FontStyle} font Font style.
- * @property {ImagesStyle} images Images style.
- * @property {ColorsStyle} colors Colors style.
+ * @typedef {object} StyleConfig
+ * @property {number} length Number of children.
+ * @property {LoaderStyle} [loader] Loader style.
+ * @property {FontStyle} [font] Font style.
+ * @property {ImagesStyle} [images] Images style.
+ * @property {ColorsStyle} [colors] Colors style.
+ * @property {ScreenSizes} [screen] Screen sizes.
  */
 
 /**
  * Application settings.
- * @typedef Settings
- * @property {VersionInfo} VERSION_INFO Version info for Jumpstart.
- * @property {boolean} debug Set the app to debug mode. Defaults to `false`.
- * @property {boolean} minify Load minified packages. Defaults to `true`.
- * @property {boolean} mobile Mobile mode flag.
- * @property {boolean} guiAllowed GUI allowed flag.
- * @property {boolean} autoSwitch Auto switch to mobile mode if detected. Defaults to `true`.
- * @property {Object} jss JSS style to use. Defaults to the flat JSS style.
- * @property {boolean} windowMode Allow the use of multiple windows. Defaults tp `true`.
- * @property {AppConfig} app App config.
- * @property {MetaConfig} meta Meta data config.
- * @property {StyleConfig} style Style config.
+ * @typedef {object} Settings
+ * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
+ * @property {boolean} [minify] Load minified packages. Defaults to `true`.
+ * @property {boolean} [guiAllowed] GUI allowed flag.
+ * @property {object} [jss] JSS style to use. Defaults to the flat JSS style.
+ * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
+ * @property {boolean} [requireAuth] Require the user to log in. Defaults to `true`.
+ * @property {AppConfig} [app] App config.
+ * @property {MetaConfig} [meta] Meta data config.
+ * @property {StyleConfig} [style] Style config.
  */
 
 /**
- * @typedef HeaderOptions
+ * @typedef {object} HeaderOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.
+ * @property {string} [class] Header class.
  */
 
 /**
- * @typedef PageOptions
+ * @typedef {object} PageOptions
  * @property {string} [title] Page title.
  * @property {boolean} [factbox] Show page in side container.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
@@ -138,7 +210,7 @@
  */
 
 /**
- * @typedef WindowOptions
+ * @typedef {object} WindowOptions
  * @property {string} [className] Window class style.
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
@@ -147,7 +219,7 @@
  */
 
 /**
- * @typedef PageFieldMeta
+ * @typedef {object} PageFieldMeta
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
@@ -157,38 +229,32 @@
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
  * @property {boolean} password If `true` display a password field.
- * @property {boolean} desktopOnly Only show in desktop mode.
- * @property {boolean} mobileOnly Only show in mobile mode.
- * @property {boolean} leftColumn Force field to show in left column.
- * @property {boolean} rightColumn Force field to show in right column.
+ * @property {string} class Field class.
  */
 
 /**
- * @typedef PageActionMeta
+ * @typedef {object} PageActionMeta
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
+ * @property {string} iconColor Icon color. Defaults to header color.
  * @property {string} className Classes to add to the button.
- * @property {boolean} desktopOnly Only show in desktop mode.
- * @property {boolean} mobileOnly Only show in mobile mode.
  */
 
 /**
- * @typedef PageTabMeta
+ * @typedef {object} PageTabMeta
  * @property {string} name Name of the tab.
  * @property {string} text Caption of the tab.
  * @property {string} pageName Display a subpage in this tab.
  * @property {string} icon Tab icon.
- * @property {boolean} desktopOnly Only show in desktop mode.
- * @property {boolean} mobileOnly Only show in mobile mode.
- * @property {boolean} factbox Display in the factbox area.
+ * @property {string} className Classes to add to the tab.
  */
 
 /**
- * @typedef PageMeta
+ * @typedef {object} PageMeta
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
- * @property {string} component Component for the whole page (defaults to `CardComponent`).
+ * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
  * @property {string} icon Icon to use for the page.
  * @property {boolean} factbox Display in the factbox area.

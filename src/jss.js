@@ -5,8 +5,8 @@
  */
 'use strict';
 
-var settings = require('./settings'),
-    util = require('./util');
+import { settings } from './settings';
+import { forEach } from './util';
 
 /**
  * Merge the JSS with the config.
@@ -16,10 +16,10 @@ var settings = require('./settings'),
 function mergeConfig(val) {
 
     // Loop through the style config.
-    util.forEach(settings.style, function(styleitem, stylekey) {
+    forEach(settings.style, function(styleitem, stylekey) {
 
         // Loop though the sub config (colors,images,etc).
-        util.forEach(styleitem, function(item, key) {
+        forEach(styleitem, function(item, key) {
 
             // Check for a merge field and replace.
             if (val.indexOf('%' + stylekey + ':' + key + '%') !== -1)
@@ -35,33 +35,33 @@ function mergeConfig(val) {
  * @param {*} obj JSS object to compile.
  * @returns {string} CSS string
  */
-function compile(obj) {
+export function compile(obj) {
 
-    var css = '';
+    let css = '';
 
     // Loop through css classes.
-    util.forEach(obj, function(cls, className) {
+    forEach(obj, function(cls, className) {
 
         css += className + '{';
-        var othercss = '';
+        let othercss = '';
 
         // Loop through styles in the class.
-        util.forEach(cls, function(style, styleName) {
+        forEach(cls, function(style, styleName) {
 
             // Check for a multi style.
             if (Array.isArray(style)) {
-                util.forEach(style, function(multistyle, msName) {
-                    css += styleName + ': ' + mergeConfig(multistyle) + ';';
+                forEach(style, function(multistyle, msName) {
+                    css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(multistyle) + ';';
                 });
             } else if (typeof styleName === 'string'
                 && styleName.indexOf && styleName.indexOf('@media') === 0) {
-                othercss += styleName + '{' + className + '{';
-                util.forEach(style, function(otherstyle, osName) {
-                    othercss += osName + ': ' + mergeConfig(otherstyle) + ';';
+                othercss += mergeConfig(styleName) + '{' + className + '{';
+                forEach(style, function(otherstyle, osName) {
+                    othercss += mergeConfig(osName.toString()) + ': ' + mergeConfig(otherstyle) + ';';
                 });
                 othercss += '}}';
             } else {
-                css += styleName + ': ' + mergeConfig(style) + ';';
+                css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(style) + ';';
             }
         });
 
@@ -70,7 +70,3 @@ function compile(obj) {
 
     return css;
 }
-
-module.exports = {
-    compile: compile
-};

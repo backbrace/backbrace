@@ -1,0 +1,50 @@
+{
+    "caption": "Test Page",
+    "controller": "test.js",
+    "icon": "tablet-ipad",
+    "fields": [
+        {
+            "name": "Field 1"
+        },
+        {
+            "name": "Field 2"
+        },
+        {
+            "name": "Field 3"
+        },
+        {
+            "name": "Field 4",
+            "tab": "Tab1"
+        },
+        {
+            "name": "Field 5",
+            "tab": "Tab1"
+        },
+        {
+            "name": "Field 6",
+            "tab": "Tab1"
+        }
+    ],
+    "actions": [
+        {
+            "name": "New",
+            "icon": "plus"
+        },
+        {
+            "name": "Delete",
+            "icon": "close",
+            "iconColor": "red"
+        }
+    ],
+    "tabs": [
+        {
+            "name": "Tab1",
+            "factbox": true,
+            "icon": "book"
+        },
+        {
+            "name": "Tab2",
+            "pageName": "test sub"
+        }
+    ]
+}

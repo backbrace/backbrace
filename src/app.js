@@ -3,21 +3,32 @@
  * @module app
  * @private
  */
-'use strict';
 
-var code = require('./code'),
-    settings = require('./settings'),
-    jss = require('./jss'),
-    log = require('./log'),
-    packages = require('./packages'),
-    progress = require('./progress'),
-    packagemanager = require('./packagemanager'),
-    util = require('./util'),
-    alertprovider = require('./providers/alert'),
-    serverprovider = require('./providers/server'),
-    windowprovider = require('./providers/window'),
-    header = null,
-    main = null,
+import { codeblock, codethread, onerror as onCodeError } from './code';
+import { compile } from './jss';
+import { error as logError } from './log';
+import * as packagemanager from './packagemanager';
+import * as progress from './progress';
+import { settings } from './settings';
+import * as sweetalert from './sweetalert';
+import {
+    setZeroTimeout,
+    forEach,
+    formatString,
+    addElement,
+    isDefined,
+    isHtml5,
+    isMobileDevice
+} from './util';
+import { get as getAlert, set as setAlert } from './providers/alert';
+import { get as getIcons } from './providers/icons';
+import { get as getJQuery } from './providers/jquery';
+import { get as getServer } from './providers/server';
+import { get as getWindow } from './providers/window';
+import { HeaderComponent } from './components/header';
+import { ViewerComponent } from './components/viewer';
+
+let main = null,
     windows = null,
     pages = {},
     activePage = 0,
@@ -26,19 +37,20 @@ var code = require('./code'),
 
 /**
  * Show a message dialog.
+ * @ignore
  * @param {string} msg Message to display.
  * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
  * @returns {void}
  */
-function message(msg, callbackFn, title) {
+export function message(msg, callbackFn, title) {
 
-    var alert = alertprovider.get();
+    const alert = getAlert();
 
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
         if (callbackFn)
-            util.setZeroTimeout(callbackFn);
+            setZeroTimeout(callbackFn);
         return;
     }
 
@@ -49,6 +61,7 @@ function message(msg, callbackFn, title) {
 
 /**
  * Show a confirmation dialog.
+ * @ignore
  * @param {string} msg Message to display.
  * @param {function(boolean)} callbackFn Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Confirmation"] Title of the dialog.
@@ -56,14 +69,14 @@ function message(msg, callbackFn, title) {
  * @param {string} [nocaption="Cancel"] Caption of the "no" button.
  * @returns {void}
  */
-function confirm(msg, callbackFn, title, yescaption, nocaption) {
+export function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
-    var alert = alertprovider.get();
+    const alert = getAlert();
 
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
         if (callbackFn)
-            util.setZeroTimeout(callbackFn);
+            setZeroTimeout(callbackFn);
         return;
     }
 
@@ -75,13 +88,14 @@ function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
 /**
  * Display an error and kill the current execution.
+ * @ignore
  * @param {string|Error} err Error to display.
  * @returns {void}
  */
-function error(err) {
+export function error(err) {
 
-    var alert = alertprovider.get(),
-        msg = '';
+    const alert = getAlert();
+    let msg = '';
 
     // Get the message.
     if (typeof err === 'string') {
@@ -91,16 +105,16 @@ function error(err) {
     }
 
     // Merge string.
-    var arr = [msg];
-    util.forEach(arguments, function(a, i) {
+    const arr = [msg];
+    forEach(arguments, function(a, i) {
         if (i > 0)
             arr.push(a);
     });
-    msg = util.formatString.apply(null, arr);
+    msg = formatString.apply(null, arr);
 
     progress.hide();
 
-    log.error('Application Error: ' + msg);
+    logError('Application Error: ' + msg);
 
     // Run error handling.
     if (!suppressNextError) {
@@ -117,61 +131,55 @@ function error(err) {
 
 /**
  * Execute a function after the app is loaded.
+ * @method ready
  * @memberof module:js
  * @param {Function} func Function to execute.
  * @returns {void}
  */
-function ready(func) {
+export function ready(func) {
     readyFunc = func;
 }
 
 /**
  * Start the app.
+ * @method start
  * @memberof module:js
  * @returns {void}
  */
-function start() {
+export function start() {
 
-    var window = windowprovider.get();
+    const window = getWindow();
 
     // Add font css.
-    util.addElement('link', {
+    addElement('link', {
         'href': settings.style.font.url,
         'rel': 'stylesheet'
     }, window.document.head);
 
-    util.addElement('meta', {
+    addElement('meta', {
         'name': 'Description',
         'content': settings.app.description
     }, window.document.head);
 
-    // Set mobile mode.
-    if (settings.autoSwitch && util.mobileCheck())
-        settings.mobile = true;
+    addElement('meta', {
+        'http-equiv': 'X-UA-Compatible',
+        'content': 'IE=Edge'
+    }, window.document.head);
 
-    // Add mobile head tags.
-    if (settings.mobile) {
+    addElement('meta', {
+        'name': 'viewport',
+        'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
+    }, window.document.head);
 
-        util.addElement('meta', {
-            'http-equiv': 'X-UA-Compatible',
-            'content': 'IE=Edge'
-        }, window.document.head);
+    addElement('meta', {
+        'name': 'apple-mobile-web-app-capable',
+        'content': 'yes'
+    }, window.document.head);
 
-        util.addElement('meta', {
-            'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
-        }, window.document.head);
-
-        util.addElement('meta', {
-            'name': 'apple-mobile-web-app-capable',
-            'content': 'yes'
-        }, window.document.head);
-
-        util.addElement('meta', {
-            'name': 'mobile-web-app-capable',
-            'content': 'yes'
-        }, window.document.head);
-    }
+    addElement('meta', {
+        'name': 'mobile-web-app-capable',
+        'content': 'yes'
+    }, window.document.head);
 
     progress.show();
 
@@ -179,41 +187,54 @@ function start() {
     window.document.title = settings.app.title;
 
     // Check for HTML5.
-    if (!util.html5Check())
+    if (!isHtml5())
         error('This app requires a HTML5 browser. We recommend chrome: ' +
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Load JQuery.
-    packagemanager.loadScript(packages.jQuery(), function() {
+    packagemanager.loadScript('jquery', function() {
 
         // JQuery wasn't loaded :(
-        if (typeof jQuery === 'undefined')
+        const $ = getJQuery();
+        if ($ === null)
             error('Unable to load the JQuery package');
 
+        /**
+         * Handle package errors.
+         * @ignore
+         * @returns {void}
+         */
         function packageError() {
-            var url = this.src || this.href || '';
+            const url = this.src || this.href || '';
             error('Unable to load ' + url +
                 '<br/><br/><a href="" onclick="window.location.reload();">' +
                 'Click here to reload</a>');
         }
 
-        // Load startup packages.
-        code.thread(function() {
+        // Set the code execution error handler.
+        onCodeError(error);
 
-            packagemanager.add(packages.startup());
+        // Load startup packages.
+        codethread(function() {
+
+            packagemanager.add('resetcss');
+            packagemanager.add('jquery-ui', 1);
+            packagemanager.add('materialdesignicons', 2);
+            packagemanager.add('moment', 2);
+            packagemanager.add('sweetalert', 2);
+            packagemanager.add('jquery-ripple', 3);
             packagemanager.load(function() {
 
-                var $ = require('./external/jquery'),
-                    sweetalert = require('./sweetalert');
+                progress.hide();
 
                 // Compile JSS and load into a style tag.
-                var css = jss.compile(settings.jss);
-                $('<style>')
+                const css = compile(settings.jss);
+                $('<style id="appstyle">')
                     .append(css)
                     .appendTo($('head'));
 
                 // Lets upgrade alerts...
-                alertprovider.set({
+                setAlert({
                     message: sweetalert.show,
                     confirm: function(msg, callback, title, yescaption, nocaption) {
                         sweetalert.show(msg, function() {
@@ -227,14 +248,13 @@ function start() {
 
                 load($('body'));
 
-                progress.hide();
-                return code.block(
+                return codeblock(
 
                     readyFunc,
 
                     (settings.requireAuth === true ? function() {
 
-                        var server = serverprovider.get();
+                        const server = getServer();
                         return server.autoLogin();
 
                     } : null)
@@ -257,28 +277,27 @@ function start() {
  * @param {JQuery} container JQuery element to load the app into.
  * @returns {void}
  */
-function load(container) {
+export function load(container) {
 
-    var $ = require('./external/jquery'),
-        HeaderComponent = require('./components/headercomponent');
+    const $ = getJQuery();
 
     main = $('<div class="main"></div>').appendTo(container);
 
-    // Add window toolbar.
-    if (settings.windowMode && !settings.mobile)
-        windows = $('<div class="main-windows"></div>').appendTo(main);
+    $('body').addClass(isMobileDevice() ? 'mobile-app' : 'desktop-app');
 
-    $('body').addClass(settings.mobile ? 'mobile-app' : 'desktop-app');
+    if (!isMobileDevice()) {
 
-    // Load components.
-    header = new HeaderComponent({});
-    header.setTitle(settings.style.images.logo !== '' ?
-        '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
-        settings.style.images.logo + '" />' :
-        settings.app.name);
-    if (!settings.mobile) {
+        // Add window toolbar.
+        if (settings.windowMode)
+            windows = $('<div class="main-windows"></div>').appendTo(main);
+
+        // Load components.
+        let header = new HeaderComponent({});
+        header.setTitle(settings.style.images.logo !== '' ?
+            '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
+            settings.style.images.logo + '" />' :
+            settings.app.name);
         header.load(main);
-        header.navbar.addClass('fixed');
         header.menuIcon.click(function() {
             header.showMenu();
         });
@@ -287,21 +306,17 @@ function load(container) {
 
 /**
  * Load a page.
+ * @method loadPage
  * @memberof module:js
  * @param {string} name Name of the page to load.
  * @param {PageOptions} [options] Page options.
  * @returns {void}
  */
-function loadPage(name, options) {
+export function loadPage(name, options) {
 
-    var PageComponent = require('./components/pagecomponent'),
-        pge = new PageComponent(name, options || {});
+    let pge = new ViewerComponent(name, options || {});
 
-    pge.options.first = Object.keys(pages).length === 0;
-    if (pge.options.first && settings.mobile)
-        pge.header = header;
-
-    code.thread(
+    codethread(
         function() {
             // Load the page component.
             return pge.load(main);
@@ -321,18 +336,19 @@ function loadPage(name, options) {
 
 /**
  * Add a window to the windows toolbar.
+ * @ignore
  * @param {number} id ID of the window.
- * @returns {void}
+ * @returns {JQuery} Returns the shortcut button.
  */
-function addWindowToToolbar(id) {
-    var icons = require('./providers/icons').get(),
-        $ = require('./external/jquery'),
+export function addWindowToToolbar(id) {
+    const icons = getIcons(),
+        $ = getJQuery(),
         closeBtn = $(icons.get('close'))
             .click(function() {
                 closePage(id);
             })
             .css('padding-left', '5px');
-    $('<div id="win' + id + '" class="main-windows-btn unselectable"></div>')
+    return $('<div id="win' + id + '" class="main-windows-btn unselectable"></div>')
         .hide()
         .appendTo(windows)
         .append('<span />')
@@ -345,16 +361,16 @@ function addWindowToToolbar(id) {
 
 /**
  * Close an opened page.
+ * @ignore
  * @param {number} id ID of the page to close.
  * @returns {void}
  */
-function closePage(id) {
-    code.thread(function() {
+export function closePage(id) {
+    codethread(function() {
 
         // Unload the page.
-        /** @type {Component} */
-        var pge = pages[id];
-        if (!util.isDefined(pge))
+        const pge = pages[id];
+        if (!isDefined(pge))
             error('Cannot find page by id: {0}', id);
         pge.unload();
 
@@ -365,10 +381,9 @@ function closePage(id) {
             activePage = 0;
 
         // Open next page.
-        var keys = Object.keys(pages);
+        const keys = Object.keys(pages);
         if (keys.length > 0) {
-            /** @type {Component} */
-            var nextpge = pages[keys[keys.length - 1]];
+            const nextpge = pages[keys[keys.length - 1]];
             nextpge.show();
             activePage = nextpge.id;
         }
@@ -378,10 +393,11 @@ function closePage(id) {
 
 /**
  * Show a loaded page.
+ * @ignore
  * @param {number} id ID of the page to show.
  * @returns {void}
  */
-function showPage(id) {
+export function showPage(id) {
 
     if (id === activePage)
         return;
@@ -391,24 +407,10 @@ function showPage(id) {
         pages[activePage].hide();
 
     // Show the page.
-    /** @type {Component} */
-    var pge = pages[id];
-    if (!util.isDefined(pge))
+    const pge = pages[id];
+    if (!isDefined(pge))
         error('Cannot find page by id: {0}', id);
 
     pge.show();
     activePage = pge.id;
 }
-
-module.exports = {
-    suppressNextError: suppressNextError,
-    message: message,
-    confirm: confirm,
-    error: error,
-    ready: ready,
-    start: start,
-    loadPage: loadPage,
-    closePage: closePage,
-    showPage: showPage,
-    addWindowToToolbar: addWindowToToolbar
-};

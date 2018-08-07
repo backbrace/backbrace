@@ -1,12 +1,19 @@
 {
     "compilerOptions": {
         "checkJs": true,
-        "target": "es5",
-        "module": "commonjs",
+        "target": "es6",
+        "module": "es6",
         "allowSyntheticDefaultImports": true
     },
+    "include": [
+        "sample",
+        "src",
+        "test",
+        "typings"
+    ],
     "exclude": [
         "node_modules",
-        "test"
+        "build",
+        "src/types.js"
     ]
 }

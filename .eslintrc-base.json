@@ -1,5 +1,5 @@
 {
-    "rules": {        
+    "rules": {
         "comma-dangle": [
             "error",
             "never"
@@ -82,10 +82,6 @@
             "error",
             "inside"
         ],
-        "strict": [
-            "error",
-            "global"
-        ],
         "no-delete-var": "error",
         "no-label-var": "error",
         "no-restricted-globals": [
@@ -127,7 +123,7 @@
         "max-len": [
             "error",
             {
-                "code": 100,
+                "code": 200,
                 "ignoreComments": true,
                 "ignoreUrls": true
             }
@@ -157,13 +153,22 @@
         "no-unneeded-ternary": "error",
         "quotes": [
             "error",
-            "single"
+            "single",
+            {
+                "allowTemplateLiterals": true
+            }
         ],
         "camelcase": "error",
         "valid-jsdoc": [
             "error",
             {
-                "preferType": { "Boolean": "boolean", "Number": "number", "object": "Object", "String": "string", "function": "Function" }
+                "preferType": {
+                    "Boolean": "boolean",
+                    "Number": "number",
+                    "Object": "object",
+                    "String": "string",
+                    "function": "Function"
+                }
             }
         ],
         "semi-spacing": "error",
@@ -191,6 +196,7 @@
         "unicode-bom": [
             "error",
             "never"
-        ]
+        ],
+        "vars-on-top": "error"
     }
 }

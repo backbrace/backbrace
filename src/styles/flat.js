@@ -3,43 +3,78 @@
  * @module flatstyle
  * @private
  */
-'use strict';
 
-module.exports = {
+import { style as base } from './base';
+import { merge } from '../util';
 
-  '.unselectable': {
-    '-webkit-touch-callout': 'none',
-    '-webkit-user-select': 'none',
-    '-khtml-user-select': 'none',
-    '-moz-user-select': 'none',
-    '-ms-user-select': 'none',
-    'user-select': 'none'
-  },
-  '.cuttext': {
-    'white-space': 'nowrap',
-    'overflow-x': 'hidden',
-    'text-overflow': 'ellipsis'
-  },
-  '.fixed': {
-    position: 'fixed'
-  },
+/**
+ * Flat style jss object.
+ */
+export let style = merge({}, base, {
+
   'body': {
     margin: '0px',
     'font-family': '%font:family%',
-    'font-size': '%font:size%'
+    'font-size': '14px',
+    'color': 'rgba(0, 0, 0, 0.87)',
+    '@media only screen and (max-width: %screen:mediumUp%px)': {
+      margin: '0',
+      'overflow-x': 'visible',
+      'overflow-y': 'hidden',
+      '-webkit-text-size-adjust': '100%',
+      '-ms-text-size-adjust': 'none',
+      '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
+    },
+    '@media only screen and (min-width: %screen:medium%px)': {
+      'font-size': '14.5px'
+    },
+    '@media only screen and (min-width: %screen:large%px)': {
+      'font-size': '14.5px'
+    }
   },
-  '.mobile-app': {
-    margin: '0',
-    'overflow-x': 'visible',
-    '-webkit-text-size-adjust': '100%',
-    '-ms-text-size-adjust': 'none',
-    '-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)'
+  'h1, h2, h3, h4, h5, h6': {
+    'font-weight': '400',
+    'line-height': '1.1'
+  },
+  'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
+    'font-weight': 'inherit'
+  },
+  'h1': {
+    'font-size': '4.2em',
+    'line-height': '110%',
+    'margin': '2.1em 0 1.68em 0'
+  },
+  'h2': {
+    'font-size': '3.56em',
+    'line-height': '110%',
+    'margin': '1.78em 0 1.424em 0'
+  },
+  'h3': {
+    'font-size': '2.92em',
+    'line-height': '110%',
+    'margin': '1.46em 0 1.168em 0'
+  },
+  'h4': {
+    'font-size': '2.28em',
+    'line-height': '110%',
+    'margin': '1.14em 0 0.912em 0'
+  },
+  'h5': {
+    'font-size': '1.2em',
+    'line-height': '110%',
+    'margin': '0.82em 0 0.656em 0'
+  },
+  'h6': {
+    'font-size': '1em',
+    'line-height': '110%',
+    'margin': '0.5em 0 0.4em 0'
+  },
+  '.z-depth-1': {
+    '-webkit-box-shadow': '0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2)',
+    'box-shadow': '0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2)'
   },
   '.header': {
     display: 'block'
-  },
-  '.noborder': {
-    'border': '0px !important'
   },
   '.navbar': {
     color: '%colors:headertext%',
@@ -53,25 +88,14 @@ module.exports = {
     'background': '%colors:header%',
     height: '50px',
     'padding-left': '0px',
-    'padding-right': '0px',
-    'box-shadow': '0 2px 5px rgba(0,0,0,.26)'
+    'padding-right': '0px'
   },
-  '.desktop-app .navbar-brand': {
+  '.navbar-brand': {
     float: 'left',
     'font-size': '1.2em',
     'font-weight': 'normal',
     'line-height': '32px',
     margin: '8px 80px 0 8px'
-  },
-  '.mobile-app .navbar-brand': {
-    width: 'calc(100vw - 100px)',
-    display: 'inline-block',
-    'text-align': 'center',
-    'font-size': '1em',
-    'line-height': '50px',
-    'overflow-y': 'hidden',
-    'font-weight': 'normal',
-    'text-shadow': 'none'
   },
   '.navbar-logo': {
     'max-height': '35px'
@@ -82,10 +106,6 @@ module.exports = {
   '.profile-img': {
     display: 'none',
     margin: '5px',
-    width: '80px',
-    height: '80px'
-  },
-  '.desktop-app .profile-img': {
     float: 'right',
     width: '40px',
     height: '40px'
@@ -97,11 +117,8 @@ module.exports = {
     width: '50px',
     height: '50px',
     'max-height': '50px',
-    padding: '5px',
     'box-sizing': 'border-box',
-    'text-align': 'center'
-  },
-  '.desktop-app .menu-icon': {
+    'text-align': 'center',
     padding: '8px'
   },
   '.menu': {
@@ -112,7 +129,6 @@ module.exports = {
     width: '300px',
     height: '100vh',
     background: '#FFF',
-    'box-shadow': '0 0 16px rgba(0,0,0,.28)',
     'z-index': '30001'
   },
   '.menu-brand': {
@@ -135,12 +151,8 @@ module.exports = {
   '.main': {
     background: '#f5f7fb',
     'margin-top': '50px',
-    height: 'calc(100vh - 65px)'
-  },
-  '.mobile-app .main': {
-    background: 'whitesmoke',
-    'margin-top': '0px',
-    height: 'calc(100vh)'
+    'padding-top': '5px',
+    'min-height': 'calc(100vh - 55px)'
   },
   '.main-windows': {
     width: '100%',
@@ -150,61 +162,41 @@ module.exports = {
     'border-bottom': '1px solid #ecf0f1',
     'box-sizing': 'border-box'
   },
+  '.viewer-full': {
+    'left': '100vw',
+    'top': '0px',
+    'position': 'absolute',
+    'width': '100vw',
+    'height': '100vh',
+    background: '#FFF'
+  },
+  '.mobile-app .viewer': {
+    'height': 'calc(100vh - 110px)',
+    'overflow-y': 'auto'
+  },
   '.window': {
-    border: '1px solid #ecf0f1',
     'box-sizing': 'border-box',
     position: 'relative',
     display: 'none',
-    background: 'white'
-  },
-  '.desktop-app .window': {
-    'vertical-align': 'top'
-  },
-  '.window-main': {
-    padding: '10px',
-    width: '100%',
-    'box-sizing': 'border-box',
-    'margin-top': '-10px'
-  },
-  '.window-main.list-component': {
-    padding: '0 5px 5px 5px',
-    'margin-top': '0'
-  },
-  '.window-column': {
-    width: '50%',
-    display: 'inline-block',
-    'vertical-align': 'top',
-    'padding-right': '10px',
-    'box-sizing': 'border-box'
-  },
-  '.mobile-app .window-column': {
-    width: '100%',
-    padding: '0'
-  },
-  '.single-column .window-column': {
-    width: '100%',
-    padding: '0'
+    background: 'white',
+    padding: '8px',
+    '@media only screen and (min-width: %screen:smallUp%px)': {
+      'margin-top': '20px',
+      padding: '24px'
+    }
   },
   '.title-bar': {
     'background': '%colors:title%',
     color: '%colors:titletext%',
-    padding: '10px',
-    'border-bottom': '1px solid #ecf0f1'
-  },
-  '.title': {
-    'font-size': '1em'
-  },
-  '.title.mobile': {
-    'overflow-y': 'hidden'
-  },
-  '.title.alt': {
-    'font-size': '.8em'
+    padding: '0 10px',
+    position: 'relative'
   },
   '.title-icon': {
-    float: 'right',
+    right: '10px',
+    top: '0px',
+    position: 'absolute',
     'font-size': '1em',
-    cursor: 'pointer',
-    'margin-right': '3px'
+    cursor: 'pointer'
   },
   '.title-icon:hover': {
     color: '#000'
@@ -215,7 +207,7 @@ module.exports = {
   },
   '.main-windows-btn': {
     padding: '15px 5px 15px 5px',
-    'font-size': '.77em',
+    'font-size': '1em',
     width: 'auto',
     display: 'inline-block',
     background: '#FFF',
@@ -229,65 +221,33 @@ module.exports = {
   },
   '.mobile-app .actions-bar': {
     position: 'fixed',
-    bottom: '-999px',
-    'background-color': '#2c3e50',
-    left: '0px',
+    bottom: '0px',
+    'background-color': '#dfe6e9',
+    left: '0px !important',
     width: '100vw',
     'box-sizing': 'border-box',
     height: 'auto',
-    color: 'white',
+    color: '#000',
     'z-index': '29001'
   },
-  '.desktop-app .action-button':{
+  '.action-button': {
     display: 'inline-block',
-    'font-size': '.75em',
+    'font-size': '1em',
     padding: '5px',
     margin: '4px',
     cursor: 'pointer'
   },
   '.mobile-app .action-button': {
-    'border-width': '0px',
-    padding: '10px',
-    'line-height': '21px',
-    'font-size': '.6em',
+    padding: '.7em .8em',
+    'font-size': '.9em',
+    margin: '0',
     'text-align': 'center',
     width: '25vw',
     'box-sizing': 'border-box',
+    'line-height': '1.7em',
+    'border-width': '0px',
     height: '60px',
-    display: 'inline-block'
-  },
-  '.desktop-app .side-container .window': {
-    'margin-left': '0'
-  },
-  '.desktop-app .side-container .window-width-full': {
-    'max-width': ['98%',
-      '-webkit-calc(100% - 5px)',
-      '-moz-calc(100% - 5px)',
-      'calc(100% - 5px)']
-  },
-  '.desktop-app .window-width-full': {
-    margin: '5px 0px 0px 5px',
-    width: '100%',
-    'max-width': ['98%',
-      '-webkit-calc(100% - 10px)',
-      '-moz-calc(100% - 10px)',
-      'calc(100% - 10px)']
-  },
-  '.mobile-app .window-width-full': {
-    width: '100%',
-    'max-width': '100%'
-  },
-  '.desktop-app .window-width-half': {
-    margin: '5px 0px 0px 5px',
-    width: '100%',
-    'max-width': ['48%',
-      '-webkit-calc(50% - 10px)',
-      '-moz-calc(50% - 10px)',
-      'calc(50% - 10px)']
-  },
-  '.mobile-app .window-width-half': {
-    width: '100%',
-    'max-width': '100%'
+    'color': 'rgba(0,0,0,0.6)'
   },
   '.window-height-auto': {
     height: 'auto'
@@ -304,7 +264,7 @@ module.exports = {
     'min-height': '200px',
     'height': '50%'
   },
-  '.desktop-app .main-container': {
+  '.main-container': {
     width: '100%',
     display: 'inline-block',
     'vertical-align': 'top'
@@ -332,11 +292,10 @@ module.exports = {
     display: 'block',
     color: 'rgba(0, 0, 0, 0.54)',
     'font-weight': '400',
-    'line-height': '15px',
     'margin-top': '1.1em',
-    'font-size': '.7em'
+    'font-size': '.9em'
   },
-  '.mobile-app .control-input': {
+  '.control-input': {
     '-webkit-box-sizing': 'border-box',
     'box-sizing': 'border-box',
     display: 'block',
@@ -346,28 +305,15 @@ module.exports = {
     'border-bottom': '1px solid rgba(0, 0, 0, 0.26)',
     outline: 'none',
     width: '100%',
+    height: '3em',
     padding: '0',
-    'font-size': '.8em',
+    'font-size': '.9em',
     'line-height': 'inherit',
-    margin: '0px',
-    'min-height': '1.8em'
+    margin: '0 0 8px 0'
   },
-  '.mobile-app .control-input:focus': {
+  '.control-input:focus': {
     'border-color': '#2196F3',
     'border-width': '2px'
-  },
-  '.desktop-app .control-input':{
-    display: 'inline-block',
-    width: '100%',
-    'box-sizing': 'border-box',
-    'border-radius': '3px',
-    border: '1px solid gainsboro',
-    'font-size': '.75em',
-    'font-weight': '200',
-    padding: '5px'
-  },
-  '.desktop-app .control-input:focus': {
-    'border-color': '#2196F3'
   },
   '.grid-container': {
     'width': '100%',
@@ -375,7 +321,7 @@ module.exports = {
     'border-top': '1px solid #CCC'
   },
   '.row-id': {
-    'font-size': '0px'
+    'font-size': '0px !important'
   },
   /* JQuery UI Overrides */
   '.ui-widget': {
@@ -389,6 +335,10 @@ module.exports = {
   '.ui-widget-content': {
     border: '0'
   },
+  '.ui-state-highlight': {
+    background: '%colors:hover% !important',
+    color: '%colors:hovertext% !important'
+  },
   /* Sweet Alert Overrides */
   '.sweet-alert button': {
     'background-color': '%colors:alertbutton% !important',
@@ -399,7 +349,16 @@ module.exports = {
     border: '0'
   },
   '.ui-jqgrid tr.jqgrow td': {
-    'vertical-align': 'middle'
+    'vertical-align': 'middle',
+    'font-size': '1.2em',
+    'padding': '.4em !important'
+  },
+  '.ui-jqgrid .ui-jqgrid-htable th div': {
+    'font-size': '1.3em',
+    'font-weight': 'bold',
+    'color': 'rgba(0,0,0,0.6)',
+    'padding': '.2em',
+    'line-height': '.3em'
   },
   '.ui-jqgrid .ui-jqgrid-htable th.ui-th-column, .ui-th-column': {
     background: '#FFF'
@@ -410,4 +369,4 @@ module.exports = {
   '.ui-jqgrid tr.jqfoot td,.ui-jqgrid tr.jqgroup td,.ui-jqgrid tr.jqgrow td': {
     'border-bottom-color': '#CCC !important'
   }
-};
+});

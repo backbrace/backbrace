@@ -3,86 +3,77 @@
  * @module meta
  * @private
  */
-'use strict';
 
-var code = require('./code'),
-    http = require('./http'),
-    settings = require('./settings'),
-    util = require('./util'),
-    defaults = {
-        /** @type {PageMeta} */
-        page: {
-            name: '',
-            caption: '',
-            component: 'cardcomponent',
-            controller: '',
-            icon: '',
-            factbox: false,
-            fields: [],
-            actions: [],
-            tabs: []
-        },
-        /** @type {PageFieldMeta} */
-        pagefield: {
-            name: '',
-            caption: '',
-            type: 'Text',
-            component: '',
-            tab: '',
-            width: '100px',
-            editable: true,
-            hidden: false,
-            desktopOnly: false,
-            mobileOnly: false,
-            password: false,
-            leftColumn: false,
-            rightColumn: false
-        },
-        /** @type {PageActionMeta} */
-        pageaction: {
-            name: '',
-            text: '',
-            icon: '',
-            className: '',
-            desktopOnly: false,
-            mobileOnly: false
-        },
-        /** @type {PageTabMeta} */
-        pagetab: {
-            name: '',
-            text: '',
-            pageName: '',
-            icon: '',
-            desktopOnly: false,
-            mobileOnly: false,
-            factbox: false
-        }
-    };
+import { codeblock } from './code';
+import { get } from './http';
+import { settings } from './settings';
+import { get as getJQuery } from './providers/jquery';
+
+const defaults = {
+    /** @type {PageMeta} */
+    page: {
+        name: '',
+        caption: '',
+        component: 'cardpage',
+        controller: '',
+        icon: '',
+        factbox: false,
+        fields: [],
+        actions: [],
+        tabs: []
+    },
+    /** @type {PageFieldMeta} */
+    pagefield: {
+        name: '',
+        caption: '',
+        type: 'Text',
+        component: '',
+        tab: '',
+        width: '100px',
+        editable: true,
+        hidden: false,
+        password: false,
+        class: 's12 m6'
+    },
+    /** @type {PageActionMeta} */
+    pageaction: {
+        name: '',
+        text: '',
+        icon: '',
+        iconColor: '',
+        className: ''
+    },
+    /** @type {PageTabMeta} */
+    pagetab: {
+        name: '',
+        text: '',
+        pageName: '',
+        icon: '',
+        className: ''
+    }
+};
 
 /**
  * Get page object meta data.
  * @param {string} name Name of the page to get.
  * @returns {JQueryPromise} Promise to get the page meta data.
  */
-function page(name) {
-    return code.block(
-        function() {
-            // Get the page from a JSON file.
-            return http.get(settings.meta.dir + 'pages/' + name + '.json');
-        },
-        /**
-         * @param {PageMeta} json JSON object.
-         * @returns {PageMeta} Returns the merged page,
-         */
-        function mergePage(json) {
+export function page(name) {
+
+    const $ = getJQuery();
+
+    return codeblock(
+
+        // Get the page from a JSON file.
+        () => get(settings.meta.dir + 'pages/' + name + '.json'),
+
+        (/** @type {PageMeta} */json) => {
 
             // Merge the json with default values.
-            var $ = require('./external/jquery');
-
             json.caption = json.caption || json.name;
 
             // Extend the page.
-            var pge = $.extend({}, defaults.page, json);
+            let pge = $.extend({}, defaults.page, json);
 
             // Extend the page fields.
             pge.fields = [];
@@ -109,7 +100,3 @@ function page(name) {
         }
     );
 }
-
-module.exports = {
-    page: page
-};

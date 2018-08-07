@@ -3,71 +3,83 @@
  * @module event
  * @private
  */
-'use strict';
 
-var code = require('./code'),
-    event = {};
+import { codeeach } from './code';
 
-function exists(name) {
-    return event[name] !== null && typeof event[name] !== 'undefined';
+/**
+ * @type {Map<string, Function[]>}
+ */
+const event = new Map();
+
+/**
+ * @description
+ * Check if an event exists.
+ * @param {string} name Name of the event.
+ * @returns {boolean} Returns `true` if the event exists.
+ */
+export function exists(name) {
+    return event.has(name);
 }
 
-function unbind(name) {
-    event[name] = null;
+/**
+ * @description
+ * Unbind an event.
+ * @param {string} name Name of the event.
+ * @returns {void}
+ */
+export function unbind(name) {
+    event.delete(name);
 }
 
-function bind(name, handler, clear) {
+/**
+ * @description
+ * Bind an event.
+ * @param {string} name Name of the event.
+ * @param {Function} handler Event handler.
+ * @param {boolean} [clear] Clear the existing event.
+ * @returns {void}
+ */
+export function bind(name, handler, clear) {
     if (clear)
         unbind(name);
-    event[name] = event[name] || [];
-    event[name].push(handler);
-}
-
-function fireWait() {
-
-    var slice = [].slice;
-
-    var args = 2 <= arguments.length ? slice.call(arguments, 1) : [],
-        handler,
-        name = arguments[0];
-
-    if (event[name] != null) {
-
-        var ref = event[name];
-
-        if (ref.length > 0)
-            return code.loop(function(i) {
-
-                return code.block(
-
-                    function() {
-                        handler = ref[i];
-                        return handler.apply(null, args);
-                    },
-
-                    function() {
-                        if (i < ref.length - 1)
-                            return code.next;
-                    }
-                );
-
-            });
+    if (exists(name)) {
+        event.get(name).push(handler);
+    } else {
+        event.set(name, [handler]);
     }
 }
 
-function fire() {
+/**
+ * @description
+ * Fire an event and wait for the repsonse.
+ * @param {string} name Name of the event.
+ * @param {...*} args Arguments to pass into the event.
+ * @returns {JQueryPromise} Promise to return after firing the event/s.
+ */
+export function fireWait(name, ...args) {
 
-    var slice = [].slice;
+    let handlers = event.get(name);
 
-    var args = 2 <= arguments.length ? slice.call(arguments, 1) : [],
-        handler,
-        name = arguments[0];
+    if (handlers)
+        if (handlers.length > 0)
+            return codeeach(handlers, function(handler) {
+                return handler.apply(null, args);
+            });
+}
 
-    if (event[name] != null) {
-        var ref = event[name];
-        for (var i = 0; i < ref.length; i++) {
-            handler = ref[i];
-            if (ref.length === 1) {
+/**
+ * @description
+ * Fire an event.
+ * @param {string} name Name of the event.
+ * @param {...*} args Arguments to pass into the event.
+ * @returns {void}.
+ */
+export function fire(name, ...args) {
+
+    let handlers = event.get(name);
+    if (handlers) {
+        for (let handler of handlers) {
+            if (handlers.length === 1) {
                 return handler.apply(null, args);
             } else {
                 handler.apply(null, args);
@@ -75,11 +87,3 @@ function fire() {
         }
     }
 }
-
-module.exports = {
-    exists: exists,
-    bind: bind,
-    unbind: unbind,
-    fireWait: fireWait,
-    fire: fire
-};

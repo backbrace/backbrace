@@ -3,31 +3,66 @@
  * @module code
  * @private
  */
-'use strict';
 
-var log = require('./log'),
-    util = require('./util'),
-    CodeThread = require('./classes/codethread'),
-    testMode = false;
+import { debug as logDebug } from './log';
+import { get as getJquery } from './providers/jquery';
+import { CodeThread } from './classes/codethread';
 
-/** @type {CodeThread} */
-var currentThread = null;
-/** @type {CodeThread[]} */
-var threads = [];
+/**
+ * @type {CodeThread}
+ * @ignore
+ */
+let currentThread = null;
 
-function reset() {
+/**
+ * @type {CodeThread[]}
+ * @ignore
+ */
+let threads = [];
+
+/**
+ * @type {ErrorHandler}
+ * @ignore
+ */
+let errorHandler = null;
+
+/**
+ * Set the error handler.
+ * @ignore
+ * @param {ErrorHandler} func Error handler.
+ * @returns {void}
+ */
+export function onerror(func) {
+    errorHandler = func;
+}
+
+/**
+ * @method reset
+ * @ignore
+ * @description
+ * Reset all code threads.
+ * @returns {void}
+ */
+export function reset() {
 
     // Clear the current queue.
     if (currentThread)
         currentThread.queue = [];
 
     // Kill off all threads.
-    log.debug('Clearing all threads.');
+    logDebug('Clearing all threads.');
     threads = [];
     currentThread = null;
 
 }
 
+/**
+ * @method runNextThread
+ * @private
+ * @description
+ * Run the next code thread in the queue.
+ * @returns {void}
+ */
 function runNextThread() {
     currentThread = null;
     if (threads.length === 0)
@@ -37,50 +72,70 @@ function runNextThread() {
 }
 
 /**
+ * @method codeblock
+ * @memberof module:js
+ * @description
  * Setup a new block of functions to run.
+ *
+ * Each function will be run in order.
+ *
+ * @param {...GenericFunction} args Functions to run.
  * @returns {JQueryPromise} Promise to run the functions.
+ * @example
+ * return js.codeblock(
+ *  function() {
+ *      // this will run first.
+ *  },
+ *  function() {
+ *      // this will run second.
+ *  }
+ * );
  */
-function block() {
+export function codeblock(...args) {
 
-    var app = require('./app'), // We require app down here so we don't get a dependency loop.
-        $ = require('./external/jquery');
+    const $ = getJquery();
 
     if (!currentThread)
-        app.error('Attempted to start a codeblock without a thread');
+        throw Error('Attempted to start a codeblock without a thread');
 
-    var w = $.Deferred();
+    let w = $.Deferred();
 
-    CodeThread.prototype.createQueue.apply(currentThread, arguments);
+    CodeThread.prototype.createQueue.apply(currentThread, args);
 
     return w.promise();
 }
 
 /**
+ * @method codeinsert
+ * @memberof module:js
+ * @description
  * Insert code into the current codeblock.
+ * @param {...Function} args Functions to run.
  * @returns {void}
  */
-function insert() {
-
-    var app = require('./app');
+export function codeinsert(...args) {
 
     if (!currentThread)
-        app.error('Attempted to insert into a codeblock without a thread');
+        throw Error('Attempted to insert into a codeblock without a thread');
 
-    CodeThread.prototype.insert.apply(currentThread, arguments);
+    CodeThread.prototype.insert.apply(currentThread, args);
 }
 
 /**
- * Loop through an array using `code.block`.
+ * @method codeeach
+ * @memberof module:js
+ * @description
+ * Loop through an array using `codeblock`.
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
  * @param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {JQueryPromise} Promise to return after we are done looping.
  */
-function each(obj, iterator, context) {
+export function codeeach(obj, iterator, context) {
 
-    var func = function(key) {
-        return block(
+    const func = function(key) {
+        return codeblock(
 
             function() {
                 return iterator.call(context, obj[key], key, obj);
@@ -96,7 +151,7 @@ function each(obj, iterator, context) {
     };
 
     if (obj.length > 0)
-        return block(
+        return codeblock(
             function() {
                 return func(0);
             }
@@ -104,18 +159,21 @@ function each(obj, iterator, context) {
 }
 
 /**
+ * @method codethread
+ * @memberof module:js
+ * @description
  * Start a new code thread to execute code when possible.
+ * @param {...GenericFunction} args Functions to run.
  * @returns {void}
  */
-function thread() {
+export function codethread(...args) {
 
-    var args = arguments,
-        func = function() {
-            return block.apply(this, args);
-        },
-        thread = new CodeThread(func);
+    const func = function() {
+        return codeblock.apply(this, args);
+    },
+        thread = new CodeThread(func, errorHandler);
 
-    log.debug('Created new thread');
+    logDebug('Created new thread');
 
     // Add the thread to the queue.
     threads.push(thread);
@@ -124,14 +182,3 @@ function thread() {
     if (!currentThread)
         runNextThread();
 }
-
-module.exports = {
-    threads: threads,
-    currentThread: currentThread,
-    testMode: testMode,
-    block: block,
-    each: each,
-    thread: thread,
-    reset: reset,
-    insert: insert
-};
