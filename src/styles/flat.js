@@ -116,6 +116,7 @@ export let style = merge({}, base, {
     float: 'left',
     width: '50px',
     height: '50px',
+    'font-size': '35px',
     'max-height': '50px',
     'box-sizing': 'border-box',
     'text-align': 'center',
@@ -232,10 +233,15 @@ export let style = merge({}, base, {
   },
   '.action-button': {
     display: 'inline-block',
-    'font-size': '1em',
-    padding: '5px',
-    margin: '4px',
-    cursor: 'pointer'
+    'font-size': '.9em',
+    padding: '.5em',
+    margin: '.2em',
+    cursor: 'pointer',
+    'text-transform': 'uppercase',
+    color: '%colors:defaulttext%'
+  },
+  '.desktop-app .action-button': {
+    'font-weight': '400'
   },
   '.mobile-app .action-button': {
     padding: '.7em .8em',
@@ -248,6 +254,13 @@ export let style = merge({}, base, {
     'border-width': '0px',
     height: '60px',
     'color': 'rgba(0,0,0,0.6)'
+  },
+  '.desktop-app .action-icon': {
+    'display': 'none'
+  },
+  '.mobile-app .action-icon': {
+    'display': 'block',
+    'font-size': '1.2em'
   },
   '.window-height-auto': {
     height: 'auto'

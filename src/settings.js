@@ -51,7 +51,7 @@ export let settings = {
             headertext: '#FFF',
             headerborder: 'none',
             title: '#FFF',
-            titletext: '#34495e',
+            titletext: '#3498db',
             menuicon: '#FFF',
             default: '#FFF',
             defaulttext: '#000',
