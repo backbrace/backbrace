@@ -14,8 +14,7 @@
     ],
     "actions": [
         {
-            "name": "New",
-            "icon": "mdi-plus-circle"
+            "name": "New"
         }
     ]
 }

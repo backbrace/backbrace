@@ -27,13 +27,10 @@
     ],
     "actions": [
         {
-            "name": "New",
-            "icon": "plus"
+            "name": "New"
         },
         {
-            "name": "Delete",
-            "icon": "close",
-            "iconColor": "red"
+            "name": "Delete"
         }
     ],
     "tabs": [
