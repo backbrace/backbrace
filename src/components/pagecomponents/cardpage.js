@@ -199,17 +199,15 @@ export class CardPageComponent extends PageComponent {
      */
     hide() {
 
-        const $ = getJQuery();
-
         // Hide the sub pages.
-        $.each(this.subpages, function(index, page) {
-            page.hide();
-        });
+        for (let page of this.subpages.entries()) {
+            page[1].hide();
+        }
 
         // Hide the sub windows.
-        $.each(this.subwindows, function(index, win) {
-            win.hide();
-        });
+        for (let win of this.subwindows.entries()) {
+            win[1].hide();
+        }
 
         return this;
     }
