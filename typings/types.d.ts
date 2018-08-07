@@ -110,11 +110,10 @@ declare type AlertInstance = {
 /**
  * @callback IconsInstanceGet
  * @param {string} [name] Name of the icon.
- * @param {string} [size] Size of the icon.
- * @param {string} [color] Color of the icon.
+ * @param {string} [className] Classes to add to the icon.
  * @returns {string} Icon html string.
  */
-declare type IconsInstanceGet = (name?: string, size?: string, color?: string)=>string;
+declare type IconsInstanceGet = (name?: string, className?: string)=>string;
 
 /**
  * Icons instance.

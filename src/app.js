@@ -343,7 +343,7 @@ export function loadPage(name, options) {
 export function addWindowToToolbar(id) {
     const icons = getIcons(),
         $ = getJQuery(),
-        closeBtn = $(icons.get('close'))
+        closeBtn = $(icons.get('%close%'))
             .click(function() {
                 closePage(id);
             })

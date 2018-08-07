@@ -114,7 +114,7 @@ export class HeaderComponent extends Component {
         // Setup the menu icon.
         this.menuIcon = $('<div class="menu-icon" data-ripple></div>')
             .appendTo(this.navbar.children())
-            .html(icons.get(this.options.menuIcon, '35px'))
+            .html(icons.get(this.options.menuIcon))
             .ripple();
 
         // Setup title bar.

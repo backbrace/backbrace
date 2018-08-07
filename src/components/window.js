@@ -67,7 +67,7 @@ export class WindowComponent extends Component {
             (this.options.hasParent ? 'alt' : 'hide-on-med-and-down') + ' unselectable cuttext" />');
 
         if (this.options.closeBtn === true && !this.options.hasParent && !isMobileDevice()) {
-            $(icons.get('close'))
+            $(icons.get('%close%'))
                 .addClass('unselectable title-icon')
                 .appendTo(titlebar)
                 .click(() => this.options.onClose());
@@ -96,7 +96,7 @@ export class WindowComponent extends Component {
         const $ = getJquery(),
             icons = getIcons();
         $('#title' + this.id).html(
-            (this.options.icon ? icons.get(this.options.icon, null, '#666') + ' ' : '')
+            (this.options.icon ? icons.get(this.options.icon) + ' ' : '')
             + title);
         return this;
     }

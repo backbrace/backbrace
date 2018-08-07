@@ -185,7 +185,7 @@ export class ListPageComponent extends PageComponent {
                         if (this.viewer.options.temp)
                             temp = true;
                         if (rowObject.NewRecord && !temp) {
-                            return icons.get('plus-circle-outline');
+                            return icons.get('%new%');
                         }
                         return cellvalue;
                     }

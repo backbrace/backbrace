@@ -7,18 +7,29 @@
 
 /** @type {IconsInstance} */
 let instance = {
-    get: function(name, size, color) {
+    get: function(name, className) {
 
         // Set defaults.
         name = name || 'alert';
-        size = size || '1em';
+
+        // Map template.
+        if (name.indexOf('%') === 0) {
+            if (name === '%new%') {
+                name = 'plus';
+            } else if (name === '%delete%') {
+                name = 'close';
+            } else if (name === '%close%') {
+                name = 'close';
+            } else {
+                name = 'alert';
+            }
+        }
 
         // Prepend mdi- if missing.
         if (name.indexOf('mdi-') !== 0)
             name = 'mdi-' + name;
 
-        return '<i class="mdi ' + name + '" style="font-size: ' + size
-            + (color ? ';color: ' + color : '') + '" />';
+        return '<i class="mdi ' + name + (className ? ' ' + className : '') + '" />';
     }
 };
 

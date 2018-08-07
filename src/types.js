@@ -85,8 +85,7 @@
 /**
  * @callback IconsInstanceGet
  * @param {string} [name] Name of the icon.
- * @param {string} [size] Size of the icon.
- * @param {string} [color] Color of the icon.
+ * @param {string} [className] Classes to add to the icon.
  * @returns {string} Icon html string.
  */
 
