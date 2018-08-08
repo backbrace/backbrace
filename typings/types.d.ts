@@ -299,12 +299,12 @@ declare type ControllerCallback = (comp: ViewerComponent)=>void;
  * @typedef {object} HeaderOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.
- * @property {string} [class] Header class.
+ * @property {string} [className] Header class.
  */
 declare type HeaderOptions = {
     menuIcon?: string;
     attachMenu?: boolean;
-    class?: string;
+    className?: string;
 };
 
 /**
@@ -325,18 +325,18 @@ declare type ViewerOptions = {
 
 /**
  * @typedef {object} WindowOptions
- * @property {string} [className] Window class style.
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
  * @property {boolean} [hasParent] If `true` sets the window as a child window.
  * @property {boolean} [closeBtn] Add a close button to the window.
+ * @property {string} [className] Window class style.
  */
 declare type WindowOptions = {
-    className?: string;
     icon?: string;
     onClose?: ()=>any;
     hasParent?: boolean;
     closeBtn?: boolean;
+    className?: string;
 };
 
 /**
@@ -350,7 +350,7 @@ declare type WindowOptions = {
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
  * @property {boolean} password If `true` display a password field.
- * @property {string} class Field class.
+ * @property {string} className Classes to add to the field.
  */
 declare type PageFieldMeta = {
     name: string;
@@ -362,7 +362,7 @@ declare type PageFieldMeta = {
     hidden: boolean;
     editable: boolean;
     password: boolean;
-    class: string;
+    className: string;
 };
 
 /**

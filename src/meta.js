@@ -33,7 +33,7 @@ const defaults = {
         editable: true,
         hidden: false,
         password: false,
-        class: 's12 m6'
+        className: 's12 m6'
     },
     /** @type {PageActionMeta} */
     pageaction: {

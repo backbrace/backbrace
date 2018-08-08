@@ -202,7 +202,7 @@
  * @typedef {object} HeaderOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.
- * @property {string} [class] Header class.
+ * @property {string} [className] Header class.
  */
 
 /**
@@ -216,11 +216,11 @@
 
 /**
  * @typedef {object} WindowOptions
- * @property {string} [className] Window class style.
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
  * @property {boolean} [hasParent] If `true` sets the window as a child window.
  * @property {boolean} [closeBtn] Add a close button to the window.
+ * @property {string} [className] Window class style.
  */
 
 /**
@@ -234,7 +234,7 @@
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
  * @property {boolean} password If `true` display a password field.
- * @property {string} class Field class.
+ * @property {string} className Classes to add to the field.
  */
 
 /**

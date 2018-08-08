@@ -36,7 +36,7 @@ export class TextFieldComponent extends FieldComponent {
             type = 'password"';
 
         if (parent === 'CardPageComponent') {
-            this.container.addClass('control-container col ' + this.field.class);
+            this.container.addClass('control-container col ' + this.field.className);
             this.label = $('<label for="cont' + this.id + '" class="control-label"></label>')
                 .text(this.field.caption)
                 .appendTo(this.container);

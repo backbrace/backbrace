@@ -99,7 +99,7 @@ export class HeaderComponent extends Component {
         const $ = getJQuery(),
             icons = getIcons();
 
-        this.container = $(`<header class="header ${this.options.class}"></header>`).appendTo(container);
+        this.container = $(`<header class="header ${this.options.className}"></header>`).appendTo(container);
 
         this.navbar = $('<nav class="navbar fixed"><div class="navbar-inner z-depth-1">'
             + '</div></nav>').appendTo(this.container);
