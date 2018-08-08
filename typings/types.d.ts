@@ -301,14 +301,14 @@ declare type HeaderOptions = {
 };
 
 /**
- * @typedef {object} PageOptions
+ * @typedef {object} ViewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [factbox] Show page in side container.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
  * @property {boolean} [first] If `true` sets as dashboard page.
  * @property {boolean} [temp] If `true` the page uses temp data.
  */
-declare type PageOptions = {
+declare type ViewerOptions = {
     title?: string;
     factbox?: boolean;
     hasParent?: boolean;
@@ -716,7 +716,7 @@ declare class ActionsComponent extends Component {
  * Header component.
  */
 declare class HeaderComponent extends Component {
-    constructor(options: HeaderOptions);
+    constructor(options?: HeaderOptions);
 
     /**
      * @description
@@ -835,7 +835,7 @@ declare class HeaderComponent extends Component {
  * Page viewer component. Used to display a page.
  */
 declare class ViewerComponent extends Component {
-    constructor(name: string, options: PageOptions);
+    constructor(name: string, options?: ViewerOptions);
 
     /**
      * @description
@@ -861,9 +861,9 @@ declare class ViewerComponent extends Component {
     /**
      * @description
      * Page component options.
-     * @type {PageOptions}
+     * @type {ViewerOptions}
      */
-    options: PageOptions;
+    options: ViewerOptions;
 
     /**
      * @description
@@ -969,7 +969,7 @@ declare class ViewerComponent extends Component {
  * Window component.
  */
 declare class WindowComponent extends Component {
-    constructor(options: WindowOptions);
+    constructor(options?: WindowOptions);
 
     /**
      * @description
@@ -1219,10 +1219,10 @@ declare namespace js {
      * @method loadPage
      * @memberof module:js
      * @param {string} name Name of the page to load.
-     * @param {PageOptions} [options] Page options.
+     * @param {ViewerOptions} [options] Page viewer options.
      * @returns {void}
      */
-    function loadPage(name: string, options?: PageOptions): void;
+    function loadPage(name: string, options?: ViewerOptions): void;
 
     /**
      * @method codeblock

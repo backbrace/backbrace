@@ -13,9 +13,15 @@ export class WindowComponent extends Component {
 
     /**
      * @constructor
-     * @param {WindowOptions} options Window options.
+     * @param {WindowOptions} [options] Window options.
      */
-    constructor(options) {
+    constructor({
+        hasParent = false,
+        closeBtn = true,
+        icon,
+        onClose,
+        className = ''
+    } = {}) {
 
         super();
 
@@ -25,15 +31,12 @@ export class WindowComponent extends Component {
          * @type {WindowOptions}
          */
         this.options = {
-            className: '',
-            hasParent: false,
-            closeBtn: true,
-            icon: null,
-            onClose: null
+            className,
+            hasParent,
+            closeBtn,
+            icon,
+            onClose
         };
-
-        // Merge options.
-        getJquery().extend(this.options, options);
 
         /**
          * @description

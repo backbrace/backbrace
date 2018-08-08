@@ -21,9 +21,9 @@ export class ViewerComponent extends Component {
     /**
      * @constructor
      * @param {string} name Page name.
-     * @param {PageOptions} options Page options.
+     * @param {ViewerOptions} [options] Viewer options.
      */
-    constructor(name, options) {
+    constructor(name, { title, hasParent = false, first = false, temp = false } = {}) {
 
         super();
 
@@ -51,17 +51,9 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * Page component options.
-         * @type {PageOptions}
+         * @type {ViewerOptions}
          */
-        this.options = {
-            title: null,
-            factbox: false,
-            hasParent: false,
-            first: false
-        };
-
-        // Merge options.
-        getJQuery().extend(this.options, options);
+        this.options = { title, hasParent, first, temp };
 
         /**
          * @description

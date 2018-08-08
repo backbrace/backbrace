@@ -13,9 +13,9 @@ export class HeaderComponent extends Component {
 
     /**
      * @constructor
-     * @param {HeaderOptions} options Header options.
+     * @param {HeaderOptions} [options] Header options.
      */
-    constructor(options) {
+    constructor({ menuIcon = 'menu', attachMenu = true, className = '' } = {}) {
 
         super();
 
@@ -24,14 +24,7 @@ export class HeaderComponent extends Component {
          * Options for the header component.
          * @type {HeaderOptions}
          */
-        this.options = {
-            menuIcon: 'menu',
-            attachMenu: true,
-            class: ''
-        };
-
-        // Merge options.
-        getJQuery().extend(this.options, options);
+        this.options = { menuIcon, attachMenu, className };
 
         /**
          * @description

@@ -292,7 +292,7 @@ export function load(container) {
             windows = $('<div class="main-windows"></div>').appendTo(main);
 
         // Load components.
-        let header = new HeaderComponent({});
+        let header = new HeaderComponent();
         header.setTitle(settings.style.images.logo !== '' ?
             '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
             settings.style.images.logo + '" />' :
@@ -309,12 +309,12 @@ export function load(container) {
  * @method loadPage
  * @memberof module:js
  * @param {string} name Name of the page to load.
- * @param {PageOptions} [options] Page options.
+ * @param {ViewerOptions} [options] Page viewer options.
  * @returns {void}
  */
 export function loadPage(name, options) {
 
-    let pge = new ViewerComponent(name, options || {});
+    let pge = new ViewerComponent(name, options);
 
     codethread(
         function() {

@@ -200,7 +200,7 @@
  */
 
 /**
- * @typedef {object} PageOptions
+ * @typedef {object} ViewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [factbox] Show page in side container.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
