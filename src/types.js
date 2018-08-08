@@ -193,6 +193,12 @@
  */
 
 /**
+ * @callback ControllerCallback
+ * @param {ViewerComponent} comp Component.
+ * @returns {void}
+ */
+
+/**
  * @typedef {object} HeaderOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.

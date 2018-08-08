@@ -17,8 +17,8 @@ let controllers = {};
  * @method controller
  * @memberof module:js
  * @param {string} name Name of the controller to create.
- * @param {function(*)} definition Definition of the controller.
- * @returns {void};
+ * @param {ControllerCallback} definition Definition of the controller.
+ * @returns {void}
  */
 export function create(name, definition) {
     if (isDefined(controllers[name]))
