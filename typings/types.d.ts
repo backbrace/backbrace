@@ -1289,10 +1289,10 @@ declare namespace js {
      * @method controller
      * @memberof module:js
      * @param {string} name Name of the controller to create.
-     * @param {function(*)} definition Definition of the controller.
-     * @returns {void};
+     * @param {ControllerCallback} definition Definition of the controller.
+     * @returns {void}
      */
-    function controller(name: string, definition: ()=>any): void;
+    function controller(name: string, definition: ControllerCallback): void;
 
     /**
      * Log an info message.
