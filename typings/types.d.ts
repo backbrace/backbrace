@@ -310,14 +310,12 @@ declare type HeaderOptions = {
 /**
  * @typedef {object} ViewerOptions
  * @property {string} [title] Page title.
- * @property {boolean} [factbox] Show page in side container.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
  * @property {boolean} [first] If `true` sets as dashboard page.
  * @property {boolean} [temp] If `true` the page uses temp data.
  */
 declare type ViewerOptions = {
     title?: string;
-    factbox?: boolean;
     hasParent?: boolean;
     first?: boolean;
     temp?: boolean;
