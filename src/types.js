@@ -185,7 +185,6 @@
  * @property {boolean} [guiAllowed] GUI allowed flag.
  * @property {object} [jss] JSS style to use. Defaults to the flat JSS style.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
- * @property {boolean} [requireAuth] Require the user to log in. Defaults to `true`.
  * @property {AppConfig} [app] App config.
  * @property {MetaConfig} [meta] Meta data config.
  * @property {StyleConfig} [style] Style config.

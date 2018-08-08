@@ -269,7 +269,6 @@ declare type StyleConfig = {
  * @property {boolean} [guiAllowed] GUI allowed flag.
  * @property {object} [jss] JSS style to use. Defaults to the flat JSS style.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
- * @property {boolean} [requireAuth] Require the user to log in. Defaults to `true`.
  * @property {AppConfig} [app] App config.
  * @property {MetaConfig} [meta] Meta data config.
  * @property {StyleConfig} [style] Style config.
@@ -280,7 +279,6 @@ declare type Settings = {
     guiAllowed?: boolean;
     jss?: object;
     windowMode?: boolean;
-    requireAuth?: boolean;
     app?: AppConfig;
     meta?: MetaConfig;
     style?: StyleConfig;
@@ -1181,15 +1179,6 @@ declare namespace js {
      * var name = js.settings().app.name;
      */
     function settings(newsettings?: Settings): Settings;
-
-    /**
-     * Get/set the server provider.
-     * @method server
-     * @memberof module:js
-     * @param {ServerInstance} [val] Server instance to set.
-     * @returns {ServerInstance} Returns the server instance.
-     */
-    function server(val?: ServerInstance): ServerInstance;
 
     /**
      * Get/set the window provider.

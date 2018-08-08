@@ -4,7 +4,7 @@
  * @private
  */
 
-import { codeblock, codethread, onerror as onCodeError } from './code';
+import { codethread, onerror as onCodeError } from './code';
 import { compile } from './jss';
 import { error as logError } from './log';
 import * as packagemanager from './packagemanager';
@@ -23,7 +23,6 @@ import {
 import { get as getAlert, set as setAlert } from './providers/alert';
 import { get as getIcons } from './providers/icons';
 import { get as getJQuery } from './providers/jquery';
-import { get as getServer } from './providers/server';
 import { get as getWindow } from './providers/window';
 import { HeaderComponent } from './components/header';
 import { ViewerComponent } from './components/viewer';
@@ -248,17 +247,8 @@ export function start() {
 
                 load($('body'));
 
-                return codeblock(
-
-                    readyFunc,
-
-                    (settings.requireAuth === true ? function() {
-
-                        const server = getServer();
-                        return server.autoLogin();
-
-                    } : null)
-                );
+                if (readyFunc)
+                    return readyFunc();
 
             }, packageError);
         });

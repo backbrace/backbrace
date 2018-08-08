@@ -17,7 +17,6 @@ export let settings = {
     guiAllowed: true,
     jss: style,
     windowMode: true,
-    requireAuth: true,
     app: {
         name: 'Jumpstart App',
         version: '0.1.0',

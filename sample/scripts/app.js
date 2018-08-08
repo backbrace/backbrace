@@ -3,7 +3,6 @@
 js.settings({
     minify: true,
     debug: false,
-    requireAuth: true,
     app: {
         title: 'Test'
     },
@@ -19,13 +18,8 @@ js.settings({
 });
 
 // Set server provider.
-js.server({
-
-    // Auto login.
-    autoLogin: function() {
-        js.loadPage('test', { first: true });
-    }
-
+js.ready(function() {
+    js.loadPage('test', { first: true });
 });
 
 js.start();

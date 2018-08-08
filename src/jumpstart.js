@@ -7,7 +7,6 @@
 
 import { settings as appSettings } from './settings';
 import { merge, isDefined } from './util';
-import * as serverprovider from './providers/server';
 import * as windowprovider from './providers/window';
 
 /**
@@ -29,19 +28,6 @@ import * as windowprovider from './providers/window';
 export function settings(newsettings) {
     merge(appSettings, newsettings);
     return appSettings;
-}
-
-/**
- * Get/set the server provider.
- * @method server
- * @memberof module:js
- * @param {ServerInstance} [val] Server instance to set.
- * @returns {ServerInstance} Returns the server instance.
- */
-export function server(val) {
-    if (isDefined(val))
-        serverprovider.set(val);
-    return serverprovider.get();
 }
 
 /**
