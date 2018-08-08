@@ -671,7 +671,7 @@ declare class ActionsComponent extends Component {
      * Action components.
      * @type {Map<string, ActionComponent>}
      */
-    actions: any;
+    actions: Map<string, ActionComponent>;
 
     /**
      * @description
@@ -1048,21 +1048,21 @@ declare class CardPageComponent extends PageComponent {
      * Sub window components.
      * @type {Map<string, WindowComponent>}
      */
-    subwindows: any;
+    subwindows: Map<string, WindowComponent>;
 
     /**
      * @description
      * Sub page components.
      * @type {Map<string, ViewerComponent>}
      */
-    subpages: any;
+    subpages: Map<string, ViewerComponent>;
 
     /**
      * @description
      * Sub control components.
      * @type {Map<string, Component>}
      */
-    controls: any;
+    controls: Map<string, Component>;
 
     /**
      * @description
