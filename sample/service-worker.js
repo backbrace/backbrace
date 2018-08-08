@@ -1,4 +1,4 @@
-var CACHE_NAME = 'JSCache-V0.1.8';
+var CACHE_NAME = 'JSCache-V0.1.9';
 
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -22,15 +22,14 @@ self.addEventListener('activate', function(event) {
 
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
-            return Promise.all(
-                cacheNames.map(function(cacheName) {
-                    if (cacheWhitelist.indexOf(cacheName) === -1) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
+            return cacheNames.map(function(cacheName) {
+                if (cacheWhitelist.indexOf(cacheName) === -1) {
+                    return caches.delete(cacheName);
+                }
+                return null;
+            });
         }).then(function() {
-            return clients.claim();
+            return self.clients.claim();
         })
     );
 });
@@ -45,7 +44,7 @@ self.addEventListener('fetch', function(event) {
                     return response;
                 }
                 return fetch(event.request).then(function(response) {
-                    if (event.request.method === "GET" && response.ok)
+                    if (event.request.method === 'GET' && response.ok)
                         cache.put(event.request, response.clone());
                     return response;
                 });
