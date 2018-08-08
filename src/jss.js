@@ -6,7 +6,21 @@
 'use strict';
 
 import { settings } from './settings';
-import { forEach } from './util';
+
+/**
+ * Iterate through an object.
+ * @private
+ * @param {object} obj Object to iterate through.
+ * @param {function(*,Key,object)} iterator Iterator function to call.
+ * @param {*} [context] Context to run the iterator function.
+ * @returns {void}
+ */
+function forEach(obj, iterator, context) {
+    if (obj)
+        for (let key in obj)
+            if (Object.prototype.hasOwnProperty.call(obj, key))
+                iterator.call(context, obj[key], key, obj);
+}
 
 /**
  * Merge the JSS with the config.

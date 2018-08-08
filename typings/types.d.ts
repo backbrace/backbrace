@@ -247,7 +247,6 @@ declare type ScreenSizes = {
  * App style configuration. Merged with the JSS style at run time.
  * Example: The place holder `%colors:header%` will merge with the settings.style.colors.header value.
  * @typedef {object} StyleConfig
- * @property {number} length Number of children.
  * @property {LoaderStyle} [loader] Loader style.
  * @property {FontStyle} [font] Font style.
  * @property {ImagesStyle} [images] Images style.
@@ -255,7 +254,6 @@ declare type ScreenSizes = {
  * @property {ScreenSizes} [screen] Screen sizes.
  */
 declare type StyleConfig = {
-    length: number;
     loader?: LoaderStyle;
     font?: FontStyle;
     images?: ImagesStyle;

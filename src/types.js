@@ -170,7 +170,6 @@
  *
  * Example: The place holder `%colors:header%` will merge with the settings.style.colors.header value.
  * @typedef {object} StyleConfig
- * @property {number} length Number of children.
  * @property {LoaderStyle} [loader] Loader style.
  * @property {FontStyle} [font] Font style.
  * @property {ImagesStyle} [images] Images style.

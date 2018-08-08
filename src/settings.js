@@ -28,7 +28,6 @@ export let settings = {
         dir: './meta/'
     },
     style: {
-        length: 5,
         loader: {
             zindex: '1000',
             barheight: '10px',
