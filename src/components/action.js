@@ -1,5 +1,3 @@
-import { settings } from '../settings';
-import { isMobileDevice } from '../util';
 import { get as getIcons } from '../providers/icons';
 import { get as getJQuery } from '../providers/jquery';
 import { Component } from '../classes/component';
