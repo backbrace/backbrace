@@ -78,7 +78,7 @@ module.exports = function(grunt) {
           private: false,
           destination: 'typings',
           template: 'node_modules/tsd-jsdoc/dist',
-          config: 'jsdoc.conf.json'
+          config: 'typings.conf.json'
         }
       }
     },

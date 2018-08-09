@@ -57,6 +57,9 @@ declare type JQueryPromise = JQueryPromise;
  * @property {function():(JQueryPromise|void)} autoLogin Attempt to auto login.
  */
 declare type ServerInstance = {
+    /**
+     * Attempt to auto login.
+     */
     autoLogin: ()=>any;
 };
 
@@ -102,8 +105,17 @@ declare type AlertInstanceError = (msg: string)=>void;
  * @property {AlertInstanceError} error Show an error message box.
  */
 declare type AlertInstance = {
+    /**
+     * Show a message box.
+     */
     message: AlertInstanceMessage;
+    /**
+     * Show a confirmation box.
+     */
     confirm: AlertInstanceConfirm;
+    /**
+     * Show an error message box.
+     */
     error: AlertInstanceError;
 };
 
@@ -121,6 +133,9 @@ declare type IconsInstanceGet = (name?: string, className?: string)=>string;
  * @property {IconsInstanceGet} get Get an icon by name.
  */
 declare type IconsInstance = {
+    /**
+     * Get an icon by name.
+     */
     get: IconsInstanceGet;
 };
 
@@ -133,9 +148,21 @@ declare type IconsInstance = {
  * @property {string} [description] App description. Defaults to `Web App powered by Jumpstart`.
  */
 declare type AppConfig = {
+    /**
+     * App name (displays in header if there is no logo image). Defaults to `Jumpstart App`.
+     */
     name?: string;
+    /**
+     * App version. Defaults to `0.1.0`.
+     */
     version?: string;
+    /**
+     * App tite (displays in browser window). Defaults to `New Jumpstart App`.
+     */
     title?: string;
+    /**
+     * App description. Defaults to `Web App powered by Jumpstart`.
+     */
     description?: string;
 };
 
@@ -145,6 +172,9 @@ declare type AppConfig = {
  * @property {string} [dir] Meta data root directory. Defaults to `./meta`.
  */
 declare type MetaConfig = {
+    /**
+     * Meta data root directory. Defaults to `./meta`.
+     */
     dir?: string;
 };
 
@@ -159,11 +189,29 @@ declare type MetaConfig = {
  * @property {string} [blockerbackground] Background for loader blocker. Defaults to `#ECF0F1`.
  */
 declare type LoaderStyle = {
+    /**
+     * Loader bar z-index. Defaults to `1000`.
+     */
     zindex?: string;
+    /**
+     * Loader bar height. Defaults to `10px`.
+     */
     barheight?: string;
+    /**
+     * Loader bar width. Defaults to `800px`.
+     */
     barwidth?: string;
+    /**
+     * Progress bar background. Defaults to `#A2CFEE`.
+     */
     progressbackground?: string;
+    /**
+     * Progress bar foreground color. Defaults to `#3498DB`.
+     */
     progresscolor?: string;
+    /**
+     * Background for loader blocker. Defaults to `#ECF0F1`.
+     */
     blockerbackground?: string;
 };
 
@@ -175,8 +223,17 @@ declare type LoaderStyle = {
  * @property {string} [size] Font size. Defaults to `16px`.
  */
 declare type FontStyle = {
+    /**
+     * URL for the font. Defaults to Roboto font.
+     */
     url?: string;
+    /**
+     * Font family to use for the app. Defaults to `'Roboto', sans-serif`.
+     */
     family?: string;
+    /**
+     * Font size. Defaults to `16px`.
+     */
     size?: string;
 };
 
@@ -188,8 +245,17 @@ declare type FontStyle = {
  * @property {string} [blocker] URL for the blocker image (displayed while the loader is shown).
  */
 declare type ImagesStyle = {
+    /**
+     * URL for the logo image (displayed in the header).
+     */
     logo?: string;
+    /**
+     * URL for the menu logo image (displayed at the top of the main menu).
+     */
     menuLogo?: string;
+    /**
+     * URL for the blocker image (displayed while the loader is shown).
+     */
     blocker?: string;
 };
 
@@ -210,17 +276,53 @@ declare type ImagesStyle = {
  * @property {string} [alertbuttontext] Alert button foreground color. Defaults to `#FFF`.
  */
 declare type ColorsStyle = {
+    /**
+     * Header background color. Defaults to `#3498db`.
+     */
     header?: string;
+    /**
+     * Header foreground color. Defaults to `#FFF`.
+     */
     headertext?: string;
+    /**
+     * Header border style. Defaults to `none`.
+     */
     headerborder?: string;
+    /**
+     * Window title background color. Defaults to `#FFF`.
+     */
     title?: string;
+    /**
+     * Window title foreground color. Defaults to `#000`.
+     */
     titletext?: string;
+    /**
+     * Menu icon color. Defaults to `#FFF`.
+     */
     menuicon?: string;
+    /**
+     * Window background color. Defaults to `#FFF`.
+     */
     default?: string;
+    /**
+     * Window foreground color. Defaults to `#000`.
+     */
     defaulttext?: string;
+    /**
+     * Hover background color. Defaults to `whitesmoke`.
+     */
     hover?: string;
+    /**
+     * Hover foreground color. Defaults to `#000`.
+     */
     hovertext?: string;
+    /**
+     * Alert button background color. Defaults to `#3498db`.
+     */
     alertbutton?: string;
+    /**
+     * Alert button foreground color. Defaults to `#FFF`.
+     */
     alertbuttontext?: string;
 };
 
@@ -235,11 +337,29 @@ declare type ColorsStyle = {
  * @property {number} [largeUp] Desktop screen upper. Defaults to `1201`.
  */
 declare type ScreenSizes = {
+    /**
+     * Mobile screen. Defaults to `600`.
+     */
     small?: number;
+    /**
+     * Mobile screen upper. Defaults to `601`.
+     */
     smallUp?: number;
+    /**
+     * Tablet screen. Defaults to `992`.
+     */
     medium?: number;
+    /**
+     * Tablet screen upper. Defaults to `993`.
+     */
     mediumUp?: number;
+    /**
+     * Desktop screen. Defaults to `1200`.
+     */
     large?: number;
+    /**
+     * Desktop screen upper. Defaults to `1201`.
+     */
     largeUp?: number;
 };
 
@@ -254,10 +374,25 @@ declare type ScreenSizes = {
  * @property {ScreenSizes} [screen] Screen sizes.
  */
 declare type StyleConfig = {
+    /**
+     * Loader style.
+     */
     loader?: LoaderStyle;
+    /**
+     * Font style.
+     */
     font?: FontStyle;
+    /**
+     * Images style.
+     */
     images?: ImagesStyle;
+    /**
+     * Colors style.
+     */
     colors?: ColorsStyle;
+    /**
+     * Screen sizes.
+     */
     screen?: ScreenSizes;
 };
 
@@ -274,13 +409,37 @@ declare type StyleConfig = {
  * @property {StyleConfig} [style] Style config.
  */
 declare type Settings = {
+    /**
+     * Set the app to debug mode. Defaults to `false`.
+     */
     debug?: boolean;
+    /**
+     * Load minified packages. Defaults to `true`.
+     */
     minify?: boolean;
+    /**
+     * GUI allowed flag.
+     */
     guiAllowed?: boolean;
+    /**
+     * JSS style to use. Defaults to the flat JSS style.
+     */
     jss?: object;
+    /**
+     * Allow the use of multiple windows. Defaults to `true`.
+     */
     windowMode?: boolean;
+    /**
+     * App config.
+     */
     app?: AppConfig;
+    /**
+     * Meta data config.
+     */
     meta?: MetaConfig;
+    /**
+     * Style config.
+     */
     style?: StyleConfig;
 };
 
@@ -298,8 +457,17 @@ declare type ControllerCallback = (comp: ViewerComponent)=>void;
  * @property {string} [className] Header class.
  */
 declare type HeaderOptions = {
+    /**
+     * Menu icon.
+     */
     menuIcon?: string;
+    /**
+     * Attach a menu to the header.
+     */
     attachMenu?: boolean;
+    /**
+     * Header class.
+     */
     className?: string;
 };
 
@@ -311,9 +479,21 @@ declare type HeaderOptions = {
  * @property {boolean} [temp] If `true` the page uses temp data.
  */
 declare type ViewerOptions = {
+    /**
+     * Page title.
+     */
     title?: string;
+    /**
+     * If `true` sets the page as a child page.
+     */
     hasParent?: boolean;
+    /**
+     * If `true` sets as dashboard page.
+     */
     first?: boolean;
+    /**
+     * If `true` the page uses temp data.
+     */
     temp?: boolean;
 };
 
@@ -326,10 +506,25 @@ declare type ViewerOptions = {
  * @property {string} [className] Window class style.
  */
 declare type WindowOptions = {
+    /**
+     * Window icon.
+     */
     icon?: string;
+    /**
+     * On close function of the window.
+     */
     onClose?: ()=>any;
+    /**
+     * If `true` sets the window as a child window.
+     */
     hasParent?: boolean;
+    /**
+     * Add a close button to the window.
+     */
     closeBtn?: boolean;
+    /**
+     * Window class style.
+     */
     className?: string;
 };
 
@@ -346,14 +541,41 @@ declare type WindowOptions = {
  * @property {string} className Classes to add to the field.
  */
 declare type PageFieldMeta = {
+    /**
+     * Name of the field.
+     */
     name: string;
+    /**
+     * Caption of the field.
+     */
     caption: string;
+    /**
+     * Data type for the field.
+     */
     type: string;
+    /**
+     * Custom component to use for the field.
+     */
     component: string;
+    /**
+     * Tab to show the field in.
+     */
     tab: string;
+    /**
+     * Width of the field. Defaults to `100px`.
+     */
     width: string;
+    /**
+     * Don't display the field on the page.
+     */
     hidden: boolean;
+    /**
+     * Readonly field.
+     */
     editable: boolean;
+    /**
+     * Classes to add to the field.
+     */
     className: string;
 };
 
@@ -366,10 +588,25 @@ declare type PageFieldMeta = {
  * @property {string} className Classes to add to the button.
  */
 declare type PageActionMeta = {
+    /**
+     * Name of the action.
+     */
     name: string;
+    /**
+     * Caption of the action.
+     */
     text: string;
+    /**
+     * Icon to use on the button.
+     */
     icon: string;
+    /**
+     * Icon color. Defaults to header color.
+     */
     iconColor: string;
+    /**
+     * Classes to add to the button.
+     */
     className: string;
 };
 
@@ -382,10 +619,25 @@ declare type PageActionMeta = {
  * @property {string} className Classes to add to the tab.
  */
 declare type PageTabMeta = {
+    /**
+     * Name of the tab.
+     */
     name: string;
+    /**
+     * Caption of the tab.
+     */
     text: string;
+    /**
+     * Display a subpage in this tab.
+     */
     pageName: string;
+    /**
+     * Tab icon.
+     */
     icon: string;
+    /**
+     * Classes to add to the tab.
+     */
     className: string;
 };
 
@@ -401,13 +653,37 @@ declare type PageTabMeta = {
  * @property {PageTabMeta[]} tabs Page tabs.
  */
 declare type PageMeta = {
+    /**
+     * Name of the page.
+     */
     name: string;
+    /**
+     * Caption of the page.
+     */
     caption: string;
+    /**
+     * Component for the whole page (defaults to `cardpage`).
+     */
     component: string;
+    /**
+     * Page controller.
+     */
     controller: string;
+    /**
+     * Icon to use for the page.
+     */
     icon: string;
+    /**
+     * Page fields.
+     */
     fields: (PageFieldMeta)[];
+    /**
+     * Page actions.
+     */
     actions: (PageActionMeta)[];
+    /**
+     * Page tabs.
+     */
     tabs: (PageTabMeta)[];
 };
 
