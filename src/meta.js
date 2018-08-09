@@ -31,7 +31,6 @@ const defaults = {
         width: '100px',
         editable: true,
         hidden: false,
-        password: false,
         className: 's12 m6'
     },
     /** @type {PageActionMeta} */

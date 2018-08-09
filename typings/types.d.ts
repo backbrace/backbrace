@@ -343,7 +343,6 @@ declare type WindowOptions = {
  * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
- * @property {boolean} password If `true` display a password field.
  * @property {string} className Classes to add to the field.
  */
 declare type PageFieldMeta = {
@@ -355,7 +354,6 @@ declare type PageFieldMeta = {
     width: string;
     hidden: boolean;
     editable: boolean;
-    password: boolean;
     className: string;
 };
 
