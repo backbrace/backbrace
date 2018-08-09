@@ -259,7 +259,6 @@
  * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
  * @property {string} icon Icon to use for the page.
- * @property {boolean} factbox Display in the factbox area.
  * @property {PageFieldMeta[]} fields Page fields.
  * @property {PageActionMeta[]} actions Page actions.
  * @property {PageTabMeta[]} tabs Page tabs.

@@ -17,7 +17,6 @@ const defaults = {
         component: 'cardpage',
         controller: '',
         icon: '',
-        factbox: false,
         fields: [],
         actions: [],
         tabs: []
