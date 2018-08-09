@@ -1,0 +1,48 @@
+{
+    "name": "PageFieldMeta",
+    "description": "Page field meta data.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Name of the field.",
+            "type": "string"
+        },
+        "caption": {
+            "description": "Caption of the field.",
+            "type": "string"
+        },
+        "type": {
+            "description": "Data type for the field.",
+            "type": "string",
+            "$ref": "datatypes.json"
+        },
+        "component": {
+            "description": "Custom component to use for the field.",
+            "type": "string"
+        },
+        "tab": {
+            "description": "Tab to show the field in.",
+            "type": "string"
+        },
+        "width": {
+            "description": "Width of the field. Defaults to `100px`.",
+            "type": "string"
+        },
+        "hidden": {
+            "description": "Don't display the field on the page.",
+            "type": "boolean"
+        },
+        "editable": {
+            "description": "Readonly field.",
+            "type": "boolean"
+        },
+        "className": {
+            "description": "Classes to add to the field.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "name",
+        "type"
+    ]
+}

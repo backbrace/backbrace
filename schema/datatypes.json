@@ -1,0 +1,21 @@
+{
+    "name": "DataTypes",
+    "description": "Built-in data types.",
+    "type": "string",
+    "enum": [
+        "BigBlob",
+        "BigText",
+        "Blob",
+        "Boolean",
+        "Char",
+        "Code",
+        "Date",
+        "DateTime",
+        "Decimal",
+        "Image",
+        "Integer",
+        "Option",
+        "Time",
+        "Text"
+    ]
+}

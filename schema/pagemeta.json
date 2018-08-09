@@ -1,0 +1,49 @@
+{
+    "name": "PageMeta",
+    "description": "Page meta data.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Name of the page.",
+            "type": "string"
+        },
+        "caption": {
+            "description": "Caption of the page.",
+            "type": "string"
+        },
+        "component": {
+            "description": "Component for the whole page (defaults to `cardpage`).",
+            "type": "string"
+        },
+        "controller": {
+            "description": "Page controller.",
+            "type": "string"
+        },
+        "icon": {
+            "description": "Icon to use for the page.",
+            "type": "string",
+            "$ref": "icons.json"
+        },
+        "fields": {
+            "description": "Page fields.",
+            "type": "array",
+            "items": {
+                "$ref": "pagefieldmeta.json"
+            }
+        },
+        "actions": {
+            "description": "Page actions.",
+            "type": "array",
+            "items": {
+                "$ref": "pageactionmeta.json"
+            }
+        },
+        "tabs": {
+            "description": "Page tabs.",
+            "type": "array",
+            "items": {
+                "$ref": "pagetabmeta.json"
+            }
+        }
+    }
+}
