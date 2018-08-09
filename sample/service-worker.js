@@ -1,4 +1,4 @@
-var CACHE_NAME = 'JSCache-V0.1.10';
+var CACHE_NAME = 'JSCache-V0.1.11';
 
 self.addEventListener('install', function(event) {
     event.waitUntil(

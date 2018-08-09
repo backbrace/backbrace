@@ -2,13 +2,15 @@
     "caption": "Test Sub Page",
     "controller": "test.js",
     "component": "listpage",
-    "icon": "facebook-box",
+    "icon": "account-multiple",
     "fields": [
         {
-            "name": "Field 1"
+            "name": "ID",
+            "type": "Integer"
         },
         {
-            "name": "Field 2",
+            "name": "Full Name",
+            "type": "Text",
             "width": "100%"
         }
     ],

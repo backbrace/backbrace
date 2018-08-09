@@ -1,27 +1,29 @@
 {
     "caption": "Test Page",
     "controller": "test.js",
-    "icon": "tablet-ipad",
+    "icon": "account-check",
     "fields": [
         {
-            "name": "Field 1"
+            "name": "First Name",
+            "type": "Text"
         },
         {
-            "name": "Field 2"
+            "name": "Last Name",
+            "type": "Text"
         },
         {
-            "name": "Field 3"
+            "name": "Age",
+            "type": "Integer"
         },
         {
-            "name": "Field 4",
+            "name": "Salary",
+            "type": "Decimal",
+            "editable": false,
             "tab": "Tab1"
         },
         {
-            "name": "Field 5",
-            "tab": "Tab1"
-        },
-        {
-            "name": "Field 6",
+            "name": "Employment Type",
+            "type": "Option",
             "tab": "Tab1"
         }
     ],
@@ -36,8 +38,8 @@
     "tabs": [
         {
             "name": "Tab1",
-            "factbox": true,
-            "icon": "book"
+            "text": "Employment",
+            "icon": "cash"
         },
         {
             "name": "Tab2",
