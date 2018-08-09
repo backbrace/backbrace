@@ -1,6 +1,7 @@
 {
-    "name": "Icons",
-    "description": "Material design icons (v2.5.94).",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/icons",
+    "title": "Material design icons (v2.5.94).",
     "type": "string",
     "enum": [
         "access-point-network",

@@ -1,6 +1,7 @@
 {
-    "name": "DataTypes",
-    "description": "Built-in data types.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/dataTypes",
+    "title": "Built-in data types.",
     "type": "string",
     "enum": [
         "BigBlob",

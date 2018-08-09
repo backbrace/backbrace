@@ -1,6 +1,7 @@
 {
-    "name": "PageMeta",
-    "description": "Page meta data.",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/pageMeta",
+    "title": "Page meta data.",
     "type": "object",
     "properties": {
         "name": {
@@ -28,22 +29,131 @@
             "description": "Page fields.",
             "type": "array",
             "items": {
-                "$ref": "pagefieldmeta.json"
+                "$ref": "#/definitions/pageFieldMeta"
             }
         },
         "actions": {
             "description": "Page actions.",
             "type": "array",
             "items": {
-                "$ref": "pageactionmeta.json"
+                "$ref": "#/definitions/pageActionMeta"
             }
         },
         "tabs": {
             "description": "Page tabs.",
             "type": "array",
             "items": {
-                "$ref": "pagetabmeta.json"
+                "$ref": "#/definitions/pageTabMeta"
             }
+        }
+    },
+    "definitions": {
+        "pageFieldMeta": {
+            "description": "Page field meta data.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the field.",
+                    "type": "string"
+                },
+                "caption": {
+                    "description": "Caption of the field.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Data type for the field.",
+                    "type": "string",
+                    "$ref": "datatypes.json"
+                },
+                "component": {
+                    "description": "Custom component to use for the field.",
+                    "type": "string"
+                },
+                "tab": {
+                    "description": "Tab to show the field in.",
+                    "type": "string"
+                },
+                "width": {
+                    "description": "Width of the field. Defaults to `100px`.",
+                    "type": "string"
+                },
+                "hidden": {
+                    "description": "Don't display the field on the page.",
+                    "type": "boolean"
+                },
+                "editable": {
+                    "description": "Readonly field.",
+                    "type": "boolean"
+                },
+                "className": {
+                    "description": "Classes to add to the field.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ]
+        },
+        "pageActionMeta": {
+            "description": "Page action meta data.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the action.",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "Caption of the action.",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "Icon to use on the button.",
+                    "type": "string",
+                    "$ref": "icons.json"
+                },
+                "iconColor": {
+                    "description": "Icon color. Defaults to header color.",
+                    "type": "string"
+                },
+                "className": {
+                    "description": "Classes to add to the button.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+        "pageTabMeta": {
+            "description": "Page tab meta data.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the tab.",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "Caption of the tab.",
+                    "type": "string"
+                },
+                "pageName": {
+                    "description": "Display a subpage in this tab.",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "Tab icon.",
+                    "type": "string",
+                    "$ref": "icons.json"
+                },
+                "className": {
+                    "description": "Classes to add to the tab.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ]
         }
     }
 }
