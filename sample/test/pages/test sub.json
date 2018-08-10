@@ -3,15 +3,20 @@
     "controller": "test.js",
     "component": "listpage",
     "icon": "account-multiple",
-    "fields": [
+    "sections": [
         {
-            "name": "ID",
-            "type": "Integer"
-        },
-        {
-            "name": "Full Name",
-            "type": "Text",
-            "width": "100%"
+            "name": "General",
+            "fields": [
+                {
+                    "name": "ID",
+                    "type": "Integer"
+                },
+                {
+                    "name": "Full Name",
+                    "type": "Text",
+                    "width": "100%"
+                }
+            ]
         }
     ],
     "actions": [

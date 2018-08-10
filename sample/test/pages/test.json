@@ -2,31 +2,6 @@
     "caption": "Test Page",
     "controller": "test.js",
     "icon": "account-check",
-    "fields": [
-        {
-            "name": "First Name",
-            "type": "Text"
-        },
-        {
-            "name": "Last Name",
-            "type": "Text"
-        },
-        {
-            "name": "Age",
-            "type": "Integer"
-        },
-        {
-            "name": "Salary",
-            "type": "Decimal",
-            "editable": false,
-            "tab": "Tab1"
-        },
-        {
-            "name": "Employment Type",
-            "type": "Option",
-            "tab": "Tab1"
-        }
-    ],
     "actions": [
         {
             "name": "New"
@@ -35,14 +10,41 @@
             "name": "Delete"
         }
     ],
-    "tabs": [
+    "sections": [
         {
-            "name": "Tab1",
-            "text": "Employment",
-            "icon": "cash"
+            "name": "General",
+            "fields": [
+                {
+                    "name": "First Name",
+                    "type": "Text"
+                },
+                {
+                    "name": "Last Name",
+                    "type": "Text"
+                },
+                {
+                    "name": "Age",
+                    "type": "Integer"
+                }
+            ]
         },
         {
-            "name": "Tab2",
+            "name": "Employment",
+            "icon": "cash",
+            "fields": [
+                {
+                    "name": "Salary",
+                    "type": "Decimal",
+                    "editable": false
+                },
+                {
+                    "name": "Employment Type",
+                    "type": "Option"
+                }
+            ]
+        },
+        {
+            "name": "Subpage",
             "pageName": "test sub"
         }
     ]
