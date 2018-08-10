@@ -1,5 +1,11 @@
 'use strict';
 
+if ('serviceWorker' in navigator)
+    navigator.serviceWorker.register('service-worker.js')
+        .then(function(reg) {
+            js.serviceWorker(reg);
+        });
+
 js.settings({
     minify: true,
     debug: false,
@@ -19,7 +25,7 @@ js.settings({
 
 // Set server provider.
 js.ready(function() {
-    js.loadPage('test', { first: true });
+    js.loadPage('employee card', { first: true });
 });
 
 js.start();
