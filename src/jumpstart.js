@@ -74,9 +74,11 @@ export {
 } from './controller';
 
 export {
+    serviceWorker,
     start,
     ready,
-    loadPage
+    loadPage,
+    message
 } from './app';
 
 export {

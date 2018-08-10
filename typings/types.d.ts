@@ -1485,6 +1485,26 @@ declare namespace js {
     function window(val?: Window | object): Window | object;
 
     /**
+     * Get/set the service worker.
+     * @method serviceWorker
+     * @memberof module:js
+     * @param {ServiceWorkerRegistration} val If `defined`, sets the service worker.
+     * @returns {void|ServiceWorkerRegistration} If `val` is `undefined`, returns the current service worker registration.
+     */
+    function serviceWorker(val: ServiceWorkerRegistration): void | ServiceWorkerRegistration;
+
+    /**
+     * Show a message dialog.
+     * @method message
+     * @memberof module:js
+     * @param {string} msg Message to display.
+     * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
+     * @param {string} [title="Application Message"] Title of the dialog.
+     * @returns {void}
+     */
+    function message(msg: string, callbackFn?: ()=>any, title?: string): void;
+
+    /**
      * Execute a function after the app is loaded.
      * @method ready
      * @memberof module:js

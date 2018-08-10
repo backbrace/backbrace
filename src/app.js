@@ -35,8 +35,40 @@ let main = null,
     suppressNextError = false;
 
 /**
- * Show a message dialog.
  * @ignore
+ * @type {ServiceWorkerRegistration}
+ */
+let serviceWorkerRegistration = null;
+
+/**
+ * Get/set the service worker.
+ * @method serviceWorker
+ * @memberof module:js
+ * @param {ServiceWorkerRegistration} val If `defined`, sets the service worker.
+ * @returns {void|ServiceWorkerRegistration} If `val` is `undefined`, returns the current service worker registration.
+ */
+export function serviceWorker(val) {
+    if (isDefined(val)) {
+        serviceWorkerRegistration = val;
+    } else {
+        return serviceWorkerRegistration;
+    }
+}
+
+/**
+ * On tick function.
+ * @ignore
+ * @returns {void}
+ */
+function onTick() {
+    if (serviceWorkerRegistration)
+        serviceWorkerRegistration.update();
+}
+
+/**
+ * Show a message dialog.
+ * @method message
+ * @memberof module:js
  * @param {string} msg Message to display.
  * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
@@ -189,6 +221,9 @@ export function start() {
     if (!isHtml5())
         error('This app requires a HTML5 browser. We recommend chrome: ' +
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
+
+    // Start ticking.
+    window.setInterval(onTick, 10000);
 
     // Load JQuery.
     packagemanager.loadScript('jquery', function() {
