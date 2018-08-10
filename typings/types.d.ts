@@ -534,7 +534,6 @@ declare type WindowOptions = {
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
  * @property {string} component Custom component to use for the field.
- * @property {string} tab Tab to show the field in.
  * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
@@ -557,10 +556,6 @@ declare type PageFieldMeta = {
      * Custom component to use for the field.
      */
     component: string;
-    /**
-     * Tab to show the field in.
-     */
-    tab: string;
     /**
      * Width of the field. Defaults to `100px`.
      */
@@ -611,34 +606,39 @@ declare type PageActionMeta = {
 };
 
 /**
- * @typedef {object} PageTabMeta
- * @property {string} name Name of the tab.
- * @property {string} text Caption of the tab.
- * @property {string} pageName Display a subpage in this tab.
- * @property {string} icon Tab icon.
- * @property {string} className Classes to add to the tab.
+ * @typedef {object} PageSectionMeta
+ * @property {string} name Name of the section.
+ * @property {string} text Caption of the section.
+ * @property {string} pageName Display a subpage in this section.
+ * @property {string} icon Section icon.
+ * @property {string} className Classes to add to the section.
+ * @property {PageFieldMeta[]} fields Page section fields.
  */
-declare type PageTabMeta = {
+declare type PageSectionMeta = {
     /**
-     * Name of the tab.
+     * Name of the section.
      */
     name: string;
     /**
-     * Caption of the tab.
+     * Caption of the section.
      */
     text: string;
     /**
-     * Display a subpage in this tab.
+     * Display a subpage in this section.
      */
     pageName: string;
     /**
-     * Tab icon.
+     * Section icon.
      */
     icon: string;
     /**
-     * Classes to add to the tab.
+     * Classes to add to the section.
      */
     className: string;
+    /**
+     * Page section fields.
+     */
+    fields: (PageFieldMeta)[];
 };
 
 /**
@@ -648,9 +648,8 @@ declare type PageTabMeta = {
  * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
  * @property {string} icon Icon to use for the page.
- * @property {PageFieldMeta[]} fields Page fields.
  * @property {PageActionMeta[]} actions Page actions.
- * @property {PageTabMeta[]} tabs Page tabs.
+ * @property {PageSectionMeta[]} sections Page sections.
  */
 declare type PageMeta = {
     /**
@@ -674,17 +673,13 @@ declare type PageMeta = {
      */
     icon: string;
     /**
-     * Page fields.
-     */
-    fields: (PageFieldMeta)[];
-    /**
      * Page actions.
      */
     actions: (PageActionMeta)[];
     /**
-     * Page tabs.
+     * Page sections.
      */
-    tabs: (PageTabMeta)[];
+    sections: (PageSectionMeta)[];
 };
 
 /**
@@ -874,6 +869,13 @@ declare class PageComponent extends Component {
      * @type {ViewerComponent}
      */
     viewer: ViewerComponent;
+
+    /**
+     * @description
+     * Field components.
+     * @type {Map<string, FieldComponent>}
+     */
+    fields: Map<string, FieldComponent>;
 
 }
 
@@ -1327,27 +1329,6 @@ declare class CardPageComponent extends PageComponent {
 
     /**
      * @description
-     * Sub control components.
-     * @type {Map<string, Component>}
-     */
-    controls: Map<string, Component>;
-
-    /**
-     * @description
-     * Left column container.
-     * @type {JQuery}
-     */
-    leftColumn: JQuery;
-
-    /**
-     * @description
-     * Right column container.
-     * @type {JQuery}
-     */
-    rightColumn: JQuery;
-
-    /**
-     * @description
      * Unload the component.
      * @returns {void}
      */
@@ -1365,15 +1346,15 @@ declare class CardPageComponent extends PageComponent {
      * Load the tabs. Tabs can either be used to group this page's fields or show subpages.
      * @returns {JQueryPromise} Promise to return after we load the tabs.
      */
-    loadTabs(): JQueryPromise;
+    loadSections(): JQueryPromise;
 
     /**
      * @description
      * Load the fields for a tab.
-     * @param {string} tab Tab name.
+     * @param {PageFieldMeta[]} fields Fields to load.
      * @returns {JQueryPromise} Promise to return after we load the fields.
      */
-    loadFields(tab: string): JQueryPromise;
+    loadFields(fields: (PageFieldMeta)[]): JQueryPromise;
 
     /**
      * @description

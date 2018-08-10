@@ -226,7 +226,6 @@
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
  * @property {string} component Custom component to use for the field.
- * @property {string} tab Tab to show the field in.
  * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
@@ -243,12 +242,13 @@
  */
 
 /**
- * @typedef {object} PageTabMeta
- * @property {string} name Name of the tab.
- * @property {string} text Caption of the tab.
- * @property {string} pageName Display a subpage in this tab.
- * @property {string} icon Tab icon.
- * @property {string} className Classes to add to the tab.
+ * @typedef {object} PageSectionMeta
+ * @property {string} name Name of the section.
+ * @property {string} text Caption of the section.
+ * @property {string} pageName Display a subpage in this section.
+ * @property {string} icon Section icon.
+ * @property {string} className Classes to add to the section.
+ * @property {PageFieldMeta[]} fields Page section fields.
  */
 
 /**
@@ -258,7 +258,6 @@
  * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
  * @property {string} icon Icon to use for the page.
- * @property {PageFieldMeta[]} fields Page fields.
  * @property {PageActionMeta[]} actions Page actions.
- * @property {PageTabMeta[]} tabs Page tabs.
+ * @property {PageSectionMeta[]} sections Page sections.
  */

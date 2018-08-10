@@ -191,8 +191,10 @@ export class ListPageComponent extends PageComponent {
                     }
                 });
 
-                $.each(this.viewer.page.fields, function(i, field) {
-                    addColumn(field);
+                $.each(this.viewer.page.sections, function(i, section) {
+                    $.each(section.fields, function(j, field) {
+                        addColumn(field);
+                    });
                 });
 
                 // Create the grid.

@@ -37,24 +37,10 @@ export class CardPageComponent extends PageComponent {
 
         /**
          * @description
-         * Sub control components.
+         * Field components.
          * @type {Map<string, Component>}
          */
-        this.controls = new Map();
-
-        /**
-         * @description
-         * Left column container.
-         * @type {JQuery}
-         */
-        this.leftColumn = null;
-
-        /**
-         * @description
-         * Right column container.
-         * @type {JQuery}
-         */
-        this.rightColumn = null;
+        this.fields = new Map();
     }
 
     /**
@@ -76,10 +62,10 @@ export class CardPageComponent extends PageComponent {
         });
         this.subpages = null;
 
-        $.each(this.controls, function(index, cont) {
+        $.each(this.fields, function(index, cont) {
             cont.unload();
         });
-        this.controls = null;
+        this.fields = null;
 
         super.unload();
     }
@@ -91,8 +77,7 @@ export class CardPageComponent extends PageComponent {
      */
     load() {
         return codeblock(
-            () => this.loadFields(''),
-            () => this.loadTabs()
+            () => this.loadSections()
         );
     }
 
@@ -101,35 +86,37 @@ export class CardPageComponent extends PageComponent {
      * Load the tabs. Tabs can either be used to group this page's fields or show subpages.
      * @returns {JQueryPromise} Promise to return after we load the tabs.
      */
-    loadTabs() {
+    loadSections() {
 
         const page = this.viewer.page;
 
-        return codeeach(page.tabs, (tab) => {
+        return codeeach(page.sections, (section, i) => {
 
             let classes = 'window-width-full';
 
-            if (tab.pageName === '') { // Not a sub page.
+            if (section.pageName === '') { // Not a sub page.
 
                 // Create the window.
-                let win = new WindowComponent({
-                    className: classes,
-                    hasParent: true,
-                    icon: tab.icon
-                });
-                win.load(this.viewer.container).setTitle(tab.text);
-
-                this.subwindows.set(tab.name, win);
-                return this.loadFields(tab.name);
+                let win = this.viewer.window;
+                if (i > 0) {
+                    win = new WindowComponent({
+                        className: classes,
+                        hasParent: true,
+                        icon: section.icon
+                    });
+                    win.load(this.viewer.container).setTitle(section.text);
+                }
+                this.subwindows.set(section.name, win);
+                return this.loadFields(win, section.fields);
 
             } else {
 
                 if (!isMobileDevice()) {
                     // Create sub page.
-                    let page = new ViewerComponent(tab.pageName, {
+                    let page = new ViewerComponent(section.pageName, {
                         hasParent: true
                     });
-                    this.subpages.set(tab.name, page);
+                    this.subpages.set(section.name, page);
                     return page.load(this.viewer.container);
                 }
             }
@@ -138,25 +125,16 @@ export class CardPageComponent extends PageComponent {
 
     /**
      * @description
-     * Load the fields for a tab.
-     * @param {string} tab Tab name.
+     * Load the fields for a section.
+     * @param {WindowComponent} win Window to load the fields into.
+     * @param {PageFieldMeta[]} fields Fields to load.
      * @returns {JQueryPromise} Promise to return after we load the fields.
      */
-    loadFields(tab) {
-
-        const $ = getJQuery(),
-            page = this.viewer.page,
-            fields = $.grep(page.fields, function(field) {
-                return field.tab === tab;
-            });
+    loadFields(win, fields) {
 
         return codeeach(fields, (field, i) => {
 
-            let comp = field.component,
-                win = this.viewer.window;
-
-            if (tab !== '' && this.subwindows.has(tab))
-                win = this.subwindows.get(tab);
+            let comp = field.component;
 
             if (comp === '') {
                 comp = 'textfield';
@@ -165,7 +143,7 @@ export class CardPageComponent extends PageComponent {
 
                 let Control = require('../fieldcomponents/' + comp + '.js').default,
                     cont = new Control(this, field);
-                this.controls.set(field.name, cont);
+                this.fields.set(field.name, cont);
 
                 return cont.load(win.main);
             }

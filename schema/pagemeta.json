@@ -25,13 +25,6 @@
             "type": "string",
             "$ref": "icons.json"
         },
-        "fields": {
-            "description": "Page fields.",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/pageFieldMeta"
-            }
-        },
         "actions": {
             "description": "Page actions.",
             "type": "array",
@@ -39,14 +32,17 @@
                 "$ref": "#/definitions/pageActionMeta"
             }
         },
-        "tabs": {
-            "description": "Page tabs.",
+        "sections": {
+            "description": "Page sections.",
             "type": "array",
             "items": {
-                "$ref": "#/definitions/pageTabMeta"
+                "$ref": "#/definitions/pageSectionMeta"
             }
         }
     },
+    "required": [
+        "sections"
+    ],
     "definitions": {
         "pageFieldMeta": {
             "description": "Page field meta data.",
@@ -67,10 +63,6 @@
                 },
                 "component": {
                     "description": "Custom component to use for the field.",
-                    "type": "string"
-                },
-                "tab": {
-                    "description": "Tab to show the field in.",
                     "type": "string"
                 },
                 "width": {
@@ -125,30 +117,37 @@
                 "name"
             ]
         },
-        "pageTabMeta": {
-            "description": "Page tab meta data.",
+        "pageSectionMeta": {
+            "description": "Page section meta data.",
             "type": "object",
             "properties": {
                 "name": {
-                    "description": "Name of the tab.",
+                    "description": "Name of the section.",
                     "type": "string"
                 },
                 "text": {
-                    "description": "Caption of the tab.",
+                    "description": "Caption of the section.",
                     "type": "string"
                 },
                 "pageName": {
-                    "description": "Display a subpage in this tab.",
+                    "description": "Display a subpage in this section.",
                     "type": "string"
                 },
                 "icon": {
-                    "description": "Tab icon.",
+                    "description": "Section icon.",
                     "type": "string",
                     "$ref": "icons.json"
                 },
                 "className": {
-                    "description": "Classes to add to the tab.",
+                    "description": "Classes to add to the section.",
                     "type": "string"
+                },
+                "fields": {
+                    "description": "Page section fields.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pageFieldMeta"
+                    }
                 }
             },
             "required": [

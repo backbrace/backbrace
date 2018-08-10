@@ -17,9 +17,8 @@ const defaults = {
         component: 'cardpage',
         controller: '',
         icon: '',
-        fields: [],
         actions: [],
-        tabs: []
+        sections: []
     },
     /** @type {PageFieldMeta} */
     pagefield: {
@@ -27,7 +26,6 @@ const defaults = {
         caption: '',
         type: 'Text',
         component: '',
-        tab: '',
         width: '100px',
         editable: true,
         hidden: false,
@@ -41,13 +39,14 @@ const defaults = {
         iconColor: '',
         className: ''
     },
-    /** @type {PageTabMeta} */
+    /** @type {PageSectionMeta} */
     pagetab: {
         name: '',
         text: '',
         pageName: '',
         icon: '',
-        className: ''
+        className: '',
+        fields: []
     }
 };
 
@@ -73,13 +72,6 @@ export function page(name) {
             // Extend the page.
             let pge = $.extend({}, defaults.page, json);
 
-            // Extend the page fields.
-            pge.fields = [];
-            $.each(json.fields, function(index, field) {
-                field.caption = field.caption || field.name;
-                pge.fields.push($.extend({}, defaults.pagefield, field));
-            });
-
             // Extend the page actions.
             pge.actions = [];
             $.each(json.actions, function(index, action) {
@@ -87,11 +79,18 @@ export function page(name) {
                 pge.actions.push($.extend({}, defaults.pageaction, action));
             });
 
-            // Extend the page tabs.
-            pge.tabs = [];
-            $.each(json.tabs, function(index, tab) {
-                tab.text = tab.text || tab.name;
-                pge.tabs.push($.extend({}, defaults.pagetab, tab));
+            // Extend the page sections.
+            pge.sections = [];
+            $.each(json.sections, function(index, section) {
+
+                section.text = section.text || section.name;
+                pge.sections.push($.extend({}, defaults.pagetab, section));
+
+                // Extend the page section fields.
+                $.each(section.fields, function(index, field) {
+                    field.caption = field.caption || field.name;
+                    section.fields[index] = $.extend({}, defaults.pagefield, field);
+                });
             });
 
             return pge;
