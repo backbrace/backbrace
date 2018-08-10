@@ -50,7 +50,7 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * Page component options.
+         * Viewer options.
          * @type {ViewerOptions}
          */
         this.options = { title, hasParent, first, temp };
@@ -86,7 +86,7 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * The component that renders over the entire window.
-         * @type {Component}
+         * @type {PageComponent}
          */
         this.pageComponent = null;
     }
