@@ -20,6 +20,10 @@
             "description": "Page controller.",
             "type": "string"
         },
+        "tableName": {
+            "description": "Name of the page's datasource.",
+            "type": "string"
+        },
         "icon": {
             "description": "Icon to use for the page.",
             "type": "string",
@@ -83,8 +87,7 @@
                 }
             },
             "required": [
-                "name",
-                "type"
+                "name"
             ]
         },
         "pageActionMeta": {

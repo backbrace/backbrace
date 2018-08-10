@@ -257,6 +257,7 @@
  * @property {string} caption Caption of the page.
  * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
+ * @property {string} tableName Name of the page's datasource.
  * @property {string} icon Icon to use for the page.
  * @property {PageActionMeta[]} actions Page actions.
  * @property {PageSectionMeta[]} sections Page sections.

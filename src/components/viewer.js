@@ -1,7 +1,7 @@
 import { error, closePage, addWindowToToolbar } from '../app';
 import { codeblock, codethread } from '../code';
 import { load as loadController, get as getController } from '../controller';
-import { page } from '../meta';
+import { page, table } from '../meta';
 import { settings } from '../settings';
 import { isMobileDevice } from '../util';
 import { get as getJQuery } from '../providers/jquery';
@@ -61,6 +61,13 @@ export class ViewerComponent extends Component {
          * @type {PageMeta}
          */
         this.page = null;
+
+        /**
+         * @description
+         * Table meta data.
+         * @type {TableMeta}
+         */
+        this.table = null;
 
         /**
          * @description
@@ -154,7 +161,7 @@ export class ViewerComponent extends Component {
             // Get the page meta data.
             () => page(this.name),
 
-            (/** @type {PageMeta} */page) => {
+            (page) => {
 
                 // Page meta data not found.
                 if (page === null)
@@ -162,10 +169,47 @@ export class ViewerComponent extends Component {
 
                 this.page = page;
 
+                // Get the table meta data.
+                if (this.page.tableName)
+                    return codeblock(
+                        () => table(this.page.tableName),
+                        (table) => {
+
+                            // Table meta data not found.
+                            if (table === null)
+                                error('Cannot find table meta data: {0}', this.page.tableName);
+
+                            this.table = table;
+
+                            let getColumn = (name) => {
+                                let columns = $.grep(this.table.columns, function(column) {
+                                    return column.name === name;
+                                });
+                                return columns.length === 1 ? columns[0] : null;
+                            };
+
+                            // Merge page and table fields.
+                            $.each(this.page.sections, function(index, section) {
+                                $.each(section.fields, function(index, field) {
+
+                                    let col = getColumn(field.name);
+                                    if (col) {
+                                        if (field.caption === field.name)
+                                            field.caption = col.caption;
+                                        field.type = col.type;
+                                    }
+                                });
+                            });
+                        }
+                    );
+            },
+
+            () => {
+
                 // Load the window.
                 if (this.options.hasParent) {
                     this.window.options.hasParent = true;
-                    this.window.options.icon = page.icon;
+                    this.window.options.icon = this.page.icon;
                 }
                 this.window.load(this.container);
 
@@ -174,17 +218,17 @@ export class ViewerComponent extends Component {
                     this.shortcutBtn = addWindowToToolbar(this.id);
                 }
 
-                this.setTitle(this.options.title || page.caption);
+                this.setTitle(this.options.title || this.page.caption);
 
                 // Add close function.
                 this.window.options.onClose = () => closePage(this.id);
 
                 // Add actions.
                 this.actions.load(this.window.toolbar);
-                $.each(page.actions, (i, action) => this.actions.addAction(action, this.actionRunner));
+                $.each(this.page.actions, (i, action) => this.actions.addAction(action, this.actionRunner));
 
                 // Load the page component.
-                let comp = page.component;
+                let comp = this.page.component;
                 if (comp.indexOf('.js') === -1) {
                     let Control = require('./pagecomponents/' + comp + '.js').default;
                     this.pageComponent = new Control(this);

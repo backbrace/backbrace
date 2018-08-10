@@ -16,6 +16,7 @@ const defaults = {
         caption: '',
         component: 'cardpage',
         controller: '',
+        tableName: '',
         icon: '',
         actions: [],
         sections: []
@@ -40,7 +41,7 @@ const defaults = {
         className: ''
     },
     /** @type {PageSectionMeta} */
-    pagetab: {
+    pagesection: {
         name: '',
         text: '',
         pageName: '',
@@ -96,7 +97,7 @@ export function page(name) {
             $.each(json.sections, function(index, section) {
 
                 section.text = section.text || section.name;
-                pge.sections.push($.extend({}, defaults.pagetab, section));
+                pge.sections.push($.extend({}, defaults.pagesection, section));
 
                 // Extend the page section fields.
                 $.each(section.fields, function(index, field) {
