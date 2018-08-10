@@ -683,6 +683,48 @@ declare type PageMeta = {
 };
 
 /**
+ * @typedef {object} TableColumnMeta
+ * @property {string} name Name of the column.
+ * @property {string} caption Caption of the column.
+ * @property {string} type  Data type for the column.
+ */
+declare type TableColumnMeta = {
+    /**
+     * Name of the column.
+     */
+    name: string;
+    /**
+     * Caption of the column.
+     */
+    caption: string;
+    /**
+     * Data type for the column.
+     */
+    type: string;
+};
+
+/**
+ * @typedef {object} TableMeta
+ * @property {string} name Name of the table.
+ * @property {string} controller Table controller.
+ * @property {TableColumnMeta[]} columns Table columns.
+ */
+declare type TableMeta = {
+    /**
+     * Name of the table.
+     */
+    name: string;
+    /**
+     * Table controller.
+     */
+    controller: string;
+    /**
+     * Table columns.
+     */
+    columns: (TableColumnMeta)[];
+};
+
+/**
  * @class
  * @description
  * Code thread class.

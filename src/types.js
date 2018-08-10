@@ -261,3 +261,17 @@
  * @property {PageActionMeta[]} actions Page actions.
  * @property {PageSectionMeta[]} sections Page sections.
  */
+
+/**
+ * @typedef {object} TableColumnMeta
+ * @property {string} name Name of the column.
+ * @property {string} caption Caption of the column.
+ * @property {string} type  Data type for the column.
+ */
+
+/**
+ * @typedef {object} TableMeta
+ * @property {string} name Name of the table.
+ * @property {string} controller Table controller.
+ * @property {TableColumnMeta[]} columns Table columns.
+ */

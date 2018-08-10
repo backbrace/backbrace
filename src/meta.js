@@ -47,6 +47,18 @@ const defaults = {
         icon: '',
         className: '',
         fields: []
+    },
+    /** @type {TableMeta} */
+    table: {
+        name: '',
+        controller: '',
+        columns: []
+    },
+    /** @type {TableColumnMeta} */
+    tablecolumn: {
+        name: '',
+        caption: '',
+        type: 'Text'
     }
 };
 
@@ -94,6 +106,37 @@ export function page(name) {
             });
 
             return pge;
+        }
+    );
+}
+
+/**
+ * Get table object meta data.
+ * @param {string} name Name of the table to get.
+ * @returns {JQueryPromise} Promise to get the table meta data.
+ */
+export function table(name) {
+
+    const $ = getJQuery();
+
+    return codeblock(
+
+        // Get the table from a JSON file.
+        () => get(settings.meta.dir + 'tables/' + name + '.json'),
+
+        (/** @type {TableMeta} */json) => {
+
+            // Extend the table.
+            let tbl = $.extend({}, defaults.table, json);
+
+            // Extend the table columns.
+            tbl.columns = [];
+            $.each(json.columns, function(index, column) {
+                column.caption = column.caption || column.name;
+                tbl.columns.push($.extend({}, defaults.tablecolumn, column));
+            });
+
+            return tbl;
         }
     );
 }

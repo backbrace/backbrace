@@ -1,0 +1,51 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/tableMeta",
+    "title": "Table meta data.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Name of the table.",
+            "type": "string"
+        },
+        "controller": {
+            "description": "Table controller.",
+            "type": "string"
+        },
+        "columns": {
+            "description": "Table columns.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/tableColumnMeta"
+            }
+        }
+    },
+    "required": [
+        "columns"
+    ],
+    "definitions": {
+        "tableColumnMeta": {
+            "description": "Table column meta data.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the column.",
+                    "type": "string"
+                },
+                "caption": {
+                    "description": "Caption of the column.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Data type for the column.",
+                    "type": "string",
+                    "$ref": "datatypes.json"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ]
+        }
+    }
+}

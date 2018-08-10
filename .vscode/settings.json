@@ -10,6 +10,12 @@
                 "*/pages/*.json"
             ],
             "url": "./schema/pagemeta.json"
+        },
+        {
+            "fileMatch": [
+                "*/tables/*.json"
+            ],
+            "url": "./schema/tablemeta.json"
         }
     ]
 }
