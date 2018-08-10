@@ -917,13 +917,6 @@ declare class PageComponent extends Component {
      */
     viewer: ViewerComponent;
 
-    /**
-     * @description
-     * Field components.
-     * @type {Map<string, FieldComponent>}
-     */
-    fields: Map<string, FieldComponent>;
-
 }
 
 /**
@@ -1182,7 +1175,7 @@ declare class ViewerComponent extends Component {
 
     /**
      * @description
-     * Page component options.
+     * Viewer options.
      * @type {ViewerOptions}
      */
     options: ViewerOptions;
@@ -1193,6 +1186,13 @@ declare class ViewerComponent extends Component {
      * @type {PageMeta}
      */
     page: PageMeta;
+
+    /**
+     * @description
+     * Table meta data.
+     * @type {TableMeta}
+     */
+    table: TableMeta;
 
     /**
      * @description
@@ -1218,9 +1218,9 @@ declare class ViewerComponent extends Component {
     /**
      * @description
      * The component that renders over the entire window.
-     * @type {Component}
+     * @type {PageComponent}
      */
-    pageComponent: Component;
+    pageComponent: PageComponent;
 
     /**
      * @description
@@ -1376,6 +1376,13 @@ declare class CardPageComponent extends PageComponent {
 
     /**
      * @description
+     * Field components.
+     * @type {Map<string, Component>}
+     */
+    fields: Map<string, Component>;
+
+    /**
+     * @description
      * Unload the component.
      * @returns {void}
      */
@@ -1397,11 +1404,12 @@ declare class CardPageComponent extends PageComponent {
 
     /**
      * @description
-     * Load the fields for a tab.
+     * Load the fields for a section.
+     * @param {WindowComponent} win Window to load the fields into.
      * @param {PageFieldMeta[]} fields Fields to load.
      * @returns {JQueryPromise} Promise to return after we load the fields.
      */
-    loadFields(fields: (PageFieldMeta)[]): JQueryPromise;
+    loadFields(win: WindowComponent, fields: (PageFieldMeta)[]): JQueryPromise;
 
     /**
      * @description
