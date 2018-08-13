@@ -41,7 +41,7 @@ export function loadScript(url, onsuccess, onerror) {
     let script = window.document.createElement('script');
     script.src = url;
     script.async = true;
-    script.onerror = onerror;
+    script.onerror = onerror || errorHandler;
     script.onload = onsuccess;
 
     window.document.head.appendChild(script);
@@ -64,7 +64,7 @@ export function loadCSS(url, onsuccess, onerror) {
     css.type = 'text/css';
     css.rel = 'stylesheet';
     css.href = url;
-    css.onerror = onerror;
+    css.onerror = onerror || errorHandler;
     css.onload = onsuccess;
 
     window.document.head.appendChild(css);
@@ -101,18 +101,20 @@ export function add(pack, offset) {
 /**
  * Load pending packages.
  * @param {Function} onsuccess On success function.
- * @param {Function} onerror On error function.
+ * @param {Function} [onerror] On error function.
  * @returns {void}
  */
 export function load(onsuccess, onerror) {
+
     const $ = getJQuery();
+
     codeinsert(
         function() {
             'inserted';
             let d = $.Deferred();
             loadpackages(function() {
                 d.resolve();
-            }, onerror);
+            }, onerror || errorHandler);
             return d.promise();
         },
         function() {

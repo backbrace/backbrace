@@ -1,4 +1,3 @@
-import { error } from '../../app';
 import * as packagemanager from '../../packagemanager';
 import { findInput, isMobileDevice } from '../../util';
 import { get as getIcons } from '../../providers/icons';
@@ -241,9 +240,6 @@ export class ListPageComponent extends PageComponent {
 
             }
 
-        }, function() {
-            let url = this.src || this.href || '';
-            error('Unable to load ' + url);
         });
 
         return this;
