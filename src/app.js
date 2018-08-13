@@ -4,7 +4,7 @@
  * @private
  */
 
-import { codethread, onerror as onCodeError } from './code';
+import { codethread, reset } from './code';
 import { compile } from './jss';
 import { error as logError } from './log';
 import * as packagemanager from './packagemanager';
@@ -13,8 +13,6 @@ import { settings } from './settings';
 import * as sweetalert from './sweetalert';
 import {
     setZeroTimeout,
-    forEach,
-    formatString,
     addElement,
     isDefined,
     isHtml5,
@@ -120,41 +118,21 @@ export function confirm(msg, callbackFn, title, yescaption, nocaption) {
 /**
  * Display an error and kill the current execution.
  * @ignore
- * @param {string|Error} err Error to display.
+ * @param {Error} err Error to display.
  * @returns {void}
  */
-export function error(err) {
+export function errorHandler(err) {
 
     const alert = getAlert();
-    let msg = '';
-
-    // Get the message.
-    if (typeof err === 'string') {
-        msg = err;
-    } else {
-        msg = err.message;
-    }
-
-    // Merge string.
-    const arr = [msg];
-    forEach(arguments, function(a, i) {
-        if (i > 0)
-            arr.push(a);
-    });
-    msg = formatString.apply(null, arr);
 
     progress.hide();
 
-    logError('Application Error: ' + msg);
+    logError(err);
 
     // Run error handling.
     if (!suppressNextError) {
-
-        // Run the event.
-        alert.error(msg);
-
-        // Kill execution.
-        throw new Error('ERROR_HANDLED');
+        reset();
+        alert.error(err.message);
     }
 
     suppressNextError = false;
@@ -180,6 +158,10 @@ export function ready(func) {
 export function start() {
 
     const window = getWindow();
+
+    window.addEventListener('error', function(ev) {
+        errorHandler(ev.error);
+    });
 
     // Add font css.
     addElement('link', {
