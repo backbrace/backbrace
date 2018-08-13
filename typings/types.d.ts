@@ -1374,6 +1374,13 @@ declare class WindowComponent extends Component {
 
     /**
      * @description
+     * Titlebar container.
+     * @type {JQuery}
+     */
+    titlebar: JQuery;
+
+    /**
+     * @description
      * Load the component.
      * @param {JQuery} container Container to load into.
      * @returns {WindowComponent} Returns itself for chaining.
@@ -1387,6 +1394,14 @@ declare class WindowComponent extends Component {
      * @returns {WindowComponent} Returns itself for chaining.
      */
     setTitle(title: string): WindowComponent;
+
+    /**
+     * Add a title bar icon.
+     * @param {string} icon Icon name.
+     * @param {GenericFunction} onclick On click function.
+     * @returns {void}
+     */
+    addTitlebarIcon(icon: string, onclick: GenericFunction): void;
 
 }
 
