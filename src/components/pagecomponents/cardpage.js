@@ -52,17 +52,17 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        $.each(this.subwindows, function(index, win) {
+        $.each(Array.from(this.subwindows.values()), function(index, win) {
             win.unload();
         });
         this.subwindows = null;
 
-        $.each(this.subpages, function(index, page) {
+        $.each(Array.from(this.subpages.values()), function(index, page) {
             page.unload();
         });
         this.subpages = null;
 
-        $.each(this.fields, function(index, cont) {
+        $.each(Array.from(this.fields.values()), function(index, cont) {
             cont.unload();
         });
         this.fields = null;
@@ -176,15 +176,17 @@ export class CardPageComponent extends PageComponent {
      */
     show() {
 
+        const $ = getJQuery();
+
         // Show the sub pages.
-        for (let page of this.subpages.entries()) {
-            page[1].show();
-        }
+        $.each(Array.from(this.subpages.values()), function(index, page) {
+            page.show();
+        });
 
         // Show the sub windows.
-        for (let win of this.subwindows.entries()) {
-            win[1].show();
-        }
+        $.each(Array.from(this.subwindows.values()), function(index, win) {
+            win.show();
+        });
 
         return this;
     }
@@ -196,15 +198,17 @@ export class CardPageComponent extends PageComponent {
      */
     hide() {
 
+        const $ = getJQuery();
+
         // Hide the sub pages.
-        for (let page of this.subpages.entries()) {
-            page[1].hide();
-        }
+        $.each(Array.from(this.subpages.values()), function(index, page) {
+            page.hide();
+        });
 
         // Hide the sub windows.
-        for (let win of this.subwindows.entries()) {
-            win[1].hide();
-        }
+        $.each(Array.from(this.subwindows.values()), function(index, win) {
+            win.hide();
+        });
 
         return this;
     }

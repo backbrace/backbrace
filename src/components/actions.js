@@ -34,7 +34,7 @@ export class ActionsComponent extends Component {
         const $ = getJQuery();
 
         // Unload each button.
-        $.each(this.actions, function(index, btn) {
+        $.each(Array.from(this.actions.values()), function(index, btn) {
             btn.unload();
         });
 
