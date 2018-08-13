@@ -167,7 +167,7 @@ export class ViewerComponent extends Component {
             (page) => {
 
                 // Page meta data not found.
-                if (page !== null)
+                if (page === null)
                     throw viewerError('nometa', 'Cannot find page meta data \'{0}\'', this.name);
 
                 this.page = page;
