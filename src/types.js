@@ -282,5 +282,6 @@
  * @typedef {object} TableMeta
  * @property {string} name Name of the table.
  * @property {string} controller Table controller.
+ * @property {string} data Table data (if from a file).
  * @property {TableColumnMeta[]} columns Table columns.
  */

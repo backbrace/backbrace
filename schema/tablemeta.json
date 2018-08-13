@@ -12,6 +12,10 @@
             "description": "Table controller.",
             "type": "string"
         },
+        "data": {
+            "description": "Table data (if from a file)",
+            "type": "string"
+        },
         "columns": {
             "description": "Table columns.",
             "type": "array",

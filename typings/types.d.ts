@@ -721,6 +721,7 @@ declare type TableColumnMeta = {
  * @typedef {object} TableMeta
  * @property {string} name Name of the table.
  * @property {string} controller Table controller.
+ * @property {string} data Table data (if from a file).
  * @property {TableColumnMeta[]} columns Table columns.
  */
 declare type TableMeta = {
@@ -732,6 +733,10 @@ declare type TableMeta = {
      * Table controller.
      */
     controller: string;
+    /**
+     * Table data (if from a file).
+     */
+    data: string;
     /**
      * Table columns.
      */
