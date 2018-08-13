@@ -4,9 +4,12 @@
  * @private
  */
 
-import { debug as logDebug } from './log';
+import { error } from './error';
+import { debug as logDebug, object as logObject } from './log';
 import { get as getJquery } from './providers/jquery';
 import { CodeThread } from './classes/codethread';
+
+const codeError = error('code');
 
 /**
  * @type {CodeThread}
@@ -86,7 +89,7 @@ export function codeblock(...args) {
     const $ = getJquery();
 
     if (!currentThread)
-        throw Error('Attempted to start a codeblock without a thread');
+        throw codeError('nothread', 'Attempted to start a codeblock without a thread');
 
     let w = $.Deferred();
 
@@ -106,7 +109,7 @@ export function codeblock(...args) {
 export function codeinsert(...args) {
 
     if (!currentThread)
-        throw Error('Attempted to insert into a codeblock without a thread');
+        throw codeError('nothread', 'Attempted to insert into a codeblock without a thread');
 
     CodeThread.prototype.insert.apply(currentThread, args);
 }

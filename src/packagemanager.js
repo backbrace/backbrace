@@ -5,6 +5,7 @@
  */
 
 import { codeinsert } from './code';
+import { error } from './error';
 import { debug as logDebug } from './log';
 import { get as getPackage, exists as packageExists } from './packages';
 import { noop } from './util';
@@ -12,7 +13,12 @@ import { get as getJQuery } from './providers/jquery';
 import { get as getWindow } from './providers/window';
 
 const packages = [],
-    loadedPackages = [];
+    loadedPackages = [],
+    packageError = error('packagemanager'),
+    errorHandler = function() {
+        let url = this.src || this.href || '';
+        throw packageError('load', 'Unable to load \'{0}\'', url);
+    };
 
 /**
  * Load an external script (native).
@@ -76,7 +82,7 @@ export function add(pack, offset) {
 
     if (typeof pack === 'string') {
         if (!packageExists(pack))
-            throw Error(`Package not found: ${pack}`);
+            throw packageError('add', 'Package not found \'{0}\'', pack);
         pack = getPackage(pack);
     }
 

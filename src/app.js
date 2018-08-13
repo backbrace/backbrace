@@ -5,6 +5,7 @@
  */
 
 import { codethread, reset } from './code';
+import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
 import * as packagemanager from './packagemanager';
@@ -31,6 +32,8 @@ let main = null,
     activePage = 0,
     readyFunc = null,
     suppressNextError = false;
+
+const appError = error('app');
 
 /**
  * @ignore
@@ -201,7 +204,7 @@ export function start() {
 
     // Check for HTML5.
     if (!isHtml5())
-        error('This app requires a HTML5 browser. We recommend chrome: ' +
+        throw appError('nohtml', 'This app requires a HTML5 browser. We recommend chrome: ' +
             '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
     // Start ticking.
@@ -213,19 +216,7 @@ export function start() {
         // JQuery wasn't loaded :(
         const $ = getJQuery();
         if ($ === null)
-            error('Unable to load the JQuery package');
-
-        /**
-         * Handle package errors.
-         * @ignore
-         * @returns {void}
-         */
-        function packageError() {
-            const url = this.src || this.href || '';
-            error('Unable to load ' + url +
-                '<br/><br/><a href="" onclick="window.location.reload();">' +
-                'Click here to reload</a>');
-        }
+            throw appError('nojquery', 'JQuery was not loaded correctly');
 
         // Load startup packages.
         codethread(function() {
@@ -264,12 +255,8 @@ export function start() {
                 if (readyFunc)
                     return readyFunc();
 
-            }, packageError);
+            });
         });
-
-    }, function() {
-
-        error('Unable to load the JQuery package');
 
     });
 
@@ -375,7 +362,7 @@ export function closePage(id) {
         // Unload the page.
         const pge = pages[id];
         if (!isDefined(pge))
-            error('Cannot find page by id: {0}', id);
+            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
         pge.unload();
 
         // Remove the page from the loaded pages.
@@ -413,7 +400,7 @@ export function showPage(id) {
     // Show the page.
     const pge = pages[id];
     if (!isDefined(pge))
-        error('Cannot find page by id: {0}', id);
+        throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
 
     pge.show();
     activePage = pge.id;

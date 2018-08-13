@@ -4,13 +4,15 @@
  * @private
  */
 
-import { error } from './app';
+import { error } from './error';
 import { loadScript } from './packagemanager';
 import { settings } from './settings';
 import { isDefined } from './util';
 import { get as getJQuery } from './providers/jquery';
 
 let controllers = {};
+
+const controllerError = error('controller');
 
 /**
  * Create a controller.
@@ -22,7 +24,7 @@ let controllers = {};
  */
 export function create(name, definition) {
     if (isDefined(controllers[name]))
-        error('Controller is already defined: {0}', name);
+        throw controllerError('exists', 'Controller is already defined \'{0}\'', name);
     controllers[name] = definition;
 }
 
@@ -34,7 +36,7 @@ export function create(name, definition) {
  */
 export function get(name) {
     if (!isDefined(controllers[name]))
-        error('Controller is not defined: {0}', name);
+        throw controllerError('noexists', 'Controller is not defined \'{0}\'', name);
     return controllers[name];
 }
 
@@ -64,7 +66,7 @@ export function load(name) {
                 d.resolve();
             },
             function() {
-                error('Cannot find contoller: {0}', name);
+                throw controllerError('noexists', 'Cannot find contoller \'{0}\'', name);
             });
         return d.promise();
     }

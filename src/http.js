@@ -4,6 +4,7 @@
  * @private
  */
 
+import { error } from './error';
 import { get as getJQuery } from './providers/jquery';
 
 /**
@@ -29,8 +30,7 @@ export function get(url) {
 /**
  * Send a HTTP post request.
  * @param {string} url Absolute or relative URL to get.
- * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
- * found, it will return `null`.
+ * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`.
  */
 export function post(url) {
 
@@ -40,8 +40,8 @@ export function post(url) {
 
     $.post(url, function(data) {
         d.resolve(data);
-    }).fail(function(xhr, status, error) {
-        throw Error(xhr.responseText || error);
+    }).fail(function(xhr, status, err) {
+        throw error('http')('post', xhr.responseText || err);
     });
 
     return d.promise();

@@ -1,6 +1,7 @@
-import { error, closePage, addWindowToToolbar } from '../app';
+import { closePage, addWindowToToolbar } from '../app';
 import { codeblock, codethread } from '../code';
 import { load as loadController, get as getController } from '../controller';
+import { error } from '../error';
 import { page, table } from '../meta';
 import { settings } from '../settings';
 import { isMobileDevice } from '../util';
@@ -9,6 +10,8 @@ import { Component } from '../classes/component';
 import { ActionsComponent } from './actions';
 import { HeaderComponent } from './header';
 import { WindowComponent } from './window';
+
+const viewerError = error('viewer');
 
 /**
  * @class
@@ -164,8 +167,8 @@ export class ViewerComponent extends Component {
             (page) => {
 
                 // Page meta data not found.
-                if (page === null)
-                    error('Cannot find page meta data: {0}', this.name);
+                if (page !== null)
+                    throw viewerError('nometa', 'Cannot find page meta data \'{0}\'', this.name);
 
                 this.page = page;
 
@@ -177,7 +180,7 @@ export class ViewerComponent extends Component {
 
                             // Table meta data not found.
                             if (table === null)
-                                error('Cannot find table meta data: {0}', this.page.tableName);
+                                throw viewerError('nometa', 'Cannot find table meta data \'{0}\'', this.page.tableName);
 
                             this.table = table;
 
