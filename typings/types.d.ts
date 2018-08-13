@@ -744,7 +744,7 @@ declare type TableMeta = {
  * Code thread class.
  */
 declare class CodeThread {
-    constructor(func: ()=>any, onerror?: ErrorHandler);
+    constructor(func: ()=>any);
 
     /**
      * @type {number}
@@ -761,18 +761,18 @@ declare class CodeThread {
     func: ()=>any;
 
     /**
-     * @type {ErrorHandler}
-     * @description
-     * Error handler.
-     */
-    onerror: ErrorHandler;
-
-    /**
      * @type {GenericFunction[][]}
      * @description
      * Function queue.
      */
     queue: ((GenericFunction)[])[];
+
+    /**
+     * @type {function()}
+     * @description
+     * Function that is currently executing.
+     */
+    currFunction: ()=>any;
 
     /**
      * @description
