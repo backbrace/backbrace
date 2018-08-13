@@ -1,7 +1,7 @@
 {
     "caption": "Employee Card",
-    "controller": "employee card.js",
-    "tableName": "employee",
+    "controller": "pages/employee card.js",
+    "tableName": "tables/employee",
     "icon": "account-card-details",
     "actions": [
         {

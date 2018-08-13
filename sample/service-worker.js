@@ -39,6 +39,8 @@ self.addEventListener('fetch', function(event) {
         caches.open(CACHE_NAME).then(function(cache) {
             return cache.match(event.request).then(function(response) {
                 var skip = navigator.onLine && event.request.url.indexOf('jumpstart.js') !== -1;
+                if (self.location.search.toLowerCase().indexOf('debug=true') !== -1)
+                    skip = true;
                 // Cache hit - return response
                 if (response && !skip && response.ok) {
                     return response;

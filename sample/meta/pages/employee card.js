@@ -1,6 +1,6 @@
 'use strict';
 
-js.controller('employee card.js', function(page) {
+js.controller('pages/employee card.js', function(page) {
 
     var actions = page.actions;
 

@@ -1,5 +1,7 @@
 {
     "name": "Employee",
+    "controller": "tables/employee.js",
+    "data": "./data/employee.json",
     "columns": [
         {
             "name": "ID",
