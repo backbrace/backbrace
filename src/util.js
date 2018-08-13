@@ -9,7 +9,8 @@ import { get as getJQuery } from './providers/jquery';
 import { get as getWindow } from './providers/window';
 
 let id = (new Date()).getTime(),
-  timeouts = [];
+  timeouts = [],
+  devMode = null;
 const messageName = 'ztm',
   toString = Object.prototype.toString;
 
@@ -311,6 +312,25 @@ export function findInput(elem) {
   }
 
   return null;
+}
+
+/**
+ * Check if we are in dev mode.
+ * @returns {boolean} Returns `true` if we are in dev mode.
+ */
+export function isDevMode() {
+  const window = getWindow();
+  if (devMode === null) {
+    // This takes advantage of the fact that `toString` is only called on logged objects if the console is open.
+    let devtools = /./;
+    devtools.toString = function() {
+      devMode = true;
+      return '';
+    };
+    window.console.log('%c', devtools);
+    return devMode;
+  }
+  return devMode;
 }
 
 // Bind the message event to the browser window.
