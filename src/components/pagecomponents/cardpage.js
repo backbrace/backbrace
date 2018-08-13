@@ -152,6 +152,25 @@ export class CardPageComponent extends PageComponent {
 
     /**
      * @description
+     * Update the card page with a data source.
+     * @param {object[]} data Array of data.
+     * @returns {JQueryPromise} Returns a promise to update the card page.
+     */
+    update(data) {
+
+        // Only show the data for the first record.
+        let r = null;
+        if (data && data.length > 0)
+            r = data[0];
+
+        // Update the fields.
+        return codeeach(Array.from(this.fields.values()), function(cont) {
+            return cont.update(r);
+        });
+    }
+
+    /**
+     * @description
      * Show the card component.
      * @returns {PageComponent} Returns itself for chaining.
      */

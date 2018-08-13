@@ -869,6 +869,14 @@ declare class Component {
 
     /**
      * @description
+     * Update the component with a data source.
+     * @param {object} data Data to bind to the component.
+     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     */
+    update(data: object): Component | JQueryPromise;
+
+    /**
+     * @description
      * Unload the component.
      * @returns {void}
      */
@@ -912,6 +920,28 @@ declare class FieldComponent extends Component {
      * @type {PageFieldMeta}
      */
     field: PageFieldMeta;
+
+    /**
+     * @description
+     * Control part of the component.
+     * @type {JQuery}
+     */
+    control: JQuery;
+
+    /**
+     * @description
+     * Label part of the component.
+     * @type {JQuery}
+     */
+    label: JQuery;
+
+    /**
+     * @description
+     * Update the field from the data source.
+     * @param {object} data Data source.
+     * @returns {FieldComponent|JQueryPromise} Returns itself for chaining.
+     */
+    update(data: object): FieldComponent | JQueryPromise;
 
 }
 
@@ -1238,6 +1268,13 @@ declare class ViewerComponent extends Component {
 
     /**
      * @description
+     * Data source of the viewer.
+     * @type {object[]}
+     */
+    data: object[];
+
+    /**
+     * @description
      * Unload the component.
      * @returns {void}
      */
@@ -1250,6 +1287,13 @@ declare class ViewerComponent extends Component {
      * @returns {JQueryPromise} Promise to load the viewer component.
      */
     load(container: JQuery): JQueryPromise;
+
+    /**
+     * @description
+     * Update the viewer.
+     * @returns {JQueryPromise} Returns a promise to update the viewer.
+     */
+    update(): JQueryPromise;
 
     /**
      * @description
@@ -1424,6 +1468,14 @@ declare class CardPageComponent extends PageComponent {
      * @returns {JQueryPromise} Promise to return after we load the fields.
      */
     loadFields(win: WindowComponent, fields: (PageFieldMeta)[]): JQueryPromise;
+
+    /**
+     * @description
+     * Update the card page with a data source.
+     * @param {object[]} data Array of data.
+     * @returns {JQueryPromise} Returns a promise to update the card page.
+     */
+    update(data: object[]): JQueryPromise;
 
     /**
      * @description

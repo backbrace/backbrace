@@ -2,6 +2,7 @@ import { closePage, addWindowToToolbar } from '../app';
 import { codeblock, codethread } from '../code';
 import { load as loadController, get as getController } from '../controller';
 import { error } from '../error';
+import { get } from '../http';
 import { page, table } from '../meta';
 import { settings } from '../settings';
 import { isMobileDevice } from '../util';
@@ -99,6 +100,13 @@ export class ViewerComponent extends Component {
          * @type {PageComponent}
          */
         this.pageComponent = null;
+
+        /**
+         * @description
+         * Data source of the viewer.
+         * @type {object[]}
+         */
+        this.data = null;
     }
 
     /**
@@ -257,12 +265,39 @@ export class ViewerComponent extends Component {
                     );
             },
 
+            () => this.update(),
+
             () => {
 
                 // Show the page.
                 this.show();
             }
 
+        );
+    }
+
+    /**
+     * @description
+     * Update the viewer.
+     * @returns {JQueryPromise} Returns a promise to update the viewer.
+     */
+    update() {
+        return codeblock(
+            () => {
+                // Load the data source from a file.
+                if (this.table.data.indexOf('.json') !== -1) {
+                    return get(this.table.data);
+                }
+            },
+            (data) => {
+
+                // Save the data.
+                this.data = data.data || data;
+
+                // Update the page component.
+                if (this.pageComponent)
+                    return this.pageComponent.update(this.data);
+            }
         );
     }
 
