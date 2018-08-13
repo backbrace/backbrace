@@ -1626,13 +1626,13 @@ declare namespace js {
     function logInfo(msg: string): void;
 
     /**
-     * Log an error message.
+     * Log an error.
      * @method logError
      * @memberof module:js
-     * @param {string} msg Message to log.
+     * @param {Error} err Error to log.
      * @returns {void}
      */
-    function logError(msg: string): void;
+    function logError(err: Error): void;
 
     /**
      * Log a warning message.

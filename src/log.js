@@ -49,15 +49,14 @@ export function info(msg) {
 }
 
 /**
- * Log an error message.
+ * Log an error.
  * @method logError
  * @memberof module:js
- * @param {string} msg Message to log.
+ * @param {Error} err Error to log.
  * @returns {void}
  */
-export function error(msg) {
-    msg = formatString.apply(null, arguments);
-    write(msg, 'error');
+export function error(err) {
+    write(err, 'error');
 }
 
 /**
