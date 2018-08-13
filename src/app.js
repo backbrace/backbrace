@@ -245,9 +245,6 @@ export function start() {
                 'Click here to reload</a>');
         }
 
-        // Set the code execution error handler.
-        onCodeError(error);
-
         // Load startup packages.
         codethread(function() {
 

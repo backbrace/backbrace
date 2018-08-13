@@ -1,5 +1,5 @@
-import { debug as logDebug, object as logObject } from '../log';
-import { uid, setZeroTimeout, noop } from '../util';
+import { debug as logDebug } from '../log';
+import { uid, setZeroTimeout } from '../util';
 import { get as getJQuery } from '../providers/jquery';
 
 /**
@@ -12,9 +12,8 @@ export class CodeThread {
     /**
      * @constructor
      * @param {function()} func Thread function to execute.
-     * @param {ErrorHandler} [onerror] Error handler.
      */
-    constructor(func, onerror) {
+    constructor(func) {
         /**
          * @type {number}
          * @description
@@ -28,17 +27,17 @@ export class CodeThread {
          */
         this.func = func;
         /**
-         * @type {ErrorHandler}
-         * @description
-         * Error handler.
-         */
-        this.onerror = onerror || noop;
-        /**
          * @type {GenericFunction[][]}
          * @description
          * Function queue.
          */
         this.queue = [];
+        /**
+         * @type {function()}
+         * @description
+         * Function that is currently executing.
+         */
+        this.currFunction = null;
     }
 
     /**
@@ -84,7 +83,7 @@ export class CodeThread {
 
         logDebug(`Attempting next function in Queue #${i}.`);
 
-        let func = this.queue[i][0];
+        this.currFunction = this.queue[i][0];
 
         if (this.queue[i].length <= 1) {
             logDebug(`Last function in Queue #${i}.`);
@@ -93,37 +92,23 @@ export class CodeThread {
         }
 
         // Don't run null functions.
-        if (func == null) {
+        if (this.currFunction == null) {
             logDebug('No function! Running next function.');
             this.runNextFunction();
             return;
         }
 
-        logDebug(func.toString());
+        logDebug(this.currFunction.toString());
 
-        try {
-
-            if (func.toString().indexOf('return') === -1) {
-                logDebug('Skipping $.when...');
-                return this.runNextFunction(func.apply(null, arr));
-            }
-
-            $.when(
-                // Run the function.
-                func.apply(null, arr)
-            ).then((result2) => this.runNextFunction(result2));
-
-        } catch (e) {
-
-            // Log the method for debugging purposes.
-            logObject(func);
-
-            // Check if the error has been handled.
-            let msg = e.message || e;
-            if (msg !== 'ERROR_HANDLED') {
-                this.onerror(e);
-            }
+        if (this.currFunction.toString().indexOf('return') === -1) {
+            logDebug('Skipping $.when...');
+            return this.runNextFunction(this.currFunction.apply(null, arr));
         }
+
+        $.when(
+            // Run the function.
+            this.currFunction.apply(null, arr)
+        ).then((result2) => this.runNextFunction(result2));
     }
 
     /**

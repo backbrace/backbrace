@@ -21,22 +21,6 @@ let currentThread = null;
 let threads = [];
 
 /**
- * @type {ErrorHandler}
- * @ignore
- */
-let errorHandler = null;
-
-/**
- * Set the error handler.
- * @ignore
- * @param {ErrorHandler} func Error handler.
- * @returns {void}
- */
-export function onerror(func) {
-    errorHandler = func;
-}
-
-/**
  * @method reset
  * @ignore
  * @description
@@ -46,8 +30,14 @@ export function onerror(func) {
 export function reset() {
 
     // Clear the current queue.
-    if (currentThread)
+    if (currentThread) {
+
+        // Output the current executing function (for debugging).
+        if (currentThread.currFunction)
+            logObject(currentThread.currFunction);
+
         currentThread.queue = [];
+    }
 
     // Kill off all threads.
     logDebug('Clearing all threads.');
@@ -171,7 +161,7 @@ export function codethread(...args) {
     const func = function() {
         return codeblock.apply(this, args);
     },
-        thread = new CodeThread(func, errorHandler);
+        thread = new CodeThread(func);
 
     logDebug('Created new thread');
 
