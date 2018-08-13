@@ -18,10 +18,8 @@ let instance = {
                 name = 'plus';
             } else if (name === '%delete%') {
                 name = 'close';
-            } else if (name === '%close%') {
-                name = 'close';
             } else {
-                name = 'alert';
+                name = name.replace(/%/g, '');
             }
         }
 

@@ -192,11 +192,13 @@ export let style = merge({}, base, {
     padding: '0 10px',
     position: 'relative'
   },
+  '.title': {
+    display: 'inline-block'
+  },
   '.title-icon': {
-    right: '10px',
-    top: '0px',
-    position: 'absolute',
-    'font-size': '1em',
+    float: 'right',
+    padding: '5px',
+    'font-size': '1.2em',
     cursor: 'pointer'
   },
   '.title-icon:hover': {

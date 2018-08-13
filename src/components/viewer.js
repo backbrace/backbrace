@@ -231,6 +231,10 @@ export class ViewerComponent extends Component {
 
                 this.setTitle(this.options.title || this.page.caption);
 
+                // Add title bar buttons.
+                if (!isMobileDevice()) {
+                    this.window.addTitlebarIcon('%refresh%', (() => codethread(() => this.update())));
+                }
                 // Add close function.
                 this.window.options.onClose = () => closePage(this.id);
 

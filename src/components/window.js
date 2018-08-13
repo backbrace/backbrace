@@ -51,6 +51,13 @@ export class WindowComponent extends Component {
          * @type {JQuery}
          */
         this.toolbar = null;
+
+        /**
+         * @description
+         * Titlebar container.
+         * @type {JQuery}
+         */
+        this.titlebar = null;
     }
 
     /**
@@ -64,15 +71,15 @@ export class WindowComponent extends Component {
         const $ = getJquery(),
             icons = getIcons();
 
-        let titlebar = $('<div class="title-bar unselectable" />');
+        this.titlebar = $('<div class="title-bar unselectable" />');
 
-        titlebar.append('<h5 id="title' + this.id + '" class="title ' +
+        this.titlebar.append('<h5 id="title' + this.id + '" class="title ' +
             (this.options.hasParent ? 'alt' : 'hide-on-med-and-down') + ' unselectable cuttext" />');
 
         if (this.options.closeBtn === true && !this.options.hasParent && !isMobileDevice()) {
             $(icons.get('%close%'))
                 .addClass('unselectable title-icon')
-                .appendTo(titlebar)
+                .appendTo(this.titlebar)
                 .click(() => this.options.onClose());
         }
 
@@ -81,7 +88,7 @@ export class WindowComponent extends Component {
 
         this.container = $('<div id="window' + this.id + '" class="window container' + (!isMobileDevice() ? ' z-depth-1' : '') + '" />')
             .addClass(this.options.className)
-            .append(titlebar)
+            .append(this.titlebar)
             .append(this.toolbar)
             .append(this.main)
             .appendTo(container);
@@ -102,6 +109,21 @@ export class WindowComponent extends Component {
             (this.options.icon ? icons.get(this.options.icon) + ' ' : '')
             + title);
         return this;
+    }
+
+    /**
+     * Add a title bar icon.
+     * @param {string} icon Icon name.
+     * @param {GenericFunction} onclick On click function.
+     * @returns {void}
+     */
+    addTitlebarIcon(icon, onclick) {
+        const $ = getJquery(),
+            icons = getIcons();
+        $(icons.get('%refresh%'))
+            .addClass('unselectable title-icon')
+            .appendTo(this.titlebar)
+            .click(onclick);
     }
 
 }
