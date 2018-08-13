@@ -39,6 +39,14 @@
  */
 
 /**
+ * @typedef {Function} ErrorInstance
+ * @param {string} code Error code.
+ * @param {string} message Error message.
+ * @param {...*} args Message arguments.
+ * @returns {Error} Returns new error object.
+ */
+
+/**
  * Server Instance
  * @typedef {object} ServerInstance
  * @property {function():(JQueryPromise|void)} autoLogin Attempt to auto login.
