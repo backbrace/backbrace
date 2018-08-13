@@ -242,14 +242,22 @@ export class ViewerComponent extends Component {
             // Get the page contoller (from file).
             () => {
                 if (this.page.controller !== '')
-                    return loadController(this.page.controller);
+                    return codeblock(
+                        () => loadController(this.page.controller),
+                        () => getController(this.page.controller)(this)
+                    );
+            },
+
+            // Get the table contoller (from file).
+            () => {
+                if (this.table.controller !== '')
+                    return codeblock(
+                        () => loadController(this.table.controller),
+                        () => getController(this.table.controller)(this)
+                    );
             },
 
             () => {
-
-                // Execute the controller.
-                if (this.page.controller !== '')
-                    getController(this.page.controller)(this);
 
                 // Show the page.
                 this.show();

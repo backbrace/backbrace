@@ -75,9 +75,12 @@ export function page(name) {
     return codeblock(
 
         // Get the page from a JSON file.
-        () => get(settings.meta.dir + 'pages/' + name + '.json'),
+        () => get(settings.meta.dir + name + '.json'),
 
         (/** @type {PageMeta} */json) => {
+
+            if (!json)
+                return null;
 
             // Merge the json with default values.
             json.caption = json.caption || json.name;
@@ -123,9 +126,12 @@ export function table(name) {
     return codeblock(
 
         // Get the table from a JSON file.
-        () => get(settings.meta.dir + 'tables/' + name + '.json'),
+        () => get(settings.meta.dir + name + '.json'),
 
         (/** @type {TableMeta} */json) => {
+
+            if (!json)
+                return null;
 
             // Extend the table.
             let tbl = $.extend({}, defaults.table, json);

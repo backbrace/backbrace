@@ -61,7 +61,7 @@ export function load(name) {
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
         const $ = getJQuery(),
             d = $.Deferred();
-        loadScript(settings.meta.dir + 'controllers/' + name,
+        loadScript(settings.meta.dir + name,
             function() {
                 d.resolve();
             },
