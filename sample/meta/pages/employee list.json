@@ -13,13 +13,17 @@
             "name": "Grid",
             "fields": [
                 {
-                    "name": "firstName"
+                    "name": "firstName",
+                    "width": "200px"
                 },
                 {
-                    "name": "lastName"
+                    "name": "lastName",
+                    "width": "200px"
                 },
                 {
-                    "name": "dob"
+                    "name": "dob",
+                    "width": "100px",
+                    "editable": false
                 }
             ]
         }
