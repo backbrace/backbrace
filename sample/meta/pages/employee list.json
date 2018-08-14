@@ -1,0 +1,27 @@
+{
+    "caption": "Employee List",
+    "tableName": "tables/employee",
+    "component": "listpage",
+    "icon": "account-card-details",
+    "actions": [
+        {
+            "name": "New"
+        }
+    ],
+    "sections": [
+        {
+            "name": "Grid",
+            "fields": [
+                {
+                    "name": "firstName"
+                },
+                {
+                    "name": "lastName"
+                },
+                {
+                    "name": "dob"
+                }
+            ]
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 'use strict';
 
 js.settings({
-    minify: true,
+    minify: false,
     debug: true,
     app: {
         title: 'Test'
@@ -22,7 +22,7 @@ if ('serviceWorker' in navigator)
 
 // Set server provider.
 js.ready(function() {
-    js.loadPage('pages/employee card', { first: true });
+    js.loadPage('pages/employee list', { first: true });
 });
 
 js.start();
