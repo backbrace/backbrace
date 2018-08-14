@@ -52,19 +52,13 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        $.each(Array.from(this.subwindows.values()), function(index, win) {
-            win.unload();
-        });
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.unload);
         this.subwindows = null;
 
-        $.each(Array.from(this.subpages.values()), function(index, page) {
-            page.unload();
-        });
+        $.each(Array.from(this.subpages.values()), (index, page) => page.unload);
         this.subpages = null;
 
-        $.each(Array.from(this.fields.values()), function(index, cont) {
-            cont.unload();
-        });
+        $.each(Array.from(this.fields.values()), (index, cont) => cont.unload);
         this.fields = null;
 
         super.unload();
@@ -178,15 +172,8 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        // Show the sub pages.
-        $.each(Array.from(this.subpages.values()), function(index, page) {
-            page.show();
-        });
-
-        // Show the sub windows.
-        $.each(Array.from(this.subwindows.values()), function(index, win) {
-            win.show();
-        });
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.show);
+        $.each(Array.from(this.subpages.values()), (index, page) => page.show);
 
         return this;
     }
@@ -200,15 +187,8 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        // Hide the sub pages.
-        $.each(Array.from(this.subpages.values()), function(index, page) {
-            page.hide();
-        });
-
-        // Hide the sub windows.
-        $.each(Array.from(this.subwindows.values()), function(index, win) {
-            win.hide();
-        });
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.hide);
+        $.each(Array.from(this.subpages.values()), (index, page) => page.hide);
 
         return this;
     }
@@ -224,15 +204,8 @@ export class CardPageComponent extends PageComponent {
 
         super.showLoad();
 
-        // Show the sub pages.
-        $.each(Array.from(this.subpages.values()), function(index, page) {
-            page.showLoad();
-        });
-
-        // Show the sub windows.
-        $.each(Array.from(this.subwindows.values()), function(index, win) {
-            win.loader.show();
-        });
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.show);
+        $.each(Array.from(this.subpages.values()), (index, page) => page.showLoad);
 
         return this;
     }
@@ -248,15 +221,8 @@ export class CardPageComponent extends PageComponent {
 
         super.hideLoad();
 
-        // Show the sub pages.
-        $.each(Array.from(this.subpages.values()), function(index, page) {
-            page.hideLoad();
-        });
-
-        // Show the sub windows.
-        $.each(Array.from(this.subwindows.values()), function(index, win) {
-            win.loader.hide();
-        });
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.hide);
+        $.each(Array.from(this.subpages.values()), (index, page) => page.hideLoad);
 
         return this;
     }
@@ -269,8 +235,7 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        // Hide the sub windows preloaders.
-        $.each(Array.from(this.subwindows.values()), function(index, win) {
+        $.each(Array.from(this.subwindows.values()), (index, win) => {
             win.preloader.hide();
             // Remove the progress bars from sub windows.
             if (index > 0)
