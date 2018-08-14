@@ -1,3 +1,4 @@
+import { formatField } from '../../format';
 import * as packagemanager from '../../packagemanager';
 import { findInput, isMobileDevice, uid } from '../../util';
 import { get as getIcons } from '../../providers/icons';
@@ -92,8 +93,9 @@ export class ListPageComponent extends PageComponent {
          * @returns {boolean} Returns `false` to cancel bubbling.
          */
         function onKeyPress(ev) {
-            ev.preventDefault();
-            return false;
+            //ev.preventDefault();
+            //return false;
+            return true;
         }
 
         /**
@@ -127,7 +129,7 @@ export class ListPageComponent extends PageComponent {
                 edittype: 'custom',
                 align: (field.type === 'Integer' || field.type === 'Decimal' ? 'right' : 'left'),
                 formatter: function(cellvalue, options, rowObject) {
-                    return cellvalue;
+                    return formatField(field, cellvalue);
                 },
                 /*eslint-disable camelcase*/
                 editoptions: {
@@ -226,10 +228,11 @@ export class ListPageComponent extends PageComponent {
             } else {
 
                 // Create the grid.
-                this.grid = $('<table style="border: none"></table>');
+                this.grid = $('<table style="border: none;width:100%;"><tbody></tbody></table>');
                 this.container = $('<div />')
                     .append(this.grid)
                     .appendTo(this.viewer.window.main);
+                this.viewer.window.container.css('padding', '0');
 
             }
 
@@ -246,15 +249,37 @@ export class ListPageComponent extends PageComponent {
      */
     update(data) {
 
-        const $ = getJQuery();
+        const $ = getJQuery(),
+            icons = getIcons();
         let r = data || [];
 
-        this.grid.jqGrid('clearGridData');
+        if (!isMobileDevice()) {
+            this.grid.jqGrid('clearGridData');
+        } else {
+            this.grid.find('tbody').html('');
+        }
 
         // Update the grid.
         $.each(r, (index, row) => {
             row.RowId = index;
-            this.grid.addRowData('RowId', [row]);
+            if (!isMobileDevice()) {
+                this.grid.addRowData('RowId', [row]);
+            } else {
+
+                let cell = $('<th style="min-height:45px;padding:.6em;text-align:left" rid="' + index + '"></th>');
+
+                $(icons.get(this.viewer.page.icon)).css({
+                    'font-size': '50px',
+                    'float': 'left',
+                    'margin-right': '15px'
+                }).appendTo(cell);
+
+                $('<h5 style="display:inline-block;">' + row[this.viewer.page.sections[0].fields[0].name] + '</h5>').appendTo(cell);
+
+                $('<tr class="gridrows" style="-webkit-user-select: none; font-size: 14px;' + (index % 2 !== 0 ? 'background:whitesmoke;' : '') + '" id="rid' + index + '" rid="' + index + '">')
+                    .append(cell)
+                    .appendTo(this.grid.find('tbody'));
+            }
         });
 
         return this;
