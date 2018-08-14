@@ -4,14 +4,14 @@
  */
 
 import { settings } from './settings';
-import { isDefined, deepMap, formatString } from './util';
+import { isDefined, deepMap, formatString, isMobileDevice } from './util';
 
 export let cdn = 'https://labs.zoomapps.com.au/JumpstartCDN';
 const packages = {
     'jqgrid': [
         '4.5.4',
         [
-            ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js']
+            (isMobileDevice() ? null : ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js'])
         ]
     ],
     'jquery': [
