@@ -1,5 +1,5 @@
 import * as packagemanager from '../../packagemanager';
-import { findInput, isMobileDevice } from '../../util';
+import { findInput, isMobileDevice, uid } from '../../util';
 import { get as getIcons } from '../../providers/icons';
 import { get as getJQuery } from '../../providers/jquery';
 import { PageComponent } from '../../classes/pagecomponent';
@@ -197,7 +197,7 @@ export class ListPageComponent extends PageComponent {
                 });
 
                 // Create the grid.
-                this.grid = $('<table style="border: none"></table>');
+                this.grid = $('<table id="' + uid() + '" style="border: none"></table>');
                 this.container = $('<div class="grid-container" />')
                     .append(this.grid)
                     .appendTo(this.viewer.window.main);
@@ -223,13 +223,6 @@ export class ListPageComponent extends PageComponent {
                     autoencode: true
                 });
 
-                this.grid.addRowData('RowId', [{ 'RowId': 1, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
-                this.grid.addRowData('RowId', [{ 'RowId': 2, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
-                this.grid.addRowData('RowId', [{ 'RowId': 3, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
-                this.grid.addRowData('RowId', [{ 'RowId': 4, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
-                this.grid.addRowData('RowId', [{ 'RowId': 5, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
-                this.grid.addRowData('RowId', [{ 'RowId': 6, 'Field 1': 'Test', 'Field 2': 'Test 2' }]);
-
             } else {
 
                 // Create the grid.
@@ -240,6 +233,28 @@ export class ListPageComponent extends PageComponent {
 
             }
 
+        });
+
+        return this;
+    }
+
+    /**
+     * @description
+     * Bind the list page to a data source.
+     * @param {object[]} data Array of data.
+     * @returns {PageComponent} Returns a promise to update the list page.
+     */
+    update(data) {
+
+        const $ = getJQuery();
+        let r = data || [];
+
+        this.grid.jqGrid('clearGridData');
+
+        // Update the grid.
+        $.each(r, (index, row) => {
+            row.RowId = index;
+            this.grid.addRowData('RowId', [row]);
         });
 
         return this;
