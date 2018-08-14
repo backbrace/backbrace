@@ -961,6 +961,24 @@ declare class PageComponent extends Component {
      */
     viewer: ViewerComponent;
 
+    /**
+     * Show the loader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    showLoad(): PageComponent;
+
+    /**
+     * Hide the loader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    hideLoad(): PageComponent;
+
+    /**
+     * Hide the preloader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    hidePreLoad(): PageComponent;
+
 }
 
 /**
@@ -1340,6 +1358,18 @@ declare class ViewerComponent extends Component {
      */
     animateOut(): ViewerComponent;
 
+    /**
+     * Show the loader.
+     * @returns {ViewerComponent} Returns itself for chaining.
+     */
+    showLoad(): ViewerComponent;
+
+    /**
+     * Hide the loader.
+     * @returns {ViewerComponent} Returns itself for chaining.
+     */
+    hideLoad(): ViewerComponent;
+
 }
 
 /**
@@ -1378,6 +1408,20 @@ declare class WindowComponent extends Component {
      * @type {JQuery}
      */
     titlebar: JQuery;
+
+    /**
+     * @description
+     * Loader overlay.
+     * @type {JQuery}
+     */
+    loader: JQuery;
+
+    /**
+     * @description
+     * Pre-loader overlay.
+     * @type {JQuery}
+     */
+    preloader: JQuery;
 
     /**
      * @description
@@ -1505,6 +1549,26 @@ declare class CardPageComponent extends PageComponent {
      * @returns {PageComponent} Returns itself for chaining.
      */
     hide(): PageComponent;
+
+    /**
+     * @description
+     * Show the loader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    showLoad(): PageComponent;
+
+    /**
+     * @description
+     * Show the loader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    hideLoad(): PageComponent;
+
+    /**
+     * Hide the preloader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    hidePreLoad(): PageComponent;
 
 }
 

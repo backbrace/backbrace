@@ -62,18 +62,19 @@ export function compile(obj) {
         // Loop through styles in the class.
         forEach(cls, function(style, styleName) {
 
-            // Check for a multi style.
-            if (Array.isArray(style)) {
-                forEach(style, function(multistyle, msName) {
-                    css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(multistyle) + ';';
-                });
-            } else if (typeof styleName === 'string'
+            if (typeof styleName === 'string'
                 && styleName.indexOf && styleName.indexOf('@media') === 0) {
                 othercss += mergeConfig(styleName) + '{' + className + '{';
                 forEach(style, function(otherstyle, osName) {
                     othercss += mergeConfig(osName.toString()) + ': ' + mergeConfig(otherstyle) + ';';
                 });
                 othercss += '}}';
+            } else if (typeof style === 'object') {
+                css += mergeConfig(styleName.toString()) + '{';
+                forEach(style, function(multistyle, msName) {
+                    css += mergeConfig(msName.toString()) + ': ' + mergeConfig(multistyle) + ';';
+                });
+                css += '}';
             } else {
                 css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(style) + ';';
             }

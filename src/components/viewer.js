@@ -1,4 +1,4 @@
-import { closePage, addWindowToToolbar } from '../app';
+import { closePage, addWindowToToolbar, currentPage } from '../app';
 import { codeblock, codethread } from '../code';
 import { load as loadController, get as getController } from '../controller';
 import { error } from '../error';
@@ -164,8 +164,11 @@ export class ViewerComponent extends Component {
 
         this.container.addClass('viewer');
 
-        if (isMobileDevice())
+        if (isMobileDevice()) {
             cont.addClass('viewer-full');
+            if (this.options.first)
+                cont.css('left', '0');
+        }
 
         return codeblock(
 
@@ -217,6 +220,10 @@ export class ViewerComponent extends Component {
 
             () => {
 
+                // Hide the current page.
+                if (currentPage() && !isMobileDevice())
+                    currentPage().hide();
+
                 // Load the window.
                 if (this.options.hasParent) {
                     this.window.options.hasParent = true;
@@ -240,7 +247,9 @@ export class ViewerComponent extends Component {
 
                 // Add actions.
                 this.actions.load(this.window.toolbar);
-                $.each(this.page.actions, (i, action) => this.actions.addAction(action, this.actionRunner));
+                $.each(this.page.actions, (i, action) => this.actions.addAction(action, (action, func) => {
+                    this.actionRunner(action, func);
+                }));
 
                 // Load the page component.
                 let comp = this.page.component;
@@ -249,6 +258,16 @@ export class ViewerComponent extends Component {
                     this.pageComponent = new Control(this);
                     return this.pageComponent.load(this.container);
                 }
+            },
+
+            () => {
+
+                // Hide the current page.
+                if (currentPage() && isMobileDevice())
+                    currentPage().hide();
+
+                // Show the page.
+                this.show();
             },
 
             // Get the page contoller (from file).
@@ -272,9 +291,7 @@ export class ViewerComponent extends Component {
             () => this.update(),
 
             () => {
-
-                // Show the page.
-                this.show();
+                this.pageComponent.hidePreLoad();
             }
 
         );
@@ -286,6 +303,9 @@ export class ViewerComponent extends Component {
      * @returns {JQueryPromise} Returns a promise to update the viewer.
      */
     update() {
+
+        this.showLoad();
+
         return codeblock(
             () => {
                 // Load the data source from a file.
@@ -299,8 +319,10 @@ export class ViewerComponent extends Component {
                 this.data = data.data || data;
 
                 // Update the page component.
-                if (this.pageComponent)
-                    return this.pageComponent.update(this.data);
+                return this.pageComponent.update(this.data);
+            },
+            () => {
+                this.hideLoad();
             }
         );
     }
@@ -314,11 +336,18 @@ export class ViewerComponent extends Component {
      */
     actionRunner(action, func) {
 
-        codethread(
-            func ? function() {
-                return func();
-            } : null
-        );
+        this.showLoad();
+
+        codethread(() => {
+            return codeblock(
+                func ? function() {
+                    return func();
+                } : null,
+                () => {
+                    this.hideLoad();
+                }
+            );
+        });
     }
 
     /**
@@ -411,6 +440,24 @@ export class ViewerComponent extends Component {
         cont.animate({
             left: '-100vw'
         });
+        return this;
+    }
+
+    /**
+     * Show the loader.
+     * @returns {ViewerComponent} Returns itself for chaining.
+     */
+    showLoad() {
+        this.pageComponent.showLoad();
+        return this;
+    }
+
+    /**
+     * Hide the loader.
+     * @returns {ViewerComponent} Returns itself for chaining.
+     */
+    hideLoad() {
+        this.pageComponent.hideLoad();
         return this;
     }
 

@@ -296,6 +296,16 @@ export function load(container) {
 }
 
 /**
+ * Get the active viewer.
+ * @returns {ViewerComponent} Returns the active viewer.
+ */
+export function currentPage() {
+    if (activePage > 0 && pages[activePage])
+        return pages[activePage];
+    return null;
+}
+
+/**
  * Load a page.
  * @method loadPage
  * @memberof module:js
@@ -309,14 +319,17 @@ export function loadPage(name, options) {
 
     codethread(
         function() {
+
+            if (currentPage())
+                currentPage().showLoad();
+
             // Load the page component.
             return pge.load(main);
         },
         function() {
 
-            // Hide the currently active page.
-            if (activePage > 0 && pages[activePage])
-                pages[activePage].hide();
+            if (currentPage())
+                currentPage().hideLoad();
 
             // Add the page to the loaded pages.
             pages[pge.id] = pge;

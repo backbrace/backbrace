@@ -213,6 +213,72 @@ export class CardPageComponent extends PageComponent {
         return this;
     }
 
+    /**
+     * @description
+     * Show the loader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    showLoad() {
+
+        const $ = getJQuery();
+
+        super.showLoad();
+
+        // Show the sub pages.
+        $.each(Array.from(this.subpages.values()), function(index, page) {
+            page.showLoad();
+        });
+
+        // Show the sub windows.
+        $.each(Array.from(this.subwindows.values()), function(index, win) {
+            win.loader.show();
+        });
+
+        return this;
+    }
+
+    /**
+     * @description
+     * Show the loader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    hideLoad() {
+
+        const $ = getJQuery();
+
+        super.hideLoad();
+
+        // Show the sub pages.
+        $.each(Array.from(this.subpages.values()), function(index, page) {
+            page.hideLoad();
+        });
+
+        // Show the sub windows.
+        $.each(Array.from(this.subwindows.values()), function(index, win) {
+            win.loader.hide();
+        });
+
+        return this;
+    }
+
+    /**
+     * Hide the preloader.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    hidePreLoad() {
+
+        const $ = getJQuery();
+
+        // Hide the sub windows preloaders.
+        $.each(Array.from(this.subwindows.values()), function(index, win) {
+            win.preloader.hide();
+            // Remove the progress bars from sub windows.
+            if (index > 0)
+                win.loader.html('');
+        });
+
+        return this;
+    }
 }
 
 export default CardPageComponent;

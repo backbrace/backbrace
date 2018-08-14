@@ -58,6 +58,20 @@ export class WindowComponent extends Component {
          * @type {JQuery}
          */
         this.titlebar = null;
+
+        /**
+         * @description
+         * Loader overlay.
+         * @type {JQuery}
+         */
+        this.loader = null;
+
+        /**
+         * @description
+         * Pre-loader overlay.
+         * @type {JQuery}
+         */
+        this.preloader = null;
     }
 
     /**
@@ -70,6 +84,9 @@ export class WindowComponent extends Component {
 
         const $ = getJquery(),
             icons = getIcons();
+
+        this.preloader = $('<div class="preloader z-depth-1"></div>');
+        this.loader = $('<div class="overlay"><div class="progress"><div class="indeterminate"></div></div></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
 
@@ -88,6 +105,8 @@ export class WindowComponent extends Component {
 
         this.container = $('<div id="window' + this.id + '" class="window container' + (!isMobileDevice() ? ' z-depth-1' : '') + '" />')
             .addClass(this.options.className)
+            .append(this.preloader)
+            .append(this.loader)
             .append(this.titlebar)
             .append(this.toolbar)
             .append(this.main)

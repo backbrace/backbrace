@@ -177,14 +177,26 @@ export let style = merge({}, base, {
   },
   '.window': {
     'box-sizing': 'border-box',
+    'min-height': '200px',
     position: 'relative',
-    display: 'none',
     background: 'white',
     padding: '8px',
     '@media only screen and (min-width: %screen:smallUp%px)': {
       'margin-top': '20px',
       padding: '24px'
     }
+  },
+  '.preloader': {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    background: '#FFF',
+    'z-index': '30001',
+    'background-image': 'url(https://labs.zoomapps.com.au/JumpstartCDN/images/placeholder.gif)',
+    'background-repeat': 'no-repeat',
+    'background-position': '40px 40px'
   },
   '.title-bar': {
     'background': '%colors:title%',
@@ -337,6 +349,118 @@ export let style = merge({}, base, {
   },
   '.row-id': {
     'font-size': '0px !important'
+  },
+  '.overlay': {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%',
+    opacity: '0.6',
+    background: '#FFF',
+    'z-index': '30000'
+  },
+  '.progress': {
+    position: 'relative',
+    height: '4px',
+    display: 'block',
+    width: '100%',
+    'background-color': '%loader:progressbackground%',
+    'border-radius': '2px',
+    margin: '.5rem 0 1rem 0',
+    overflow: 'hidden'
+  },
+  '.progress .determinate': {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    bottom: '0',
+    'background-color': '%loader:progresscolor%',
+    '-webkit-transition': 'width .3s linear',
+    transition: 'width .3s linear'
+  },
+  '.progress .indeterminate': {
+    'background-color': '%loader:progresscolor%'
+  },
+  '.progress .indeterminate:before': {
+    content: '\'\'',
+    position: 'absolute',
+    'background-color': 'inherit',
+    top: '0',
+    left: '0',
+    bottom: '0',
+    'will-change': 'left, right',
+    '-webkit-animation': 'indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite',
+    animation: 'indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite'
+  },
+  '.progress .indeterminate:after': {
+    content: '\'\'',
+    position: 'absolute',
+    'background-color': 'inherit',
+    top: '0',
+    left: '0',
+    bottom: '0',
+    'will-change': 'left, right',
+    '-webkit-animation': 'indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite',
+    animation: 'indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite',
+    '-webkit-animation-delay': '1.15s',
+    'animation-delay': '1.15s'
+  },
+  '@-webkit-keyframes indeterminate': {
+    '0%': {
+      left: '-35%',
+      right: '100%'
+    },
+    '60%': {
+      left: '100%',
+      right: '-90%'
+    },
+    '100%': {
+      left: '100%',
+      right: '-90%'
+    }
+  },
+  '@keyframes indeterminate': {
+    '0%': {
+      left: '-35%',
+      right: '100%'
+    },
+    '60%': {
+      left: '100%',
+      right: '-90%'
+    },
+    '100%': {
+      left: '100%',
+      right: '-90%'
+    }
+  },
+  '@-webkit-keyframes indeterminate-short': {
+    '0%': {
+      left: '-200%',
+      right: '100%'
+    },
+    '60%': {
+      left: '107%',
+      right: '-8%'
+    },
+    '100%': {
+      left: '107%',
+      right: '-8%'
+    }
+  },
+  '@keyframes indeterminate-short': {
+    '0%': {
+      left: '-200%',
+      right: '100%'
+    },
+    '60%': {
+      left: '107%',
+      right: '-8%'
+    },
+    '100%': {
+      left: '107%',
+      right: '-8%'
+    }
   },
   /* JQuery UI Overrides */
   '.ui-widget': {
