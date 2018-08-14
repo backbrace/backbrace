@@ -502,6 +502,9 @@ export let style = merge({}, base, {
   '.ui-jqgrid .ui-jqgrid-htable th.ui-th-column, .ui-th-column': {
     background: '#FFF'
   },
+  '.ui-jqgrid-hdiv': {
+    background: '#FFF !important'
+  },
   '.ui-jqgrid tr.ui-row-ltr td': {
     'border-right-color': '#CCC !important'
   },
