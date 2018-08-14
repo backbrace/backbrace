@@ -1609,6 +1609,14 @@ declare class ListPageComponent extends PageComponent {
      */
     load(): Component;
 
+    /**
+     * @description
+     * Bind the list page to a data source.
+     * @param {object[]} data Array of data.
+     * @returns {PageComponent} Returns a promise to update the list page.
+     */
+    update(data: object[]): PageComponent;
+
 }
 
 /**
