@@ -163,7 +163,7 @@ export function start() {
     const window = getWindow();
 
     window.addEventListener('error', function(ev) {
-        errorHandler(ev.error);
+        errorHandler(ev.error || new Error('A script error occurred. Please check the log.'));
     });
 
     // Add font css.
