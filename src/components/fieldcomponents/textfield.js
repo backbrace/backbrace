@@ -27,12 +27,12 @@ export class TextFieldComponent extends FieldComponent {
     load(container) {
 
         const $ = getJQuery(),
-            parent = this.parent.constructor.name;
+      parent = this.parent.viewer.page.component;
         let type = 'text';
 
         super.load(container);
 
-        if (parent === 'CardPageComponent') {
+    if (parent === 'cardpage') {
             this.container.addClass('control-container col ' + this.field.className);
             this.label = $('<label for="cont' + this.id + '" class="control-label"></label>')
                 .text(this.field.caption)
