@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 module.exports = function(grunt) {
 
   //Load grunt modules.
@@ -7,6 +9,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('lib/grunt');
 
   var pkg = require('./package.json');
+  var webpackconfig = require('./webpack.config');
 
   //Project configuration.
   grunt.initConfig({
@@ -40,13 +43,35 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      dev: require('./dev.config.js'),
-      prod: require('./prod.config.js')
+      dev: Object.assign({
+        mode: 'development',
+        output: {
+          path: path.join(__dirname, 'build'),
+          publicPath: 'build/',
+          library: 'js',
+          filename: '[name].js'
+        }
+      }, webpackconfig),
+      prod: Object.assign({
+        mode: 'production',
+        output: {
+          path: path.join(__dirname, 'build'),
+          publicPath: 'build/',
+          library: 'js',
+          filename: '[name].min.js'
+        }
+      }, webpackconfig)
     },
 
     'webpack-dev-server': {
       core: {
-        webpack: require('./dev.config.js'),
+        webpack: Object.assign({
+          mode: 'development',
+          output: {
+            library: 'js',
+            filename: '[name].js'
+          }
+        }, webpackconfig),
         publicPath: '/scripts',
         contentBase: 'sample',
         port: 8000
@@ -85,17 +110,15 @@ module.exports = function(grunt) {
 
     file_append: {
       typings: {
-        files: [
-          {
-            prepend: "/**\n" +
-              "* Type definitions for " + pkg.name + "\n" +
-              "* Project: " + pkg.repository.url + "\n" +
-              "* Definitions by: tsd-doc\n" +
-              "*/\n\n",
-            input: './typings/types.d.ts',
-            output: './typings/types.d.ts'
-          }
-        ]
+        files: [{
+          prepend: "/**\n" +
+            "* Type definitions for " + pkg.name + "\n" +
+            "* Project: " + pkg.repository.url + "\n" +
+            "* Definitions by: tsd-doc\n" +
+            "*/\n\n",
+          input: './typings/types.d.ts',
+          output: './typings/types.d.ts'
+        }]
       }
     }
 
@@ -125,7 +148,7 @@ module.exports = function(grunt) {
   grunt.registerTask('package', [
     'clean',
     'build',
-    //'webpack:prod', Add this back in when they add support for extends
+    'webpack:prod',
     'docs',
     'typings'
   ]);
