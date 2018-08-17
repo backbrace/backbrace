@@ -67,26 +67,26 @@ export class CardPageComponent extends PageComponent {
     /**
      * @description
      * Load the component.
+     * @param {JQuery} cont Container to load into.
      * @returns {JQueryPromise} Promise to load the card.
      */
-    load() {
+    load(cont) {
         return codeblock(
-            () => this.loadSections()
+            () => this.loadSections(cont)
         );
     }
 
     /**
      * @description
      * Load the tabs. Tabs can either be used to group this page's fields or show subpages.
+     * @param {JQuery} cont Container to load into.
      * @returns {JQueryPromise} Promise to return after we load the tabs.
      */
-    loadSections() {
+    loadSections(cont) {
 
         const page = this.viewer.page;
 
         return codeeach(page.sections, (section, i) => {
-
-            let classes = 'window-width-full';
 
             if (section.pageName === '') { // Not a sub page.
 
@@ -94,11 +94,11 @@ export class CardPageComponent extends PageComponent {
                 let win = this.viewer.window;
                 if (i > 0) {
                     win = new WindowComponent({
-                        className: classes,
+                        className: section.className,
                         hasParent: true,
                         icon: section.icon
                     });
-                    win.load(this.viewer.container).setTitle(section.text);
+                    win.load(cont).setTitle(section.text);
                 }
                 this.subwindows.set(section.name, win);
                 return this.loadFields(win, section.fields);
@@ -111,7 +111,7 @@ export class CardPageComponent extends PageComponent {
                         hasParent: true
                     });
                     this.subpages.set(section.name, page);
-                    return page.load(this.viewer.container);
+                    return page.load(cont);
                 }
             }
         });

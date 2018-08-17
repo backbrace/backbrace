@@ -125,8 +125,7 @@ export class ViewerComponent extends Component {
         if (this.header)
             this.header.unload();
         this.header = null;
-        if (isMobileDevice())
-            this.container.parent().remove();
+        this.container.parent().remove();
         // Unload DOM.
         if (this.shortcutBtn)
             this.shortcutBtn.remove();

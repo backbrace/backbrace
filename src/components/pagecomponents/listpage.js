@@ -207,7 +207,7 @@ export class ListPageComponent extends PageComponent {
                 this.grid.jqGrid({
                     datatype: 'local',
                     data: [],
-                    autowidth: true,
+                    autowidth: false,
                     height: 'auto',
                     width: null,
                     colNames: this.colNames,

@@ -1518,16 +1518,18 @@ declare class CardPageComponent extends PageComponent {
     /**
      * @description
      * Load the component.
+     * @param {JQuery} cont Container to load into.
      * @returns {JQueryPromise} Promise to load the card.
      */
-    load(): JQueryPromise;
+    load(cont: JQuery): JQueryPromise;
 
     /**
      * @description
      * Load the tabs. Tabs can either be used to group this page's fields or show subpages.
+     * @param {JQuery} cont Container to load into.
      * @returns {JQueryPromise} Promise to return after we load the tabs.
      */
-    loadSections(): JQueryPromise;
+    loadSections(cont: JQuery): JQueryPromise;
 
     /**
      * @description

@@ -85,7 +85,7 @@ export class WindowComponent extends Component {
         const $ = getJquery(),
             icons = getIcons();
 
-        this.preloader = $('<div class="preloader z-depth-1"></div>');
+        this.preloader = $('<div class="preloader' + (!isMobileDevice() ? ' z-depth-1' : '') + '"></div>');
         this.loader = $('<div class="overlay"><div class="progress"><div class="indeterminate"></div></div></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
@@ -103,14 +103,19 @@ export class WindowComponent extends Component {
         this.main = $('<div class="row" />');
         this.toolbar = $('<div class="row no-margin" />');
 
-        this.container = $('<div id="window' + this.id + '" class="window container' + (!isMobileDevice() ? ' z-depth-1' : '') + '" />')
-            .addClass(this.options.className)
+        if (!this.options.className || this.options.className === '')
+            this.options.className = 's12';
+
+        this.container = $('<div class="col ' + this.options.className + '" />')
+            .appendTo(container);
+
+        $('<div id="window' + this.id + '" class="window ' + (!isMobileDevice() ? ' z-depth-1' : '') + '" />')
             .append(this.preloader)
             .append(this.loader)
             .append(this.titlebar)
             .append(this.toolbar)
             .append(this.main)
-            .appendTo(container);
+            .appendTo(this.container);
 
         return this;
     }

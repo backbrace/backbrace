@@ -26,7 +26,7 @@ import { get as getWindow } from './providers/window';
 import { HeaderComponent } from './components/header';
 import { ViewerComponent } from './components/viewer';
 
-let main = null,
+let maincontainer = null,
     windows = null,
     pages = {},
     activePage = 0,
@@ -272,7 +272,8 @@ export function load(container) {
 
     const $ = getJQuery();
 
-    main = $('<div class="main"></div>').appendTo(container);
+
+    let main = $('<div class="main"></div>').appendTo(container);
 
     $('body').addClass(isMobileDevice() ? 'mobile-app' : 'desktop-app');
 
@@ -293,6 +294,12 @@ export function load(container) {
             header.showMenu();
         });
     }
+
+    maincontainer = $('<div class="row"></div>');
+    $('<div class="container"></div>')
+        .append(maincontainer)
+        .appendTo(main);
+
 }
 
 /**
@@ -324,7 +331,7 @@ export function loadPage(name, options) {
                 currentPage().showLoad();
 
             // Load the page component.
-            return pge.load(main);
+            return pge.load(maincontainer);
         },
         function() {
 
