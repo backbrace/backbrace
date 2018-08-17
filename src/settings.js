@@ -45,18 +45,20 @@ export let settings = {
             blocker: ''
         },
         colors: {
-            header: '#3498db',
-            headertext: '#FFF',
-            headerborder: 'none',
-            title: '#FFF',
-            titletext: '#3498db',
-            menuicon: '#FFF',
-            default: '#FFF',
-            defaulttext: '#000',
+            primary: '#3498db',
+            primarytext: '#FFF',
+            primaryvar: '#006aa9',
+            primaryvartext: '#FFF',
+            secondary: '#34495e',
+            secondarytext: '#FFF',
+            secondaryvar: '#092234',
+            secondaryvartext: '#FFF',
+            surface: '#FFF',
+            surfacetext: '#000',
+            background: '#f5f7fb',
+            backgroundtext: '#000',
             hover: 'whitesmoke',
-            hovertext: '#000',
-            alertbutton: '#3498db',
-            alertbuttontext: '#FFF'
+            hovertext: '#000'
         },
         screen: {
             small: 600,

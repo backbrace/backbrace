@@ -271,68 +271,78 @@ declare type ImagesStyle = {
 /**
  * Colours style.
  * @typedef {object} ColorsStyle
- * @property {string} [header] Header background color. Defaults to `#3498db`.
- * @property {string} [headertext] Header foreground color. Defaults to `#FFF`.
- * @property {string} [headerborder] Header border style. Defaults to `none`.
- * @property {string} [title] Window title background color. Defaults to `#FFF`.
- * @property {string} [titletext] Window title foreground color. Defaults to `#000`.
- * @property {string} [menuicon] Menu icon color. Defaults to `#FFF`.
- * @property {string} [default] Window background color. Defaults to `#FFF`.
- * @property {string} [defaulttext] Window foreground color. Defaults to `#000`.
- * @property {string} [hover] Hover background color. Defaults to `whitesmoke`.
- * @property {string} [hovertext] Hover foreground color. Defaults to `#000`.
- * @property {string} [alertbutton] Alert button background color. Defaults to `#3498db`.
- * @property {string} [alertbuttontext] Alert button foreground color. Defaults to `#FFF`.
+ * @property {string} [primary] Primary color. Displayed most frequently accross the app.
+ * @property {string} [primarytext] Primary text color.
+ * @property {string} [primaryvar] Primary variant color.
+ * @property {string} [primaryvartext] Primary variant text color.
+ * @property {string} [secondary] Secondary color.
+ * @property {string} [secondarytext] Secondary text color.
+ * @property {string} [secondaryvar] Secondary variant color.
+ * @property {string} [secondaryvartext] Secondary variant text color.
+ * @property {string} [surface] Surface color of components.
+ * @property {string} [surfacetext] Surface text color.
+ * @property {string} [background] Appears behind content.
+ * @property {string} [backgroundtext] Background text color.
+ * @property {string} [hover] Hover background color.
+ * @property {string} [hovertext] Hover text color.
  */
 declare type ColorsStyle = {
     /**
-     * Header background color. Defaults to `#3498db`.
+     * Primary color. Displayed most frequently accross the app.
      */
-    header?: string;
+    primary?: string;
     /**
-     * Header foreground color. Defaults to `#FFF`.
+     * Primary text color.
      */
-    headertext?: string;
+    primarytext?: string;
     /**
-     * Header border style. Defaults to `none`.
+     * Primary variant color.
      */
-    headerborder?: string;
+    primaryvar?: string;
     /**
-     * Window title background color. Defaults to `#FFF`.
+     * Primary variant text color.
      */
-    title?: string;
+    primaryvartext?: string;
     /**
-     * Window title foreground color. Defaults to `#000`.
+     * Secondary color.
      */
-    titletext?: string;
+    secondary?: string;
     /**
-     * Menu icon color. Defaults to `#FFF`.
+     * Secondary text color.
      */
-    menuicon?: string;
+    secondarytext?: string;
     /**
-     * Window background color. Defaults to `#FFF`.
+     * Secondary variant color.
      */
-    default?: string;
+    secondaryvar?: string;
     /**
-     * Window foreground color. Defaults to `#000`.
+     * Secondary variant text color.
      */
-    defaulttext?: string;
+    secondaryvartext?: string;
     /**
-     * Hover background color. Defaults to `whitesmoke`.
+     * Surface color of components.
+     */
+    surface?: string;
+    /**
+     * Surface text color.
+     */
+    surfacetext?: string;
+    /**
+     * Appears behind content.
+     */
+    background?: string;
+    /**
+     * Background text color.
+     */
+    backgroundtext?: string;
+    /**
+     * Hover background color.
      */
     hover?: string;
     /**
-     * Hover foreground color. Defaults to `#000`.
+     * Hover text color.
      */
     hovertext?: string;
-    /**
-     * Alert button background color. Defaults to `#3498db`.
-     */
-    alertbutton?: string;
-    /**
-     * Alert button foreground color. Defaults to `#FFF`.
-     */
-    alertbuttontext?: string;
 };
 
 /**
@@ -374,7 +384,7 @@ declare type ScreenSizes = {
 
 /**
  * App style configuration. Merged with the JSS style at run time.
- * Example: The place holder `%colors:header%` will merge with the settings.style.colors.header value.
+ * Example: The place holder `%colors:primary%` will merge with the settings.style.colors.header value.
  * @typedef {object} StyleConfig
  * @property {LoaderStyle} [loader] Loader style.
  * @property {FontStyle} [font] Font style.

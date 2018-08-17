@@ -148,18 +148,20 @@
 /**
  * Colours style.
  * @typedef {object} ColorsStyle
- * @property {string} [header] Header background color. Defaults to `#3498db`.
- * @property {string} [headertext] Header foreground color. Defaults to `#FFF`.
- * @property {string} [headerborder] Header border style. Defaults to `none`.
- * @property {string} [title] Window title background color. Defaults to `#FFF`.
- * @property {string} [titletext] Window title foreground color. Defaults to `#000`.
- * @property {string} [menuicon] Menu icon color. Defaults to `#FFF`.
- * @property {string} [default] Window background color. Defaults to `#FFF`.
- * @property {string} [defaulttext] Window foreground color. Defaults to `#000`.
- * @property {string} [hover] Hover background color. Defaults to `whitesmoke`.
- * @property {string} [hovertext] Hover foreground color. Defaults to `#000`.
- * @property {string} [alertbutton] Alert button background color. Defaults to `#3498db`.
- * @property {string} [alertbuttontext] Alert button foreground color. Defaults to `#FFF`.
+ * @property {string} [primary] Primary color. Displayed most frequently accross the app.
+ * @property {string} [primarytext] Primary text color.
+ * @property {string} [primaryvar] Primary variant color.
+ * @property {string} [primaryvartext] Primary variant text color.
+ * @property {string} [secondary] Secondary color.
+ * @property {string} [secondarytext] Secondary text color.
+ * @property {string} [secondaryvar] Secondary variant color.
+ * @property {string} [secondaryvartext] Secondary variant text color.
+ * @property {string} [surface] Surface color of components.
+ * @property {string} [surfacetext] Surface text color.
+ * @property {string} [background] Appears behind content.
+ * @property {string} [backgroundtext] Background text color.
+ * @property {string} [hover] Hover background color.
+ * @property {string} [hovertext] Hover text color.
  */
 
 /**
@@ -176,7 +178,7 @@
 /**
  * App style configuration. Merged with the JSS style at run time.
  *
- * Example: The place holder `%colors:header%` will merge with the settings.style.colors.header value.
+ * Example: The place holder `%colors:primary%` will merge with the settings.style.colors.header value.
  * @typedef {object} StyleConfig
  * @property {LoaderStyle} [loader] Loader style.
  * @property {FontStyle} [font] Font style.

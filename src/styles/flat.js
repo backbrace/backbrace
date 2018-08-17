@@ -17,6 +17,7 @@ export let style = merge({}, base, {
     'font-family': '%font:family%',
     'font-size': '14px',
     'color': 'rgba(0, 0, 0, 0.87)',
+    background: '%colors:background%',
     '@media only screen and (max-width: %screen:mediumUp%px)': {
       margin: '0',
       'overflow-x': 'visible',
@@ -77,15 +78,14 @@ export let style = merge({}, base, {
     display: 'block'
   },
   '.navbar': {
-    color: '%colors:headertext%',
-    'border-bottom': '%colors:headerborder%',
+    color: '%colors:primarytext%',
     top: '0px',
     left: '0px',
     right: '0px',
     'z-index': '3000'
   },
   '.navbar-inner': {
-    'background': '%colors:header%',
+    'background': '%colors:primary%',
     height: '50px',
     'padding-left': '0px',
     'padding-right': '0px'
@@ -150,14 +150,12 @@ export let style = merge({}, base, {
     'border-spacing': '0px'
   },
   '.main': {
-    background: '#f5f7fb',
     'margin-top': '50px',
-    'padding-top': '5px',
-    'min-height': 'calc(100vh - 55px)'
+    'padding-top': '5px'
   },
   '.main-windows': {
     width: '100%',
-    background: '#FFF',
+    background: '%colors:surface%',
     display: 'inline-block',
     'padding-left': '3px',
     'border-bottom': '1px solid #ecf0f1',
@@ -169,7 +167,7 @@ export let style = merge({}, base, {
     'position': 'absolute',
     'width': '100vw',
     'height': '100vh',
-    background: '#FFF'
+    background: '%colors:surface%'
   },
   '.mobile-app .viewer': {
     'height': 'calc(100vh - 110px)',
@@ -177,13 +175,14 @@ export let style = merge({}, base, {
   },
   '.window': {
     'box-sizing': 'border-box',
-    'min-height': '200px',
     position: 'relative',
-    background: 'white',
-    padding: '8px',
+    padding: '8px !important',
+    'border-radius': '3px',
     '@media only screen and (min-width: %screen:smallUp%px)': {
       'margin-top': '20px',
-      padding: '24px'
+      padding: '24px !important',
+      background: '%colors:surface%',
+      'min-height': '200px'
     }
   },
   '.preloader': {
@@ -192,15 +191,13 @@ export let style = merge({}, base, {
     left: '0',
     width: '100%',
     height: '100%',
-    background: '#FFF',
     'z-index': '30001',
+    background: '%colors:surface%',
     'background-image': 'url(https://labs.zoomapps.com.au/JumpstartCDN/images/placeholder.gif)',
     'background-repeat': 'no-repeat',
     'background-position': '40px 40px'
   },
   '.title-bar': {
-    'background': '%colors:title%',
-    color: '%colors:titletext%',
     padding: '0 10px',
     position: 'relative'
   },
@@ -211,38 +208,32 @@ export let style = merge({}, base, {
     float: 'right',
     padding: '5px',
     'font-size': '1.2em',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    opacity: '.6'
   },
   '.title-icon:hover': {
-    color: '#000'
-  },
-  '.action-button:hover': {
-    background: '%colors:hover%',
-    color: '%colors:hovertext%'
+    opacity: '.8'
   },
   '.main-windows-btn': {
     padding: '15px 5px 15px 5px',
     'font-size': '1em',
     width: 'auto',
     display: 'inline-block',
-    background: '#FFF',
-    color: '#7f8c8d',
     'margin-right': '3px',
     cursor: 'pointer'
   },
   '.main-windows-btn.active': {
-    'border-bottom': '2px solid %colors:header%',
-    color: '%colors:header%'
+    'border-bottom': '2px solid %colors:primary%',
+    color: '%colors:primary%'
   },
   '.mobile-app .actions-bar': {
     position: 'fixed',
     bottom: '0px',
-    'background-color': '#dfe6e9',
+    'background-color': '%colors:secondary%',
     left: '0px !important',
     width: '100vw',
     'box-sizing': 'border-box',
     height: 'auto',
-    color: '#000',
     'z-index': '29001'
   },
   '.action-button': {
@@ -252,7 +243,9 @@ export let style = merge({}, base, {
     margin: '.2em',
     cursor: 'pointer',
     'text-transform': 'uppercase',
-    color: '%colors:defaulttext%'
+    'border-radius': '3px',
+    background: '%colors:secondary%',
+    color: '%colors:secondarytext%'
   },
   '.desktop-app .action-button': {
     'font-weight': '400'
@@ -266,11 +259,11 @@ export let style = merge({}, base, {
     'box-sizing': 'border-box',
     'line-height': '1.7em',
     'border-width': '0px',
-    height: '60px',
-    'color': 'rgba(0,0,0,0.6)'
+    height: '60px'
   },
-  '.desktop-app .action-icon': {
-    'display': 'none'
+  '.action-button:hover': {
+    background: '%colors:secondaryvar%',
+    color: '%colors:secondaryvartext%'
   },
   '.mobile-app .action-icon': {
     'display': 'block',
@@ -317,7 +310,7 @@ export let style = merge({}, base, {
   },
   '.control-label': {
     display: 'block',
-    color: 'rgba(0, 0, 0, 0.54)',
+    opacity: '.6',
     'font-weight': '400',
     'margin-top': '1.1em',
     'font-size': '.9em'
@@ -327,7 +320,7 @@ export let style = merge({}, base, {
     'box-sizing': 'border-box',
     display: 'block',
     'background-color': 'transparent',
-    color: 'rgba(0, 0, 0, 0.87)',
+    opacity: '.8',
     border: 'none',
     'border-bottom': '1px solid rgba(0, 0, 0, 0.26)',
     outline: 'none',
@@ -339,8 +332,11 @@ export let style = merge({}, base, {
     margin: '0 0 8px 0'
   },
   '.control-input:focus': {
-    'border-color': '#2196F3',
+    'border-color': '%colors:primary%',
     'border-width': '2px'
+  },
+  '.list-component .control-input': {
+    'height': '2em'
   },
   '.grid-container': {
     'width': '100%',
@@ -357,7 +353,7 @@ export let style = merge({}, base, {
     width: '100%',
     height: '100%',
     opacity: '0.6',
-    background: '#FFF',
+    background: '%colors:surface%',
     'z-index': '30000'
   },
   '.progress': {
@@ -479,9 +475,16 @@ export let style = merge({}, base, {
     color: '%colors:hovertext% !important'
   },
   /* Sweet Alert Overrides */
+  '.sweet-alert': {
+    'font-family': 'inherit !important'
+  },
   '.sweet-alert button': {
-    'background-color': '%colors:alertbutton% !important',
-    color: '%colors:alertbuttontext% !important'
+    'background-color': '%colors:secondary% !important',
+    color: '%colors:secondarytext% !important'
+  },
+  '.sweet-alert button:hover': {
+    'background-color': '%colors:secondaryvar% !important',
+    color: '%colors:secondaryvartext% !important'
   },
   /* JQGrid Overrides */
   '.ui-jqgrid': {
@@ -495,15 +498,17 @@ export let style = merge({}, base, {
   '.ui-jqgrid .ui-jqgrid-htable th div': {
     'font-size': '1.3em',
     'font-weight': 'bold',
-    'color': 'rgba(0,0,0,0.6)',
+    opacity: '.6',
     'padding': '.2em',
-    'line-height': '.3em'
+    'height': '1.6em !important',
+    'text-align': 'left',
+    'box-sizing': 'border-box'
   },
   '.ui-jqgrid .ui-jqgrid-htable th.ui-th-column, .ui-th-column': {
-    background: '#FFF'
+    background: '%colors:surface%'
   },
   '.ui-jqgrid-hdiv': {
-    background: '#FFF !important'
+    background: '%colors:surface% !important'
   },
   '.ui-jqgrid tr.ui-row-ltr td': {
     'border-right-color': '#CCC !important'
