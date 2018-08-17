@@ -100,13 +100,6 @@ export class CodeThread {
 
         logDebug(this.currFunction.toString());
 
-    /*
-        if (this.currFunction.toString().indexOf('return') === -1) {
-            logDebug('Skipping $.when...');
-            return this.runNextFunction(this.currFunction.apply(null, arr));
-        }
-    */
-
         $.when(
             // Run the function.
             this.currFunction.apply(null, arr)
