@@ -53,6 +53,7 @@ const defaults = {
     table: {
         name: '',
         controller: '',
+        data: '',
         columns: []
     },
     /** @type {TableColumnMeta} */
