@@ -172,8 +172,8 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.show);
-        $.each(Array.from(this.subpages.values()), (index, page) => page.show);
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.show());
+        $.each(Array.from(this.subpages.values()), (index, page) => page.show());
 
         return this;
     }
@@ -187,8 +187,8 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.hide);
-        $.each(Array.from(this.subpages.values()), (index, page) => page.hide);
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.hide());
+        $.each(Array.from(this.subpages.values()), (index, page) => page.hide());
 
         return this;
     }
@@ -204,8 +204,8 @@ export class CardPageComponent extends PageComponent {
 
         super.showLoad();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.show);
-        $.each(Array.from(this.subpages.values()), (index, page) => page.showLoad);
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.show());
+        $.each(Array.from(this.subpages.values()), (index, page) => page.showLoad());
 
         return this;
     }
@@ -221,8 +221,8 @@ export class CardPageComponent extends PageComponent {
 
         super.hideLoad();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.hide);
-        $.each(Array.from(this.subpages.values()), (index, page) => page.hideLoad);
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.hide());
+        $.each(Array.from(this.subpages.values()), (index, page) => page.hideLoad());
 
         return this;
     }
