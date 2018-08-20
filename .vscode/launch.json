@@ -5,12 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach",
+            "name": "Launch",
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:8000",
             "sourceMaps": true,
-            "webRoot": "${workspaceRoot}"
+            "webRoot": "${workspaceRoot}",
+            "sourceMapPathOverrides": {
+                "webpack://js/./src/*": "${webRoot}/src/*"
+            }
         }
     ]
 }

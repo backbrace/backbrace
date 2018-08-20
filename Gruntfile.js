@@ -65,13 +65,18 @@ module.exports = function(grunt) {
 
     'webpack-dev-server': {
       core: {
-        webpack: Object.assign({
-          mode: 'development',
+        webpack: {
+          mode: 'none',
+          entry: {
+            jumpstart: ['./src/jumpstart.js']
+          },
+          devtool: 'source-map',
+          devServer: {},
           output: {
             library: 'js',
             filename: '[name].js'
           }
-        }, webpackconfig),
+        },
         publicPath: '/scripts',
         contentBase: 'sample',
         port: 8000
