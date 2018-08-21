@@ -225,6 +225,9 @@ export function start() {
         if ($ === null)
             throw appError('nojquery', 'JQuery was not loaded correctly');
 
+        if ($.isFunction(window.document.getElementsByTagName('*')))
+            throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
+
         // Load startup packages.
         codethread(function() {
 
