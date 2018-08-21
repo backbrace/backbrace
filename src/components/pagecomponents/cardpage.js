@@ -52,13 +52,13 @@ export class CardPageComponent extends PageComponent {
 
         const $ = getJQuery();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.unload);
+        $.each(Array.from(this.subwindows.values()), (index, win) => win.unload());
         this.subwindows = null;
 
-        $.each(Array.from(this.subpages.values()), (index, page) => page.unload);
+        $.each(Array.from(this.subpages.values()), (index, page) => page.unload());
         this.subpages = null;
 
-        $.each(Array.from(this.fields.values()), (index, cont) => cont.unload);
+        $.each(Array.from(this.fields.values()), (index, cont) => cont.unload());
         this.fields = null;
 
         super.unload();
