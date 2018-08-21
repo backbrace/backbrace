@@ -107,7 +107,7 @@ module.exports = function(grunt) {
         options: {
           private: false,
           destination: 'typings',
-          template: 'node_modules/tsd-jsdoc/dist',
+          template: 'node_modules/@jumpstartjs/tsd-jsdoc/dist',
           config: 'typings.conf.json'
         }
       }

@@ -7,6 +7,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
     "@babel/preset-env": "^7.0.0-beta.51",
+    "@jumpstartjs/tsd-jsdoc": "^2.0.2",
     "@types/jasmine": "^2.8.8",
     "@types/jquery": "^3.3.4",
     "@types/moment": "^2.13.0",
@@ -32,7 +33,6 @@
     "npm-run": "^5.0.1",
     "semver": "^5.5.0",
     "shelljs": "^0.7.8",
-    "tsd-jsdoc": "^2.0.0-beta.5",
     "webpack": "4.16.5",
     "webpack-dev-server": "3.1.5"
   },
