@@ -170,7 +170,7 @@ export function start() {
     const window = getWindow();
 
     window.addEventListener('error', function(ev) {
-        errorHandler(ev.error || new Error('A script error occurred. Please check the log.'));
+        errorHandler(ev.error || ev);
     });
 
     // Add font css.
