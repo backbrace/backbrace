@@ -365,8 +365,10 @@ export function addWindowToToolbar(id) {
     const icons = getIcons(),
         $ = getJQuery(),
         closeBtn = $(icons.get('%close%'))
-            .click(function() {
+            .click(function(ev) {
                 closePage(id);
+                ev.preventDefault();
+                return false;
             })
             .css('padding-left', '5px');
     return $('<div id="win' + id + '" class="main-windows-btn unselectable"></div>')
