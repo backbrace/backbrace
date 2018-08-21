@@ -157,10 +157,20 @@ export class CardPageComponent extends PageComponent {
         if (data && data.length > 0)
             r = data[0];
 
-        // Update the fields.
-        return codeeach(Array.from(this.fields.values()), function(cont) {
-            return cont.update(r);
-        });
+        return codeblock(
+            () => {
+                // Update the fields.
+                return codeeach(Array.from(this.fields.values()), function(cont) {
+                    return cont.update(r);
+                });
+            },
+            () => {
+                // Update the sub pages.
+                return codeeach(Array.from(this.subpages.values()), function(page) {
+                    return page.update();
+                });
+            }
+        );
     }
 
     /**
