@@ -1,6 +1,7 @@
 'use strict';
 
-var path = require('path');
+var path = require('path'),
+  merge = require('webpack-merge');
 
 module.exports = function(grunt) {
 
@@ -43,7 +44,7 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      dev: Object.assign({
+      dev: merge({
         mode: 'development',
         output: {
           path: path.join(__dirname, 'build'),
@@ -52,7 +53,7 @@ module.exports = function(grunt) {
           filename: '[name].js'
         }
       }, webpackconfig),
-      prod: Object.assign({
+      prod: merge({
         mode: 'production',
         output: {
           path: path.join(__dirname, 'build'),
