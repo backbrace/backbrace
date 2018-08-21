@@ -28,10 +28,17 @@ import { ViewerComponent } from './components/viewer';
 
 let maincontainer = null,
     windows = null,
-    pages = {},
     activePage = 0,
     readyFunc = null,
     suppressNextError = false;
+
+/**
+ * @ignore
+ * @description
+ * App pages that are currently loaded.
+ * @type {Map<number,ViewerComponent>}
+ */
+let pages = new Map();
 
 const appError = error('app');
 
@@ -307,8 +314,8 @@ export function load(container) {
  * @returns {ViewerComponent} Returns the active viewer.
  */
 export function currentPage() {
-    if (activePage > 0 && pages[activePage])
-        return pages[activePage];
+    if (activePage > 0 && pages.has(activePage))
+        return pages.get(activePage);
     return null;
 }
 
@@ -339,7 +346,7 @@ export function loadPage(name, options) {
                 currentPage().hideLoad();
 
             // Add the page to the loaded pages.
-            pages[pge.id] = pge;
+            pages.set(pge.id, pge);
             activePage = pge.id;
         }
     );
@@ -377,26 +384,27 @@ export function addWindowToToolbar(id) {
  * @returns {void}
  */
 export function closePage(id) {
+
     codethread(function() {
 
         // Unload the page.
-        const pge = pages[id];
-        if (!isDefined(pge))
+        if (!pages.has(id))
             throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+        const pge = pages.get(id);
         pge.unload();
 
         // Remove the page from the loaded pages.
-        pages[id] = null;
-        delete pages[id];
-        if (activePage === id)
+        pages.delete(id);
+        if (activePage === id) {
+
             activePage = 0;
 
-        // Open next page.
-        const keys = Object.keys(pages);
-        if (keys.length > 0) {
-            const nextpge = pages[keys[keys.length - 1]];
-            nextpge.show();
-            activePage = nextpge.id;
+            // Open next page.
+            if (pages.size > 0) {
+                const nextpge = Array.from(pages.values())[pages.size - 1];
+                nextpge.show();
+                activePage = nextpge.id;
+            }
         }
 
     });
@@ -410,18 +418,20 @@ export function closePage(id) {
  */
 export function showPage(id) {
 
-    if (id === activePage)
-        return;
+    codethread(function() {
+        if (id === activePage)
+            return;
 
-    // Hide the currently active page.
-    if (activePage > 0 && pages[activePage])
-        pages[activePage].hide();
+        // Hide the currently active page.
+        if (currentPage())
+            currentPage().hide();
 
-    // Show the page.
-    const pge = pages[id];
-    if (!isDefined(pge))
-        throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+        // Show the page.
+        if (!pages.has(id))
+            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
 
-    pge.show();
-    activePage = pge.id;
+        const pge = pages.get(id);
+        pge.show();
+        activePage = pge.id;
+    });
 }
