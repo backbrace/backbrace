@@ -65,9 +65,10 @@ export function loadCSS(url, onsuccess, onerror) {
     css.rel = 'stylesheet';
     css.href = url;
     css.onerror = onerror || errorHandler;
-    css.onload = onsuccess;
 
     window.document.head.appendChild(css);
+
+    if (onsuccess) onsuccess();
 }
 
 /**
