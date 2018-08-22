@@ -1,5 +1,5 @@
 /**
-* Type definitions for jumpstartjs
+* Type definitions for @jumpstartjs/core
 * Project: https://zoomapps.visualstudio.com/Zoom%20Apps/_git/Jumpstart.js
 * Definitions by: tsd-doc
 */
