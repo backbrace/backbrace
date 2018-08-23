@@ -107,7 +107,7 @@ module.exports = function(grunt) {
         ],
         options: {
           private: false,
-          destination: './packages/typings',
+          destination: './packages/typings/dist',
           template: 'node_modules/@jumpstartjs/tsd-jsdoc/dist',
           config: './packages/typings/jsdoc.conf.json'
         }
@@ -124,8 +124,8 @@ module.exports = function(grunt) {
             "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: tsd-doc\n" +
             "*/\n\n",
-          input: './packages/typings/types.d.ts',
-          output: './packages/typings/types.d.ts'
+          input: './packages/typings/dist/types.d.ts',
+          output: './packages/typings/dist/types.d.ts'
         }]
       }
     }
