@@ -10,7 +10,7 @@
     "typings"
   ],
   "files": [
-    "types.d.ts",
+    "dist/*",
     "README.md",
     "LICENSE"
   ]
