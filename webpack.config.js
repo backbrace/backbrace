@@ -33,8 +33,8 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin(
-      '@license JumpstartJS v' + versionInfo.currentVersion.full +
-      '\n(c) 2018 Zoom Apps https://zoomapps.com.au' +
-      '\nLicense: MIT')
+      '@license ' + versionInfo.currentPackage.name + ' v' + versionInfo.currentVersion.full +
+      '\n' + versionInfo.currentPackage.author +
+      '\nLicense: ' + versionInfo.currentPackage.license)
   ]
 };

@@ -9,8 +9,8 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   grunt.loadTasks('lib/grunt');
 
-  var pkg = require('./package.json');
-  var webpackconfig = require('./webpack.config');
+  var webpackconfig = require('./webpack.config'),
+    versionInfo = require('./lib/version-info/version-info.js');
 
   //Project configuration.
   grunt.initConfig({
@@ -118,8 +118,10 @@ module.exports = function(grunt) {
       typings: {
         files: [{
           prepend: "/**\n" +
-            "* Type definitions for " + pkg.name + "\n" +
-            "* Project: " + pkg.repository.url + "\n" +
+            "* Type definitions for " + versionInfo.currentPackage.name + " v" + versionInfo.currentVersion.full + "\n" +
+            "* " + versionInfo.currentPackage.author + "\n" +
+            "* Project: " + versionInfo.currentPackage.repository.url + "\n" +
+            "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: tsd-doc\n" +
             "*/\n\n",
           input: './packages/typings/types.d.ts',

@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "branchVersion": "^0.1.0",
   "branchPattern": "0.1.*",
+  "author": "Paul Fisher <paulfisher53@gmail.com>",
   "license": "MIT",
   "files": [
     "build/*",
