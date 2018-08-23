@@ -9,7 +9,8 @@
         "sample",
         "src",
         "test",
-        "typings"
+        "typings",
+        "packages/typings"
     ],
     "exclude": [
         "node_modules",

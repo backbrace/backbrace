@@ -1,0 +1,17 @@
+{
+  "name": "@jumpstartjs/typings",
+  "version": "0.1.0",
+  "description": "Typings for JumpstartJS",
+  "repository": "https://zoomapps.visualstudio.com/Zoom%20Apps/Zoom%20Apps/_git/Jumpstart.js?path=/packages/jumpstartjs-typings",
+  "author": "Paul Fisher <paulfisher53@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "jumpstartjs",
+    "typings"
+  ],
+  "files": [
+    "types.d.ts",
+    "README.md",
+    "LICENSE"
+  ]
+}
