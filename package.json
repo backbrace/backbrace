@@ -17,7 +17,6 @@
     "@jumpstartjs/tsd-jsdoc": "^2.0.2",
     "@types/jasmine": "^2.8.8",
     "@types/jquery": "^3.3.4",
-    "@types/moment": "^2.13.0",
     "@types/sweetalert": "^1.1.28",
     "babel-eslint": "^8.2.5",
     "babel-loader": "^8.0.0-beta.4",
