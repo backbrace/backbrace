@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           }
         },
         publicPath: '/scripts',
-        contentBase: 'sample',
+        contentBase: 'packages/sample',
         port: 8000
       }
     },

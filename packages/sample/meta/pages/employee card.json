@@ -26,11 +26,33 @@
         {
             "name": "Employment Details",
             "icon": "account-settings",
+            "className": "s12 m12 l6",
             "fields": [
                 {
                     "name": "salary"
+                },
+                {
+                    "name": "dob"
+                },
+                {
+                    "name": "dob"
                 }
             ]
+        },
+        {
+            "name": "Other Details",
+            "icon": "account-multiple",
+            "className": "s12 m12 l6",
+            "fields": [
+                {
+                    "name": "ID"
+                }
+            ]
+        },
+        {
+            "name": "Others",
+            "icon": "account-multiple",
+            "pageName": "pages/employee list"
         }
     ]
 }
