@@ -6,7 +6,7 @@ var webpack = require('webpack'),
 module.exports = {
   cache: true,
   entry: {
-    jumpstart: ['./src/jumpstart.js']
+    jumpstart: ['./packages/core/src/jumpstart.js']
   },
   devtool: 'source-map',
   devServer: {},

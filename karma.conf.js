@@ -11,10 +11,10 @@ module.exports = function(config) {
     browserNoActivityTimeout: 30000,
     reporters: ['spec'],
     files: [
-      'test/**/*.js'
+      'packages/core/test/**/*.js'
     ],
     preprocessors: {
-      'test/**/*.js': ['webpack']
+      'packages/core/test/**/*.js': ['webpack']
     },
     webpack: {
       cache: true

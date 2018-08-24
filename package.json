@@ -1,15 +1,10 @@
 {
-  "name": "@jumpstartjs/core",
+  "name": "jumpstartjs",
   "version": "0.1.1",
   "branchVersion": "^0.1.0",
   "branchPattern": "0.1.*",
   "author": "Paul Fisher <paulfisher53@gmail.com>",
   "license": "MIT",
-  "files": [
-    "build/*",
-    "README.md",
-    "LICENSE"
-  ],
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
     "@babel/plugin-transform-runtime": "^7.0.0-rc.1",

@@ -6,16 +6,14 @@
         "allowSyntheticDefaultImports": true
     },
     "include": [
-        "sample",
-        "src",
-        "test",
-        "typings",
+        "pakages/core",
+        "packages/sample",
         "packages/typings"
     ],
     "exclude": [
         "node_modules",
-        "build",
         "lib",
-        "src/types.js"
+        "packages/core/dist",
+        "packages/core/src/types.js"
     ]
 }

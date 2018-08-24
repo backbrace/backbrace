@@ -1,4 +1,4 @@
-build/**
+packages/core/dist/**
 lib/**
 node_modules/**
 tmp/**

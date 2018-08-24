@@ -15,20 +15,18 @@ module.exports = function(grunt) {
   //Project configuration.
   grunt.initConfig({
 
-    //Clean build directories.
+    //Clean directories.
     clean: {
-      build: ['build'],
-      tmp: ['tmp'],
-      deploy: ['docs']
+      dist: ['packages/core/dist', 'packages/typings/dist'],
+      tmp: ['tmp']
     },
 
     //Lint javascript.
     eslint: {
       all: {
         src: [
-          '*.js',
-          'src/**/*.js',
-          'test/**/*.js'
+          'packages/core/src/**/*.js',
+          'packages/core/test/**/*.js'
         ]
       }
     },
@@ -47,8 +45,8 @@ module.exports = function(grunt) {
       dev: merge({
         mode: 'development',
         output: {
-          path: path.join(__dirname, 'build'),
-          publicPath: 'build/',
+          path: path.join(__dirname, 'packages/core/dist'),
+          publicPath: 'packages/core/dist/',
           library: 'js',
           filename: '[name].js'
         }
@@ -56,8 +54,8 @@ module.exports = function(grunt) {
       prod: merge({
         mode: 'production',
         output: {
-          path: path.join(__dirname, 'build'),
-          publicPath: 'build/',
+          path: path.join(__dirname, 'packages/core/dist'),
+          publicPath: 'packages/core/dist/',
           library: 'js',
           filename: '[name].min.js'
         }
@@ -69,7 +67,7 @@ module.exports = function(grunt) {
         webpack: {
           mode: 'none',
           entry: {
-            jumpstart: ['./src/jumpstart.js']
+            jumpstart: ['./packages/core/src/jumpstart.js']
           },
           devtool: 'source-map',
           devServer: {},
@@ -86,7 +84,7 @@ module.exports = function(grunt) {
 
     jsdoc: {
       dist: {
-        src: ['src/*.js', 'src/*/*.js', 'src/*/*/*.js', 'README.md'],
+        src: ['packages/core/src/*.js', 'packages/core/src/*/*.js', 'packages/core/src/*/*/*.js', 'README.md'],
         options: {
           destination: 'docs',
           template: 'node_modules/jumpstartjs-jsdoc-template',
@@ -95,15 +93,15 @@ module.exports = function(grunt) {
       },
       typings: {
         src: [
-          'src/types.js',
-          'src/classes/*.js',
-          'src/components/*.js',
-          'src/components/*/*.js',
-          'src/jumpstart.js',
-          'src/app.js',
-          'src/code.js',
-          'src/controller.js',
-          'src/log.js'
+          'packages/core/src/types.js',
+          'packages/core/src/classes/*.js',
+          'packages/core/src/components/*.js',
+          'packages/core/src/components/*/*.js',
+          'packages/core/src/jumpstart.js',
+          'packages/core/src/app.js',
+          'packages/core/src/code.js',
+          'packages/core/src/controller.js',
+          'packages/core/src/log.js'
         ],
         options: {
           private: false,
