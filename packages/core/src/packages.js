@@ -6,56 +6,31 @@
 import { settings } from './settings';
 import { isDefined, deepMap, formatString, isMobileDevice } from './util';
 
-export let cdn = 'https://labs.zoomapps.com.au/JumpstartCDN';
 const packages = {
     'jqgrid': [
-        '4.5.4',
-        [
-            (isMobileDevice() ? null : ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js'])
-        ]
+        (isMobileDevice() ? null : ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js'])
     ],
     'jquery': [
-        '3.3.1',
-        [
-            ['{0}.js']
-        ]
+        ['{0}.js']
     ],
     'jquery-ripple': [
-        '0.2.1',
-        [
-            ['jquery.ripple.js', 'jquery.ripple.css']
-        ]
+        ['jquery.ripple.js', 'jquery.ripple.css']
     ],
     'jquery-ui': [
-        '1.12.1',
-        [
-            ['{0}.js', '{0}.css']
-        ]
+        ['{0}.js', '{0}.css']
     ],
     'materialdesignicons': [
-        '2.2.43',
-        [
-            ['css/{0}.css']
-        ]
+        ['css/{0}.css']
     ],
     'moment': [
-        '2.22.0',
-        [
-            ['{0}.js'],
-            ['locale/en-au.js']
-        ]
+        ['{0}.js'],
+        ['locale/en-au.js']
     ],
     'resetcss': [
-        '2.0.0',
-        [
-            ['reset.css']
-        ]
+        ['reset.css']
     ],
     'sweetalert': [
-        '1.1.3',
-        [
-            ['{0}.js', '{0}.css']
-        ]
+        ['{0}.js', 'sweetalert.css']
     ]
 };
 
@@ -76,9 +51,8 @@ export function exists(name) {
 export function get(name) {
     if (isDefined(packages[name])) {
         const p = packages[name],
-            v = p[0],
             m = (settings.minify ? '.min' : '');
-        return deepMap(p[1], val => `${cdn}/${name}/${v}/${formatString(val, name + m)}`);
+        return deepMap(p, val => `${settings.packages}/${name}/${formatString(val, name + m)}`);
     }
     return null;
 }

@@ -1,8 +1,10 @@
 'use strict';
 
+// Setup the app.
 js.settings({
     minify: false,
     debug: true,
+    packages: './packages',
     app: {
         title: 'Test'
     },
@@ -18,16 +20,16 @@ js.settings({
     }
 });
 
+// Register the service worker.
 if ('serviceWorker' in window.navigator)
     window.navigator.serviceWorker.register('service-worker.js' + (js.settings().debug ? '?debug=true' : ''))
         .then(function(reg) {
             js.serviceWorker(reg);
         });
 
-// Set server provider.
 js.ready(function() {
-    js.loadPage('pages/employee list', { first: true });
-    js.loadPage('pages/employee card');
+    js.message('Ready!');
 });
 
+// Start the app!
 js.start();

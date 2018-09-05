@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           }
         },
         publicPath: '/scripts',
-        contentBase: 'packages/sample',
+        contentBase: ['packages/sample', 'packages/cdn'],
         port: 8000
       }
     },
@@ -126,6 +126,17 @@ module.exports = function(grunt) {
           output: './packages/typings/dist/types.d.ts'
         }]
       }
+    },
+
+    subgrunt: {
+      cdn: {
+        options: {
+          // Target-specific options
+        },
+        projects: {
+          'packages/cdn': 'default'
+        }
+      }
     }
 
   });
@@ -150,7 +161,10 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'webpack:dev'
   ]);
-  grunt.registerTask('webserver', ['webpack-dev-server:core']);
+  grunt.registerTask('webserver', [
+    'subgrunt:cdn',
+    'webpack-dev-server:core'
+  ]);
   grunt.registerTask('package', [
     'clean',
     'build',

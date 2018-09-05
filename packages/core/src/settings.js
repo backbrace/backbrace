@@ -17,9 +17,10 @@ export let settings = {
     guiAllowed: true,
     jss: style,
     windowMode: true,
+    packages: 'https://labs.zoomapps.com.au/JumpstartCDN/0.1.0/packages',
     app: {
         name: 'Jumpstart App',
-        version: '0.1.0',
+        version: '1.0.0',
         title: 'New Jumpstart App',
         description: 'Web App powered by Jumpstart'
     },

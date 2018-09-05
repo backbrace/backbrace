@@ -1,3 +1,4 @@
+packages/cdn/packages/**
 packages/core/dist/**
 lib/**
 node_modules/**
