@@ -6,9 +6,9 @@
         "allowSyntheticDefaultImports": true
     },
     "include": [
-        "pakages/core",
-        "packages/sample",
-        "packages/typings"
+        "packages/typings",
+        "packages/core",
+        "packages/sample"
     ],
     "exclude": [
         "node_modules",

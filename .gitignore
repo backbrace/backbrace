@@ -3,5 +3,7 @@ node_modules/
 npm-debug.log
 .DS_Store
 /packages/cdn/packages/
+#TEMP!!!!
+/packages/cdn/src/
 /packages/core/dist/
 /packages/typings/dist/
