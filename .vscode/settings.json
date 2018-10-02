@@ -3,19 +3,5 @@
     "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
     "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
     "files.trimTrailingWhitespace": true,
-    "editor.formatOnSave": true,
-    "json.schemas": [
-        {
-            "fileMatch": [
-                "*/pages/*.json"
-            ],
-            "url": "./packages/jsonschema/schema/pagemeta.json"
-        },
-        {
-            "fileMatch": [
-                "*/tables/*.json"
-            ],
-            "url": "./packages/jsonschema/schema/tablemeta.json"
-        }
-    ]
+    "editor.formatOnSave": true
 }
