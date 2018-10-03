@@ -11,10 +11,10 @@ module.exports = function(config) {
     browserNoActivityTimeout: 30000,
     reporters: ['spec'],
     files: [
-      'packages/core/test/**/*.js'
+      'packages/backbrace-core/test/**/*.js'
     ],
     preprocessors: {
-      'packages/core/test/**/*.js': ['webpack']
+      'packages/backbrace-core/test/**/*.js': ['webpack']
     },
     webpack: {
       cache: true

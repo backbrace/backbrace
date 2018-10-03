@@ -4,6 +4,7 @@
  * @private
  */
 
+import { globals } from '../globals';
 import { style as base } from './base';
 import { merge } from '../util';
 
@@ -193,7 +194,7 @@ export let style = merge({}, base, {
     height: '100%',
     'z-index': '30001',
     background: '%colors:surface%',
-    'background-image': 'url(https://labs.zoomapps.com.au/JumpstartCDN/images/placeholder.gif)',
+    'background-image': `url(${globals.CDNSERVER}/images/placeholder.gif)`,
     'background-repeat': 'no-repeat',
     'background-position': '40px 40px'
   },

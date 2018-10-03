@@ -106,10 +106,10 @@
 /**
  * App configuration.
  * @typedef {object} AppConfig
- * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Jumpstart App`.
+ * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Backbrace App`.
  * @property {string} [version] App version. Defaults to `0.1.0`.
- * @property {string} [title] App tite (displays in browser window). Defaults to `New Jumpstart App`.
- * @property {string} [description] App description. Defaults to `Web App powered by Jumpstart`.
+ * @property {string} [title] App tite (displays in browser window). Defaults to `New Backbrace App`.
+ * @property {string} [description] App description. Defaults to `Web App powered by Backbrace`.
  */
 
 /**

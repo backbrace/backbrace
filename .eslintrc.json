@@ -6,6 +6,6 @@
   "extends": "./.eslintrc-base.json",
   "globals": {
     "window": false,
-    "js": false
+    "bb": false
   }
 }

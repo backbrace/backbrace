@@ -5,5 +5,5 @@ npm-debug.log
 /packages/backbrace-packages/dist/
 #TEMP!!!!
 /packages/backbrace-packages/src/
-/packages/core/dist/
+/packages/backbrace-core/dist/
 /packages/typings/dist/

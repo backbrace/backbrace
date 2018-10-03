@@ -51,7 +51,7 @@ let serviceWorkerRegistration = null;
 /**
  * Get/set the service worker.
  * @method serviceWorker
- * @memberof module:js
+ * @memberof module:bb
  * @param {ServiceWorkerRegistration} val If `defined`, sets the service worker.
  * @returns {void|ServiceWorkerRegistration} If `val` is `undefined`, returns the current service worker registration.
  */
@@ -76,7 +76,7 @@ function onTick() {
 /**
  * Show a message dialog.
  * @method message
- * @memberof module:js
+ * @memberof module:bb
  * @param {string} msg Message to display.
  * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
@@ -151,7 +151,7 @@ export function errorHandler(err) {
 /**
  * Execute a function after the app is loaded.
  * @method ready
- * @memberof module:js
+ * @memberof module:bb
  * @param {Function} func Function to execute.
  * @returns {void}
  */
@@ -162,7 +162,7 @@ export function ready(func) {
 /**
  * Start the app.
  * @method start
- * @memberof module:js
+ * @memberof module:bb
  * @returns {void}
  */
 export function start() {
@@ -325,7 +325,7 @@ export function currentPage() {
 /**
  * Load a page.
  * @method loadPage
- * @memberof module:js
+ * @memberof module:bb
  * @param {string} name Name of the page to load.
  * @param {ViewerOptions} [options] Page viewer options.
  * @returns {void}

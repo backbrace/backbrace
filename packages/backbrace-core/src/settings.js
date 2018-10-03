@@ -4,6 +4,7 @@
  * @private
  */
 
+import { globals } from './globals';
 import { style } from './styles/flat';
 
 /**
@@ -17,12 +18,12 @@ export let settings = {
     guiAllowed: true,
     jss: style,
     windowMode: true,
-    packages: 'https://labs.zoomapps.com.au/JumpstartCDN/0.1.0/packages',
+    packages: `${globals.CDNSERVER}/packages`,
     app: {
-        name: 'Jumpstart App',
+        name: 'Backbrace App',
         version: '1.0.0',
-        title: 'New Jumpstart App',
-        description: 'Web App powered by Jumpstart'
+        title: 'New Backbrace App',
+        description: 'Web App powered by Backbrace'
     },
     meta: {
         dir: './meta/'
@@ -37,7 +38,7 @@ export let settings = {
             blockerbackground: '#ECF0F1'
         },
         font: {
-            url: 'https://labs.zoomapps.com.au/JumpstartCDN/fonts/roboto/roboto.css',
+            url: `${globals.CDNSERVER}/packages/roboto/css/roboto/roboto-fontface.css`,
             family: '\'Roboto\', sans-serif'
         },
         images: {

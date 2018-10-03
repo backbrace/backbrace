@@ -6,7 +6,7 @@ var webpack = require('webpack'),
 module.exports = {
   cache: true,
   entry: {
-    jumpstart: ['./packages/core/src/jumpstart.js']
+    backbrace: ['./packages/backbrace-core/src/backbrace.js']
   },
   devtool: 'source-map',
   devServer: {},
@@ -35,6 +35,9 @@ module.exports = {
     new webpack.BannerPlugin(
       '@license ' + versionInfo.currentPackage.name + ' v' + versionInfo.currentVersion.full +
       '\n' + versionInfo.currentPackage.author +
-      '\nLicense: ' + versionInfo.currentPackage.license)
+      '\nLicense: ' + versionInfo.currentPackage.license),
+    new webpack.DefinePlugin({
+      __CDNSERVER__: JSON.stringify('https://labs.zoomapps.com.au/JumpstartCDN/' + versionInfo.currentVersion.version)
+    })
   ]
 };

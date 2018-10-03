@@ -1,8 +1,8 @@
 'use strict';
 
 /**
- * Jumpstart public api.
- * @module js
+ * Backbrace public api.
+ * @module bb
  */
 
 import { settings as appSettings } from './settings';
@@ -12,18 +12,18 @@ import * as windowprovider from './providers/window';
 /**
  * Get/Set the application settings.
  * @method settings
- * @memberof module:js
+ * @memberof module:bb
  * @param {Settings} [newsettings] Settings to set.
  * @returns {Settings} Returns the app settings.
  * @example
  * // Turn on debug mode and don't minify the resources.
- * js.settings({
+ * bb.settings({
  *  debug: true,
  *  minify: false
  * });
  *
  * // Get the app name.
- * var name = js.settings().app.name;
+ * var name = bb.settings().app.name;
  */
 export function settings(newsettings) {
     merge(appSettings, newsettings);
@@ -33,7 +33,7 @@ export function settings(newsettings) {
 /**
  * Get/set the window provider.
  * @method window
- * @memberof module:js
+ * @memberof module:bb
  * @param {(Window|object)} [val] Window instance to set.
  * @returns {(Window|object)} Returns the window instance.
  */

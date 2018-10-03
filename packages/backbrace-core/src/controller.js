@@ -17,7 +17,7 @@ const controllerError = error('controller');
 /**
  * Create a controller.
  * @method controller
- * @memberof module:js
+ * @memberof module:bb
  * @param {string} name Name of the controller to create.
  * @param {ControllerCallback} definition Definition of the controller.
  * @returns {void}

@@ -17,7 +17,7 @@ export function get() {
 /**
  * Set the window provider instance.
  * @method setWindow
- * @memberof module:js
+ * @memberof module:bb
  * @param {(Window|object)} val Window provider instance to set.
  * @returns {void}
  */

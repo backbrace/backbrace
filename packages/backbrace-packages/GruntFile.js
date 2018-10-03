@@ -23,6 +23,7 @@ module.exports = function(grunt) {
                     { expand: true, cwd: 'node_modules/moment', src: ['locale/**', 'moment.js', '*.md', 'LICENSE'], dest: 'dist/moment' },
                     { expand: true, cwd: 'node_modules/moment/min', src: ['moment.min.js'], dest: 'dist/moment' },
                     { expand: true, cwd: 'node_modules/reset-css', src: ['**'], dest: 'dist/resetcss' },
+                    { expand: true, cwd: 'node_modules/roboto-fontface', src: ['**'], dest: 'dist/roboto' },
                     {
                         expand: true, cwd: 'node_modules/sweetalert/dist', src: ['**'], dest: 'dist/sweetalert', rename: function(dest, src) {
                             return dest + '/' + src.replace('-dev', '');

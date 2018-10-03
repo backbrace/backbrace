@@ -7,13 +7,13 @@
     },
     "include": [
         "packages/typings",
-        "packages/core",
+        "packages/backbrace-core",
         "packages/backbrace-sample-app"
     ],
     "exclude": [
         "node_modules",
         "lib",
-        "packages/core/dist",
-        "packages/core/src/types.js"
+        "packages/backbrace-core/dist",
+        "packages/backbrace-core/src/types.js"
     ]
 }

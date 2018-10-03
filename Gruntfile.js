@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 
     //Clean directories.
     clean: {
-      dist: ['packages/core/dist', 'packages/typings/dist'],
+      dist: ['packages/backbrace-core/dist', 'packages/typings/dist'],
       tmp: ['tmp']
     },
 
@@ -25,8 +25,8 @@ module.exports = function(grunt) {
     eslint: {
       all: {
         src: [
-          'packages/core/src/**/*.js',
-          'packages/core/test/**/*.js'
+          'packages/backbrace-core/src/**/*.js',
+          'packages/backbrace-core/test/**/*.js'
         ]
       }
     },
@@ -45,34 +45,34 @@ module.exports = function(grunt) {
       dev: merge({
         mode: 'development',
         output: {
-          path: path.join(__dirname, 'packages/core/dist'),
-          publicPath: 'packages/core/dist/',
-          library: 'js',
+          path: path.join(__dirname, 'packages/backbrace-core/dist'),
+          publicPath: 'packages/backbrace-core/dist/',
+          library: 'bb',
           filename: '[name].js'
         }
       }, webpackconfig),
       prod: merge({
         mode: 'production',
         output: {
-          path: path.join(__dirname, 'packages/core/dist'),
-          publicPath: 'packages/core/dist/',
-          library: 'js',
+          path: path.join(__dirname, 'packages/backbrace-core/dist'),
+          publicPath: 'packages/backbrace-core/dist/',
+          library: 'bb',
           filename: '[name].min.js'
         }
       }, webpackconfig)
     },
 
     'webpack-dev-server': {
-      core: {
+      sampleapp: {
         webpack: {
           mode: 'none',
           entry: {
-            jumpstart: ['./packages/core/src/jumpstart.js']
+            backbrace: ['./packages/backbrace-core/src/backbrace.js']
           },
           devtool: 'source-map',
           devServer: {},
           output: {
-            library: 'js',
+            library: 'bb',
             filename: '[name].js'
           }
         },
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
 
     jsdoc: {
       dist: {
-        src: ['packages/core/src/*.js', 'packages/core/src/*/*.js', 'packages/core/src/*/*/*.js', 'README.md'],
+        src: ['packages/backbrace-core/src/*.js', 'packages/backbrace-core/src/*/*.js', 'packages/backbrace-core/src/*/*/*.js', 'README.md'],
         options: {
           destination: 'docs',
           template: 'node_modules/jumpstartjs-jsdoc-template',
@@ -93,20 +93,20 @@ module.exports = function(grunt) {
       },
       typings: {
         src: [
-          'packages/core/src/types.js',
-          'packages/core/src/classes/*.js',
-          'packages/core/src/components/*.js',
-          'packages/core/src/components/*/*.js',
-          'packages/core/src/jumpstart.js',
-          'packages/core/src/app.js',
-          'packages/core/src/code.js',
-          'packages/core/src/controller.js',
-          'packages/core/src/log.js'
+          'packages/backbrace-core/src/types.js',
+          'packages/backbrace-core/src/classes/*.js',
+          'packages/backbrace-core/src/components/*.js',
+          'packages/backbrace-core/src/components/*/*.js',
+          'packages/backbrace-core/src/backbrace.js',
+          'packages/backbrace-core/src/app.js',
+          'packages/backbrace-core/src/code.js',
+          'packages/backbrace-core/src/controller.js',
+          'packages/backbrace-core/src/log.js'
         ],
         options: {
           private: false,
           destination: './packages/typings/dist',
-          template: 'node_modules/@jumpstartjs/tsd-jsdoc/dist',
+          template: 'node_modules/@backbrace/dts-generator/dist',
           config: './packages/typings/jsdoc.conf.json'
         }
       }
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
             "* " + versionInfo.currentPackage.author + "\n" +
             "* Project: " + versionInfo.currentPackage.repository.url + "\n" +
             "* License: " + versionInfo.currentPackage.license + "\n" +
-            "* Definitions by: tsd-doc\n" +
+            "* Definitions by: @backbrace/dts-generator\n" +
             "*/\n\n",
           input: './packages/typings/dist/types.d.ts',
           output: './packages/typings/dist/types.d.ts'
