@@ -1,7 +1,7 @@
 'use strict';
 
 // Setup the app.
-js.settings({
+bb.settings({
     minify: false,
     debug: true,
     packages: './packages',
@@ -10,8 +10,8 @@ js.settings({
     },
     style: {
         images: {
-            logo: 'https://labs.zoomapps.com.au/JumpstartCDN/images/logo-light.png',
-            blocker: 'https://labs.zoomapps.com.au/JumpstartCDN/images/logo-portrait.png'
+            logo: './images/logo-light.png',
+            blocker: './images/512x512-icon.png'
         },
         font: {
             url: 'https://labs.zoomapps.com.au/JumpstartCDN/fonts/googlesans/googlesans.css',
@@ -22,14 +22,14 @@ js.settings({
 
 // Register the service worker.
 if ('serviceWorker' in window.navigator)
-    window.navigator.serviceWorker.register('service-worker.js' + (js.settings().debug ? '?debug=true' : ''))
+    window.navigator.serviceWorker.register('service-worker.js' + (bb.settings().debug ? '?debug=true' : ''))
         .then(function(reg) {
-            js.serviceWorker(reg);
+            bb.serviceWorker(reg);
         });
 
-js.ready(function() {
-    js.message('Ready!');
+bb.ready(function() {
+    bb.message('Ready!');
 });
 
 // Start the app!
-js.start();
+bb.start();

@@ -2,7 +2,7 @@ packages/backbrace-packages/dist/**
 #TEMP!!!!
 packages/backbrace-packages/src/**
 packages/core/dist/**
-packages/sample/service-worker.js
+packages/backbrace-sample-app/service-worker.js
 lib/**
 node_modules/**
 tmp/**

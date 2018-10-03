@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           }
         },
         publicPath: '/scripts',
-        contentBase: ['packages/sample', 'packages/backbrace-packages'],
+        contentBase: ['packages/backbrace-sample-app', 'packages/backbrace-packages'],
         port: 8000
       }
     },
@@ -160,9 +160,9 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'webpack:dev'
   ]);
-  grunt.registerTask('webserver', [
+  grunt.registerTask('sampleapp', [
     'subgrunt:packages',
-    'webpack-dev-server:core'
+    'webpack-dev-server:sampleapp'
   ]);
   grunt.registerTask('package', [
     'clean',

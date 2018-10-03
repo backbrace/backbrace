@@ -1,4 +1,4 @@
-var CACHE_NAME = 'JSCache-V0.1.0';
+var CACHE_NAME = 'BBCache-V0.1.0-alpha.1';
 
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -38,7 +38,7 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.open(CACHE_NAME).then(function(cache) {
             return cache.match(event.request).then(function(response) {
-                var skip = navigator.onLine && event.request.url.indexOf('jumpstart.js') !== -1;
+                var skip = navigator.onLine && event.request.url.indexOf('backbrace.js') !== -1;
                 if (self.location.search.toLowerCase().indexOf('debug=true') !== -1)
                     skip = true;
                 // Cache hit - return response
