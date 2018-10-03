@@ -2,8 +2,8 @@
 node_modules/
 npm-debug.log
 .DS_Store
-/packages/cdn/packages/
+/packages/backbrace-packages/dist/
 #TEMP!!!!
-/packages/cdn/src/
+/packages/backbrace-packages/src/
 /packages/core/dist/
 /packages/typings/dist/

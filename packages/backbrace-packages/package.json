@@ -1,13 +1,13 @@
 {
-    "name": "@jumpstartjs/cdn",
-    "version": "0.1.1",
-    "description": "CDN Packages for JumpstartJS",
-    "repository": "https://zoomapps.visualstudio.com/Zoom%20Apps/Zoom%20Apps/_git/Jumpstart.js?path=/packages/cdn",
+    "name": "@backbrace/packages",
+    "version": "0.1.0-alpha.1",
+    "description": "External packages required by backbrace.",
+    "repository": "https://github.com/backbrace/backbrace/tree/master/packages/backbrace-packages",
     "author": "Paul Fisher <paulfisher53@gmail.com>",
     "license": "MIT",
     "keywords": [
-        "jumpstartjs",
-        "cdn"
+        "backbrace",
+        "dist"
     ],
     "dependencies": {
         "@mdi/font": "2.7.94",

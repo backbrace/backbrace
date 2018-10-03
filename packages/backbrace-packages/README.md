@@ -1,4 +1,17 @@
-# Jumpstart CDN Packages
+
+# @backbrace/packages
+
+> External packages required by backbrace.
+
+## Install
+
+Using npm:
+
+```sh
+npm install --save @backbrace/packages
+```
+
+# Available Packages
 
 | Package | Version |
 |--------|-------|

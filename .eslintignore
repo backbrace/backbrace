@@ -1,5 +1,6 @@
-packages/cdn/packages/**
-packages/cdn/src/**
+packages/backbrace-packages/dist/**
+#TEMP!!!!
+packages/backbrace-packages/src/**
 packages/core/dist/**
 packages/sample/service-worker.js
 lib/**

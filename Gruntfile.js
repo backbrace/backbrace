@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           }
         },
         publicPath: '/scripts',
-        contentBase: ['packages/sample', 'packages/cdn'],
+        contentBase: ['packages/sample', 'packages/backbrace-packages'],
         port: 8000
       }
     },
@@ -129,12 +129,11 @@ module.exports = function(grunt) {
     },
 
     subgrunt: {
-      cdn: {
+      packages: {
         options: {
-          // Target-specific options
         },
         projects: {
-          'packages/cdn': 'default'
+          'packages/backbrace-packages': 'default'
         }
       }
     }
@@ -162,7 +161,7 @@ module.exports = function(grunt) {
     'webpack:dev'
   ]);
   grunt.registerTask('webserver', [
-    'subgrunt:cdn',
+    'subgrunt:packages',
     'webpack-dev-server:core'
   ]);
   grunt.registerTask('package', [

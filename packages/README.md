@@ -1,13 +1,13 @@
-# Jumpstart Monorepo
+# Backbrace Monorepo
 
 ### Core Packages
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
-| [`@jumpstartjs/core`](/packages/core) | [![npm](https://img.shields.io/npm/v/@jumpstartjs/core.svg?maxAge=2592000)](https://www.npmjs.com/package/@jumpstartjs/core) | [![Dependency Status](https://david-dm.org/paulfisher53/jumpstartjs.svg?path=packages/core)](https://david-dm.org/paulfisher53/jumpstartjs?path=packages/core) |
+ [`@backbrace/packages`](/packages/backbrace-packages) | [![npm](https://img.shields.io/npm/v/@backbrace/packages.svg?maxAge=3600)](https://www.npmjs.com/package/@backbrace/packages) | [![Dependency Status](https://david-dm.org/backbrace/backbrace.svg?path=packages/backbrace-packages)](https://david-dm.org/backbrace/backbrace?path=packages/backbrace-packages) |
 
 ### Other
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
-| [`@jumpstartjs/typings`](/packages/typings) | [![npm](https://img.shields.io/npm/v/@jumpstartjs/typings.svg?maxAge=2592000)](https://www.npmjs.com/package/@jumpstartjs/typings) | [![Dependency Status](https://david-dm.org/paulfisher53/jumpstartjs.svg?path=packages/typings)](https://david-dm.org/paulfisher53/jumpstartjs?path=packages/typings) |
+
