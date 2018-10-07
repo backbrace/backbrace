@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/pageMeta",
+    "id": "https://schema.backbrace.io/pageMeta.json",
     "title": "Page meta data.",
     "type": "object",
     "properties": {

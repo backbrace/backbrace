@@ -6,7 +6,7 @@
         "allowSyntheticDefaultImports": true
     },
     "include": [
-        "packages/typings",
+        "packages/backbrace-devkit",
         "packages/backbrace-core",
         "packages/backbrace-sample-app"
     ],

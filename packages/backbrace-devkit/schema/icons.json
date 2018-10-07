@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/icons",
+    "id": "https://schema.backbrace.io/icons.json",
     "title": "Material design icons (v2.5.94).",
     "type": "string",
     "enum": [

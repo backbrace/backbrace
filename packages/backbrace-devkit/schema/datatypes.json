@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "id": "https://labs.zoomapps.com.au/JumpstartCDN/schemas/dataTypes",
+    "id": "https:///schema.backbrace.io/dataTypes.json",
     "title": "Built-in data types.",
     "type": "string",
     "enum": [

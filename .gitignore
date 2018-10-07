@@ -6,4 +6,4 @@ npm-debug.log
 #TEMP!!!!
 /packages/backbrace-packages/src/
 /packages/backbrace-core/dist/
-/packages/typings/dist/
+/packages/backbrace-devkit/typings/

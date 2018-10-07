@@ -17,7 +17,10 @@ module.exports = function(grunt) {
 
     //Clean directories.
     clean: {
-      dist: ['packages/backbrace-core/dist', 'packages/typings/dist'],
+      dist: [
+        'packages/backbrace-core/dist',
+        'packages/backbrace-devkit/typings'
+      ],
       tmp: ['tmp']
     },
 
@@ -105,9 +108,9 @@ module.exports = function(grunt) {
         ],
         options: {
           private: false,
-          destination: './packages/typings/dist',
+          destination: './packages/backbrace-devkit/typings',
           template: 'node_modules/@backbrace/dts-generator/dist',
-          config: './packages/typings/jsdoc.conf.json'
+          config: './packages/backbrace-devkit/jsdoc.conf.json'
         }
       }
     },
@@ -122,8 +125,8 @@ module.exports = function(grunt) {
             "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: @backbrace/dts-generator\n" +
             "*/\n\n",
-          input: './packages/typings/dist/types.d.ts',
-          output: './packages/typings/dist/types.d.ts'
+          input: './packages/backbrace-devkit/typings/types.d.ts',
+          output: './packages/backbrace-devkit/typings/types.d.ts'
         }]
       }
     },
