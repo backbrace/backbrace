@@ -11,7 +11,8 @@
     ],
     "files": [
         "dist/*",
-        "README.md"
+        "README.md",
+        "LICENSE"
     ],
     "dependencies": {
         "@mdi/font": "2.7.94",
