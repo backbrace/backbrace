@@ -38,7 +38,7 @@ describe('log module', function() {
         });
         log.info('message');
         log.warning('message');
-        log.error('message');
+        log.error(new Error('message'));
         log.debug('message');
         expect(logger).toBe('info;warn;error;debug;');
     });
@@ -53,7 +53,7 @@ describe('log module', function() {
         });
         log.info('message');
         log.warning('message');
-        log.error('message');
+        log.error(new Error('message'));
         log.debug('message');
         expect(logger).toBe('log;log;log;log;');
     });
@@ -65,7 +65,7 @@ describe('log module', function() {
         });
         log.info('message');
         log.warning('message');
-        log.error('message');
+        log.error(new Error('message'));
         log.debug('message');
         expect(logger).toBe('');
     });
