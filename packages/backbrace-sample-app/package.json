@@ -12,5 +12,7 @@
     "dependencies": {
         "@backbrace/packages": "0.1.0-alpha.2"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "@backbrace/devkit": "0.1.0-alpha.1"
+    }
 }
