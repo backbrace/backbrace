@@ -10,6 +10,7 @@
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
+[`@backbrace/devkit`](/packages/backbrace-devkit) | [![npm](https://img.shields.io/npm/v/@backbrace/devkit.svg?maxAge=3600)](https://www.npmjs.com/package/@backbrace/devkit) | [![Dependency Status](https://david-dm.org/backbrace/backbrace.svg?path=packages/backbrace-devkit)](https://david-dm.org/backbrace/backbrace?path=packages/backbrace-devkit) |
 
 ### Samples
 
