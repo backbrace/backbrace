@@ -1,6 +1,5 @@
 {
   "name": "backbrace",
-  "private": true,
   "version": "0.1.0-alpha.1",
   "branchVersion": "^0.1.0",
   "branchPattern": "0.1.*",
@@ -10,6 +9,10 @@
     "type": "git",
     "url": "https://github.com/backbrace/backbrace.git"
   },
+  "files": [
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
     "@babel/core": "^7.0.0-rc.1",
     "@babel/plugin-transform-runtime": "^7.0.0-rc.1",
