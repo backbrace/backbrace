@@ -90,7 +90,6 @@ module.exports = function(grunt) {
         src: ['packages/backbrace-core/src/*.js', 'packages/backbrace-core/src/*/*.js', 'packages/backbrace-core/src/*/*/*.js', 'README.md'],
         options: {
           destination: 'docs',
-          template: 'node_modules/jumpstartjs-jsdoc-template',
           config: 'jsdoc.conf.json'
         }
       },
@@ -148,6 +147,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
     'package',
+    'subgrunt:packages',
     'test:core'
   ]);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);

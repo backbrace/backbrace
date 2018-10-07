@@ -1,12 +1,8 @@
-# jumpstart.js #
+# Backbrace #
 
-Jumpstart.js allows you to easly develop web applications by handling most of the work for you. It automatically wires together your web application, by using a simple to use design language.
+Backbrace is a development framework for building progressive web applications using Javascript and JSON.
 
-Jumpstart.js is automatically cross-browser and works on mobile devices and desktop browsers, with no extra coding.
-
-* Demo: https://labs.zoomapps.com.au/jumpstart
-
-Building Jumpstart.js
+Building Backbrace
 ---------
 Once you have set up your environment, just run:
 
