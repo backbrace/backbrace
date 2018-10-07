@@ -1,6 +1,7 @@
 'use strict';
 
 var webpack = require('webpack'),
+  globals = require('./lib/globals/global-vars'),
   versionInfo = require('./lib/version-info/version-info.js');
 
 module.exports = {
@@ -36,8 +37,6 @@ module.exports = {
       '@license ' + versionInfo.currentPackage.name + ' v' + versionInfo.currentVersion.full +
       '\n' + versionInfo.currentPackage.author +
       '\nLicense: ' + versionInfo.currentPackage.license),
-    new webpack.DefinePlugin({
-      __CDNSERVER__: JSON.stringify('https://labs.zoomapps.com.au/JumpstartCDN/' + versionInfo.currentVersion.version)
-    })
+    new webpack.DefinePlugin(globals)
   ]
 };

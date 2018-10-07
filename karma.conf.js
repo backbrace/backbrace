@@ -1,5 +1,8 @@
 'use strict';
 
+var webpack = require('webpack'),
+  globals = require('./lib/globals/global-vars');
+
 module.exports = function(config) {
   config.set({
     frameworks: ['jasmine'],
@@ -11,13 +14,17 @@ module.exports = function(config) {
     browserNoActivityTimeout: 30000,
     reporters: ['spec'],
     files: [
+      { pattern: 'packages/backbrace-packages/dist/**', included: false, served: true, watched: false, nocache: true },
       'packages/backbrace-core/test/**/*.js'
     ],
     preprocessors: {
       'packages/backbrace-core/test/**/*.js': ['webpack']
     },
     webpack: {
-      cache: true
+      cache: true,
+      plugins: [
+        new webpack.DefinePlugin(globals)
+      ]
     },
     webpackMiddleware: {
       stats: 'errors-only'
