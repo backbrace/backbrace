@@ -10,11 +10,14 @@ backbrace.settings({
     },
     style: {
         images: {
-            logo: './images/logo-light.png',
-            blocker: './images/512x512-icon.png'
+            logo: './images/logo-landscape.png',
+            blocker: './images/logo-portrait-dark.png'
         },
         font: {
             url: './dist/roboto/css/roboto/roboto-fontface.css'
+        },
+        colors: {
+            primary: '#34495e'
         }
     }
 });
