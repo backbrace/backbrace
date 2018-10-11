@@ -39,7 +39,7 @@ function write(msg, type) {
 /**
  * Log an info message.
  * @method logInfo
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -51,7 +51,7 @@ export function info(msg) {
 /**
  * Log an error.
  * @method logError
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {Error} err Error to log.
  * @returns {void}
  */
@@ -62,7 +62,7 @@ export function error(err) {
 /**
  * Log a warning message.
  * @method logWarning
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -74,7 +74,7 @@ export function warning(msg) {
 /**
  * Log a debug message (If debug mode is turned on).
  * @method logDebug
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {string} msg Message to log.
  * @returns {void}
  */
@@ -88,7 +88,7 @@ export function debug(msg) {
 /**
  * Log an object.
  * @method logObject
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {*} obj Object to log.
  * @returns {void}
  */

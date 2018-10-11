@@ -2,7 +2,7 @@
 
 /**
  * Backbrace public api.
- * @module bb
+ * @module backbrace
  */
 
 import { settings as appSettings } from './settings';
@@ -12,18 +12,18 @@ import * as windowprovider from './providers/window';
 /**
  * Get/Set the application settings.
  * @method settings
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {Settings} [newsettings] Settings to set.
  * @returns {Settings} Returns the app settings.
  * @example
  * // Turn on debug mode and don't minify the resources.
- * bb.settings({
+ * backbrace.settings({
  *  debug: true,
  *  minify: false
  * });
  *
  * // Get the app name.
- * var name = bb.settings().app.name;
+ * var name = backbrace.settings().app.name;
  */
 export function settings(newsettings) {
     merge(appSettings, newsettings);
@@ -33,7 +33,7 @@ export function settings(newsettings) {
 /**
  * Get/set the window provider.
  * @method window
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {(Window|object)} [val] Window instance to set.
  * @returns {(Window|object)} Returns the window instance.
  */

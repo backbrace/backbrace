@@ -12,7 +12,7 @@
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}",
             "sourceMapPathOverrides": {
-                "webpack://bb/./packages/backbrace-core/src/*": "${webRoot}/packages/backbrace-core/src/*"
+                "webpack://backbrace/./packages/backbrace-core/src/*": "${webRoot}/packages/backbrace-core/src/*"
             }
         }
     ]

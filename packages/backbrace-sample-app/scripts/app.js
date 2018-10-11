@@ -1,7 +1,7 @@
 'use strict';
 
 // Setup the app.
-bb.settings({
+backbrace.settings({
     minify: false,
     debug: true,
     packages: './dist',
@@ -21,14 +21,14 @@ bb.settings({
 
 // Register the service worker.
 if ('serviceWorker' in window.navigator)
-    window.navigator.serviceWorker.register('service-worker.js' + (bb.settings().debug ? '?debug=true' : ''))
+    window.navigator.serviceWorker.register('service-worker.js' + (backbrace.settings().debug ? '?debug=true' : ''))
         .then(function(reg) {
-            bb.serviceWorker(reg);
+            backbrace.serviceWorker(reg);
         });
 
-bb.ready(function() {
-    bb.message('Ready!');
+backbrace.ready(function() {
+    backbrace.message('Ready!');
 });
 
 // Start the app!
-bb.start();
+backbrace.start();

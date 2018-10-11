@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         output: {
           path: path.join(__dirname, 'packages/backbrace-core/dist'),
           publicPath: 'packages/backbrace-core/dist/',
-          library: 'bb',
+          library: 'backbrace',
           filename: '[name].js'
         }
       }, webpackconfig),
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
         output: {
           path: path.join(__dirname, 'packages/backbrace-core/dist'),
           publicPath: 'packages/backbrace-core/dist/',
-          library: 'bb',
+          library: 'backbrace',
           filename: '[name].min.js'
         }
       }, webpackconfig)
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
           devtool: 'source-map',
           devServer: {},
           output: {
-            library: 'bb',
+            library: 'backbrace',
             filename: '[name].js'
           },
           plugins: [

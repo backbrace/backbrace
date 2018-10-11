@@ -16,10 +16,10 @@ const messageName = 'ztm',
 
 /**
  * A function that performs no operations.
- * @memberof module:bb
+ * @memberof module:backbrace
  * @returns {void}
  * @example
- * var consoleFn = console.log || bb.noop;
+ * var consoleFn = console.log || backbrace.noop;
  * consoleFn('Test message'); // Will not error if `console.log` is unavailable.
  */
 export function noop() {
@@ -27,10 +27,10 @@ export function noop() {
 
 /**
  * Generate a unique id.
- * @memberof module:bb
+ * @memberof module:backbrace
  * @returns {number} Returns a unique id.
  * @example
- * var id = bb.uid();
+ * var id = backbrace.uid();
  */
 export function uid() {
   return id++;
@@ -38,7 +38,7 @@ export function uid() {
 
 /**
  * Check for HTML5 compatability.
- * @memberof module:bb
+ * @memberof module:backbrace
  * @returns {boolean} `True` if the current environment is HTML5 compatable.
  */
 export function isHtml5() {
@@ -48,7 +48,7 @@ export function isHtml5() {
 
 /**
  * Check if we are on a mobile/tablet device.
- * @memberof module:bb
+ * @memberof module:backbrace
  * @returns {boolean} `True` if we are using a mobile/tablet device.
  */
 export function isMobileDevice() {
@@ -59,7 +59,7 @@ export function isMobileDevice() {
 
 /**
  * Determines if a reference is an `Error`.
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {*} val Reference to check.
  * @returns {boolean} `True` if val is an `Error`.
  */
@@ -75,7 +75,7 @@ export function isError(val) {
 
 /**
  * Determines if a reference is defined.
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {*} val Reference to check.
  * @returns {boolean} `True` if val is defined.
  */
@@ -95,11 +95,11 @@ export function isDate(val) {
 /**
  * Format a string. Merge fields are specified by the argument number wrapped in {}.
  * @method formatString
- * @memberof module:bb
+ * @memberof module:backbrace
  * @param {string} str String to format.
  * @returns {string} Formatted string.
  * @example
- * var str = bb.formatString('This is a {0} {1}.','test','message');
+ * var str = backbrace.formatString('This is a {0} {1}.','test','message');
  * // str = 'This is a test message'
  */
 export function formatString(str) {

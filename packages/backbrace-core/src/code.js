@@ -66,7 +66,7 @@ function runNextThread() {
 
 /**
  * @method codeblock
- * @memberof module:bb
+ * @memberof module:backbrace
  * @description
  * Setup a new block of functions to run.
  *
@@ -75,7 +75,7 @@ function runNextThread() {
  * @param {...GenericFunction} args Functions to run.
  * @returns {JQueryPromise} Promise to run the functions.
  * @example
- * return bb.codeblock(
+ * return backbrace.codeblock(
  *  function() {
  *      // this will run first.
  *  },
@@ -100,7 +100,7 @@ export function codeblock(...args) {
 
 /**
  * @method codeinsert
- * @memberof module:bb
+ * @memberof module:backbrace
  * @description
  * Insert code into the current codeblock.
  * @param {...Function} args Functions to run.
@@ -116,7 +116,7 @@ export function codeinsert(...args) {
 
 /**
  * @method codeeach
- * @memberof module:bb
+ * @memberof module:backbrace
  * @description
  * Loop through an array using `codeblock`.
  * @template T
@@ -153,7 +153,7 @@ export function codeeach(obj, iterator, context) {
 
 /**
  * @method codethread
- * @memberof module:bb
+ * @memberof module:backbrace
  * @description
  * Start a new code thread to execute code when possible.
  * @param {...GenericFunction} args Functions to run.
