@@ -1,7 +1,9 @@
 'use strict';
 
 var path = require('path'),
-  merge = require('webpack-merge');
+  webpack = require('webpack'),
+  merge = require('webpack-merge'),
+  globals = require('./lib/globals/global-vars');
 
 module.exports = function(grunt) {
 
@@ -77,7 +79,10 @@ module.exports = function(grunt) {
           output: {
             library: 'bb',
             filename: '[name].js'
-          }
+          },
+          plugins: [
+            new webpack.DefinePlugin(globals)
+          ]
         },
         publicPath: '/scripts',
         contentBase: ['packages/backbrace-sample-app', 'packages/backbrace-packages'],
