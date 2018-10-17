@@ -1,0 +1,160 @@
+{
+    "!name": "backbrace-types",
+    "!define": {},
+    "GenericFunction": {
+        "!type": "fn(args: ?) -> ?",
+        "!doc": "Alias for `Function`. Use this where you have repeatable function params."
+    },
+    "Key": {
+        "!type": "number",
+        "!doc": "Array key."
+    },
+    "T": {
+        "!type": "?",
+        "!doc": "Any type."
+    },
+    "window": {
+        "!type": "<top>",
+        "!url": "https://developer.mozilla.org/en/docs/DOM/window",
+        "!doc": "The window object represents a window containing a DOM document."
+    },
+    "ErrorHandler": {
+        "!type": "fn(msg: string|Error, args: ?) -> ?",
+        "!doc": "Error handler function."
+    },
+    "PageField": {
+        "name": {
+            "!type": "string",
+            "!span": "8281[245:2]-8285[245:6]"
+        },
+        "caption": {
+            "!type": "string",
+            "!span": "8293[246:2]-8300[246:9]"
+        },
+        "type": {
+            "!type": "string",
+            "!span": "8308[247:2]-8312[247:6]"
+        },
+        "component": {
+            "!type": "string",
+            "!span": "8324[248:2]-8333[248:11]"
+        },
+        "width": {
+            "!type": "string",
+            "!span": "8341[249:2]-8346[249:7]"
+        },
+        "editable": {
+            "!type": "bool",
+            "!span": "8359[250:2]-8367[250:10]"
+        },
+        "hidden": {
+            "!type": "bool",
+            "!span": "8377[251:2]-8383[251:8]"
+        },
+        "className": {
+            "!type": "string",
+            "!span": "8394[252:2]-8403[252:11]"
+        },
+        "!span": "8265[244:11]-8274[244:20]"
+    },
+    "PageAction": {
+        "name": {
+            "!type": "string",
+            "!span": "8773[264:2]-8777[264:6]"
+        },
+        "text": {
+            "!type": "string",
+            "!span": "8785[265:2]-8789[265:6]"
+        },
+        "icon": {
+            "!type": "string",
+            "!span": "8797[266:2]-8801[266:6]"
+        },
+        "iconColor": {
+            "!type": "string",
+            "!span": "8809[267:2]-8818[267:11]"
+        },
+        "className": {
+            "!type": "string",
+            "!span": "8826[268:2]-8835[268:11]"
+        },
+        "!span": "8756[263:11]-8766[263:21]"
+    },
+    "PageSection": {
+        "name": {
+            "!type": "string",
+            "!span": "9246[281:2]-9250[281:6]"
+        },
+        "text": {
+            "!type": "string",
+            "!span": "9258[282:2]-9262[282:6]"
+        },
+        "pageName": {
+            "!type": "string",
+            "!span": "9270[283:2]-9278[283:10]"
+        },
+        "icon": {
+            "!type": "string",
+            "!span": "9286[284:2]-9290[284:6]"
+        },
+        "className": {
+            "!type": "string",
+            "!span": "9298[285:2]-9307[285:11]"
+        },
+        "fields": {
+            "!type": "[PageField]",
+            "!span": "9315[286:2]-9321[286:8]"
+        },
+        "!span": "9228[280:11]-9239[280:22]"
+    },
+    "PageMeta": {
+        "name": {
+            "!type": "string",
+            "!span": "9854[301:2]-9858[301:6]"
+        },
+        "caption": {
+            "!type": "string",
+            "!span": "9866[302:2]-9873[302:9]"
+        },
+        "component": {
+            "!type": "string",
+            "!span": "9881[303:2]-9890[303:11]"
+        },
+        "controller": {
+            "!type": "string",
+            "!span": "9906[304:2]-9916[304:12]"
+        },
+        "tableName": {
+            "!type": "string",
+            "!span": "9924[305:2]-9933[305:11]"
+        },
+        "icon": {
+            "!type": "string",
+            "!span": "9941[306:2]-9945[306:6]"
+        },
+        "actions": {
+            "!type": "[PageAction]",
+            "!span": "9953[307:2]-9960[307:9]"
+        },
+        "sections": {
+            "!type": "[PageSection]",
+            "!span": "9968[308:2]-9976[308:10]"
+        },
+        "!span": "9839[300:11]-9847[300:19]"
+    },
+    "JQueryPromise": {
+        "!url": "http://api.jquery.com/jQuery.Deferred/",
+        "!doc": "A constructor function that returns a chainable utility object with methods to register multiple callbacks into callback queues, invoke callback queues, and relay the success or failure state of any synchronous or asynchronous function.",
+        "prototype": {
+            "always": "fn(callback: fn()) -> +jQuery.Promise",
+            "done": "fn(callback: fn()) -> +jQuery.Promise",
+            "fail": "fn(callback: fn()) -> +jQuery.Promise",
+            "isRejected": "fn() -> bool",
+            "isResolved": "fn() -> bool",
+            "pipe": "fn(doneFilter?: fn(), failFilter?: fn()) -> +jQuery.Promise",
+            "promise": "fn(target: ?) -> +jQuery.Deferred",
+            "state": "fn() -> string",
+            "then": "fn(doneFilter: fn(), failFilter?: fn(), progressFilter?: fn()) -> +jQuery.Promise"
+        }
+    }
+}

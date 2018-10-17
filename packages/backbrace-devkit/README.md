@@ -9,3 +9,29 @@ Using npm:
 ```sh
 npm install --save-dev @backbrace/devkit
 ```
+
+## Build Typings
+
+From the project root:
+
+```sh
+grunt typings
+```
+
+This will output the typings to `packages/backbrace-devkit/typings/types.d.ts`
+
+## Generate Tern Definition JSON
+
+From the project root:
+
+```sh
+./node_modules/rollup/bin/rollup packages/backbrace-core/src/backbrace.js --format iife --name "backbrace" --file packages/backbrace-devkit/tern/temp/backbrace.js
+```
+
+Then run:
+
+```sh
+./node_modules/tern/bin/condense packages/backbrace-devkit/tern/temp/backbrace.js --def packages/backbrace-devkit/tern/defs/backbrace-types.json
+```
+
+This will output the Tern definition JSON.
