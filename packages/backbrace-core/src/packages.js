@@ -7,6 +7,10 @@ import { settings } from './settings';
 import { isDefined, deepMap, formatString, isMobileDevice } from './util';
 
 const packages = {
+    'ace': [
+        ['{1}/ace.js'],
+        ['{1}/ext-language_tools.js', '{1}/ext-tern.js']
+    ],
     'jqgrid': [
         (isMobileDevice() ? null : ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js'])
     ],
@@ -51,8 +55,9 @@ export function exists(name) {
 export function get(name) {
     if (isDefined(packages[name])) {
         const p = packages[name],
-            m = (settings.minify ? '.min' : '');
-        return deepMap(p, val => `${settings.packages}/${name}/${formatString(val, name + m)}`);
+            m = (settings.minify ? '.min' : ''),
+            fm = (settings.minify ? 'min' : 'src');
+        return deepMap(p, val => `${settings.packages}/${name}/${formatString(val, name + m, fm)}`);
     }
     return null;
 }

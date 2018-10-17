@@ -403,6 +403,12 @@ export let style = merge({}, base, {
     '-webkit-animation-delay': '1.15s',
     'animation-delay': '1.15s'
   },
+  '.ace_editor': {
+    border: '1px solid lightgray',
+    margin: 'auto',
+    height: '200px',
+    width: '100%'
+  },
   '@-webkit-keyframes indeterminate': {
     '0%': {
       left: '-35%',
