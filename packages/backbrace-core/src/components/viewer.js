@@ -279,13 +279,14 @@ export class ViewerComponent extends Component {
             },
 
             // Get the table contoller (from file).
-            () => {
-                if (this.table.controller !== '')
-                    return codeblock(
-                        () => loadController(this.table.controller),
-                        () => getController(this.table.controller)(this)
-                    );
-            },
+            this.table ?
+                () => {
+                    if (this.table.controller !== '')
+                        return codeblock(
+                            () => loadController(this.table.controller),
+                            () => getController(this.table.controller)(this)
+                        );
+                } : null,
 
             () => this.update(),
 
@@ -303,27 +304,28 @@ export class ViewerComponent extends Component {
      */
     update() {
 
-        this.showLoad();
+        if (this.table) {
+            this.showLoad();
+            return codeblock(
+                () => {
+                    // Load the data source from a file.
+                    if (this.table.data.indexOf('.json') !== -1) {
+                        return get(this.table.data);
+                    }
+                },
+                (data) => {
 
-        return codeblock(
-            () => {
-                // Load the data source from a file.
-                if (this.table.data.indexOf('.json') !== -1) {
-                    return get(this.table.data);
+                    // Save the data.
+                    this.data = data.data || data;
+
+                    // Update the page component.
+                    return this.pageComponent.update(this.data);
+                },
+                () => {
+                    this.hideLoad();
                 }
-            },
-            (data) => {
-
-                // Save the data.
-                this.data = data.data || data;
-
-                // Update the page component.
-                return this.pageComponent.update(this.data);
-            },
-            () => {
-                this.hideLoad();
-            }
-        );
+            );
+        }
     }
 
     /**
