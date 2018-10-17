@@ -19,6 +19,7 @@ module.exports = function(grunt) {
                     { expand: true, cwd: 'node_modules/@mdi/font', src: ['css/**', 'fonts/**', 'scss/**', '*.md'], dest: 'dist/materialdesignicons' },
                     { expand: true, cwd: 'node_modules/ace-builds/src', src: ['**'], dest: 'dist/ace/src' },
                     { expand: true, cwd: 'node_modules/ace-builds/src-min', src: ['**'], dest: 'dist/ace/min' },
+                    { expand: true, cwd: 'src/ace', src: ['**'], dest: 'dist/ace' },
                     { expand: true, cwd: 'node_modules/jquery/dist', src: ['**'], dest: 'dist/jquery' },
                     { expand: true, cwd: 'node_modules/jquery-ripple', src: ['*.js', '*.css', '*.md'], dest: 'dist/jquery-ripple' },
                     { expand: true, cwd: 'node_modules/jquery-ui-dist', src: ['**'], dest: 'dist/jquery-ui' },
