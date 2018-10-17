@@ -19,6 +19,7 @@
     "@babel/preset-env": "^7.0.0-rc.1",
     "@babel/runtime": "^7.0.0-rc.1",
     "@backbrace/dts-generator": "0.1.0-beta.1",
+    "@types/ace": "0.0.40",
     "@types/jasmine": "^2.8.8",
     "@types/jquery": "^3.3.4",
     "@types/sweetalert": "^1.1.28",
