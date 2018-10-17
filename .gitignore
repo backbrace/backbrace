@@ -3,8 +3,6 @@ node_modules/
 npm-debug.log
 .DS_Store
 /packages/backbrace-packages/dist/
-#TEMP!!!!
-/packages/backbrace-packages/src/
 /packages/backbrace-core/dist/
 /packages/backbrace-devkit/typings/
 /packages/backbrace-devkit/tern/temp/
