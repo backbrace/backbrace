@@ -5,19 +5,19 @@ import { get as getJQuery } from '../providers/jquery';
 /**
  * @class
  * @description
- * Code thread class.
+ * Promises Queue class.
  */
-export class CodeThread {
+export class PromiseQueue {
 
     /**
      * @constructor
-     * @param {function()} func Thread function to execute.
+     * @param {function()} func Queue function to execute.
      */
     constructor(func) {
         /**
          * @type {number}
          * @description
-         * ID for the thread.
+         * ID for the queue.
          */
         this.id = uid();
         /**
@@ -42,7 +42,7 @@ export class CodeThread {
 
     /**
      * @description
-     * Create a new code queue and run the first function.
+     * Create a new promise queue and run the first function.
      * @param {...GenericFunction} args Functions to run.
      * @returns {void}
      */
@@ -124,20 +124,20 @@ export class CodeThread {
 
     /**
      * @description
-     * Run the code thread.
+     * Run the promise queue.
      * @param {function()} callback Callback function to run.
      * @returns {void}
      */
     run(callback) {
 
-        logDebug(`Started Thread: ${this.id}`);
+        logDebug(`Started Promise Queue: ${this.id}`);
 
         this.createQueue(
 
             () => this.func(),
 
             () => {
-                logDebug(`Finished Thread: #${this.id}`);
+                logDebug(`Finished Promise Queue: #${this.id}`);
                 if (callback)
                     callback();
             }
@@ -147,7 +147,7 @@ export class CodeThread {
 
     /**
      * @description
-     * Insert functions into the start of the current codeblock.
+     * Insert functions into the start of the current promiseblock.
      * @param {...GenericFunction} args Functions to run.
      * @returns {void}
      */

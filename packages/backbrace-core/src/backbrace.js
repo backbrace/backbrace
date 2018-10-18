@@ -63,11 +63,11 @@ export {
 } from './log';
 
 export {
-    codeblock,
-    codeinsert,
-    codethread,
-    codeeach
-} from './code';
+    promiseblock,
+    promiseinsert,
+    promisequeue,
+    promiseeach
+} from './promises';
 
 export {
     create as controller

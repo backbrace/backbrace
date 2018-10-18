@@ -4,7 +4,7 @@
  * @private
  */
 
-import { codethread, reset } from './code';
+import { promisequeue, reset } from './promises';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
@@ -229,7 +229,7 @@ export function start() {
             throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
 
         // Load startup packages.
-        codethread(function() {
+        promisequeue(function() {
 
             packagemanager.add('resetcss');
             packagemanager.add('jquery-ui', 1);
@@ -334,7 +334,7 @@ export function loadPage(name, options) {
 
     let pge = new ViewerComponent(name, options);
 
-    codethread(
+    promisequeue(
         function() {
 
             if (currentPage())
@@ -390,7 +390,7 @@ export function addWindowToToolbar(id) {
  */
 export function closePage(id) {
 
-    codethread(function() {
+    promisequeue(function() {
 
         // Unload the page.
         if (!pages.has(id))
@@ -423,7 +423,7 @@ export function closePage(id) {
  */
 export function showPage(id) {
 
-    codethread(function() {
+    promisequeue(function() {
         if (id === activePage)
             return;
 

@@ -1,4 +1,4 @@
-import { codeblock, codeeach } from '../../code';
+import { promiseblock, promiseeach } from '../../promises';
 import { get as getJQuery } from '../../providers/jquery';
 import { PageComponent } from '../../classes/pagecomponent';
 import { ViewerComponent } from '../viewer';
@@ -71,7 +71,7 @@ export class CardPageComponent extends PageComponent {
      * @returns {JQueryPromise} Promise to load the card.
      */
     load(cont) {
-        return codeblock(
+        return promiseblock(
             () => this.loadSections(cont)
         );
     }
@@ -86,7 +86,7 @@ export class CardPageComponent extends PageComponent {
 
         const page = this.viewer.page;
 
-        return codeeach(page.sections, (section, i) => {
+        return promiseeach(page.sections, (section, i) => {
 
             if (section.pageName === '') { // Not a sub page.
 
@@ -126,7 +126,7 @@ export class CardPageComponent extends PageComponent {
      */
     loadFields(win, fields) {
 
-        return codeeach(fields, (field, i) => {
+        return promiseeach(fields, (field, i) => {
 
             let comp = field.component;
 
@@ -157,16 +157,16 @@ export class CardPageComponent extends PageComponent {
         if (data && data.length > 0)
             r = data[0];
 
-        return codeblock(
+        return promiseblock(
             () => {
                 // Update the fields.
-                return codeeach(Array.from(this.fields.values()), function(cont) {
+                return promiseeach(Array.from(this.fields.values()), function(cont) {
                     return cont.update(r);
                 });
             },
             () => {
                 // Update the sub pages.
-                return codeeach(Array.from(this.subpages.values()), function(page) {
+                return promiseeach(Array.from(this.subpages.values()), function(page) {
                     return page.update();
                 });
             }

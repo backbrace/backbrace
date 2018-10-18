@@ -4,7 +4,7 @@
  * @private
  */
 
-import { codeblock } from './code';
+import { promiseblock } from './promises';
 import { get } from './http';
 import { settings } from './settings';
 import { get as getJQuery } from './providers/jquery';
@@ -73,7 +73,7 @@ export function page(name) {
 
     const $ = getJQuery();
 
-    return codeblock(
+    return promiseblock(
 
         // Get the page from a JSON file.
         () => get(settings.meta.dir + name + '.json'),
@@ -124,7 +124,7 @@ export function table(name) {
 
     const $ = getJQuery();
 
-    return codeblock(
+    return promiseblock(
 
         // Get the table from a JSON file.
         () => get(settings.meta.dir + name + '.json'),

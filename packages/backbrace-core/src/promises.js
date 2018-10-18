@@ -1,71 +1,71 @@
 /**
- * Code execution module. Handles execution of async code.
- * @module code
+ * Promise execution module. Handles execution of async code.
+ * @module promises
  * @private
  */
 
 import { error } from './error';
 import { debug as logDebug, object as logObject } from './log';
 import { get as getJquery } from './providers/jquery';
-import { CodeThread } from './classes/codethread';
+import { PromiseQueue } from './classes/promisequeue';
 
-const codeError = error('code');
-
-/**
- * @type {CodeThread}
- * @ignore
- */
-let currentThread = null;
+const promisesError = error('promises');
 
 /**
- * @type {CodeThread[]}
+ * @type {PromiseQueue}
  * @ignore
  */
-let threads = [];
+let currentQueue = null;
+
+/**
+ * @type {PromiseQueue[]}
+ * @ignore
+ */
+let promisequeues = [];
 
 /**
  * @method reset
  * @ignore
  * @description
- * Reset all code threads.
+ * Reset all promise queues.
  * @returns {void}
  */
 export function reset() {
 
     // Clear the current queue.
-    if (currentThread) {
+    if (currentQueue) {
 
         // Output the current executing function (for debugging).
-        if (currentThread.currFunction)
-            logObject(currentThread.currFunction);
+        if (currentQueue.currFunction)
+            logObject(currentQueue.currFunction);
 
-        currentThread.queue = [];
+        currentQueue.queue = [];
     }
 
-    // Kill off all threads.
-    logDebug('Clearing all threads.');
-    threads = [];
-    currentThread = null;
+    // Kill off all queues.
+    logDebug('Clearing all promise queues.');
+    promisequeues = [];
+    currentQueue = null;
 
 }
 
 /**
- * @method runNextThread
+ * @method runNextQueue
  * @private
  * @description
- * Run the next code thread in the queue.
+ * Run the next promise queue in the queue.
  * @returns {void}
  */
-function runNextThread() {
-    currentThread = null;
-    if (threads.length === 0)
+function runNextQueue() {
+    currentQueue = null;
+    if (promisequeues.length === 0)
         return;
-    currentThread = threads.shift();
-    currentThread.run(runNextThread);
+    currentQueue = promisequeues.shift();
+    currentQueue.run(runNextQueue);
 }
 
 /**
- * @method codeblock
+ * @method promiseblock
  * @memberof module:backbrace
  * @description
  * Setup a new block of functions to run.
@@ -75,7 +75,7 @@ function runNextThread() {
  * @param {...GenericFunction} args Functions to run.
  * @returns {JQueryPromise} Promise to run the functions.
  * @example
- * return backbrace.codeblock(
+ * return backbrace.promiseblock(
  *  function() {
  *      // this will run first.
  *  },
@@ -84,51 +84,51 @@ function runNextThread() {
  *  }
  * );
  */
-export function codeblock(...args) {
+export function promiseblock(...args) {
 
     const $ = getJquery();
 
-    if (!currentThread)
-        throw codeError('nothread', 'Attempted to start a codeblock without a thread');
+    if (!currentQueue)
+        throw promisesError('noqueue', 'Attempted to run a promise block without a promise queue');
 
     let w = $.Deferred();
 
-    CodeThread.prototype.createQueue.apply(currentThread, args);
+    PromiseQueue.prototype.createQueue.apply(currentQueue, args);
 
     return w.promise();
 }
 
 /**
- * @method codeinsert
+ * @method promiseinsert
  * @memberof module:backbrace
  * @description
- * Insert code into the current codeblock.
+ * Insert code into the current promise block.
  * @param {...Function} args Functions to run.
  * @returns {void}
  */
-export function codeinsert(...args) {
+export function promiseinsert(...args) {
 
-    if (!currentThread)
-        throw codeError('nothread', 'Attempted to insert into a codeblock without a thread');
+    if (!currentQueue)
+        throw promisesError('noqueue', 'Attempted to insert into a promise block without a promise queue');
 
-    CodeThread.prototype.insert.apply(currentThread, args);
+    PromiseQueue.prototype.insert.apply(currentQueue, args);
 }
 
 /**
- * @method codeeach
+ * @method promiseeach
  * @memberof module:backbrace
  * @description
- * Loop through an array using `codeblock`.
+ * Loop through an array using `promiseblock`.
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
  * @param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {JQueryPromise} Promise to return after we are done looping.
  */
-export function codeeach(obj, iterator, context) {
+export function promiseeach(obj, iterator, context) {
 
     const func = function(key) {
-        return codeblock(
+        return promiseblock(
 
             function() {
                 return iterator.call(context, obj[key], key, obj);
@@ -144,7 +144,7 @@ export function codeeach(obj, iterator, context) {
     };
 
     if (obj.length > 0)
-        return codeblock(
+        return promiseblock(
             function() {
                 return func(0);
             }
@@ -152,26 +152,26 @@ export function codeeach(obj, iterator, context) {
 }
 
 /**
- * @method codethread
+ * @method promisequeue
  * @memberof module:backbrace
  * @description
- * Start a new code thread to execute code when possible.
+ * Start a new promise queue to execute code when possible.
  * @param {...GenericFunction} args Functions to run.
  * @returns {void}
  */
-export function codethread(...args) {
+export function promisequeue(...args) {
 
     const func = function() {
-        return codeblock.apply(this, args);
+        return promiseblock.apply(this, args);
     },
-        thread = new CodeThread(func);
+        queue = new PromiseQueue(func);
 
-    logDebug('Created new thread');
+    logDebug('Created new promise queue');
 
-    // Add the thread to the queue.
-    threads.push(thread);
+    // Add the queue to the queue.
+    promisequeues.push(queue);
 
-    // If nothing is running, run this thread.
-    if (!currentThread)
-        runNextThread();
+    // If nothing is running, run this queue.
+    if (!currentQueue)
+        runNextQueue();
 }

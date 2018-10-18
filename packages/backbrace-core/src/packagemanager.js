@@ -4,7 +4,7 @@
  * @private
  */
 
-import { codeinsert } from './code';
+import { promiseinsert } from './promises';
 import { error } from './error';
 import { debug as logDebug } from './log';
 import { get as getPackage, exists as packageExists } from './packages';
@@ -109,7 +109,7 @@ export function load(onsuccess, onerror) {
 
     const $ = getJQuery();
 
-    codeinsert(
+    promiseinsert(
         function() {
             'inserted';
             let d = $.Deferred();

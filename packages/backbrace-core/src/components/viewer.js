@@ -1,5 +1,5 @@
 import { closePage, addWindowToToolbar, currentPage } from '../app';
-import { codeblock, codethread } from '../code';
+import { promiseblock, promisequeue } from '../promises';
 import { load as loadController, get as getController } from '../controller';
 import { error } from '../error';
 import { get } from '../http';
@@ -169,7 +169,7 @@ export class ViewerComponent extends Component {
                 cont.css('left', '0');
         }
 
-        return codeblock(
+        return promiseblock(
 
             // Get the page meta data.
             () => page(this.name),
@@ -184,7 +184,7 @@ export class ViewerComponent extends Component {
 
                 // Get the table meta data.
                 if (this.page.tableName)
-                    return codeblock(
+                    return promiseblock(
                         () => table(this.page.tableName),
                         (table) => {
 
@@ -239,7 +239,7 @@ export class ViewerComponent extends Component {
 
                 // Add title bar buttons.
                 if (!isMobileDevice()) {
-                    this.window.addTitlebarIcon('%refresh%', (() => codethread(() => this.update())));
+                    this.window.addTitlebarIcon('%refresh%', (() => promisequeue(() => this.update())));
                 }
                 // Add close function.
                 this.window.options.onClose = () => closePage(this.id);
@@ -272,7 +272,7 @@ export class ViewerComponent extends Component {
             // Get the page contoller (from file).
             () => {
                 if (this.page.controller !== '')
-                    return codeblock(
+                    return promiseblock(
                         () => loadController(this.page.controller),
                         () => getController(this.page.controller)(this)
                     );
@@ -282,7 +282,7 @@ export class ViewerComponent extends Component {
             this.table ?
                 () => {
                     if (this.table.controller !== '')
-                        return codeblock(
+                        return promiseblock(
                             () => loadController(this.table.controller),
                             () => getController(this.table.controller)(this)
                         );
@@ -306,7 +306,7 @@ export class ViewerComponent extends Component {
 
         if (this.table) {
             this.showLoad();
-            return codeblock(
+            return promiseblock(
                 () => {
                     // Load the data source from a file.
                     if (this.table.data.indexOf('.json') !== -1) {
@@ -339,8 +339,8 @@ export class ViewerComponent extends Component {
 
         this.showLoad();
 
-        codethread(() => {
-            return codeblock(
+        promisequeue(() => {
+            return promiseblock(
                 func ? function() {
                     return func();
                 } : null,
