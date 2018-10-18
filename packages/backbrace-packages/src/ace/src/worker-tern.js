@@ -21859,7 +21859,7 @@ var def_ecma6 = {
 //#endregion
 
 var def_bbtypes = {
-    "!name": "bbtypes",
+    "!name": "backbrace-types",
     "!define": {},
     "GenericFunction": {
         "!type": "fn(args: ?) -> ?",
@@ -21884,123 +21884,92 @@ var def_bbtypes = {
     },
     "PageField": {
         "name": {
-            "!type": "string",
-            "!span": "8281[245:2]-8285[245:6]"
+            "!type": "string"
         },
         "caption": {
-            "!type": "string",
-            "!span": "8293[246:2]-8300[246:9]"
+            "!type": "string"
         },
         "type": {
-            "!type": "string",
-            "!span": "8308[247:2]-8312[247:6]"
+            "!type": "string"
         },
         "component": {
-            "!type": "string",
-            "!span": "8324[248:2]-8333[248:11]"
+            "!type": "string"
         },
         "width": {
-            "!type": "string",
-            "!span": "8341[249:2]-8346[249:7]"
+            "!type": "string"
         },
         "editable": {
-            "!type": "bool",
-            "!span": "8359[250:2]-8367[250:10]"
+            "!type": "bool"
         },
         "hidden": {
-            "!type": "bool",
-            "!span": "8377[251:2]-8383[251:8]"
+            "!type": "bool"
         },
         "className": {
-            "!type": "string",
-            "!span": "8394[252:2]-8403[252:11]"
-        },
-        "!span": "8265[244:11]-8274[244:20]"
+            "!type": "string"
+        }
     },
     "PageAction": {
         "name": {
-            "!type": "string",
-            "!span": "8773[264:2]-8777[264:6]"
+            "!type": "string"
         },
         "text": {
-            "!type": "string",
-            "!span": "8785[265:2]-8789[265:6]"
+            "!type": "string"
         },
         "icon": {
-            "!type": "string",
-            "!span": "8797[266:2]-8801[266:6]"
+            "!type": "string"
         },
         "iconColor": {
-            "!type": "string",
-            "!span": "8809[267:2]-8818[267:11]"
+            "!type": "string"
         },
         "className": {
-            "!type": "string",
-            "!span": "8826[268:2]-8835[268:11]"
-        },
-        "!span": "8756[263:11]-8766[263:21]"
+            "!type": "string"
+        }
     },
     "PageSection": {
         "name": {
-            "!type": "string",
-            "!span": "9246[281:2]-9250[281:6]"
+            "!type": "string"
         },
         "text": {
-            "!type": "string",
-            "!span": "9258[282:2]-9262[282:6]"
+            "!type": "string"
         },
         "pageName": {
-            "!type": "string",
-            "!span": "9270[283:2]-9278[283:10]"
+            "!type": "string"
         },
         "icon": {
-            "!type": "string",
-            "!span": "9286[284:2]-9290[284:6]"
+            "!type": "string"
         },
         "className": {
-            "!type": "string",
-            "!span": "9298[285:2]-9307[285:11]"
+            "!type": "string"
         },
         "fields": {
-            "!type": "[PageField]",
-            "!span": "9315[286:2]-9321[286:8]"
-        },
-        "!span": "9228[280:11]-9239[280:22]"
+            "!type": "[PageField]"
+        }
     },
     "PageMeta": {
         "name": {
-            "!type": "string",
-            "!span": "9854[301:2]-9858[301:6]"
+            "!type": "string"
         },
         "caption": {
-            "!type": "string",
-            "!span": "9866[302:2]-9873[302:9]"
+            "!type": "string"
         },
         "component": {
-            "!type": "string",
-            "!span": "9881[303:2]-9890[303:11]"
+            "!type": "string"
         },
         "controller": {
-            "!type": "string",
-            "!span": "9906[304:2]-9916[304:12]"
+            "!type": "string"
         },
         "tableName": {
-            "!type": "string",
-            "!span": "9924[305:2]-9933[305:11]"
+            "!type": "string"
         },
         "icon": {
-            "!type": "string",
-            "!span": "9941[306:2]-9945[306:6]"
+            "!type": "string"
         },
         "actions": {
-            "!type": "[PageAction]",
-            "!span": "9953[307:2]-9960[307:9]"
+            "!type": "[PageAction]"
         },
         "sections": {
-            "!type": "[PageSection]",
-            "!span": "9968[308:2]-9976[308:10]"
-        },
-        "!span": "9839[300:11]-9847[300:19]"
+            "!type": "[PageSection]"
+        }
     },
     "JQueryPromise": {
         "!url": "http://api.jquery.com/jQuery.Deferred/",
@@ -22023,526 +21992,284 @@ var def_backbrace = {
     "!name": "backbrace.js",
     "!define": {
         "backbrace.settings.!ret": {
-            "debug": {
-                "!type": "bool",
-                "!span": "28641[1040:8]-28646[1040:13]"
-            },
-            "minify": {
-                "!type": "bool",
-                "!span": "28663[1041:8]-28669[1041:14]"
-            },
-            "guiAllowed": {
-                "!type": "bool",
-                "!span": "28685[1042:8]-28695[1042:18]"
-            },
+            "debug": "bool",
+            "minify": "bool",
+            "guiAllowed": "bool",
             "jss": {
-                "!span": "28711[1043:8]-28714[1043:11]",
                 "!doc": "Flat style jss object."
             },
-            "windowMode": {
-                "!type": "bool",
-                "!span": "28733[1044:8]-28743[1044:18]"
-            },
-            "packages": {
-                "!type": "string",
-                "!span": "28759[1045:8]-28767[1045:16]"
-            },
+            "windowMode": "bool",
+            "packages": "string",
             "app": {
-                "name": {
-                    "!type": "string",
-                    "!span": "28829[1047:12]-28833[1047:16]"
-                },
-                "version": {
-                    "!type": "string",
-                    "!span": "28864[1048:12]-28871[1048:19]"
-                },
+                "name": "string",
+                "version": "string",
                 "title": {
                     "!type": "string",
-                    "!span": "28894[1049:12]-28899[1049:17]",
                     "!doc": "Update title."
                 },
-                "description": {
-                    "!type": "string",
-                    "!span": "28934[1050:12]-28945[1050:23]"
-                },
-                "!span": "28810[1046:8]-28813[1046:11]"
+                "description": "string"
             },
             "meta": {
-                "dir": {
-                    "!type": "string",
-                    "!span": "29017[1053:12]-29020[1053:15]"
-                },
-                "!span": "28997[1052:8]-29001[1052:12]"
+                "dir": "string"
             },
             "style": {
                 "loader": {
-                    "zindex": {
-                        "!type": "string",
-                        "!span": "29098[1057:16]-29104[1057:22]"
-                    },
-                    "barheight": {
-                        "!type": "string",
-                        "!span": "29130[1058:16]-29139[1058:25]"
-                    },
-                    "barwidth": {
-                        "!type": "string",
-                        "!span": "29165[1059:16]-29173[1059:24]"
-                    },
-                    "progressbackground": {
-                        "!type": "string",
-                        "!span": "29200[1060:16]-29218[1060:34]"
-                    },
-                    "progresscolor": {
-                        "!type": "string",
-                        "!span": "29247[1061:16]-29260[1061:29]"
-                    },
-                    "blockerbackground": {
-                        "!type": "string",
-                        "!span": "29289[1062:16]-29306[1062:33]"
-                    },
-                    "!span": "29072[1056:12]-29078[1056:18]"
+                    "zindex": "string",
+                    "barheight": "string",
+                    "barwidth": "string",
+                    "progressbackground": "string",
+                    "progresscolor": "string",
+                    "blockerbackground": "string"
                 },
                 "font": {
-                    "url": {
-                        "!type": "string",
-                        "!span": "29369[1065:16]-29372[1065:19]"
-                    },
-                    "family": {
-                        "!type": "string",
-                        "!span": "29461[1066:16]-29467[1066:22]"
-                    },
-                    "!span": "29345[1064:12]-29349[1064:16]"
+                    "url": "string",
+                    "family": "string"
                 },
                 "images": {
-                    "logo": {
-                        "!type": "string",
-                        "!span": "29547[1069:16]-29551[1069:20]"
-                    },
-                    "menuLogo": {
-                        "!type": "string",
-                        "!span": "29573[1070:16]-29581[1070:24]"
-                    },
-                    "blocker": {
-                        "!type": "string",
-                        "!span": "29603[1071:16]-29610[1071:23]"
-                    },
-                    "!span": "29521[1068:12]-29527[1068:18]"
+                    "logo": "string",
+                    "menuLogo": "string",
+                    "blocker": "string"
                 },
                 "colors": {
-                    "primary": {
-                        "!type": "string",
-                        "!span": "29668[1074:16]-29675[1074:23]"
-                    },
-                    "primarytext": {
-                        "!type": "string",
-                        "!span": "29704[1075:16]-29715[1075:27]"
-                    },
-                    "primaryvar": {
-                        "!type": "string",
-                        "!span": "29741[1076:16]-29751[1076:26]"
-                    },
-                    "primaryvartext": {
-                        "!type": "string",
-                        "!span": "29780[1077:16]-29794[1077:30]"
-                    },
-                    "secondary": {
-                        "!type": "string",
-                        "!span": "29820[1078:16]-29829[1078:25]"
-                    },
-                    "secondarytext": {
-                        "!type": "string",
-                        "!span": "29858[1079:16]-29871[1079:29]"
-                    },
-                    "secondaryvar": {
-                        "!type": "string",
-                        "!span": "29897[1080:16]-29909[1080:28]"
-                    },
-                    "secondaryvartext": {
-                        "!type": "string",
-                        "!span": "29938[1081:16]-29954[1081:32]"
-                    },
-                    "surface": {
-                        "!type": "string",
-                        "!span": "29980[1082:16]-29987[1082:23]"
-                    },
-                    "surfacetext": {
-                        "!type": "string",
-                        "!span": "30013[1083:16]-30024[1083:27]"
-                    },
-                    "background": {
-                        "!type": "string",
-                        "!span": "30050[1084:16]-30060[1084:26]"
-                    },
-                    "backgroundtext": {
-                        "!type": "string",
-                        "!span": "30089[1085:16]-30103[1085:30]"
-                    },
-                    "hover": {
-                        "!type": "string",
-                        "!span": "30129[1086:16]-30134[1086:21]"
-                    },
-                    "hovertext": {
-                        "!type": "string",
-                        "!span": "30166[1087:16]-30175[1087:25]"
-                    },
-                    "!span": "29642[1073:12]-29648[1073:18]"
+                    "primary": "string",
+                    "primarytext": "string",
+                    "primaryvar": "string",
+                    "primaryvartext": "string",
+                    "secondary": "string",
+                    "secondarytext": "string",
+                    "secondaryvar": "string",
+                    "secondaryvartext": "string",
+                    "surface": "string",
+                    "surfacetext": "string",
+                    "background": "string",
+                    "backgroundtext": "string",
+                    "hover": "string",
+                    "hovertext": "string"
                 },
                 "screen": {
-                    "small": {
-                        "!type": "number",
-                        "!span": "30237[1090:16]-30242[1090:21]"
-                    },
-                    "smallUp": {
-                        "!type": "number",
-                        "!span": "30265[1091:16]-30272[1091:23]"
-                    },
-                    "medium": {
-                        "!type": "number",
-                        "!span": "30295[1092:16]-30301[1092:22]"
-                    },
-                    "mediumUp": {
-                        "!type": "number",
-                        "!span": "30324[1093:16]-30332[1093:24]"
-                    },
-                    "large": {
-                        "!type": "number",
-                        "!span": "30355[1094:16]-30360[1094:21]"
-                    },
-                    "largeUp": {
-                        "!type": "number",
-                        "!span": "30384[1095:16]-30391[1095:23]"
-                    },
-                    "!span": "30211[1089:12]-30217[1089:18]"
-                },
-                "!span": "29051[1055:8]-29056[1055:13]"
+                    "small": "number",
+                    "smallUp": "number",
+                    "medium": "number",
+                    "mediumUp": "number",
+                    "large": "number",
+                    "largeUp": "number"
+                }
             },
-            "!span": "28630[1038:19]-30427[1098:5]",
             "!doc": "App settings object.\n@type {Settings}"
         },
-        "backbrace.codeblock.!0": {
-            "!type": "fn() -> JQueryPromise",
-            "!span": "108993[3916:12]-109194[3923:13]"
-        },
-        "backbrace.codeinsert.!0": {
-            "!type": "fn()",
-            "!span": "47106[1734:12]-47354[1741:13]"
-        },
-        "backbrace.message.!1": {
-            "!type": "fn()",
-            "!span": "106726[3832:40]-106816[3834:29]"
-        },
+        "backbrace.promiseblock.!0": "fn() -> JQueryPromise",
+        "backbrace.promiseinsert.!0": "fn() -> ?",
+        "backbrace.message.!1": "fn()",
         "backbrace.currentPage.!ret": {
             "header": {
-                "!span": "87856[3200:17]-87862[3200:23]",
                 "!doc": "@description\nHeader component (mobile only).\n@type {HeaderComponent}",
                 "options": {
-                    "menuIcon": {
-                        "!type": "string",
-                        "!span": "67748[2485:29]-67756[2485:37]"
-                    },
-                    "attachMenu": {
-                        "!type": "bool",
-                        "!span": "67758[2485:39]-67768[2485:49]"
-                    },
-                    "className": {
-                        "!type": "string",
-                        "!span": "67770[2485:51]-67779[2485:60]"
-                    },
-                    "!span": "67736[2485:17]-67743[2485:24]",
+                    "menuIcon": "string",
+                    "attachMenu": "bool",
+                    "className": "string",
                     "!doc": "@description\nOptions for the header component.\n@type {HeaderOptions}"
                 },
                 "menuExtended": {
                     "!type": "bool",
-                    "!span": "68728[2527:17]-68740[2527:29]",
                     "!doc": "@description\nIf `true` the main menu is visible.\n@type {boolean}"
                 },
                 "title": {
                     "!type": "string",
-                    "!span": "68888[2534:17]-68893[2534:22]",
                     "!doc": "@description\nCurrent title.\n@type {string}"
                 },
-                "id": {
-                    "!type": "number",
-                    "!span": "65017[2380:17]-65019[2380:19]"
-                },
-                "visible": {
-                    "!type": "bool",
-                    "!span": "65394[2395:17]-65401[2395:24]"
-                },
-                "hidden": {
-                    "!type": "bool",
-                    "!span": "65579[2402:17]-65585[2402:23]"
-                },
-                "navbar": "?",
-                "menu": "?",
+                "id": "number",
+                "visible": "bool",
+                "hidden": "bool",
+                "navbar": "jQuery.fn",
+                "menu": "jQuery.fn",
                 "menuIcon": "?",
-                "titleBar": "?",
-                "profileImage": "?"
+                "titleBar": "jQuery.fn",
+                "profileImage": "jQuery.fn",
+                "container": "jQuery.fn"
             },
             "name": {
                 "!type": "string",
-                "!span": "88012[3207:17]-88016[3207:21]",
                 "!doc": "@description\nName of the page.\n@type {string}"
             },
             "title": {
                 "!type": "string",
-                "!span": "88160[3214:17]-88165[3214:22]",
                 "!doc": "@description\nPage title.\n@type {string}"
             },
             "options": {
-                "hasParent": {
-                    "!type": "bool",
-                    "!span": "88337[3221:36]-88346[3221:45]"
-                },
-                "first": {
-                    "!type": "bool",
-                    "!span": "88348[3221:47]-88353[3221:52]"
-                },
-                "temp": {
-                    "!type": "bool",
-                    "!span": "88355[3221:54]-88359[3221:58]"
-                },
-                "!span": "88318[3221:17]-88325[3221:24]",
+                "hasParent": "bool",
+                "first": "bool",
+                "temp": "bool",
                 "!doc": "@description\nViewer options.\n@type {ViewerOptions}"
             },
             "window": {
-                "!span": "88835[3242:17]-88841[3242:23]",
                 "!doc": "@description\nThe page's window component.\n@type {WindowComponent}",
                 "options": {
-                    "className": {
-                        "!type": "string",
-                        "!span": "83484[3055:16]-83493[3055:25]"
-                    },
-                    "hasParent": {
-                        "!type": "bool",
-                        "!span": "83511[3056:16]-83520[3056:25]"
-                    },
-                    "closeBtn": {
-                        "!type": "bool",
-                        "!span": "83538[3057:16]-83546[3057:24]"
-                    },
-                    "icon": {
-                        "!type": "string",
-                        "!span": "83564[3058:16]-83568[3058:20]"
-                    },
+                    "className": "string",
+                    "hasParent": "bool",
+                    "closeBtn": "bool",
+                    "icon": "string",
                     "onClose": {
                         "!type": "fn()",
-                        "!span": "83586[3059:16]-83593[3059:23]",
                         "!doc": "Add close function."
                     },
-                    "!span": "83456[3054:17]-83463[3054:24]",
                     "!doc": "@description\nOptions for the window component.\n@type {WindowOptions}"
                 },
-                "id": {
-                    "!type": "number",
-                    "!span": "65017[2380:17]-65019[2380:19]"
-                },
-                "visible": {
-                    "!type": "bool",
-                    "!span": "65394[2395:17]-65401[2395:24]"
-                },
-                "hidden": {
-                    "!type": "bool",
-                    "!span": "65579[2402:17]-65585[2402:23]"
-                },
-                "main": "?",
-                "toolbar": "?",
-                "titlebar": "?",
-                "loader": "?",
-                "preloader": "?"
+                "id": "number",
+                "visible": "bool",
+                "hidden": "bool",
+                "main": "jQuery.fn",
+                "toolbar": "jQuery.fn",
+                "titlebar": "jQuery.fn",
+                "loader": "jQuery.fn",
+                "preloader": "jQuery.fn",
+                "container": "jQuery.fn"
             },
             "actions": {
-                "!span": "89193[3256:17]-89200[3256:24]",
                 "!doc": "@description\nPage actions component.\n@type {ActionsComponent}",
                 "actions": {
                     "!type": "+Map",
-                    "!span": "80780[2954:17]-80787[2954:24]",
                     "!doc": "@description\nAction components.\n@type {Map<string, ActionComponent>}"
                 },
-                "id": {
-                    "!type": "number",
-                    "!span": "65017[2380:17]-65019[2380:19]"
-                },
-                "visible": {
-                    "!type": "bool",
-                    "!span": "65394[2395:17]-65401[2395:24]"
-                },
-                "hidden": {
-                    "!type": "bool",
-                    "!span": "65579[2402:17]-65585[2402:23]"
-                }
+                "id": "number",
+                "visible": "bool",
+                "hidden": "bool"
             },
             "data": {
                 "!type": "[?]",
-                "!span": "89582[3270:17]-89586[3270:21]",
                 "!doc": "Save the data."
             },
             "id": {
                 "!type": "number",
-                "!span": "65017[2380:17]-65019[2380:19]",
                 "!doc": "@description\nID of the component.\n@type {number}"
             },
             "visible": {
                 "!type": "bool",
-                "!span": "65394[2395:17]-65401[2395:24]",
                 "!doc": "@readonly\n@description\nIf `true` the component is currently visible.\n@type {boolean}"
             },
             "hidden": {
                 "!type": "bool",
-                "!span": "65579[2402:17]-65585[2402:23]",
                 "!doc": "@description\nSet to `true` to keep the component hidden.\n@type {boolean}"
             },
             "page": "PageMeta",
-            "shortcutBtn": "?",
-            "container": "?"
+            "shortcutBtn": "jQuery.fn"
         }
     },
     "backbrace": {
         "settings": {
             "!type": "fn(newsettings?: ?) -> backbrace.settings.!ret",
-            "!span": "116267[4175:12]-116275[4175:20]",
-            "!doc": "Get/Set the application settings.\n@method settings\n@memberof module:backbrace\n@param {Settings} [newsettings] Settings to set.\n@returns {Settings} Returns the app settings.\n@example\n// Turn on debug mode and don't minify the resources.\nbackbrace.settings({\n debug: true,\n minify: false\n});\n\n// Get the app name.\nvar name = backbrace.settings().app.name;"
+            "!doc": "Get/Set the application settings.\n@method settings\n@memberof module:backbrace\n@param {Settings} [newsettings] Settings to set.\n@returns {Settings} Returnsthe app settings.\n@example\n// Turn on debug mode and don't minify the resources.\nbackbrace.settings({\n debug: true,\n minify: false\n});\n\n// Get the app name.\nvar name = backbrace.settings().app.name;"
         },
         "window": {
-            "!type": "fn(val?: ?) -> !0",
-            "!span": "116302[4176:12]-116308[4176:18]",
+            "!type": "fn(val?: ?) -> window",
             "!doc": "Get/set the window provider.\n@method window\n@memberof module:backbrace\n@param {(Window|object)} [val] Window instance to set.\n@returns {(Window|object)} Returns the window instance."
         },
         "findInput": {
-            "!type": "fn(elem: ?) -> ?",
-            "!span": "116333[4177:12]-116342[4177:21]",
+            "!type": "fn(elem: jQuery.fn) -> jQuery.fn",
             "!doc": "Find the input editor.\n@param {JQuery} elem Element to search.\n@returns {JQuery} Returns the editor if found."
         },
         "formatString": {
             "!type": "fn(str: string) -> string",
-            "!span": "116368[4178:12]-116380[4178:24]",
             "!doc": "Format a string. Merge fields are specified by the argument number wrapped in {}.\n@method formatString\n@memberof module:backbrace\n@param {string} str String to format.\n@returns {string} Formatted string.\n@example\nvar str = backbrace.formatString('This is a {0} {1}.','test','message');\n// str = 'This is a test message'"
         },
         "isDefined": {
             "!type": "fn(val: ?) -> bool",
-            "!span": "116409[4179:12]-116418[4179:21]",
             "!doc": "Determines if a reference is defined.\n@memberof module:backbrace\n@param {*} val Reference to check.\n@returns {boolean} `True` if val is defined."
         },
         "isError": {
             "!type": "fn(val: ?) -> bool",
-            "!span": "116444[4180:12]-116451[4180:19]",
             "!doc": "Determines if a reference is an `Error`.\n@memberof module:backbrace\n@param {*} val Reference to check.\n@returns {boolean} `True` if val is an `Error`."
         },
         "isHtml5": {
             "!type": "fn() -> bool",
-            "!span": "116475[4181:12]-116482[4181:19]",
             "!doc": "Check for HTML5 compatability.\n@memberof module:backbrace\n@returns {boolean} `True` if the current environment is HTML5 compatable."
         },
         "isMobileDevice": {
             "!type": "fn() -> bool",
-            "!span": "116506[4182:12]-116520[4182:26]",
             "!doc": "Check if we are on a mobile/tablet device.\n@memberof module:backbrace\n@returns {boolean} `True` if we are using a mobile/tablet device."
         },
         "noop": {
             "!type": "fn() -> ?",
-            "!span": "116551[4183:12]-116555[4183:16]",
             "!doc": "A function that performs no operations.\n@memberof module:backbrace\n@returns {void}\n@example\nvar consoleFn = console.log || backbrace.noop;\nconsoleFn('Test message'); // Will not error if `console.log` is unavailable."
         },
         "uid": {
             "!type": "fn() -> number",
-            "!span": "116576[4184:12]-116579[4184:15]",
             "!doc": "Generate a unique id.\n@memberof module:backbrace\n@returns {number} Returns a unique id.\n@example\nvar id = backbrace.uid();"
         },
         "logInfo": {
             "!type": "fn(msg: string) -> ?",
-            "!span": "116599[4185:12]-116606[4185:19]",
             "!doc": "Log an info message.\n@method logInfo\n@memberof module:backbrace\n@param {string} msg Message to log.\n@returns {void}"
         },
         "logWarning": {
             "!type": "fn(msg: string) -> ?",
-            "!span": "116627[4186:12]-116637[4186:22]",
             "!doc": "Log a warning message.\n@method logWarning\n@memberof module:backbrace\n@param {string} msg Message to log.\n@returns {void}"
         },
         "logError": {
             "!type": "fn(err: +Error) -> ?",
-            "!span": "116661[4187:12]-116669[4187:20]",
             "!doc": "Log an error.\n@method logError\n@memberof module:backbrace\n@param {Error} err Error to log.\n@returns {void}"
         },
         "logDebug": {
             "!type": "fn(msg: string) -> ?",
-            "!span": "116691[4188:12]-116699[4188:20]",
             "!doc": "Log a debug message (If debug mode is turned on).\n@method logDebug\n@memberof module:backbrace\n@param {string} msg Message to log.\n@returns {void}"
         },
         "logObject": {
-            "!type": "fn(obj: ?) -> ?",
-            "!span": "116721[4189:12]-116730[4189:21]",
+            "!type": "fn(obj: ?|fn() -> JQueryPromise) -> ?",
             "!doc": "Log an object.\n@method logObject\n@memberof module:backbrace\n@param {*} obj Object to log.\n@returns {void}"
         },
-        "codeblock": {
+        "promiseblock": {
             "!type": "fn(args: ?) -> JQueryPromise",
-            "!span": "116753[4190:12]-116762[4190:21]",
-            "!doc": "@method codeblock\n@memberof module:backbrace\n@description\nSetup a new block of functions to run.\n\nEach function will be run in order.\n\n@param {...GenericFunction} args Functions to run.\n@returns {JQueryPromise} Promise to run the functions.\n@example\nreturn backbrace.codeblock(\n function() {\n     // this will run first.\n },\n function() {\n     // this will run second.\n }\n);"
+            "!doc": "@method promiseblock\n@memberof module:backbrace\n@description\nSetup a new block of functions to run.\n\nEach function will be run in order.\n\n@param {...GenericFunction} args Functions to run.\n@returns {JQueryPromise} Promise to run the functions.\n@example\nreturn backbrace.promiseblock(\n function() {\n     // this will run first.\n },\n function() {\n     // this will run second.\n }\n);"
         },
-        "codeinsert": {
-            "!type": "fn(args: fn()) -> ?",
-            "!span": "116788[4191:12]-116798[4191:22]",
-            "!doc": "@method codeinsert\n@memberof module:backbrace\n@description\nInsert code into the current codeblock.\n@param {...Function} args Functions to run.\n@returns {void}"
+        "promiseinsert": {
+            "!type": "fn(args: fn() -> ?) -> ?",
+            "!doc": "@method promiseinsert\n@memberof module:backbrace\n@description\nInsert code into the current promiseblock.\n@param {...Function} args Functions to run.\n@returns {void}"
         },
-        "codethread": {
+        "promisequeue": {
             "!type": "fn(args: fn()|fn() -> JQueryPromise) -> ?",
-            "!span": "116825[4192:12]-116835[4192:22]",
-            "!doc": "@method codethread\n@memberof module:backbrace\n@description\nStart a new code thread to execute code when possible.\n@param {...GenericFunction} args Functions to run.\n@returns {void}"
+            "!doc": "@method promisequeue\n@memberof module:backbrace\n@description\nStart a new code thread to execute code when possible.\n@param {...GenericFunction} args Functions to run.\n@returns {void}"
         },
-        "codeeach": {
+        "promiseeach": {
             "!type": "fn(obj: ?, iterator: ?, context: ?) -> JQueryPromise",
-            "!span": "116862[4193:12]-116870[4193:20]",
-            "!doc": "@method codeeach\n@memberof module:backbrace\n@description\nLoop through an array using `codeblock`.\n@template T\n@param {ArrayLike<T>} obj Object to iterate through.\n@param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.\n@param {*} [context] Context to run the iterator function.\n@returns {JQueryPromise} Promise to return after we are done looping."
+            "!doc": "@method promiseeach\n@memberof module:backbrace\n@description\nLoop through an array using `promiseblock`.\n@template T\n@param {ArrayLike<T>} obj Object to iteratethrough.\n@param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.\n@param {*} [context] Context to run the iterator function.\n@returns {JQueryPromise} Promise to return after we are done looping."
         },
         "controller": {
             "!type": "fn(name: string, definition: ?) -> ?",
-            "!span": "116895[4194:12]-116905[4194:22]",
             "!doc": "Create a controller.\n@method controller\n@memberof module:backbrace\n@param {string} name Name of the controller to create.\n@param {ControllerCallback} definition Definition of the controller.\n@returns {void}"
         },
         "serviceWorker": {
             "!type": "fn(val: ?) -> !0",
-            "!span": "116928[4195:12]-116941[4195:25]",
             "!doc": "Get/set the service worker.\n@method serviceWorker\n@memberof module:backbrace\n@param {ServiceWorkerRegistration} val If `defined`, sets the service worker.\n@returns {void|ServiceWorkerRegistration} If `val` is `undefined`, returns the current service worker registration."
         },
         "start": {
             "!type": "fn() -> ?",
-            "!span": "116971[4196:12]-116976[4196:17]",
             "!doc": "Start the app.\n@method start\n@memberof module:backbrace\n@returns {void}"
         },
         "ready": {
             "!type": "fn(func: +Function) -> ?",
-            "!span": "117000[4197:12]-117005[4197:17]",
             "!doc": "Execute a function after the app is loaded.\n@method ready\n@memberof module:backbrace\n@param {Function} func Function to execute.\n@returns {void}"
         },
         "loadPage": {
             "!type": "fn(name: string, options?: ?) -> ?",
-            "!span": "117027[4198:12]-117035[4198:20]",
             "!doc": "Load a page.\n@method loadPage\n@memberof module:backbrace\n@param {string} name Name of the page to load.\n@param {ViewerOptions} [options] Page viewer options.\n@returns {void}"
         },
         "message": {
             "!type": "fn(msg: string, callbackFn: ?, title?: string) -> ?",
-            "!span": "117060[4199:12]-117067[4199:19]",
             "!doc": "Show a message dialog.\n@method message\n@memberof module:backbrace\n@param {string} msg Message to display.\n@param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.\n@param {string} [title=\"Application Message\"] Title of the dialog.\n@returns {void}"
         },
         "currentPage": {
             "!type": "fn() -> ?|backbrace.currentPage.!ret",
-            "!span": "117091[4200:12]-117102[4200:23]",
             "!doc": "Get the active viewer.\n@returns {ViewerComponent} Returns the active viewer."
         },
         "get": {
             "!type": "fn(url: string) -> JQueryPromise",
-            "!span": "117130[4201:12]-117133[4201:15]",
             "!doc": "Send a HTTP get request.\n@param {string} url Absolute or relative URL to get.\n@returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not\nfound, it will return `null`."
         },
         "post": {
             "!type": "fn(url: string) -> JQueryPromise",
-            "!span": "117155[4202:12]-117159[4202:16]",
             "!doc": "Send a HTTP post request.\n@param {string} url Absolute or relative URL to get.\n@returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`."
         },
         "sanitizeString": {
             "!type": "fn(input: string) -> !0",
-            "!span": "117180[4203:12]-117194[4203:26]",
             "!doc": "@method sanitizeHtml\n@ignore\n@description\nSanitize a HTML string.\n@param {string} input String to sanitize.\n@returns {string} Sanitized string."
-        },
-        "!span": "4[0:4]-13[0:13]"
+        }
     }
 };

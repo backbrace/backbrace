@@ -24,123 +24,92 @@
     },
     "PageField": {
         "name": {
-            "!type": "string",
-            "!span": "8281[245:2]-8285[245:6]"
+            "!type": "string"
         },
         "caption": {
-            "!type": "string",
-            "!span": "8293[246:2]-8300[246:9]"
+            "!type": "string"
         },
         "type": {
-            "!type": "string",
-            "!span": "8308[247:2]-8312[247:6]"
+            "!type": "string"
         },
         "component": {
-            "!type": "string",
-            "!span": "8324[248:2]-8333[248:11]"
+            "!type": "string"
         },
         "width": {
-            "!type": "string",
-            "!span": "8341[249:2]-8346[249:7]"
+            "!type": "string"
         },
         "editable": {
-            "!type": "bool",
-            "!span": "8359[250:2]-8367[250:10]"
+            "!type": "bool"
         },
         "hidden": {
-            "!type": "bool",
-            "!span": "8377[251:2]-8383[251:8]"
+            "!type": "bool"
         },
         "className": {
-            "!type": "string",
-            "!span": "8394[252:2]-8403[252:11]"
-        },
-        "!span": "8265[244:11]-8274[244:20]"
+            "!type": "string"
+        }
     },
     "PageAction": {
         "name": {
-            "!type": "string",
-            "!span": "8773[264:2]-8777[264:6]"
+            "!type": "string"
         },
         "text": {
-            "!type": "string",
-            "!span": "8785[265:2]-8789[265:6]"
+            "!type": "string"
         },
         "icon": {
-            "!type": "string",
-            "!span": "8797[266:2]-8801[266:6]"
+            "!type": "string"
         },
         "iconColor": {
-            "!type": "string",
-            "!span": "8809[267:2]-8818[267:11]"
+            "!type": "string"
         },
         "className": {
-            "!type": "string",
-            "!span": "8826[268:2]-8835[268:11]"
-        },
-        "!span": "8756[263:11]-8766[263:21]"
+            "!type": "string"
+        }
     },
     "PageSection": {
         "name": {
-            "!type": "string",
-            "!span": "9246[281:2]-9250[281:6]"
+            "!type": "string"
         },
         "text": {
-            "!type": "string",
-            "!span": "9258[282:2]-9262[282:6]"
+            "!type": "string"
         },
         "pageName": {
-            "!type": "string",
-            "!span": "9270[283:2]-9278[283:10]"
+            "!type": "string"
         },
         "icon": {
-            "!type": "string",
-            "!span": "9286[284:2]-9290[284:6]"
+            "!type": "string"
         },
         "className": {
-            "!type": "string",
-            "!span": "9298[285:2]-9307[285:11]"
+            "!type": "string"
         },
         "fields": {
-            "!type": "[PageField]",
-            "!span": "9315[286:2]-9321[286:8]"
-        },
-        "!span": "9228[280:11]-9239[280:22]"
+            "!type": "[PageField]"
+        }
     },
     "PageMeta": {
         "name": {
-            "!type": "string",
-            "!span": "9854[301:2]-9858[301:6]"
+            "!type": "string"
         },
         "caption": {
-            "!type": "string",
-            "!span": "9866[302:2]-9873[302:9]"
+            "!type": "string"
         },
         "component": {
-            "!type": "string",
-            "!span": "9881[303:2]-9890[303:11]"
+            "!type": "string"
         },
         "controller": {
-            "!type": "string",
-            "!span": "9906[304:2]-9916[304:12]"
+            "!type": "string"
         },
         "tableName": {
-            "!type": "string",
-            "!span": "9924[305:2]-9933[305:11]"
+            "!type": "string"
         },
         "icon": {
-            "!type": "string",
-            "!span": "9941[306:2]-9945[306:6]"
+            "!type": "string"
         },
         "actions": {
-            "!type": "[PageAction]",
-            "!span": "9953[307:2]-9960[307:9]"
+            "!type": "[PageAction]"
         },
         "sections": {
-            "!type": "[PageSection]",
-            "!span": "9968[308:2]-9976[308:10]"
-        },
-        "!span": "9839[300:11]-9847[300:19]"
+            "!type": "[PageSection]"
+        }
     },
     "JQueryPromise": {
         "!url": "http://api.jquery.com/jQuery.Deferred/",

@@ -9,7 +9,7 @@ import { isDefined, deepMap, formatString, isMobileDevice } from './util';
 const packages = {
     'ace': [
         ['{1}/ace.js'],
-        ['{1}/ext-language_tools.js', '{1}/ext-tern.js']
+        ['{1}/ext-tern.js']
     ],
     'jqgrid': [
         (isMobileDevice() ? null : ['jquery.{0}.js', 'ui.{0}.css', 'i18n/grid.locale-en.js'])

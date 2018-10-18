@@ -31,7 +31,7 @@ From the project root:
 Then run:
 
 ```sh
-./node_modules/tern/bin/condense packages/backbrace-devkit/tern/temp/backbrace.js --def packages/backbrace-devkit/tern/defs/backbrace-types.json
+./node_modules/tern/bin/condense packages/backbrace-devkit/tern/temp/backbrace.js --def packages/backbrace-devkit/tern/defs/backbrace-types.json --no-spans
 ```
 
 This will output the Tern definition JSON.

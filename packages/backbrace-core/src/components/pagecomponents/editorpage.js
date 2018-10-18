@@ -23,10 +23,9 @@ export class EditorPageComponent extends PageComponent {
     /**
      * @description
      * Load the component.
-     * @param {JQuery} cont Container to load into.
-     * @returns {JQueryPromise} Promise to load the card.
+     * @returns {Component} Promise to load the card.
      */
-    load(cont) {
+    load() {
 
         packagemanager.add('ace');
         packagemanager.load(() => {
@@ -47,6 +46,8 @@ export class EditorPageComponent extends PageComponent {
                 enableLiveAutocompletion: true
             });
         });
+
+        return this;
     }
 }
 
