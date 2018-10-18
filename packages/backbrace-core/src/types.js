@@ -242,6 +242,16 @@
  * @property {boolean} editable Readonly field.
  * @property {string} className Classes to add to the field.
  */
+export let pagefield = {
+  name: '',
+  caption: '',
+  type: 'Text',
+  component: '',
+  width: '100px',
+  editable: true,
+  hidden: false,
+  className: 's12 m6'
+};
 
 /**
  * @typedef {object} PageActionMeta
@@ -251,6 +261,13 @@
  * @property {string} iconColor Icon color. Defaults to header color.
  * @property {string} className Classes to add to the button.
  */
+export let pageaction = {
+  name: '',
+  text: '',
+  icon: '',
+  iconColor: '',
+  className: ''
+};
 
 /**
  * @typedef {object} PageSectionMeta
@@ -261,6 +278,14 @@
  * @property {string} className Classes to add to the section.
  * @property {PageFieldMeta[]} fields Page section fields.
  */
+export let pagesection = {
+  name: '',
+  text: '',
+  pageName: '',
+  icon: '',
+  className: '',
+  fields: []
+};
 
 /**
  * @typedef {object} PageMeta
@@ -273,6 +298,16 @@
  * @property {PageActionMeta[]} actions Page actions.
  * @property {PageSectionMeta[]} sections Page sections.
  */
+export let pagemeta = {
+  name: '',
+  caption: '',
+  component: 'cardpage',
+  controller: '',
+  tableName: '',
+  icon: '',
+  actions: [],
+  sections: []
+};
 
 /**
  * @typedef {object} TableColumnMeta
@@ -280,6 +315,11 @@
  * @property {string} caption Caption of the column.
  * @property {string} type  Data type for the column.
  */
+export let tablecolumn = {
+  name: '',
+  caption: '',
+  type: 'Text'
+};
 
 /**
  * @typedef {object} TableMeta
@@ -288,3 +328,9 @@
  * @property {string} data Table data (if from a file).
  * @property {TableColumnMeta[]} columns Table columns.
  */
+export let tablemeta = {
+  name: '',
+  controller: '',
+  data: '',
+  columns: []
+};

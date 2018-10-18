@@ -7,61 +7,22 @@
 import { promiseblock } from './promises';
 import { get } from './http';
 import { settings } from './settings';
+import * as types from './types';
 import { get as getJQuery } from './providers/jquery';
 
 const defaults = {
     /** @type {PageMeta} */
-    page: {
-        name: '',
-        caption: '',
-        component: 'cardpage',
-        controller: '',
-        tableName: '',
-        icon: '',
-        actions: [],
-        sections: []
-    },
+    page: types.pagemeta,
     /** @type {PageFieldMeta} */
-    pagefield: {
-        name: '',
-        caption: '',
-        type: 'Text',
-        component: '',
-        width: '100px',
-        editable: true,
-        hidden: false,
-        className: 's12 m6'
-    },
+    pagefield: types.pagefield,
     /** @type {PageActionMeta} */
-    pageaction: {
-        name: '',
-        text: '',
-        icon: '',
-        iconColor: '',
-        className: ''
-    },
+    pageaction: types.pageaction,
     /** @type {PageSectionMeta} */
-    pagesection: {
-        name: '',
-        text: '',
-        pageName: '',
-        icon: '',
-        className: '',
-        fields: []
-    },
+    pagesection: types.pagesection,
     /** @type {TableMeta} */
-    table: {
-        name: '',
-        controller: '',
-        data: '',
-        columns: []
-    },
+    table: types.tablemeta,
     /** @type {TableColumnMeta} */
-    tablecolumn: {
-        name: '',
-        caption: '',
-        type: 'Text'
-    }
+    tablecolumn: types.tablecolumn
 };
 
 /**
