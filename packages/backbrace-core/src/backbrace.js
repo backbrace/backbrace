@@ -78,7 +78,8 @@ export {
     start,
     ready,
     loadPage,
-    message
+    message,
+    currentPage
 } from './app';
 
 export {
