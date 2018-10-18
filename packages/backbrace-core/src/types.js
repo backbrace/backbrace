@@ -24,21 +24,6 @@
  */
 
 /**
- * Alias for `ArrayLike`.
- * @typedef {ArrayLike} ArrayLike
- */
-
-/**
- * JQuery library.
- * @typedef {JQuery} JQuery
- */
-
-/**
- * JQuery promise.
- * @typedef {JQueryPromise} JQueryPromise
- */
-
-/**
  * @typedef {Function} ErrorInstance
  * @param {string} code Error code.
  * @param {string} message Error message.
@@ -97,11 +82,11 @@
  * @returns {string} Icon html string.
  */
 
- /**
-  * Icons instance.
-  * @typedef {object} IconsInstance
-  * @property {IconsInstanceGet} get Get an icon by name.
-  */
+/**
+ * Icons instance.
+ * @typedef {object} IconsInstance
+ * @property {IconsInstanceGet} get Get an icon by name.
+ */
 
 /**
  * App configuration.
