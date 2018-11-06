@@ -2,6 +2,8 @@ language: node_js
 sudo: false
 node_js:
   - '6'
+addons:
+  chrome: stable
 
 script:
   - ./scripts/travis/build.sh
