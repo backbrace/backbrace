@@ -4,11 +4,17 @@ var webpack = require('webpack'),
   globals = require('./lib/globals/global-vars');
 
 module.exports = function(config) {
-  config.set({
+  var configuration = {
     frameworks: ['jasmine'],
     autoWatch: true,
     logColors: true,
     browsers: ['Chrome'],
+    customLaunchers: {
+      ChromeTravisCI: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
+    },
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
@@ -29,5 +35,11 @@ module.exports = function(config) {
     webpackMiddleware: {
       stats: 'errors-only'
     }
-  });
+  };
+
+  if (process.env.TRAVIS)
+    configuration.browsers = ['ChromeTravisCI'];
+
+  config.set(configuration);
+
 };

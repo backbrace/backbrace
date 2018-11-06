@@ -12,7 +12,13 @@ module.exports = function(grunt) {
   grunt.loadTasks('lib/grunt');
 
   var webpackconfig = require('./webpack.config'),
-    versionInfo = require('./lib/version-info/version-info.js');
+    versionInfo = require('./lib/version-info/version-info.js'),
+    paths = {
+      core: 'packages/backbrace-core/',
+      devkit: 'packages/backbrace-devkit/',
+      packages: 'packages/backbrace-packages/',
+      sampleapp: 'packages/backbrace-sample-app/'
+    };
 
   //Project configuration.
   grunt.initConfig({
@@ -21,7 +27,8 @@ module.exports = function(grunt) {
     clean: {
       dist: [
         'packages/backbrace-core/dist',
-        'packages/backbrace-devkit/typings'
+        'packages/backbrace-devkit/typings',
+        'packages/backbrace-packages/dist'
       ],
       tmp: ['tmp']
     },
@@ -135,13 +142,27 @@ module.exports = function(grunt) {
       }
     },
 
-    subgrunt: {
+    copy: {
       packages: {
-        options: {
-        },
-        projects: {
-          'packages/backbrace-packages': 'default'
-        }
+        files: [
+          { expand: true, cwd: paths.packages + 'node_modules/@mdi/font', src: ['css/**', 'fonts/**', 'scss/**', '*.md'], dest: paths.packages + 'dist/materialdesignicons' },
+          { expand: true, cwd: paths.packages + 'node_modules/ace-builds/src', src: ['**'], dest: paths.packages + 'dist/ace/src' },
+          { expand: true, cwd: paths.packages + 'node_modules/ace-builds/src-min', src: ['**'], dest: paths.packages + 'dist/ace/min' },
+          { expand: true, cwd: paths.packages + 'src/ace', src: ['**'], dest: paths.packages + 'dist/ace' },
+          { expand: true, cwd: paths.packages + 'node_modules/jquery/dist', src: ['**'], dest: paths.packages + 'dist/jquery' },
+          { expand: true, cwd: paths.packages + 'node_modules/jquery-ripple', src: ['*.js', '*.css', '*.md'], dest: paths.packages + 'dist/jquery-ripple' },
+          { expand: true, cwd: paths.packages + 'node_modules/jquery-ui-dist', src: ['**'], dest: paths.packages + 'dist/jquery-ui' },
+          { expand: true, cwd: paths.packages + 'node_modules/moment', src: ['locale/**', 'moment.js', '*.md', 'LICENSE'], dest: paths.packages + 'dist/moment' },
+          { expand: true, cwd: paths.packages + 'node_modules/moment/min', src: ['moment.min.js'], dest: paths.packages + 'dist/moment' },
+          { expand: true, cwd: paths.packages + 'node_modules/reset-css', src: ['**'], dest: paths.packages + 'dist/resetcss' },
+          { expand: true, cwd: paths.packages + 'node_modules/roboto-fontface', src: ['**'], dest: paths.packages + 'dist/roboto' },
+          {
+            expand: true, cwd: paths.packages + 'node_modules/sweetalert/dist', src: ['**'], dest: paths.packages + 'dist/sweetalert', rename: function(dest, src) {
+              return dest + '/' + src.replace('-dev', '');
+            }
+          },
+          { expand: true, cwd: paths.packages + 'src/jqgrid', src: ['**'], dest: paths.packages + 'dist/jqgrid' }
+        ]
       }
     }
 
@@ -152,7 +173,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
     'package',
-    'subgrunt:packages',
+    'copy:packages',
     'test:core'
   ]);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
@@ -169,7 +190,7 @@ module.exports = function(grunt) {
     'webpack:dev'
   ]);
   grunt.registerTask('sampleapp', [
-    'subgrunt:packages',
+    'copy:packages',
     'webpack-dev-server:sampleapp'
   ]);
   grunt.registerTask('package', [
