@@ -3,6 +3,7 @@
 var path = require('path'),
   webpack = require('webpack'),
   merge = require('webpack-merge'),
+  moment = require('moment'),
   globals = require('./lib/globals/global-vars');
 
 module.exports = function(grunt) {
@@ -10,6 +11,7 @@ module.exports = function(grunt) {
   //Load grunt modules.
   require('load-grunt-tasks')(grunt);
   grunt.loadTasks('lib/grunt');
+  grunt.loadNpmTasks('git-changelog');
 
   var webpackconfig = require('./webpack.config'),
     versionInfo = require('./lib/version-info/version-info.js'),
@@ -164,12 +166,64 @@ module.exports = function(grunt) {
           { expand: true, cwd: paths.packages + 'src/jqgrid', src: ['**'], dest: paths.packages + 'dist/jqgrid' }
         ]
       }
+    },
+
+    git_changelog: {
+      dist: {
+        options: {
+          app_name: versionInfo.currentPackage.name,
+          template: './lib/grunt/changelog-template.md',
+          file: './tmp/CHANGELOG.md',
+          version_name: versionInfo.currentVersion.full,
+          intro: moment().format('MMMM YYYY'),
+          tag: versionInfo.previousVersions.slice(-1).pop(),
+          "sections": [
+            {
+              "title": "Bug Fixes",
+              "grep": "^fix"
+            },
+            {
+              "title": "Features",
+              "grep": "^feat"
+            },
+            {
+              "title": "Build Tools",
+              "grep": "^build"
+            },
+            {
+              "title": "Documentation",
+              "grep": "^docs"
+            },
+            {
+              "title": "Breaking changes",
+              "grep": "BREAKING"
+            },
+            {
+              "title": "Refactor",
+              "grep": "^refactor"
+            },
+            {
+              "title": "Performance Improvements",
+              "grep": "^perf"
+            },
+            {
+              "title": "Style",
+              "grep": "^style"
+            },
+            {
+              "title": "Test",
+              "grep": "^test"
+            }
+          ]
+        }
+      }
     }
 
   });
 
   grunt.loadNpmTasks('grunt-webpack');
 
+  grunt.registerTask('changelog', ['git_changelog:dist']);
   grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
     'package',
