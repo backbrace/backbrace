@@ -175,8 +175,9 @@ module.exports = function(grunt) {
           template: './lib/grunt/changelog-template.md',
           file: './tmp/CHANGELOG.md',
           version_name: versionInfo.currentVersion.full,
-          intro: moment().format('MMMM YYYY'),
-          tag: versionInfo.previousVersions.slice(-1).pop(),
+          intro: moment().format('YYYY-MM-DD'),
+          logo: versionInfo.previousVersions.slice(-1).pop(),
+          tag: 'v' + versionInfo.previousVersions.slice(-1).pop(),
           "sections": [
             {
               "title": "Bug Fixes",
@@ -185,14 +186,6 @@ module.exports = function(grunt) {
             {
               "title": "Features",
               "grep": "^feat"
-            },
-            {
-              "title": "Build Tools",
-              "grep": "^build"
-            },
-            {
-              "title": "Documentation",
-              "grep": "^docs"
             },
             {
               "title": "Breaking changes",
