@@ -3,7 +3,6 @@
  * @module sweetalert
  * @private
  */
-'use strict';
 
 import { width } from './util';
 import { get as getSwal } from './providers/swal';

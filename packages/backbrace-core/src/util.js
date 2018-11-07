@@ -3,7 +3,6 @@
  * @module util
  * @private
  */
-'use strict';
 
 import { get as getJQuery } from './providers/jquery';
 import { get as getWindow } from './providers/window';

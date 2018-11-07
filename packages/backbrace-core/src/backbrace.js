@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Backbrace public api.
  * @module backbrace
