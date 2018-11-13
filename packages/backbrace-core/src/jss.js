@@ -3,7 +3,6 @@
  * @module jss
  * @private
  */
-'use strict';
 
 import { settings } from './settings';
 
