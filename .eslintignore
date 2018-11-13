@@ -4,6 +4,7 @@ packages/backbrace-packages/src/**
 packages/backbrace-core/dist/**
 packages/backbrace-sample-app/service-worker.js
 lib/**
+scripts/**
 node_modules/**
 tmp/**
 Gruntfile.js

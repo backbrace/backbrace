@@ -14,7 +14,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "postinstall": "cd packages/backbrace-packages && npm install"
+    "preinstall": "node ./scripts/node/install.js"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
