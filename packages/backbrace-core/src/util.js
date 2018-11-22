@@ -165,7 +165,7 @@ export function merge(dst) {
  * @internal
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
- * @param {function(T,Key,ArrayLike<T>)} iterator Iterator function to call.
+ * @param {function(T,Key,ArrayLike<T>):void} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {ArrayLike<T>} Returned object for chaining.
  */

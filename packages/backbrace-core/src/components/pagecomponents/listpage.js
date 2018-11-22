@@ -89,7 +89,7 @@ export class ListPageComponent extends PageComponent {
          * @ignore
          * @description
          * On key press event handler for cell editors.
-         * @param {Event} ev Key press event.
+         * @param {JQuery.Event} ev Key press event.
          * @returns {boolean} Returns `false` to cancel bubbling.
          */
         function onKeyPress(ev) {

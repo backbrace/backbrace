@@ -68,6 +68,11 @@
  */
 
 /**
+ * @callback ActionRunnerOnClick
+ * @returns {(void|JQueryPromise<any>)}
+ */
+
+/**
  * Alert instance.
  * @typedef {object} AlertInstance
  * @property {AlertInstanceMessage} message Show a message box.

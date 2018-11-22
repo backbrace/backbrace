@@ -115,7 +115,7 @@ module.exports = function(grunt) {
           'packages/backbrace-core/src/components/*/*.js',
           'packages/backbrace-core/src/backbrace.js',
           'packages/backbrace-core/src/app.js',
-          'packages/backbrace-core/src/code.js',
+          'packages/backbrace-core/src/promises.js',
           'packages/backbrace-core/src/controller.js',
           'packages/backbrace-core/src/log.js'
         ],

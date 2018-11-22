@@ -11,7 +11,7 @@ export class PromiseQueue {
 
     /**
      * @constructor
-     * @param {function()} func Queue function to execute.
+     * @param {function():*} func Queue function to execute.
      */
     constructor(func) {
         /**
@@ -21,7 +21,7 @@ export class PromiseQueue {
          */
         this.id = uid();
         /**
-         * @type {function()}
+         * @type {function():*}
          * @description
          * Function to execute.
          */
@@ -33,7 +33,7 @@ export class PromiseQueue {
          */
         this.queue = [];
         /**
-         * @type {function()}
+         * @type {function():*}
          * @description
          * Function that is currently executing.
          */
@@ -125,7 +125,7 @@ export class PromiseQueue {
     /**
      * @description
      * Run the promise queue.
-     * @param {function()} callback Callback function to run.
+     * @param {function():void} callback Callback function to run.
      * @returns {void}
      */
     run(callback) {

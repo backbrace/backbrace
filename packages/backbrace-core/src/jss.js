@@ -10,7 +10,7 @@ import { settings } from './settings';
  * Iterate through an object.
  * @private
  * @param {object} obj Object to iterate through.
- * @param {function(*,Key,object)} iterator Iterator function to call.
+ * @param {function(*,Key,object):void} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {void}
  */
