@@ -29,7 +29,7 @@ export class ActionComponent extends Component {
         /**
          * @description
          * Function to run on click.
-         * @type {function()}
+         * @type {ActionRunnerOnClick}
          */
         this.onclick = null;
 
@@ -72,7 +72,7 @@ export class ActionComponent extends Component {
     /**
      * @description
      * Set the on click function.
-     * @param {function()} func On click function.
+     * @param {ActionRunnerOnClick} func On click function.
      * @returns {ActionComponent} Returns itself for chaining.
      */
     click(func) {

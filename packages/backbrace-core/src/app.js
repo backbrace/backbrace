@@ -78,7 +78,7 @@ function onTick() {
  * @method message
  * @memberof module:backbrace
  * @param {string} msg Message to display.
- * @param {function()} [callbackFn] Callback function to execute after the dialog is dismissed.
+ * @param {function():void} [callbackFn] Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Message"] Title of the dialog.
  * @returns {void}
  */
@@ -102,7 +102,7 @@ export function message(msg, callbackFn, title) {
  * Show a confirmation dialog.
  * @ignore
  * @param {string} msg Message to display.
- * @param {function(boolean)} callbackFn Callback function to execute after the dialog is dismissed.
+ * @param {function(boolean):void} callbackFn Callback function to execute after the dialog is dismissed.
  * @param {string} [title="Application Confirmation"] Title of the dialog.
  * @param {string} [yescaption="OK"] Caption of the "yes" button.
  * @param {string} [nocaption="Cancel"] Caption of the "no" button.
