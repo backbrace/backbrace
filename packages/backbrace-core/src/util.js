@@ -96,16 +96,16 @@ export function isDate(val) {
  * @method formatString
  * @memberof module:backbrace
  * @param {string} str String to format.
+ * @param {...*} args Arguments to merge into the string.
  * @returns {string} Formatted string.
  * @example
  * var str = backbrace.formatString('This is a {0} {1}.','test','message');
  * // str = 'This is a test message'
  */
-export function formatString(str) {
-  const a = arguments;
+export function formatString(str, ...args) {
   return str.replace(/{(\d+)}/g, function(match, number) {
-    return typeof a[+number + 1] !== 'undefined'
-      ? a[+number + 1] : '';
+    return typeof args[+number] !== 'undefined'
+      ? args[+number] : '';
   });
 }
 
