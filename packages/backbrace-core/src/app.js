@@ -314,6 +314,7 @@ export function load(container) {
 
 /**
  * Get the active viewer.
+ * @method currentPage
  * @memberof module:backbrace
  * @returns {ViewerComponent} Returns the active viewer.
  */
