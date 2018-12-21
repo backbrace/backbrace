@@ -1,6 +1,7 @@
 import { closePage, addWindowToToolbar, currentPage } from '../app';
 import { promiseblock, promisequeue } from '../promises';
 import { load as loadController, get as getController } from '../controller';
+import { dataTable } from '../data';
 import { error } from '../error';
 import { get } from '../http';
 import { page, table } from '../meta';
@@ -311,6 +312,10 @@ export class ViewerComponent extends Component {
                     // Load the data source from a file.
                     if (this.table.data.indexOf('.json') !== -1) {
                         return get(this.table.data);
+                    } else if (this.table.data.indexOf('datatable/') === 0) {
+                        return {
+                            data: dataTable(this.table.data.substr(10))
+                        };
                     }
                 },
                 (data) => {
