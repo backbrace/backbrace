@@ -91,15 +91,13 @@ export class CardPageComponent extends PageComponent {
             if (section.pageName === '') { // Not a sub page.
 
                 // Create the window.
-                let win = this.viewer.window;
-                if (i > 0) {
-                    win = new WindowComponent({
-                        className: section.className,
-                        hasParent: true,
-                        icon: section.icon
-                    });
-                    win.load(cont).setTitle(section.text);
-                }
+                let win = new WindowComponent({
+                    className: section.className,
+                    hasParent: i > 0,
+                    icon: section.icon
+                });
+                win.load(cont).setTitle(section.text);
+
                 this.subwindows.set(section.name, win);
                 return this.loadFields(win, section.fields);
 
@@ -171,6 +169,19 @@ export class CardPageComponent extends PageComponent {
                 });
             }
         );
+    }
+
+    /**
+     * @description
+     * Set the title of the page.
+     * @param {string} title Title to change to.
+     * @returns {CardPageComponent} Returns itself for chaining.
+     */
+    setTitle(title) {
+        let wins = Array.from(this.subwindows.values());
+        if (wins.length > 0)
+            wins[0].setTitle(title);
+        return this;
     }
 
     /**
