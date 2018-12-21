@@ -5,7 +5,6 @@
  */
 
 import { globals } from './globals';
-import { style } from './styles/flat';
 
 /**
  * App settings object.
@@ -16,7 +15,6 @@ export let settings = {
     debug: false,
     minify: true,
     guiAllowed: true,
-    jss: style,
     windowMode: true,
     packages: `${globals.CDNSERVER}/packages`,
     app: {

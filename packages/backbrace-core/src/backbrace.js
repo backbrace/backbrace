@@ -41,6 +41,20 @@ export function window(val) {
     return windowprovider.get();
 }
 
+/**
+ * Get an app style.
+ * @param {string} name Name of the style.
+ * @returns {object} Returns the application style.
+ */
+export function style(name) {
+    let s = require('./styles/' + name + '.js');
+    return s.style;
+}
+
+export {
+    set as setStyle
+} from './providers/style';
+
 export {
     findInput,
     formatString,

@@ -22,6 +22,7 @@ import {
 import { get as getAlert, set as setAlert } from './providers/alert';
 import { get as getIcons } from './providers/icons';
 import { get as getJQuery } from './providers/jquery';
+import { get as getStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
 import { HeaderComponent } from './components/header';
 import { ViewerComponent } from './components/viewer';
@@ -242,7 +243,7 @@ export function start() {
                 progress.hide();
 
                 // Compile JSS and load into a style tag.
-                const css = compile(settings.jss);
+                const css = compile(getStyle());
                 $('<style id="appstyle">')
                     .append(css)
                     .appendTo($('head'));

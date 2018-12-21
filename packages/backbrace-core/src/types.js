@@ -183,7 +183,6 @@
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
  * @property {boolean} [minify] Load minified packages. Defaults to `true`.
  * @property {boolean} [guiAllowed] GUI allowed flag.
- * @property {object} [jss] JSS style to use. Defaults to the flat JSS style.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
  * @property {string} [packages] Packages URL.
  * @property {AppConfig} [app] App config.
