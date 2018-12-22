@@ -82,8 +82,9 @@ export {
 } from './promises';
 
 export {
-    create as controller
-} from './controller';
+    controller,
+    pageComponent
+} from './module';
 
 export {
     serviceWorker,

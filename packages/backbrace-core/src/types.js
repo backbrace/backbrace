@@ -191,10 +191,20 @@
  */
 
 /**
- * @callback ControllerCallback
- * @param {ViewerComponent} comp Component.
- * @returns {void}
  */
+
+/**
+* Callback function for creating a controller.
+* @callback ControllerCallback
+* @param {ViewerComponent} viewer Viewer component.
+* @returns {void}
+*/
+
+/**
+* @callback PageComponentCallback
+* @param {PageComponent} comp Page component.
+* @returns {void}
+*/
 
 /**
  * @typedef {object} HeaderOptions
