@@ -37,6 +37,6 @@ module.exports = {
       '@license ' + versionInfo.currentPackage.name + ' v' + versionInfo.currentVersion.full +
       '\n' + versionInfo.currentPackage.author +
       '\nLicense: ' + versionInfo.currentPackage.license),
-    new webpack.DefinePlugin(globals)
+    new webpack.DefinePlugin(globals.get())
   ]
 };

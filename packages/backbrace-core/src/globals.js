@@ -6,6 +6,13 @@
 
 // @ts-nocheck
 
+/**
+ * Global variables.
+ * @type {Gobals}
+ * @property globals
+ * @memberof module:backbrace
+ */
 export const globals = {
-    CDNSERVER: __CDNSERVER__
+    CDNSERVER: __CDNSERVER__,
+    DEVMODE: __DEVMODE__
 };

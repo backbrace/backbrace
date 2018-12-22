@@ -1,10 +1,12 @@
 /**
+ * @description
  * Backbrace public api.
  * @module backbrace
  */
 
 import { settings as appSettings } from './settings';
 import { merge, isDefined } from './util';
+import * as jqueryprovider from './providers/jquery';
 import * as windowprovider from './providers/window';
 
 /**
@@ -55,6 +57,18 @@ export {
     set as setStyle
 } from './providers/style';
 
+/**
+ * Get the JQuery library.
+ * @returns {JQueryStatic} Returns the JQuery library.
+ */
+export function jquery() {
+    return jqueryprovider.get();
+}
+
+export {
+    globals
+} from './globals';
+
 export {
     findInput,
     formatString,
@@ -63,7 +77,8 @@ export {
     isHtml5,
     isMobileDevice,
     noop,
-    uid
+    uid,
+    merge
 } from './util';
 
 export {

@@ -191,6 +191,10 @@
  */
 
 /**
+ * Global variables.
+ * @typedef {object} Gobals
+ * @property {string} [CDNSERVER] CDN server URL.
+ * @property {boolean} [DEVMODE] If `true` then we are running in a development environment.
  */
 
 /**

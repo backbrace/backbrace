@@ -15,6 +15,7 @@ const messageName = 'ztm',
 
 /**
  * A function that performs no operations.
+ * @method noop
  * @memberof module:backbrace
  * @returns {void}
  * @example
@@ -26,6 +27,7 @@ export function noop() {
 
 /**
  * Generate a unique id.
+ * @method uid
  * @memberof module:backbrace
  * @returns {number} Returns a unique id.
  * @example
@@ -37,6 +39,7 @@ export function uid() {
 
 /**
  * Check for HTML5 compatability.
+ * @method isHtml5
  * @memberof module:backbrace
  * @returns {boolean} `True` if the current environment is HTML5 compatable.
  */
@@ -47,6 +50,7 @@ export function isHtml5() {
 
 /**
  * Check if we are on a mobile/tablet device.
+ * @method isMobileDevice
  * @memberof module:backbrace
  * @returns {boolean} `True` if we are using a mobile/tablet device.
  */
@@ -58,6 +62,7 @@ export function isMobileDevice() {
 
 /**
  * Determines if a reference is an `Error`.
+ * @method isError
  * @memberof module:backbrace
  * @param {*} val Reference to check.
  * @returns {boolean} `True` if val is an `Error`.
@@ -74,6 +79,7 @@ export function isError(val) {
 
 /**
  * Determines if a reference is defined.
+ * @method isDefined
  * @memberof module:backbrace
  * @param {*} val Reference to check.
  * @returns {boolean} `True` if val is defined.
@@ -84,6 +90,7 @@ export function isDefined(val) {
 
 /**
  * Determines if a reference is a date.
+ * @private
  * @param {*} val Reference to check.
  * @returns {boolean} Returns `true` if val is a date.
  */
@@ -111,6 +118,7 @@ export function formatString(str, ...args) {
 
 /**
  * Base extend.
+ * @private
  * @param {*} dst Object to extend.
  * @param {any[]} objs Objects to extend with.
  * @param {boolean} [deep] Deep copy.
@@ -143,6 +151,7 @@ function baseExtend(dst, objs, deep) {
 /**
  * Extend an object with another object.
  * @internal
+ * @private
  * @param {*} dst Destination object.
  * @returns {*} Extended object.
  */
@@ -152,17 +161,20 @@ export function extend(dst) {
 
 /**
  * Merge an object with another object.
- * @internal
+ * @method merge
+ * @memberof module:backbrace
  * @param {*} dst Destination object.
+ * @param {...*} args Other objects to merge.
  * @returns {*} Extended object.
  */
-export function merge(dst) {
-  return baseExtend(dst, [].slice.call(arguments, 1), true);
+export function merge(dst, ...args) {
+  return baseExtend(dst, args, true);
 }
 
 /**
  * Iterate through an array or object.
  * @internal
+ * @private
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
  * @param {function(T,Key,ArrayLike<T>):void} iterator Iterator function to call.
@@ -195,6 +207,7 @@ export function forEach(obj, iterator, context) {
 
 /**
  * Deep map.
+ * @private
  * @param {*} obj Object.
  * @param {*} f Function.
  * @param {*} [ctx] Context.
@@ -241,6 +254,7 @@ export function bindMessageEvent() {
 /**
  * Clear all current message timeouts.
  * @internal
+ * @private
  * @returns {void}
  */
 export function clearTimeouts() {
@@ -250,6 +264,7 @@ export function clearTimeouts() {
 /**
  * Run a function asyncroniously. Runs faster than setTimeout(fn, 0).
  * @internal
+ * @private
  * @param {Function} fn Function to run after 0 seconds.
  * @returns {void}
  */
@@ -262,6 +277,7 @@ export function setZeroTimeout(fn) {
 /**
  * Add an element (native).
  * @internal
+ * @private
  * @param {string} type Element type to create.
  * @param {*} attributes Attributes to add to the element.
  * @param {HTMLElement} parentElement Parent element to append to.
@@ -282,6 +298,7 @@ export function addElement(type, attributes, parentElement) {
 
 /**
  * Get the width of the window.
+ * @private
  * @returns {number} Width of the window.
  */
 export function width() {
@@ -292,6 +309,7 @@ export function width() {
 
 /**
  * Find the input editor.
+ * @private
  * @param {JQuery} elem Element to search.
  * @returns {JQuery} Returns the editor if found.
  */
@@ -315,6 +333,7 @@ export function findInput(elem) {
 
 /**
  * Check if we are in dev mode.
+ * @private
  * @returns {boolean} Returns `true` if we are in dev mode.
  */
 export function isDevMode() {

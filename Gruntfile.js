@@ -90,7 +90,7 @@ module.exports = function(grunt) {
             filename: '[name].js'
           },
           plugins: [
-            new webpack.DefinePlugin(globals)
+            new webpack.DefinePlugin(globals.get(true))
           ]
         },
         publicPath: '/scripts',
@@ -114,11 +114,14 @@ module.exports = function(grunt) {
           'packages/backbrace-core/src/components/*.js',
           'packages/backbrace-core/src/components/*/*.js',
           'packages/backbrace-core/src/backbrace.js',
+          'packages/backbrace-core/src/globals.js',
           'packages/backbrace-core/src/app.js',
           'packages/backbrace-core/src/promises.js',
-          'packages/backbrace-core/src/controller.js',
+          'packages/backbrace-core/src/module.js',
           'packages/backbrace-core/src/log.js',
+          'packages/backbrace-core/src/util.js',
           'packages/backbrace-core/src/http.js',
+          'packages/backbrace-core/src/providers/style.js'
         ],
         options: {
           private: false,
