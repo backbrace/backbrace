@@ -24,7 +24,7 @@ export let settings = {
         description: 'Web App powered by Backbrace'
     },
     meta: {
-        dir: './meta/'
+        dir: '/meta/'
     },
     style: {
         loader: {

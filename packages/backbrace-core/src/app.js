@@ -322,23 +322,20 @@ export function load(container) {
 
     $('body').addClass(isMobileDevice() ? 'mobile-app' : 'desktop-app');
 
-    if (!isMobileDevice()) {
+    // Add window toolbar.
+    if (settings.windowMode)
+        windows = $('<div class="main-windows"></div>').appendTo(main);
 
-        // Add window toolbar.
-        if (settings.windowMode)
-            windows = $('<div class="main-windows"></div>').appendTo(main);
-
-        // Load components.
-        let header = new HeaderComponent();
-        header.setTitle(settings.style.images.logo !== '' ?
-            '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
-            settings.style.images.logo + '" />' :
-            settings.app.name);
-        header.load(main);
-        header.menuIcon.click(function() {
-            header.showMenu();
-        });
-    }
+    // Load components.
+    let header = new HeaderComponent();
+    header.setTitle(settings.style.images.logo !== '' ?
+        '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
+        settings.style.images.logo + '" />' :
+        settings.app.name);
+    header.load(main);
+    header.menuIcon.click(function() {
+        header.showMenu();
+    });
 
     maincontainer = $('<div class="row"></div>');
     $('<div class="container"></div>')
@@ -376,6 +373,10 @@ export function loadPage(name, options) {
 
             if (currentPage())
                 currentPage().showLoad();
+
+            // Add a window shorcut.
+            if (settings.windowMode)
+                addWindowToToolbar(pge.id);
 
             // Load the page component.
             return pge.load(maincontainer);
@@ -429,6 +430,8 @@ export function closePage(id) {
 
     promisequeue(function() {
 
+        const $ = getJQuery();
+
         // Unload the page.
         if (!pages.has(id))
             throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
@@ -437,6 +440,13 @@ export function closePage(id) {
 
         // Remove the page from the loaded pages.
         pages.delete(id);
+
+        // Remove shortcut.
+        if (settings.windowMode) {
+            $('#win' + id).remove();
+            $(window).scrollTop(0);
+        }
+
         if (activePage === id) {
 
             activePage = 0;
@@ -464,9 +474,14 @@ export function showPage(id) {
         if (id === activePage)
             return;
 
+        const $ = getJQuery();
+
         // Hide the currently active page.
         if (currentPage())
             currentPage().hide();
+
+        if (settings.windowMode)
+            $('.main-windows-btn').removeClass('active');
 
         // Show the page.
         if (!pages.has(id))
@@ -475,5 +490,8 @@ export function showPage(id) {
         const pge = pages.get(id);
         pge.show();
         activePage = pge.id;
+
+        if (settings.windowMode)
+            $('#win' + id).addClass('active');
     });
 }

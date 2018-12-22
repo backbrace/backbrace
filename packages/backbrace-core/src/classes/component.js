@@ -60,7 +60,7 @@ export class Component {
     /**
      * @description
      * Update the component with a data source.
-     * @param {object} data Data to bind to the component.
+     * @param {any[]} data Data to bind to the component.
      * @returns {Component|JQueryPromise} Returns itself for chaining.
      */
     update(data) {

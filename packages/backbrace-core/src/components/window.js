@@ -91,7 +91,7 @@ export class WindowComponent extends Component {
         this.titlebar = $('<div class="title-bar unselectable" />');
 
         this.titlebar.append('<h5 id="title' + this.id + '" class="title ' +
-            (this.options.hasParent ? 'alt' : 'hide-on-med-and-down') + ' unselectable cuttext" />');
+            (this.options.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
 
         if (this.options.closeBtn === true && !this.options.hasParent && !isMobileDevice()) {
             $(icons.get('%close%'))
