@@ -5,9 +5,11 @@
  */
 
 import { promisequeue, reset } from './promises';
+import { addDataTable, dataTable } from './data';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
+import { addPage, addTable } from './meta';
 import * as packagemanager from './packagemanager';
 import * as progress from './progress';
 import { settings } from './settings';
@@ -17,7 +19,8 @@ import {
     addElement,
     isDefined,
     isHtml5,
-    isMobileDevice
+    isMobileDevice,
+    extend
 } from './util';
 import { get as getAlert, set as setAlert } from './providers/alert';
 import { get as getIcons } from './providers/icons';
@@ -26,6 +29,7 @@ import { get as getStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
 import { HeaderComponent } from './components/header';
 import { ViewerComponent } from './components/viewer';
+import { pagemeta, tablemeta } from './types';
 
 let maincontainer = null,
     windows = null,
@@ -261,6 +265,16 @@ export function start() {
                     }
                 });
 
+                addDataTable('status');
+                let tbl = tablemeta;
+                tbl.name = 'status';
+                tbl.data = 'datatable/status';
+                addTable('builtin/status', tbl);
+
+                // Add status pages.
+                addStatusPage('400', 'Seems like a bad request has happened.');
+                addStatusPage('404', 'We can\'t seem to find the page you were looking for.');
+
                 load($('body'));
 
                 if (readyFunc)
@@ -271,6 +285,26 @@ export function start() {
 
     });
 
+}
+
+/**
+ * Add a status page to the app.
+ * @private
+ * @param {string} code Status code.
+ * @param {string} description Status description.
+ * @returns {void}
+ */
+function addStatusPage(code, description) {
+    let pge = extend({}, pagemeta),
+        tbl = dataTable('status');
+    pge.name = code;
+    pge.component = 'statuspage';
+    pge.tableName = 'builtin/status';
+    addPage('status/' + code, pge);
+    tbl.push({
+        code: code,
+        description: description
+    });
 }
 
 /**

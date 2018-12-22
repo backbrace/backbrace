@@ -174,6 +174,22 @@ export let style = merge({}, base, {
     'height': 'calc(100vh - 110px)',
     'overflow-y': 'auto'
   },
+  '.status-title': {
+    'font-size': '3.5em',
+    'font-weight': '800',
+    margin: '1em 0 .5em 0',
+    color: '#666'
+  },
+  '.status-description': {
+    'font-size': '2em',
+    margin: '0 0 1em',
+    color: '#666'
+  },
+  '.status-code': {
+    'font-size': '1.2em',
+    'font-weight': '500',
+    color: '#666'
+  },
   '.window': {
     'box-sizing': 'border-box',
     position: 'relative',
