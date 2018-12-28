@@ -24,8 +24,9 @@ export class ViewerComponent extends Component {
      * @constructor
      * @param {string} name Page name.
      * @param {ViewerOptions} [options] Viewer options.
+     * @param {object} [params] Page params.
      */
-    constructor(name, { title, hasParent = false, first = false, temp = false } = {}) {
+    constructor(name, { title, hasParent = false, temp = false, updateHistory = null } = {}, params = {}) {
 
         super();
 
@@ -48,7 +49,7 @@ export class ViewerComponent extends Component {
          * Viewer options.
          * @type {ViewerOptions}
          */
-        this.options = { title, hasParent, first, temp };
+        this.options = { title, hasParent, temp, updateHistory };
 
         /**
          * @description
@@ -84,6 +85,13 @@ export class ViewerComponent extends Component {
          * @type {object[]}
          */
         this.data = null;
+
+        /**
+         * @description
+         * Page params.
+         * @type {object}
+         */
+        this.params = params;
     }
 
     /**
