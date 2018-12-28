@@ -5,9 +5,11 @@
  */
 
 import { promisequeue, reset } from './promises';
+import { addDataTable, dataTable } from './data';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
+import { addPage, addTable } from './meta';
 import * as packagemanager from './packagemanager';
 import * as progress from './progress';
 import { settings } from './settings';
@@ -17,14 +19,17 @@ import {
     addElement,
     isDefined,
     isHtml5,
-    isMobileDevice
+    isMobileDevice,
+    extend
 } from './util';
 import { get as getAlert, set as setAlert } from './providers/alert';
 import { get as getIcons } from './providers/icons';
 import { get as getJQuery } from './providers/jquery';
+import { get as getStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
 import { HeaderComponent } from './components/header';
 import { ViewerComponent } from './components/viewer';
+import { pagemeta, tablemeta } from './types';
 
 let maincontainer = null,
     windows = null,
@@ -242,7 +247,7 @@ export function start() {
                 progress.hide();
 
                 // Compile JSS and load into a style tag.
-                const css = compile(settings.jss);
+                const css = compile(getStyle());
                 $('<style id="appstyle">')
                     .append(css)
                     .appendTo($('head'));
@@ -260,6 +265,16 @@ export function start() {
                     }
                 });
 
+                addDataTable('status');
+                let tbl = tablemeta;
+                tbl.name = 'status';
+                tbl.data = 'datatable/status';
+                addTable('builtin/status', tbl);
+
+                // Add status pages.
+                addStatusPage('400', 'Seems like a bad request has happened.');
+                addStatusPage('404', 'We can\'t seem to find the page you were looking for.');
+
                 load($('body'));
 
                 if (readyFunc)
@@ -270,6 +285,26 @@ export function start() {
 
     });
 
+}
+
+/**
+ * Add a status page to the app.
+ * @private
+ * @param {string} code Status code.
+ * @param {string} description Status description.
+ * @returns {void}
+ */
+function addStatusPage(code, description) {
+    let pge = extend({}, pagemeta),
+        tbl = dataTable('status');
+    pge.name = code;
+    pge.component = 'statuspage';
+    pge.tableName = 'builtin/status';
+    addPage('status/' + code, pge);
+    tbl.push({
+        code: code,
+        description: description
+    });
 }
 
 /**
@@ -287,23 +322,20 @@ export function load(container) {
 
     $('body').addClass(isMobileDevice() ? 'mobile-app' : 'desktop-app');
 
-    if (!isMobileDevice()) {
+    // Add window toolbar.
+    if (settings.windowMode)
+        windows = $('<div class="main-windows"></div>').appendTo(main);
 
-        // Add window toolbar.
-        if (settings.windowMode)
-            windows = $('<div class="main-windows"></div>').appendTo(main);
-
-        // Load components.
-        let header = new HeaderComponent();
-        header.setTitle(settings.style.images.logo !== '' ?
-            '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
-            settings.style.images.logo + '" />' :
-            settings.app.name);
-        header.load(main);
-        header.menuIcon.click(function() {
-            header.showMenu();
-        });
-    }
+    // Load components.
+    let header = new HeaderComponent();
+    header.setTitle(settings.style.images.logo !== '' ?
+        '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
+        settings.style.images.logo + '" />' :
+        settings.app.name);
+    header.load(main);
+    header.menuIcon.click(function() {
+        header.showMenu();
+    });
 
     maincontainer = $('<div class="row"></div>');
     $('<div class="container"></div>')
@@ -314,6 +346,7 @@ export function load(container) {
 
 /**
  * Get the active viewer.
+ * @method currentPage
  * @memberof module:backbrace
  * @returns {ViewerComponent} Returns the active viewer.
  */
@@ -340,6 +373,10 @@ export function loadPage(name, options) {
 
             if (currentPage())
                 currentPage().showLoad();
+
+            // Add a window shorcut.
+            if (settings.windowMode)
+                addWindowToToolbar(pge.id);
 
             // Load the page component.
             return pge.load(maincontainer);
@@ -393,6 +430,8 @@ export function closePage(id) {
 
     promisequeue(function() {
 
+        const $ = getJQuery();
+
         // Unload the page.
         if (!pages.has(id))
             throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
@@ -401,6 +440,13 @@ export function closePage(id) {
 
         // Remove the page from the loaded pages.
         pages.delete(id);
+
+        // Remove shortcut.
+        if (settings.windowMode) {
+            $('#win' + id).remove();
+            $(window).scrollTop(0);
+        }
+
         if (activePage === id) {
 
             activePage = 0;
@@ -428,9 +474,14 @@ export function showPage(id) {
         if (id === activePage)
             return;
 
+        const $ = getJQuery();
+
         // Hide the currently active page.
         if (currentPage())
             currentPage().hide();
+
+        if (settings.windowMode)
+            $('.main-windows-btn').removeClass('active');
 
         // Show the page.
         if (!pages.has(id))
@@ -439,5 +490,8 @@ export function showPage(id) {
         const pge = pages.get(id);
         pge.show();
         activePage = pge.id;
+
+        if (settings.windowMode)
+            $('#win' + id).addClass('active');
     });
 }

@@ -25,11 +25,21 @@ export class PageComponent extends Component {
     }
 
     /**
+     * @description
+     * Set the title of the page.
+     * @param {string} title Title to change to.
+     * @returns {PageComponent} Returns itself for chaining.
+     */
+    setTitle(title) {
+        return this;
+    }
+
+    /**
      * Show the loader.
      * @returns {PageComponent} Returns itself for chaining.
      */
     showLoad() {
-        this.viewer.window.loader.show();
+        //this.viewer.window.loader.show();
         return this;
     }
 
@@ -38,7 +48,7 @@ export class PageComponent extends Component {
      * @returns {PageComponent} Returns itself for chaining.
      */
     hideLoad() {
-        this.viewer.window.loader.hide();
+        //this.viewer.window.loader.hide();
         return this;
     }
 
@@ -47,7 +57,7 @@ export class PageComponent extends Component {
      * @returns {PageComponent} Returns itself for chaining.
      */
     hidePreLoad() {
-        this.viewer.window.preloader.hide();
+        //this.viewer.window.preloader.hide();
         return this;
     }
 

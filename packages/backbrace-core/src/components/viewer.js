@@ -1,16 +1,14 @@
-import { closePage, addWindowToToolbar, currentPage } from '../app';
 import { promiseblock, promisequeue } from '../promises';
-import { load as loadController, get as getController } from '../controller';
+import { dataTable } from '../data';
+import { load as loadModule, get as getModule } from '../module';
 import { error } from '../error';
 import { get } from '../http';
 import { page, table } from '../meta';
 import { settings } from '../settings';
-import { isMobileDevice } from '../util';
 import { get as getJQuery } from '../providers/jquery';
 import { Component } from '../classes/component';
 import { ActionsComponent } from './actions';
-import { HeaderComponent } from './header';
-import { WindowComponent } from './window';
+import { PageComponent } from '../classes/pagecomponent';
 
 const viewerError = error('viewer');
 
@@ -30,13 +28,6 @@ export class ViewerComponent extends Component {
     constructor(name, { title, hasParent = false, first = false, temp = false } = {}) {
 
         super();
-
-        /**
-         * @description
-         * Header component (mobile only).
-         * @type {HeaderComponent}
-         */
-        this.header = null;
 
         /**
          * @description
@@ -75,20 +66,6 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * The page's window component.
-         * @type {WindowComponent}
-         */
-        this.window = new WindowComponent({});
-
-        /**
-         * @description
-         * Page's shortcut button.
-         * @type {JQuery}
-         */
-        this.shortcutBtn = null;
-
-        /**
-         * @description
          * Page actions component.
          * @type {ActionsComponent}
          */
@@ -120,15 +97,7 @@ export class ViewerComponent extends Component {
         this.pageComponent = null;
         this.actions.unload();
         this.actions = null;
-        this.window.unload();
-        this.window = null;
-        if (this.header)
-            this.header.unload();
-        this.header = null;
         this.container.parent().remove();
-        // Unload DOM.
-        if (this.shortcutBtn)
-            this.shortcutBtn.remove();
         super.unload();
     }
 
@@ -144,30 +113,9 @@ export class ViewerComponent extends Component {
 
         let cont = $('<div>').appendTo(container);
 
-        // Load header (mobile only).
-        if (!this.options.hasParent && isMobileDevice()) {
-            this.header = new HeaderComponent({
-                menuIcon: !this.options.first ? 'keyboard-backspace' : 'menu',
-                attachMenu: this.options.first
-            });
-            this.header.load(cont);
-            this.header.navbar.removeClass('fixed');
-            if (this.options.first) {
-                this.header.menuIcon.click(() => this.header.showMenu());
-            } else {
-                this.header.menuIcon.click(() => closePage(this.id));
-            }
-        }
-
         super.load(cont);
 
         this.container.addClass('viewer');
-
-        if (isMobileDevice()) {
-            cont.addClass('viewer-full');
-            if (this.options.first)
-                cont.css('left', '0');
-        }
 
         return promiseblock(
 
@@ -219,33 +167,8 @@ export class ViewerComponent extends Component {
 
             () => {
 
-                // Hide the current page.
-                if (currentPage() && !isMobileDevice())
-                    currentPage().hide();
-
-                // Load the window.
-                if (this.options.hasParent) {
-                    this.window.options.hasParent = true;
-                    this.window.options.icon = this.page.icon;
-                }
-                this.window.load(this.container);
-
-                // Add the page to the windows toolbar.
-                if (settings.windowMode && !this.options.hasParent) {
-                    this.shortcutBtn = addWindowToToolbar(this.id);
-                }
-
-                this.setTitle(this.options.title || this.page.caption);
-
-                // Add title bar buttons.
-                if (!isMobileDevice()) {
-                    this.window.addTitlebarIcon('%refresh%', (() => promisequeue(() => this.update())));
-                }
-                // Add close function.
-                this.window.options.onClose = () => closePage(this.id);
-
                 // Add actions.
-                this.actions.load(this.window.toolbar);
+                //this.actions.load(this.window.toolbar);
                 $.each(this.page.actions, (i, action) => this.actions.addAction(action, (action, func) => {
                     this.actionRunner(action, func);
                 }));
@@ -256,14 +179,22 @@ export class ViewerComponent extends Component {
                     let Control = require('./pagecomponents/' + comp + '.js').default;
                     this.pageComponent = new Control(this);
                     return this.pageComponent.load(this.container);
+                } else {
+                    // Load from a module.
+                    return promiseblock(
+                        () => loadModule(comp),
+                        () => {
+                            let control = getModule(comp);
+                            this.pageComponent = control(new PageComponent(this));
+                            return this.pageComponent.load(this.container);
+                        }
+                    );
                 }
             },
 
             () => {
 
-                // Hide the current page.
-                if (currentPage() && isMobileDevice())
-                    currentPage().hide();
+                this.setTitle(this.options.title || this.page.caption);
 
                 // Show the page.
                 this.show();
@@ -273,8 +204,8 @@ export class ViewerComponent extends Component {
             () => {
                 if (this.page.controller !== '')
                     return promiseblock(
-                        () => loadController(this.page.controller),
-                        () => getController(this.page.controller)(this)
+                        () => loadModule(this.page.controller),
+                        () => getModule(this.page.controller)(this)
                     );
             },
 
@@ -283,8 +214,8 @@ export class ViewerComponent extends Component {
                 () => {
                     if (this.table.controller !== '')
                         return promiseblock(
-                            () => loadController(this.table.controller),
-                            () => getController(this.table.controller)(this)
+                            () => loadModule(this.table.controller),
+                            () => getModule(this.table.controller)(this)
                         );
                 } : null,
 
@@ -311,6 +242,10 @@ export class ViewerComponent extends Component {
                     // Load the data source from a file.
                     if (this.table.data.indexOf('.json') !== -1) {
                         return get(this.table.data);
+                    } else if (this.table.data.indexOf('datatable/') === 0) {
+                        return {
+                            data: dataTable(this.table.data.substr(10))
+                        };
                     }
                 },
                 (data) => {
@@ -358,16 +293,10 @@ export class ViewerComponent extends Component {
      */
     show() {
 
-        this.window.show();
-        if (this.shortcutBtn)
-            this.shortcutBtn.addClass('active');
-
         // Show components.
         this.pageComponent.show();
 
         this.container.show();
-
-        this.animateIn();
 
         return this;
     }
@@ -379,16 +308,7 @@ export class ViewerComponent extends Component {
      */
     hide() {
 
-        if (isMobileDevice()) {
-            this.actions.hide();
-            this.animateOut();
-            return this;
-        }
-
         this.container.hide();
-        this.window.hide();
-        if (this.shortcutBtn)
-            this.shortcutBtn.removeClass('active');
 
         // Hide components.
         this.pageComponent.hide();
@@ -403,44 +323,14 @@ export class ViewerComponent extends Component {
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     setTitle(title) {
+        const $ = getJQuery();
         this.title = title;
-        this.window.setTitle(title);
-        if (this.shortcutBtn)
-            this.shortcutBtn.find('span').html(`${title}`);
-        if (this.header && !this.options.first)
-            this.header.setTitle(title);
-        return this;
-    }
-
-    /**
-     * @description
-     * Animate the page into view (mobile only).
-     * @returns {ViewerComponent} Returns itself for chaining.
-     */
-    animateIn() {
-        if (!isMobileDevice() || this.options.hasParent)
-            return this;
-        let cont = this.container.parent();
-        cont.show().animate({
-            left: '0px'
-        }, null, null, () => {
-            this.actions.show();
-        });
-        return this;
-    }
-
-    /**
-     * @description
-     * Animate the page out of view (mobile only).
-     * @returns {ViewerComponent} Returns itself for chaining.
-     */
-    animateOut() {
-        if (!isMobileDevice() || this.options.hasParent)
-            return this;
-        let cont = this.container.parent();
-        cont.animate({
-            left: '-100vw'
-        });
+        this.pageComponent.setTitle(title);
+        if (settings.windowMode) {
+            $('#win' + this.id).find('span').html(`${title}`);
+        } else {
+            window.document.title = settings.app.title + (title !== '' ? ' - ' + title : '');
+        }
         return this;
     }
 

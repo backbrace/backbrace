@@ -183,7 +183,6 @@
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
  * @property {boolean} [minify] Load minified packages. Defaults to `true`.
  * @property {boolean} [guiAllowed] GUI allowed flag.
- * @property {object} [jss] JSS style to use. Defaults to the flat JSS style.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
  * @property {string} [packages] Packages URL.
  * @property {AppConfig} [app] App config.
@@ -192,10 +191,24 @@
  */
 
 /**
- * @callback ControllerCallback
- * @param {ViewerComponent} comp Component.
- * @returns {void}
+ * Global variables.
+ * @typedef {object} Gobals
+ * @property {string} [CDNSERVER] CDN server URL.
+ * @property {boolean} [DEVMODE] If `true` then we are running in a development environment.
  */
+
+/**
+* Callback function for creating a controller.
+* @callback ControllerCallback
+* @param {ViewerComponent} viewer Viewer component.
+* @returns {void}
+*/
+
+/**
+* @callback PageComponentCallback
+* @param {PageComponent} comp Page component.
+* @returns {void}
+*/
 
 /**
  * @typedef {object} HeaderOptions

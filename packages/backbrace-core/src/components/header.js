@@ -132,8 +132,6 @@ export class HeaderComponent extends Component {
             $(window.document).on('click', (event) => {
                 if (!$(event.target).closest('.menu-icon').length) {
                     this.hideMenu();
-                    event.preventDefault();
-                    return false;
                 }
             });
         }

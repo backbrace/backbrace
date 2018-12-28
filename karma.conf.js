@@ -29,7 +29,7 @@ module.exports = function(config) {
     webpack: {
       cache: true,
       plugins: [
-        new webpack.DefinePlugin(globals)
+        new webpack.DefinePlugin(globals.get())
       ]
     },
     webpackMiddleware: {
