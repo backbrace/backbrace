@@ -102,6 +102,11 @@ export {
 } from './module';
 
 export {
+    route,
+    match as matchRoute
+} from './route';
+
+export {
     serviceWorker,
     start,
     ready,

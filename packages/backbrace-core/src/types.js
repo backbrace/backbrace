@@ -221,8 +221,8 @@
  * @typedef {object} ViewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
- * @property {boolean} [first] If `true` sets as dashboard page.
  * @property {boolean} [temp] If `true` the page uses temp data.
+ * @property {string} [updateHistory] Add a url path to the browser history.
  */
 
 /**
@@ -232,6 +232,12 @@
  * @property {boolean} [hasParent] If `true` sets the window as a child window.
  * @property {boolean} [closeBtn] Add a close button to the window.
  * @property {string} [className] Window class style.
+ */
+
+/**
+ * @typedef {object} Route
+ * @property {string} path Path to match.
+ * @property {string} page Page to load.
  */
 
 /**

@@ -14,6 +14,7 @@ import * as packagemanager from './packagemanager';
 import * as progress from './progress';
 import { settings } from './settings';
 import * as sweetalert from './sweetalert';
+import { route as addRoute, match as matchRoute } from './route';
 import {
     setZeroTimeout,
     addElement,
@@ -277,6 +278,22 @@ export function start() {
 
                 load($('body'));
 
+                if (!settings.windowMode) {
+
+                    addRoute({ path: '**', page: 'status/404' });
+
+                    window.onpopstate = function(event) {
+                        var r = matchRoute(window.location.pathname);
+                        if (r) {
+                            loadPage(r.page, {}, r.params);
+                        }
+                    };
+
+                    let route = matchRoute(window.location.pathname);
+                    if (route)
+                        loadPage(route.page, {}, route.params);
+                }
+
                 if (readyFunc)
                     return readyFunc();
 
@@ -362,11 +379,17 @@ export function currentPage() {
  * @memberof module:backbrace
  * @param {string} name Name of the page to load.
  * @param {ViewerOptions} [options] Page viewer options.
+ * @param {object} [params] Page params.
  * @returns {void}
  */
-export function loadPage(name, options) {
+export function loadPage(name, options, params) {
 
-    let pge = new ViewerComponent(name, options);
+    let pge = new ViewerComponent(name, options, params),
+        $ = getJQuery();
+
+    let curr = currentPage();
+    if (!settings.windowMode && curr)
+        closePage(curr.id);
 
     promisequeue(
         function() {
@@ -382,6 +405,21 @@ export function loadPage(name, options) {
             return pge.load(maincontainer);
         },
         function() {
+
+            if (!settings.windowMode && window.history && options.updateHistory)
+                window.history.pushState(null, pge.title, options.updateHistory);
+
+            //Process links.
+            $('a[route]').each(function() {
+                var a = $(this);
+                if (a.attr('processed') === 'true')
+                    return;
+                a.css('cursor', 'pointer').on('click', function() {
+                    var r = matchRoute(a.attr('route'));
+                    if (r)
+                        loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
+                }).attr('processed', 'true');
+            });
 
             if (currentPage())
                 currentPage().hideLoad();
