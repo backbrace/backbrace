@@ -194,22 +194,6 @@ module.exports = function(grunt) {
             {
               "title": "Breaking changes",
               "grep": "BREAKING"
-            },
-            {
-              "title": "Refactor",
-              "grep": "^refactor"
-            },
-            {
-              "title": "Performance Improvements",
-              "grep": "^perf"
-            },
-            {
-              "title": "Style",
-              "grep": "^style"
-            },
-            {
-              "title": "Test",
-              "grep": "^test"
             }
           ]
         }
