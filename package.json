@@ -22,7 +22,7 @@
         "@babel/preset-env": "^7.2.3",
         "@babel/runtime": "^7.2.0",
         "@backbrace/dts-generator": "0.1.0-beta.3",
-        "@backbrace/jsdoc-json": "0.1.0-beta.1",
+        "@backbrace/jsdoc-json": "0.1.0-beta.2",
         "@types/ace": "^0.0.40",
         "@types/jquery": "^3.3.22",
         "@types/jasmine": "^3.3.5",
