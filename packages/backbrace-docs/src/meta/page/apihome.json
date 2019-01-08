@@ -1,0 +1,7 @@
+{
+    "$schema": "../../node_modules/@backbrace/devkit/schema/pagemeta.json",
+    "name": "API List",
+    "tableName": "table/modules",
+    "component": "components/apihome.js",
+    "sections": []
+}

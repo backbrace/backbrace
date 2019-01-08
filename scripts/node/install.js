@@ -6,3 +6,4 @@ function npm_install(where) {
 
 npm_install('./packages/backbrace-packages');
 npm_install('./packages/backbrace-sample-app');
+npm_install('./packages/backbrace-docs');

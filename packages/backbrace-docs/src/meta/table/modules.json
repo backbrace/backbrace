@@ -1,0 +1,31 @@
+{
+    "$schema": "../../node_modules/@backbrace/devkit/schema/tablemeta.json",
+    "name": "api",
+    "data": "/meta/data/modules.json",
+    "columns": [
+        {
+            "name": "kind",
+            "type": "Text"
+        },
+        {
+            "name": "name",
+            "type": "Text"
+        },
+        {
+            "name": "desc",
+            "type": "Text"
+        },
+        {
+            "name": "access",
+            "type": "Text"
+        },
+        {
+            "name": "file",
+            "type": "Text"
+        },
+        {
+            "name": "lineno",
+            "type": "Integer"
+        }
+    ]
+}

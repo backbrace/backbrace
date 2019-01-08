@@ -7,3 +7,6 @@ npm-debug.log
 /packages/backbrace-core/dist/
 /packages/backbrace-devkit/typings/
 /packages/backbrace-devkit/tern/temp/
+/packages/backbrace-docs/src/meta/data/members.json
+/packages/backbrace-docs/src/meta/data/modules.json
+/packages/backbrace-docs/src/meta/data/tutorials.json

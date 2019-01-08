@@ -8,7 +8,8 @@
     "include": [
         "packages/backbrace-devkit",
         "packages/backbrace-core",
-        "packages/backbrace-sample-app"
+        "packages/backbrace-sample-app",
+        "packages/backbrace-docs/src"
     ],
     "exclude": [
         "node_modules",

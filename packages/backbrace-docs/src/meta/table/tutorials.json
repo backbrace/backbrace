@@ -1,0 +1,23 @@
+{
+    "$schema": "../../node_modules/@backbrace/devkit/schema/tablemeta.json",
+    "name": "tutorials",
+    "data": "/meta/data/tutorials.json",
+    "columns": [
+        {
+            "name": "name",
+            "type": "Text"
+        },
+        {
+            "name": "title",
+            "type": "Text"
+        },
+        {
+            "name": "html",
+            "type": "BigText"
+        },
+        {
+            "name": "content",
+            "type": "BigText"
+        }
+    ]
+}

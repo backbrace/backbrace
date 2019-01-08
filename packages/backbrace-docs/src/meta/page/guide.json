@@ -1,0 +1,7 @@
+{
+    "$schema": "../../node_modules/@backbrace/devkit/schema/pagemeta.json",
+    "name": "index",
+    "tableName": "table/tutorials",
+    "component": "components/guide.js",
+    "sections": []
+}

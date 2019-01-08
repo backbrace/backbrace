@@ -96,15 +96,62 @@ module.exports = function(grunt) {
         publicPath: '/scripts',
         contentBase: ['packages/backbrace-sample-app', 'packages/backbrace-packages'],
         port: 8000
+      },
+      docs: {
+        webpack: {
+          mode: 'none',
+          entry: {
+            backbrace: ['./packages/backbrace-core/src/backbrace.js']
+          },
+          devtool: 'source-map',
+          output: {
+            library: 'backbrace',
+            filename: '[name].js'
+          },
+          plugins: [
+            new webpack.DefinePlugin(globals.get(true))
+          ]
+        },
+        publicPath: '/scripts',
+        contentBase: [
+          'packages/backbrace-docs/src',
+          'packages/backbrace-packages'
+        ],
+        port: 8000,
+        historyApiFallback: true,
+        watchContentBase: false,
+        before(app, server) {
+          const chokidar = require("chokidar");
+          const files = [
+            '**/*.js',
+            '**/*.json'
+          ];
+          const options = {
+            // chokidar options can be found in it's docs
+            followSymlinks: false,
+            depth: 5, // opens chokidar's depth up just in case.
+          }
+          let watcher = chokidar.watch(files, options)
+          watcher
+            .on('all', _ => {
+              server.sockWrite(server.sockets, 'content-changed');
+            })
+        }
       }
     },
 
     jsdoc: {
       dist: {
-        src: ['packages/backbrace-core/src/*.js', 'packages/backbrace-core/src/*/*.js', 'packages/backbrace-core/src/*/*/*.js', 'README.md'],
+        src: [
+          'packages/backbrace-core/src/*.js',
+          'packages/backbrace-core/src/*/*.js',
+          'packages/backbrace-core/src/*/*/*.js'
+        ],
         options: {
-          destination: 'docs',
-          config: 'jsdoc.conf.json'
+          destination: 'packages/backbrace-docs/src/meta/data',
+          config: 'jsdoc.conf.json',
+          template: './node_modules/@backbrace/jsdoc-json',
+          tutorials: 'packages/backbrace-docs/content',
         }
       },
       typings: {
@@ -121,6 +168,7 @@ module.exports = function(grunt) {
           'packages/backbrace-core/src/log.js',
           'packages/backbrace-core/src/util.js',
           'packages/backbrace-core/src/http.js',
+          'packages/backbrace-core/src/route.js',
           'packages/backbrace-core/src/providers/style.js'
         ],
         options: {
@@ -227,6 +275,10 @@ module.exports = function(grunt) {
   grunt.registerTask('sampleapp', [
     'copy:packages',
     'webpack-dev-server:sampleapp'
+  ]);
+  grunt.registerTask('localdocs', [
+    'copy:packages',
+    'webpack-dev-server:docs'
   ]);
   grunt.registerTask('package', [
     'clean',
