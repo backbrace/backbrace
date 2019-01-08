@@ -80,7 +80,7 @@ export class Component {
 
     /**
      * @description
-     * Show the component if `hide` is `false`.
+     * Show the component if the `hidden` property is `false`.
      * @returns {Component} Returns itself for chaining.
      */
     show() {
