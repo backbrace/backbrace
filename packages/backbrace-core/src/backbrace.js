@@ -97,13 +97,11 @@ export {
 } from './promises';
 
 export {
-    controller,
-    pageComponent
+    controller
 } from './module';
 
 export {
-    route,
-    match as matchRoute
+    route
 } from './route';
 
 export {

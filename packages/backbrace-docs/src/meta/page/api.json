@@ -1,7 +1,13 @@
 {
-    "$schema": "../../node_modules/@backbrace/devkit/schema/pagemeta.json",
+    "$schema": "../../../node_modules/@backbrace/devkit/schema/pagemeta.json",
     "name": "api",
     "tableName": "table/modules",
-    "component": "components/api.js",
-    "sections": []
+    "component": "templatepage",
+    "controller": "controllers/api.js",
+    "sections": [
+        {
+            "name": "footer",
+            "pageName": "page/footer"
+        }
+    ]
 }

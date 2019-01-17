@@ -192,7 +192,7 @@
 
 /**
  * Global variables.
- * @typedef {object} Gobals
+ * @typedef {object} Globals
  * @property {string} [CDNSERVER] CDN server URL.
  * @property {boolean} [DEVMODE] If `true` then we are running in a development environment.
  */
@@ -205,8 +205,8 @@
 */
 
 /**
-* @callback PageComponentCallback
-* @param {PageComponent} comp Page component.
+* @callback DataCallback
+* @param {any[]} data Data array.
 * @returns {void}
 */
 
@@ -304,6 +304,7 @@ export let pagesection = {
  * @property {string} controller Page controller.
  * @property {string} tableName Name of the page's datasource.
  * @property {string} icon Icon to use for the page.
+ * @property {string} filters Filters for the page.
  * @property {PageActionMeta[]} actions Page actions.
  * @property {PageSectionMeta[]} sections Page sections.
  */
@@ -314,6 +315,7 @@ export let pagemeta = {
   controller: '',
   tableName: '',
   icon: '',
+  filters: '',
   actions: [],
   sections: []
 };

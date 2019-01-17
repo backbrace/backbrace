@@ -1,4 +1,5 @@
 /**
+/*
  * Global variables (merged in at compile time).
  * @module globals
  * @private
@@ -6,13 +7,16 @@
 
 // @ts-nocheck
 
+/* global CDNSERVER, DEVMODE, FULLVERSION */
+
 /**
  * Global variables.
- * @type {Gobals}
- * @property globals
+ * @name globals
+ * @type {Globals}
  * @memberof module:backbrace
  */
 export const globals = {
-    CDNSERVER: __CDNSERVER__,
-    DEVMODE: __DEVMODE__
+    CDNSERVER: CDNSERVER,
+    DEVMODE: DEVMODE,
+    FULLVERSION: FULLVERSION
 };

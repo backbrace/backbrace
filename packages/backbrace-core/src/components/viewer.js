@@ -1,14 +1,14 @@
 import { promiseblock, promisequeue } from '../promises';
 import { dataTable } from '../data';
-import { load as loadModule, get as getModule } from '../module';
+import { load as loadModule } from '../module';
 import { error } from '../error';
 import { get } from '../http';
 import { page, table } from '../meta';
 import { settings } from '../settings';
+import { noop } from '../util';
 import { get as getJQuery } from '../providers/jquery';
 import { Component } from '../classes/component';
 import { ActionsComponent } from './actions';
-import { PageComponent } from '../classes/pagecomponent';
 
 const viewerError = error('viewer');
 
@@ -82,7 +82,7 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * Data source of the viewer.
-         * @type {object[]}
+         * @type {any[]}
          */
         this.data = null;
 
@@ -92,6 +92,13 @@ export class ViewerComponent extends Component {
          * @type {object}
          */
         this.params = params;
+
+        /**
+         * @description
+         * On before update of the viewer.
+         * @type {DataCallback}
+         */
+        this.onBeforeUpdate = null;
     }
 
     /**
@@ -187,16 +194,6 @@ export class ViewerComponent extends Component {
                     let Control = require('./pagecomponents/' + comp + '.js').default;
                     this.pageComponent = new Control(this);
                     return this.pageComponent.load(this.container);
-                } else {
-                    // Load from a module.
-                    return promiseblock(
-                        () => loadModule(comp),
-                        () => {
-                            let control = getModule(comp);
-                            this.pageComponent = control(new PageComponent(this));
-                            return this.pageComponent.load(this.container);
-                        }
-                    );
                 }
             },
 
@@ -213,7 +210,7 @@ export class ViewerComponent extends Component {
                 if (this.page.controller !== '')
                     return promiseblock(
                         () => loadModule(this.page.controller),
-                        () => getModule(this.page.controller)(this)
+                        (mod) => mod(this)
                     );
             },
 
@@ -223,11 +220,11 @@ export class ViewerComponent extends Component {
                     if (this.table.controller !== '')
                         return promiseblock(
                             () => loadModule(this.table.controller),
-                            () => getModule(this.table.controller)(this)
+                            (mod) => mod(this)
                         );
                 } : null,
 
-            () => this.update(),
+            //() => this.update(),
 
             () => {
                 this.pageComponent.hidePreLoad();
@@ -261,6 +258,10 @@ export class ViewerComponent extends Component {
                     // Save the data.
                     this.data = data.data || data;
 
+                    // On before update.
+                    return (this.onBeforeUpdate || noop)(this.data);
+                },
+                () => {
                     // Update the page component.
                     return this.pageComponent.update(this.data);
                 },

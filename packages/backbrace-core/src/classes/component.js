@@ -43,6 +43,13 @@ export class Component {
          * @type {boolean}
          */
         this.hidden = false;
+
+        /**
+         * @description
+         * Template for the component.
+         * @type {string}
+         */
+        this.template = '';
     }
 
     /**

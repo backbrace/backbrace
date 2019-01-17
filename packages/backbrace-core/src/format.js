@@ -2,6 +2,7 @@
  * @description
  * Formatter module.
  * @module format
+ * @private
  */
 
 import { isDefined } from './util';

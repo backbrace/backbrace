@@ -22,7 +22,7 @@ backbrace.setStyle(backbrace.merge({}, base, {
     },
     '.navbar-brand': {
         float: 'left',
-        margin: '12px 80px 0 8px'
+        margin: '12px 80px 0 20px'
     },
     '.navbar-logo': {
         'max-height': '40px'
@@ -74,7 +74,26 @@ backbrace.setStyle(backbrace.merge({}, base, {
         'margin-top': '20px'
     },
     'h5': {
-        margin: '0'
+        margin: '0',
+        'font-size': '1.1em'
+    },
+    'footer': {
+        position: 'absolute',
+        'line-height': '24px',
+        flex: '1',
+        padding: '48px',
+        'z-index': '0',
+        'background-color': '#3498db',
+        color: '#fafafa',
+        'font-weight': '300',
+        margin: '20px 0 24px 0',
+        left: '0px',
+        width: '100%',
+        'box-sizing': 'border-box'
+    },
+    'footer p': {
+        'text-align': 'center',
+        margin: '10px 0 5px'
     },
     '.header-link': {
         width: 'auto',
@@ -269,16 +288,25 @@ if ('serviceWorker' in window.navigator)
         });
 
 // Setup routes.
-backbrace.route({ path: '/', page: 'page/guide' });
-backbrace.route({ path: 'guides/:name', page: 'page/guide' });
-backbrace.route({ path: 'api', page: 'page/apihome' });
-backbrace.route({ path: 'api/:module', page: 'page/api' });
+backbrace.route(
+    { path: '/', page: 'page/guide' },
+    { path: ':name', page: 'page/guide' },
+    { path: ':parent/:name', page: 'page/guide' },
+    { path: 'api', page: 'page/apihome' },
+    { path: 'api/:module', page: 'page/api' }
+);
 
 backbrace.ready(function() {
+
     var $ = backbrace.jquery();
+
     $('.navbar-inner').removeClass('z-depth-1');
-    $('<div class="header-link"><a route="api">API</a></div>')
-        .appendTo($('.navbar-inner'));
+
+    $('.navbar-brand').attr('route', '/');
+
+    //$('<div class="header-link"><a route="api">API</a></div>')
+    //   .appendTo($('.navbar-inner'));
+
 });
 
 // Start the app!

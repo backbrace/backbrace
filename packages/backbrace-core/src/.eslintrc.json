@@ -11,9 +11,7 @@
   },
   "globals": {
     "window": false,
-    "require": false,
-    "__CDNSERVER__": false,
-    "__DEVMODE__": false
+    "require": false
   },
   "rules": {
     "require-jsdoc": [

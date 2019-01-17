@@ -382,7 +382,7 @@ export function currentPage() {
  * @param {object} [params] Page params.
  * @returns {void}
  */
-export function loadPage(name, options, params) {
+export function loadPage(name, options = {}, params = {}) {
 
     let pge = new ViewerComponent(name, options, params),
         $ = getJQuery();
@@ -409,8 +409,18 @@ export function loadPage(name, options, params) {
             if (!settings.windowMode && window.history && options.updateHistory)
                 window.history.pushState(null, pge.title, options.updateHistory);
 
+            if (currentPage())
+                currentPage().hideLoad();
+
+            // Add the page to the loaded pages.
+            pages.set(pge.id, pge);
+            activePage = pge.id;
+
+            return pge.update();
+        },
+        function() {
             //Process links.
-            $('a[route]').each(function() {
+            $('[route]').each(function() {
                 var a = $(this);
                 if (a.attr('processed') === 'true')
                     return;
@@ -420,13 +430,6 @@ export function loadPage(name, options, params) {
                         loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
                 }).attr('processed', 'true');
             });
-
-            if (currentPage())
-                currentPage().hideLoad();
-
-            // Add the page to the loaded pages.
-            pages.set(pge.id, pge);
-            activePage = pge.id;
         }
     );
 }

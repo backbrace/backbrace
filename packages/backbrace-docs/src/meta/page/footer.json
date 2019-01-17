@@ -1,0 +1,8 @@
+{
+    "$schema": "../../../node_modules/@backbrace/devkit/schema/pagemeta.json",
+    "name": "footer",
+    "tableName": "table/tutorials",
+    "component": "templatepage",
+    "controller": "controllers/footer.js",
+    "sections": []
+}

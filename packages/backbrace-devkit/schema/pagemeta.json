@@ -29,6 +29,10 @@
             "type": "string",
             "$ref": "icons.json"
         },
+        "filters": {
+            "description": "Filters for the page",
+            "type": "string"
+        },
         "actions": {
             "description": "Page actions.",
             "type": "array",
