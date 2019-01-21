@@ -1,6 +1,6 @@
 The MIT License
 <br><br>
-Copyright (c) 2017-2018 Paul Fisher https://backbrace.io
+Copyright (c) 2017-2019 Paul Fisher https://backbrace.io
 <br><br>
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
