@@ -118,6 +118,15 @@ export let style = {
         '@media only screen and (min-width: %screen:largeUp%px)': {
             'display': 'block !important'
         }
+    },
+    '.grid-fluid': {
+        display: ['-ms-flexbox', '-webkit-flex', 'flex'],
+        'justify-content': 'center',
+        'text-align': 'left',
+        margin: '0 0 40px',
+        '@media (max-width: 480px)': {
+            'flex-direction': 'column'
+        }
     }
 };
 

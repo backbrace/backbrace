@@ -68,6 +68,10 @@ export function compile(obj) {
                     othercss += mergeConfig(osName.toString()) + ': ' + mergeConfig(otherstyle) + ';';
                 });
                 othercss += '}}';
+            } else if (Array.isArray(style)) {
+                forEach(style, function(substyle) {
+                    css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(substyle) + ';';
+                });
             } else if (typeof style === 'object') {
                 css += mergeConfig(styleName.toString()) + '{';
                 forEach(style, function(multistyle, msName) {

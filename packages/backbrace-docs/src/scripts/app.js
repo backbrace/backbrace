@@ -128,12 +128,15 @@ backbrace.setStyle(backbrace.merge({}, base, {
     },
     '.banner-text': {
         color: '#FFF',
-        'font-size': '2em',
+        'font-size': '1.8em',
         display: 'flex',
         position: 'relative',
         'align-items': 'center',
         'flex-direction': 'column',
-        'justify-content': 'center'
+        'justify-content': 'center',
+        'text-transform': 'uppercase',
+        'text-align': 'center',
+        'padding': '10px'
     },
     '.banner-img': {
         display: 'flex',
@@ -141,6 +144,27 @@ backbrace.setStyle(backbrace.merge({}, base, {
         'flex-direction': 'column',
         'justify-content': 'center',
         'align-items': 'center'
+    },
+    '.main-title': {
+        color: '#0984e3',
+        'text-transform': 'uppercase',
+        'font-size': '1.5em'
+    },
+    '.main-text': {
+        margin: '20px 0'
+    },
+    '.footer-block': {
+        margin: '0 40px 40px 0'
+    },
+    '.footer-block h1': {
+        'text-transform': 'uppercase',
+        'font-size': '1em'
+    },
+    '.footer-block a': {
+        'font-weight': '100',
+        'font-size': '.9em',
+        'text-decoration': 'none',
+        color: '#FFF'
     },
     '.ovr-link': {
         color: '#000',
@@ -211,6 +235,10 @@ backbrace.setStyle(backbrace.merge({}, base, {
     '.desc>p': {
         'margin-top': '5px'
     },
+    'hr.rows': {
+        border: '.5px solid gainsboro',
+        margin: '50px'
+    },
     'code': {
         'font-size': '85%',
         'line-height': '1.45',
@@ -225,6 +253,12 @@ backbrace.setStyle(backbrace.merge({}, base, {
         overflow: 'auto',
         padding: '16px',
         'font-family': 'SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace'
+    },
+    'pre>b': {
+        color: '#0984e3'
+    },
+    'pre>i': {
+        color: '#e67e22'
     },
     '.sig .source': {
         background: '#FFF',
