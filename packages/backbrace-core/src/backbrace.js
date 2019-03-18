@@ -6,7 +6,7 @@
 
 import $ from 'jquery';
 import { settings as appSettings } from './settings';
-import { merge, isDefined } from './util';
+import { isDefined } from './util';
 import * as windowprovider from './providers/window';
 
 /**
@@ -26,7 +26,8 @@ import * as windowprovider from './providers/window';
  * var name = backbrace.settings().app.name;
  */
 export function settings(newsettings) {
-    merge(appSettings, newsettings);
+    if (isDefined(newsettings))
+        $.extend(true, appSettings, newsettings);
     return appSettings;
 }
 
@@ -77,8 +78,7 @@ export {
     isHtml5,
     isMobileDevice,
     noop,
-    uid,
-    merge
+    uid
 } from './util';
 
 export {

@@ -12,17 +12,14 @@ import { compile } from './jss';
 import { error as logError } from './log';
 import { addPage, addTable } from './meta';
 import * as packagemanager from './packagemanager';
-import * as progress from './progress';
 import { settings } from './settings';
 import * as sweetalert from './sweetalert';
 import { route as addRoute, match as matchRoute } from './route';
 import {
     setZeroTimeout,
-    addElement,
     isDefined,
     isHtml5,
-    isMobileDevice,
-    extend
+    isMobileDevice
 } from './util';
 import { get as getAlert, set as setAlert } from './providers/alert';
 import { get as getIcons } from './providers/icons';
@@ -141,8 +138,6 @@ export function errorHandler(err) {
 
     const alert = getAlert();
 
-    progress.hide();
-
     logError(err);
 
     // Run error handling.
@@ -180,37 +175,35 @@ export function start() {
     });
 
     // Add font css.
-    addElement('link', {
+    $('<link>').attr({
         'href': settings.style.font.url,
         'rel': 'stylesheet'
-    }, window.document.head);
+    }).appendTo(window.document.head);
 
-    addElement('meta', {
+    $('<meta>').attr({
         'name': 'Description',
         'content': settings.app.description
-    }, window.document.head);
+    }).appendTo(window.document.head);
 
-    addElement('meta', {
+    $('<meta>').attr({
         'http-equiv': 'X-UA-Compatible',
         'content': 'IE=Edge'
-    }, window.document.head);
+    }).appendTo(window.document.head);
 
-    addElement('meta', {
+    $('<meta>').attr({
         'name': 'viewport',
         'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
-    }, window.document.head);
+    }).appendTo(window.document.head);
 
-    addElement('meta', {
+    $('<meta>').attr({
         'name': 'apple-mobile-web-app-capable',
         'content': 'yes'
-    }, window.document.head);
+    }).appendTo(window.document.head);
 
-    addElement('meta', {
+    $('<meta>').attr({
         'name': 'mobile-web-app-capable',
         'content': 'yes'
-    }, window.document.head);
-
-    progress.show();
+    }).appendTo(window.document.head);
 
     // Update title.
     window.document.title = settings.app.title;
@@ -240,8 +233,6 @@ export function start() {
             packagemanager.add('sweetalert', 2);
             packagemanager.add('jquery-ripple', 3);
         packagemanager.load(function() {
-
-            progress.hide();
 
             // Compile JSS and load into a style tag.
             const css = compile(getStyle());
@@ -306,7 +297,7 @@ export function start() {
  * @returns {void}
  */
 function addStatusPage(code, description) {
-    let pge = extend({}, pagemeta),
+    let pge = $.extend({}, pagemeta),
         tbl = dataTable('status');
     pge.name = code;
     pge.component = 'statuspage';

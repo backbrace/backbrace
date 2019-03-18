@@ -4,14 +4,14 @@
  * @private
  */
 
+import $ from 'jquery';
 import { globals } from '../globals';
 import { style as base } from './base';
-import { merge } from '../util';
 
 /**
  * Flat style jss object.
  */
-export let style = merge({}, base, {
+export let style = $.extend({}, base, {
 
   'body': {
     margin: '0px',

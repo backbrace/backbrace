@@ -109,17 +109,6 @@
  */
 
 /**
- * Loader style.
- * @typedef {object} LoaderStyle
- * @property {string} [zindex] Loader bar z-index. Defaults to `1000`.
- * @property {string} [barheight] Loader bar height. Defaults to `10px`.
- * @property {string} [barwidth] Loader bar width. Defaults to `800px`.
- * @property {string} [progressbackground] Progress bar background. Defaults to `#A2CFEE`.
- * @property {string} [progresscolor] Progress bar foreground color. Defaults to `#3498DB`.
- * @property {string} [blockerbackground] Background for loader blocker. Defaults to `#ECF0F1`.
- */
-
-/**
  * Font style.
  * @typedef {object} FontStyle
  * @property {string} [url] URL for the font. Defaults to Roboto font.
@@ -170,7 +159,6 @@
  *
  * Example: The place holder `%colors:primary%` will merge with the settings.style.colors.header value.
  * @typedef {object} StyleConfig
- * @property {LoaderStyle} [loader] Loader style.
  * @property {FontStyle} [font] Font style.
  * @property {ImagesStyle} [images] Images style.
  * @property {ColorsStyle} [colors] Colors style.

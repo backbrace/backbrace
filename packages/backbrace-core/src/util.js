@@ -117,95 +117,6 @@ export function formatString(str, ...args) {
 }
 
 /**
- * Base extend.
- * @private
- * @param {*} dst Object to extend.
- * @param {any[]} objs Objects to extend with.
- * @param {boolean} [deep] Deep copy.
- * @returns {*} Extended object.
- */
-function baseExtend(dst, objs, deep) {
-
-  for (let i = 0, ii = objs.length; i < ii; ++i) {
-    let obj = objs[i];
-    if (typeof obj !== 'object' && typeof obj !== 'function') continue;
-    let keys = Object.keys(obj);
-    for (let j = 0, jj = keys.length; j < jj; j++) {
-      let key = keys[j],
-        src = obj[key];
-      if (deep && typeof src === 'object') {
-        if (isDate(src)) {
-          dst[key] = new Date(src.valueOf());
-        } else {
-          if (typeof dst[key] !== 'object') dst[key] = Array.isArray(src) ? [] : {};
-          baseExtend(dst[key], [src], true);
-        }
-      } else {
-        dst[key] = src;
-      }
-    }
-  }
-  return dst;
-}
-
-/**
- * Extend an object with another object.
- * @internal
- * @private
- * @param {*} dst Destination object.
- * @returns {*} Extended object.
- */
-export function extend(dst) {
-  return baseExtend(dst, [].slice.call(arguments, 1), false);
-}
-
-/**
- * Merge an object with another object.
- * @method merge
- * @memberof module:backbrace
- * @param {*} dst Destination object.
- * @param {...*} args Other objects to merge.
- * @returns {*} Extended object.
- */
-export function merge(dst, ...args) {
-  return baseExtend(dst, args, true);
-}
-
-/**
- * Iterate through an array or object.
- * @internal
- * @private
- * @template T
- * @param {ArrayLike<T>} obj Object to iterate through.
- * @param {function(T,Key,ArrayLike<T>):void} iterator Iterator function to call.
- * @param {*} [context] Context to run the iterator function.
- * @returns {ArrayLike<T>} Returned object for chaining.
- */
-export function forEach(obj, iterator, context) {
-  if (obj) {
-    if (Array.isArray(obj)) {
-      const isPrimitive = typeof obj !== 'object';
-      for (let key = 0, length = obj.length; key < length; key++) {
-        if (isPrimitive || key in obj) {
-          iterator.call(context, obj[key], key, obj);
-        }
-      }
-    } else if (Array.isArray(obj) && obj.forEach && obj.forEach !== forEach) {
-      obj.forEach(iterator, context);
-    } else if (typeof obj.hasOwnProperty === 'function') {
-      for (let key in obj)
-        if (obj.hasOwnProperty(key))
-          iterator.call(context, obj[key], key, obj);
-    } else {
-      for (let key in obj)
-        if (Object.prototype.hasOwnProperty.call(obj, key))
-          iterator.call(context, obj[key], key, obj);
-    }
-  }
-  return obj;
-}
-
-/**
  * Deep map.
  * @private
  * @param {*} obj Object.
@@ -272,28 +183,6 @@ export function setZeroTimeout(fn) {
   const window = getWindow();
   timeouts.push(fn);
   window.postMessage(messageName, '*');
-}
-
-/**
- * Add an element (native).
- * @internal
- * @private
- * @param {string} type Element type to create.
- * @param {*} attributes Attributes to add to the element.
- * @param {HTMLElement} parentElement Parent element to append to.
- * @returns {HTMLElement} Returns the new element created.
- */
-export function addElement(type, attributes, parentElement) {
-
-  const window = getWindow(),
-    element = window.document.createElement(type);
-
-  if (attributes)
-    for (let i in attributes)
-      element.setAttribute(i, attributes[i]);
-
-  parentElement.appendChild(element);
-  return element;
 }
 
 /**

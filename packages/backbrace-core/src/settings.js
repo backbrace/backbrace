@@ -27,14 +27,6 @@ export let settings = {
         dir: '/meta/'
     },
     style: {
-        loader: {
-            zindex: '1000',
-            barheight: '10px',
-            barwidth: '800px',
-            progressbackground: '#A2CFEE',
-            progresscolor: '#3498DB',
-            blockerbackground: '#ECF0F1'
-        },
         font: {
             url: `${globals.CDNSERVER}/packages/roboto/css/roboto/roboto-fontface.css`,
             family: '\'Roboto\', sans-serif'
