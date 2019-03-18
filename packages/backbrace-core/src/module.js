@@ -6,7 +6,6 @@
 
 import $ from 'jquery';
 import { error } from './error';
-import { loadScript } from './packagemanager';
 import { settings } from './settings';
 import { isDefined } from './util';
 
@@ -61,15 +60,19 @@ export function exists(name) {
 export function load(name) {
     // Check if we are loading a js file and the module doesn't exist.
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
+
         const d = $.Deferred();
-        loadScript(settings.meta.dir + name,
-            function() {
+
+        $.getScript(settings.meta.dir + name)
+            .done(function() {
                 d.resolve(get(name));
-            },
-            function() {
+            })
+            .fail(function() {
                 throw moduleError('noexists', 'Cannot find module \'{0}\'', name);
             });
+
         return d.promise();
+
     } else {
         return get(name);
     }

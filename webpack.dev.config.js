@@ -18,6 +18,8 @@ module.exports = {
   resolve: {
     alias: {
       'jquery': 'modules/jquery/dist/jquery.js',
+      'moment': 'modules/moment/moment.js',
+      'sweetalert': 'modules/sweetalert/dist/sweetalert-dev.js',
       'modules': path.join(__dirname, './node_modules')
     }
   },
@@ -26,6 +28,16 @@ module.exports = {
       {
         test: /\.(s*)css$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/'
+          }
+        }]
       }
     ]
   },

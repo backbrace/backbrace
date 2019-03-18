@@ -109,8 +109,7 @@ export {
     start,
     ready,
     loadPage,
-    message,
-    currentPage
+    message
 } from './app';
 
 export {

@@ -4,8 +4,10 @@
  * @private
  */
 
+import swal from 'sweetalert';
+import 'modules/sweetalert/dist/sweetalert.css';
+
 import { width } from './util';
-import { get as getSwal } from './providers/swal';
 import { get as getWindow } from './providers/window';
 
 let queue = [],
@@ -18,8 +20,6 @@ let queue = [],
  * @returns {void}
  */
 function load() {
-
-    const swal = getSwal();
 
     //Overwrite the close function.
     originalClose = swal.close;
@@ -39,7 +39,6 @@ function load() {
  * @returns {void}
  */
 function openSwal() {
-    const swal = getSwal();
     if (isOpen || isClosing) {
         queue.push(arguments);
     } else {

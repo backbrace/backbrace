@@ -80,7 +80,6 @@ module.exports = function(grunt) {
     'webpack-dev-server': {
       sampleapp: {
         webpack: webpackdevconfig,
-        publicPath: '/scripts',
         contentBase: [
           'packages/backbrace-sample-app',
           'packages/backbrace-packages'
@@ -89,7 +88,6 @@ module.exports = function(grunt) {
       },
       docs: {
         webpack: webpackdevconfig,
-        publicPath: '/scripts',
         contentBase: [
           'packages/backbrace-docs/src',
           'packages/backbrace-packages'

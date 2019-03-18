@@ -5,8 +5,10 @@
  * @private
  */
 
+import moment from 'moment';
+import 'modules/moment/locale/en-au.js';
+
 import { isDefined } from './util';
-import { get as moment } from './providers/moment';
 
 /**
  * Format a field value to a string.

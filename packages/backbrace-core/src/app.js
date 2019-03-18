@@ -6,42 +6,23 @@
 
 import $ from 'jquery';
 import { promisequeue, reset } from './promises';
-import { addDataTable, dataTable } from './data';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
-import { addPage, addTable } from './meta';
-import * as packagemanager from './packagemanager';
 import { settings } from './settings';
-import * as sweetalert from './sweetalert';
 import { route as addRoute, match as matchRoute } from './route';
 import {
     setZeroTimeout,
     isDefined,
-    isHtml5,
-    isMobileDevice
+    isHtml5
 } from './util';
-import { get as getAlert, set as setAlert } from './providers/alert';
-import { get as getIcons } from './providers/icons';
+import { get as getAlert } from './providers/alert';
 import { get as getStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
-import { HeaderComponent } from './components/header';
-import { ViewerComponent } from './components/viewer';
-import { pagemeta, tablemeta } from './types';
 
-let maincontainer = null,
-    windows = null,
-    activePage = 0,
+let app = null,
     readyFunc = null,
     suppressNextError = false;
-
-/**
- * @ignore
- * @description
- * App pages that are currently loaded.
- * @type {Map<number,ViewerComponent>}
- */
-let pages = new Map();
 
 const appError = error('app');
 
@@ -226,13 +207,7 @@ export function start() {
     // Load startup packages.
     promisequeue(function() {
 
-        packagemanager.add('resetcss');
-            packagemanager.add('jquery-ui', 1);
-            packagemanager.add('materialdesignicons', 2);
-            packagemanager.add('moment', 2);
-            packagemanager.add('sweetalert', 2);
-            packagemanager.add('jquery-ripple', 3);
-        packagemanager.load(function() {
+        return import(/* webpackChunkName: "app" */'./components/app').then(({ default: AppComponent }) => {
 
             // Compile JSS and load into a style tag.
             const css = compile(getStyle());
@@ -240,30 +215,9 @@ export function start() {
                 .append(css)
                 .appendTo($('head'));
 
-            // Lets upgrade alerts...
-            setAlert({
-                message: sweetalert.show,
-                confirm: function(msg, callback, title, yescaption, nocaption) {
-                    sweetalert.show(msg, function() {
-                        callback(true);
-                    });
-                },
-                error: function(msg) {
-                    sweetalert.show(msg, null, 'Application Error');
-                }
-            });
+            app = new AppComponent();
 
-            addDataTable('status');
-            let tbl = tablemeta;
-            tbl.name = 'status';
-            tbl.data = 'datatable/status';
-            addTable('builtin/status', tbl);
-
-            // Add status pages.
-            addStatusPage('400', 'Seems like a bad request has happened.');
-            addStatusPage('404', 'We can\'t seem to find the page you were looking for.');
-
-            load($('body'));
+            app.load($('body'));
 
             if (!settings.windowMode) {
 
@@ -272,87 +226,22 @@ export function start() {
                 window.onpopstate = function(event) {
                     var r = matchRoute(window.location.pathname);
                     if (r) {
-                        loadPage(r.page, {}, r.params);
+                        app.loadPage(r.page, {}, r.params);
                     }
                 };
 
                 let route = matchRoute(window.location.pathname);
                 if (route)
-                    loadPage(route.page, {}, route.params);
+                    app.loadPage(route.page, {}, route.params);
             }
 
             if (readyFunc)
                 return readyFunc();
 
         });
+
     });
 
-}
-
-/**
- * Add a status page to the app.
- * @private
- * @param {string} code Status code.
- * @param {string} description Status description.
- * @returns {void}
- */
-function addStatusPage(code, description) {
-    let pge = $.extend({}, pagemeta),
-        tbl = dataTable('status');
-    pge.name = code;
-    pge.component = 'statuspage';
-    pge.tableName = 'builtin/status';
-    addPage('status/' + code, pge);
-    tbl.push({
-        code: code,
-        description: description
-    });
-}
-
-/**
- * Load the app into a container.
- * @private
- * @param {JQuery} container JQuery element to load the app into.
- * @returns {void}
- */
-export function load(container) {
-
-    let main = $('<div class="main"></div>').appendTo(container);
-
-    $('body').addClass(isMobileDevice() ? 'mobile-app' : 'desktop-app');
-
-    // Add window toolbar.
-    if (settings.windowMode)
-        windows = $('<div class="main-windows"></div>').appendTo(main);
-
-    // Load components.
-    let header = new HeaderComponent();
-    header.setTitle(settings.style.images.logo !== '' ?
-        '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
-        settings.style.images.logo + '" />' :
-        settings.app.name);
-    header.load(main);
-    header.menuIcon.click(function() {
-        header.showMenu();
-    });
-
-    maincontainer = $('<div class="row"></div>');
-    $('<div class="container"></div>')
-        .append(maincontainer)
-        .appendTo(main);
-
-}
-
-/**
- * Get the active viewer.
- * @method currentPage
- * @memberof module:backbrace
- * @returns {ViewerComponent} Returns the active viewer.
- */
-export function currentPage() {
-    if (activePage > 0 && pages.has(activePage))
-        return pages.get(activePage);
-    return null;
 }
 
 /**
@@ -365,150 +254,5 @@ export function currentPage() {
  * @returns {void}
  */
 export function loadPage(name, options = {}, params = {}) {
-
-    let pge = new ViewerComponent(name, options, params);
-
-    let curr = currentPage();
-    if (!settings.windowMode && curr)
-        closePage(curr.id);
-
-    promisequeue(
-        function() {
-
-            if (currentPage())
-                currentPage().showLoad();
-
-            // Add a window shorcut.
-            if (settings.windowMode)
-                addWindowToToolbar(pge.id);
-
-            // Load the page component.
-            return pge.load(maincontainer);
-        },
-        function() {
-
-            if (!settings.windowMode && window.history && options.updateHistory)
-                window.history.pushState(null, pge.title, options.updateHistory);
-
-            if (currentPage())
-                currentPage().hideLoad();
-
-            // Add the page to the loaded pages.
-            pages.set(pge.id, pge);
-            activePage = pge.id;
-
-            return pge.update();
-        },
-        function() {
-            //Process links.
-            $('[route]').each(function() {
-                var a = $(this);
-                if (a.attr('processed') === 'true')
-                    return;
-                a.css('cursor', 'pointer').on('click', function() {
-                    var r = matchRoute(a.attr('route'));
-                    if (r)
-                        loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
-                }).attr('processed', 'true');
-            });
-        }
-    );
-}
-
-/**
- * Add a window to the windows toolbar.
- * @ignore
- * @param {number} id ID of the window.
- * @returns {JQuery} Returns the shortcut button.
- */
-export function addWindowToToolbar(id) {
-    const icons = getIcons(),
-        closeBtn = $(icons.get('%close%'))
-            .click(function(ev) {
-                closePage(id);
-                ev.preventDefault();
-                return false;
-            })
-            .css('padding-left', '5px');
-    return $('<div id="win' + id + '" class="main-windows-btn unselectable"></div>')
-        .hide()
-        .appendTo(windows)
-        .append('<span />')
-        .append(closeBtn)
-        .click(function() {
-            showPage(id);
-        })
-        .fadeIn(300);
-}
-
-/**
- * Close an opened page.
- * @ignore
- * @param {number} id ID of the page to close.
- * @returns {void}
- */
-export function closePage(id) {
-
-    promisequeue(function() {
-
-        // Unload the page.
-        if (!pages.has(id))
-            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
-        const pge = pages.get(id);
-        pge.unload();
-
-        // Remove the page from the loaded pages.
-        pages.delete(id);
-
-        // Remove shortcut.
-        if (settings.windowMode) {
-            $('#win' + id).remove();
-            $(window).scrollTop(0);
-        }
-
-        if (activePage === id) {
-
-            activePage = 0;
-
-            // Open next page.
-            if (pages.size > 0) {
-                const nextpge = Array.from(pages.values())[pages.size - 1];
-                nextpge.show();
-                activePage = nextpge.id;
-            }
-        }
-
-    });
-}
-
-/**
- * Show a loaded page.
- * @ignore
- * @param {number} id ID of the page to show.
- * @returns {void}
- */
-export function showPage(id) {
-
-    promisequeue(function() {
-        if (id === activePage)
-            return;
-
-        // Hide the currently active page.
-        if (currentPage())
-            currentPage().hide();
-
-        if (settings.windowMode)
-            $('.main-windows-btn').removeClass('active');
-
-        // Show the page.
-        if (!pages.has(id))
-            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
-
-        const pge = pages.get(id);
-        pge.show();
-        activePage = pge.id;
-
-        if (settings.windowMode)
-            $('#win' + id).addClass('active');
-    });
+    app.loadPage(name, options, params);
 }
