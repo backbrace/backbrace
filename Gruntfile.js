@@ -14,6 +14,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('git-changelog');
 
   var webpackconfig = require('./webpack.config'),
+    webpackdevconfig = require('./webpack.dev.config'),
     versionInfo = require('./lib/version-info/version-info.js'),
     paths = {
       core: 'packages/backbrace-core/',
@@ -78,40 +79,16 @@ module.exports = function(grunt) {
 
     'webpack-dev-server': {
       sampleapp: {
-        webpack: {
-          mode: 'none',
-          entry: {
-            backbrace: ['./packages/backbrace-core/src/backbrace.js']
-          },
-          devtool: 'source-map',
-          devServer: {},
-          output: {
-            library: 'backbrace',
-            filename: '[name].js'
-          },
-          plugins: [
-            new webpack.DefinePlugin(globals.get(true))
-          ]
-        },
+        webpack: webpackdevconfig,
         publicPath: '/scripts',
-        contentBase: ['packages/backbrace-sample-app', 'packages/backbrace-packages'],
+        contentBase: [
+          'packages/backbrace-sample-app',
+          'packages/backbrace-packages'
+        ],
         port: 8000
       },
       docs: {
-        webpack: {
-          mode: 'none',
-          entry: {
-            backbrace: ['./packages/backbrace-core/src/backbrace.js']
-          },
-          devtool: 'source-map',
-          output: {
-            library: 'backbrace',
-            filename: '[name].js'
-          },
-          plugins: [
-            new webpack.DefinePlugin(globals.get(true))
-          ]
-        },
+        webpack: webpackdevconfig,
         publicPath: '/scripts',
         contentBase: [
           'packages/backbrace-docs/src',

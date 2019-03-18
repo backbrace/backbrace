@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { promiseblock, promisequeue } from '../promises';
 import { dataTable } from '../data';
 import { load as loadModule } from '../module';
@@ -6,7 +7,6 @@ import { get } from '../http';
 import { page, table } from '../meta';
 import { settings } from '../settings';
 import { noop } from '../util';
-import { get as getJQuery } from '../providers/jquery';
 import { Component } from '../classes/component';
 import { ActionsComponent } from './actions';
 
@@ -123,8 +123,6 @@ export class ViewerComponent extends Component {
      * @returns {JQueryPromise} Promise to load the viewer component.
      */
     load(container) {
-
-        const $ = getJQuery();
 
         let cont = $('<div>').appendTo(container);
 
@@ -332,7 +330,6 @@ export class ViewerComponent extends Component {
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     setTitle(title) {
-        const $ = getJQuery();
         this.title = title;
         this.pageComponent.setTitle(title);
         if (settings.windowMode) {

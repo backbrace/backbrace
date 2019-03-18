@@ -4,11 +4,11 @@
  * @private
  */
 
+import $ from 'jquery';
 import { error } from './error';
 import { loadScript } from './packagemanager';
 import { settings } from './settings';
 import { isDefined } from './util';
-import { get as getJQuery } from './providers/jquery';
 
 let modules = {};
 
@@ -61,8 +61,7 @@ export function exists(name) {
 export function load(name) {
     // Check if we are loading a js file and the module doesn't exist.
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
-        const $ = getJQuery(),
-            d = $.Deferred();
+        const d = $.Deferred();
         loadScript(settings.meta.dir + name,
             function() {
                 d.resolve(get(name));

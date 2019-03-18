@@ -1,5 +1,4 @@
 import { isMobileDevice } from '../util';
-import { get as getJQuery } from '../providers/jquery';
 import { ActionComponent } from './action';
 import { Component } from '../classes/component';
 
@@ -31,10 +30,8 @@ export class ActionsComponent extends Component {
      */
     unload() {
 
-        const $ = getJQuery();
-
         // Unload each button.
-        $.each(Array.from(this.actions.values()), function(index, btn) {
+        Array.from(this.actions.values()).forEach(function(btn) {
             btn.unload();
         });
 

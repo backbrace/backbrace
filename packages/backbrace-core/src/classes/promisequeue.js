@@ -1,6 +1,6 @@
+import $ from 'jquery';
 import { debug as logDebug } from '../log';
 import { uid, setZeroTimeout } from '../util';
-import { get as getJQuery } from '../providers/jquery';
 
 /**
  * @class
@@ -49,7 +49,6 @@ export class PromiseQueue {
     createQueue(...args) {
 
         // Create a new queue.
-        const $ = getJQuery();
         let queue = [];
 
         // Add the function blocks to the new queue if they are not null.
@@ -74,8 +73,7 @@ export class PromiseQueue {
      */
     resolveQueue(result) {
 
-        const $ = getJQuery(),
-            i = this.queue.length - 1,
+        const i = this.queue.length - 1,
             arr = [result];
 
         if (this.queue.length === 0)

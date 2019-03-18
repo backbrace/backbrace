@@ -4,6 +4,7 @@
  * @private
  */
 
+import $ from 'jquery';
 import { promisequeue, reset } from './promises';
 import { addDataTable, dataTable } from './data';
 import { error } from './error';
@@ -25,7 +26,6 @@ import {
 } from './util';
 import { get as getAlert, set as setAlert } from './providers/alert';
 import { get as getIcons } from './providers/icons';
-import { get as getJQuery } from './providers/jquery';
 import { get as getStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
 import { HeaderComponent } from './components/header';
@@ -223,83 +223,77 @@ export function start() {
     // Start ticking.
     window.setInterval(onTick, 10000);
 
-    // Load JQuery.
-    packagemanager.loadScript('jquery', function() {
+    // JQuery wasn't loaded :(
+    if ($ === null)
+        throw appError('nojquery', 'JQuery was not loaded correctly');
 
-        // JQuery wasn't loaded :(
-        const $ = getJQuery();
-        if ($ === null)
-            throw appError('nojquery', 'JQuery was not loaded correctly');
+    if ($.isFunction(window.document.getElementsByTagName('*')))
+        throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
 
-        if ($.isFunction(window.document.getElementsByTagName('*')))
-            throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
+    // Load startup packages.
+    promisequeue(function() {
 
-        // Load startup packages.
-        promisequeue(function() {
-
-            packagemanager.add('resetcss');
+        packagemanager.add('resetcss');
             packagemanager.add('jquery-ui', 1);
             packagemanager.add('materialdesignicons', 2);
             packagemanager.add('moment', 2);
             packagemanager.add('sweetalert', 2);
             packagemanager.add('jquery-ripple', 3);
-            packagemanager.load(function() {
+        packagemanager.load(function() {
 
-                progress.hide();
+            progress.hide();
 
-                // Compile JSS and load into a style tag.
-                const css = compile(getStyle());
-                $('<style id="appstyle">')
-                    .append(css)
-                    .appendTo($('head'));
+            // Compile JSS and load into a style tag.
+            const css = compile(getStyle());
+            $('<style id="appstyle">')
+                .append(css)
+                .appendTo($('head'));
 
-                // Lets upgrade alerts...
-                setAlert({
-                    message: sweetalert.show,
-                    confirm: function(msg, callback, title, yescaption, nocaption) {
-                        sweetalert.show(msg, function() {
-                            callback(true);
-                        });
-                    },
-                    error: function(msg) {
-                        sweetalert.show(msg, null, 'Application Error');
-                    }
-                });
-
-                addDataTable('status');
-                let tbl = tablemeta;
-                tbl.name = 'status';
-                tbl.data = 'datatable/status';
-                addTable('builtin/status', tbl);
-
-                // Add status pages.
-                addStatusPage('400', 'Seems like a bad request has happened.');
-                addStatusPage('404', 'We can\'t seem to find the page you were looking for.');
-
-                load($('body'));
-
-                if (!settings.windowMode) {
-
-                    addRoute({ path: '**', page: 'status/404' });
-
-                    window.onpopstate = function(event) {
-                        var r = matchRoute(window.location.pathname);
-                        if (r) {
-                            loadPage(r.page, {}, r.params);
-                        }
-                    };
-
-                    let route = matchRoute(window.location.pathname);
-                    if (route)
-                        loadPage(route.page, {}, route.params);
+            // Lets upgrade alerts...
+            setAlert({
+                message: sweetalert.show,
+                confirm: function(msg, callback, title, yescaption, nocaption) {
+                    sweetalert.show(msg, function() {
+                        callback(true);
+                    });
+                },
+                error: function(msg) {
+                    sweetalert.show(msg, null, 'Application Error');
                 }
-
-                if (readyFunc)
-                    return readyFunc();
-
             });
-        });
 
+            addDataTable('status');
+            let tbl = tablemeta;
+            tbl.name = 'status';
+            tbl.data = 'datatable/status';
+            addTable('builtin/status', tbl);
+
+            // Add status pages.
+            addStatusPage('400', 'Seems like a bad request has happened.');
+            addStatusPage('404', 'We can\'t seem to find the page you were looking for.');
+
+            load($('body'));
+
+            if (!settings.windowMode) {
+
+                addRoute({ path: '**', page: 'status/404' });
+
+                window.onpopstate = function(event) {
+                    var r = matchRoute(window.location.pathname);
+                    if (r) {
+                        loadPage(r.page, {}, r.params);
+                    }
+                };
+
+                let route = matchRoute(window.location.pathname);
+                if (route)
+                    loadPage(route.page, {}, route.params);
+            }
+
+            if (readyFunc)
+                return readyFunc();
+
+        });
     });
 
 }
@@ -331,9 +325,6 @@ function addStatusPage(code, description) {
  * @returns {void}
  */
 export function load(container) {
-
-    const $ = getJQuery();
-
 
     let main = $('<div class="main"></div>').appendTo(container);
 
@@ -384,8 +375,7 @@ export function currentPage() {
  */
 export function loadPage(name, options = {}, params = {}) {
 
-    let pge = new ViewerComponent(name, options, params),
-        $ = getJQuery();
+    let pge = new ViewerComponent(name, options, params);
 
     let curr = currentPage();
     if (!settings.windowMode && curr)
@@ -442,7 +432,6 @@ export function loadPage(name, options = {}, params = {}) {
  */
 export function addWindowToToolbar(id) {
     const icons = getIcons(),
-        $ = getJQuery(),
         closeBtn = $(icons.get('%close%'))
             .click(function(ev) {
                 closePage(id);
@@ -470,8 +459,6 @@ export function addWindowToToolbar(id) {
 export function closePage(id) {
 
     promisequeue(function() {
-
-        const $ = getJQuery();
 
         // Unload the page.
         if (!pages.has(id))
@@ -514,8 +501,6 @@ export function showPage(id) {
     promisequeue(function() {
         if (id === activePage)
             return;
-
-        const $ = getJQuery();
 
         // Hide the currently active page.
         if (currentPage())

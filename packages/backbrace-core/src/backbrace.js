@@ -4,9 +4,9 @@
  * @module backbrace
  */
 
+import $ from 'jquery';
 import { settings as appSettings } from './settings';
 import { merge, isDefined } from './util';
-import * as jqueryprovider from './providers/jquery';
 import * as windowprovider from './providers/window';
 
 /**
@@ -62,7 +62,7 @@ export {
  * @returns {JQueryStatic} Returns the JQuery library.
  */
 export function jquery() {
-    return jqueryprovider.get();
+    return $;
 }
 
 export {

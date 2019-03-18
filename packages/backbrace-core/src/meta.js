@@ -4,12 +4,12 @@
  * @private
  */
 
+import $ from 'jquery';
 import { error } from './error';
 import { promiseblock } from './promises';
 import { get } from './http';
 import { settings } from './settings';
 import * as types from './types';
-import { get as getJQuery } from './providers/jquery';
 
 const defaults = {
     /** @type {PageMeta} */
@@ -70,8 +70,6 @@ export function addTable(name, tbl) {
  */
 export function page(name) {
 
-    const $ = getJQuery();
-
     return promiseblock(
 
         // Get the page from a JSON file.
@@ -97,14 +95,14 @@ export function page(name) {
 
             // Extend the page actions.
             pge.actions = [];
-            $.each(json.actions, function(index, action) {
+            (json.actions || []).forEach(function(action) {
                 action.text = action.text || action.name;
                 pge.actions.push($.extend({}, defaults.pageaction, action));
             });
 
             // Extend the page sections.
             pge.sections = [];
-            $.each(json.sections, function(index, section) {
+            (json.sections || []).forEach(function(section) {
 
                 section.text = section.text || section.name;
                 pge.sections.push($.extend({}, defaults.pagesection, section));
@@ -128,8 +126,6 @@ export function page(name) {
  */
 export function table(name) {
 
-    const $ = getJQuery();
-
     return promiseblock(
 
         // Get the table from a JSON file.
@@ -152,7 +148,7 @@ export function table(name) {
 
             // Extend the table columns.
             tbl.columns = [];
-            $.each(json.columns, function(index, column) {
+            (json.columns || []).forEach(function(column) {
                 column.caption = column.caption || column.name;
                 tbl.columns.push($.extend({}, defaults.tablecolumn, column));
             });

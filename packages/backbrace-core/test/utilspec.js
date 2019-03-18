@@ -1,6 +1,5 @@
+import $ from 'jquery';
 import * as util from '../src/util';
-import { loadScript } from '../src/packagemanager';
-import { get as getJQuery } from '../src/providers/jquery';
 import { get as getWindow, set as setWindow } from '../src/providers/window';
 
 import { settings } from '../src/settings';
@@ -250,26 +249,23 @@ describe('util', function() {
     });
 
     describe('addElement', function() {
-        it('should add an element to the dom', function(done) {
-            loadScript('jquery', function() {
+        it('should add an element to the dom', function() {
 
-                const $ = getJQuery(),
-                    window = getWindow();
-                let id = util.uid();
+            const window = getWindow();
+            let id = util.uid();
 
-                util.addElement('div', {
-                    id: id,
-                    custom: '123'
-                }, window.document.body);
+            util.addElement('div', {
+                id: id,
+                custom: '123'
+            }, window.document.body);
 
-                let ele = $('#' + id);
-                expect(ele.length).toBe(1);
-                expect(ele.attr('custom')).toBe('123');
-                expect(ele.parent().is('body')).toBe(true);
-                ele.remove();
-                done();
-            });
+            let ele = $('#' + id);
+            expect(ele.length).toBe(1);
+            expect(ele.attr('custom')).toBe('123');
+            expect(ele.parent().is('body')).toBe(true);
+            ele.remove();
         });
+
     });
 
 });

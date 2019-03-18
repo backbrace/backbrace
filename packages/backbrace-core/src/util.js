@@ -4,7 +4,7 @@
  * @private
  */
 
-import { get as getJQuery } from './providers/jquery';
+import $ from 'jquery';
 import { get as getWindow } from './providers/window';
 
 let id = (new Date()).getTime(),
@@ -314,8 +314,6 @@ export function width() {
  * @returns {JQuery} Returns the editor if found.
  */
 export function findInput(elem) {
-
-  const $ = getJQuery();
 
   for (let i = 0; i < elem.children().length; i++) {
     if (elem.children()[i].nodeName === 'INPUT'

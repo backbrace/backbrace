@@ -4,8 +4,8 @@
  * @private
  */
 
+import $ from 'jquery';
 import { error } from './error';
-import { get as getJQuery } from './providers/jquery';
 
 /**
  * Send a HTTP get request.
@@ -17,8 +17,7 @@ import { get as getJQuery } from './providers/jquery';
  */
 export function get(url) {
 
-    const $ = getJQuery(),
-        d = $.Deferred();
+    const d = $.Deferred();
 
     $.get(url, function(data) {
         d.resolve(data);
@@ -37,8 +36,6 @@ export function get(url) {
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`.
  */
 export function post(url) {
-
-    const $ = getJQuery();
 
     let d = $.Deferred();
 

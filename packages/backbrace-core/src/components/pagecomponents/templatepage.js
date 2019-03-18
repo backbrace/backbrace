@@ -2,7 +2,6 @@ import { globals } from '../../globals';
 import { promiseblock, promiseeach } from '../../promises';
 import { PageComponent } from '../../classes/pagecomponent';
 import { ViewerComponent } from '../viewer';
-import { get as getJQuery } from '../../providers/jquery';
 
 /**
  * @class
@@ -35,9 +34,7 @@ export class TemplatePageComponent extends PageComponent {
      */
     unload() {
 
-        const $ = getJQuery();
-
-        $.each(Array.from(this.subpages.values()), (index, page) => page.unload());
+        Array.from(this.subpages.values()).forEach((page) => page.unload());
         this.subpages = null;
 
         super.unload();
@@ -90,7 +87,6 @@ export class TemplatePageComponent extends PageComponent {
      */
     update(data) {
 
-        const $ = getJQuery();
         let depth = 0;
 
         /**
@@ -108,7 +104,7 @@ export class TemplatePageComponent extends PageComponent {
             let s = templ,
                 check = new RegExp('\\{\\{((.*?))\\}\\}', 'g'),
                 fields = s.match(check);
-            $.each(fields, function(i, f) {
+            fields.forEach(function(f) {
                 let fieldname = f.replace(check, '$1');
                 // Merge global variables.
                 if (fieldname.startsWith('globals.')) {
@@ -132,7 +128,7 @@ export class TemplatePageComponent extends PageComponent {
         let repeater = this.container.find('[bb-repeat=true]');
         if (repeater.length > 0) {
             let templ = repeater[0].outerHTML;
-            $.each(data, function(index, d) {
+            data.forEach(function(d) {
                 repeater.after(mergeData(templ, d));
             });
             repeater.remove();

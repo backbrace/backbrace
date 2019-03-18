@@ -1,4 +1,4 @@
-import { get as getJquery } from '../providers/jquery';
+import $ from 'jquery';
 import { get as getIcons } from '../providers/icons';
 import { Component } from '../classes/component';
 import { isMobileDevice } from '../util';
@@ -82,8 +82,7 @@ export class WindowComponent extends Component {
      */
     load(container) {
 
-        const $ = getJquery(),
-            icons = getIcons();
+        const icons = getIcons();
 
         this.preloader = $('<div class="preloader' + (!isMobileDevice() ? ' z-depth-1' : '') + '"></div>');
         this.loader = $('<div class="overlay"><div class="progress"><div class="indeterminate"></div></div></div>').hide();
@@ -127,8 +126,7 @@ export class WindowComponent extends Component {
      * @returns {WindowComponent} Returns itself for chaining.
      */
     setTitle(title) {
-        const $ = getJquery(),
-            icons = getIcons();
+        const icons = getIcons();
         $('#title' + this.id).html(
             (this.options.icon ? icons.get(this.options.icon) + ' ' : '')
             + title);
@@ -142,8 +140,7 @@ export class WindowComponent extends Component {
      * @returns {void}
      */
     addTitlebarIcon(icon, onclick) {
-        const $ = getJquery(),
-            icons = getIcons();
+        const icons = getIcons();
         $(icons.get('%refresh%'))
             .addClass('unselectable title-icon')
             .appendTo(this.titlebar)

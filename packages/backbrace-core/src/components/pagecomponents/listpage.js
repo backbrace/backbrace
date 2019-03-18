@@ -1,8 +1,8 @@
+import $ from 'jquery';
 import { formatField } from '../../format';
 import * as packagemanager from '../../packagemanager';
 import { findInput, isMobileDevice, uid } from '../../util';
 import { get as getIcons } from '../../providers/icons';
-import { get as getJQuery } from '../../providers/jquery';
 import { PageComponent } from '../../classes/pagecomponent';
 
 /**
@@ -50,8 +50,6 @@ export class ListPageComponent extends PageComponent {
      */
     load() {
 
-        const $ = getJQuery();
-
         /**
          * @ignore
          * @description
@@ -75,8 +73,7 @@ export class ListPageComponent extends PageComponent {
          * @returns {*} Returns the new value.
          */
         function customValue(elem, op, value) {
-            const $ = getJQuery(),
-                editor = findInput($(elem));
+            const editor = findInput($(elem));
             if (op === 'set' && editor) {
                 editor.val(value);
             }
@@ -249,8 +246,7 @@ export class ListPageComponent extends PageComponent {
      */
     update(data) {
 
-        const $ = getJQuery(),
-            icons = getIcons();
+        const icons = getIcons();
         let r = data || [];
 
         if (!isMobileDevice()) {

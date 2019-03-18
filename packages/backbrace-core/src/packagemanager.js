@@ -4,12 +4,12 @@
  * @private
  */
 
+import $ from 'jquery';
 import { promiseinsert } from './promises';
 import { error } from './error';
 import { debug as logDebug } from './log';
 import { get as getPackage, exists as packageExists } from './packages';
 import { noop } from './util';
-import { get as getJQuery } from './providers/jquery';
 import { get as getWindow } from './providers/window';
 
 const packages = [],
@@ -79,7 +79,6 @@ export function loadCSS(url, onsuccess, onerror) {
  */
 export function add(pack, offset) {
 
-    const $ = getJQuery();
 
     if (typeof pack === 'string') {
         if (!packageExists(pack))
@@ -107,8 +106,6 @@ export function add(pack, offset) {
  */
 export function load(onsuccess, onerror) {
 
-    const $ = getJQuery();
-
     promiseinsert(
         function() {
             'inserted';
@@ -134,8 +131,7 @@ export function load(onsuccess, onerror) {
  */
 export function loadpackages(onsuccess, onerror) {
 
-    const $ = getJQuery(),
-        urls = packages.shift();
+    const urls = packages.shift();
     let styles = [],
         scripts = [],
         totalLoaded = 0;

@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import { uid } from '../util';
-import { get as getJQuery } from '../providers/jquery';
 
 /**
  * @class
@@ -59,7 +59,6 @@ export class Component {
      * @returns {Component|JQueryPromise} Returns itself for chaining.
      */
     load(container) {
-        const $ = getJQuery();
         this.container = $('<div />').appendTo(container);
         return this;
     }

@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import { get as getIcons } from '../providers/icons';
-import { get as getJQuery } from '../providers/jquery';
 import { Component } from '../classes/component';
 
 /**
@@ -49,8 +49,7 @@ export class ActionComponent extends Component {
      */
     load(container) {
 
-        const $ = getJQuery(),
-            icons = getIcons();
+        const icons = getIcons();
 
         //Default the icon.
         if (!this.action.icon && this.action.name)

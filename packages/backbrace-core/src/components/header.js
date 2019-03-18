@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import { settings } from '../settings';
-import { get as getJQuery } from '../providers/jquery';
 import { get as getIcons } from '../providers/icons';
 import { Component } from '../classes/component';
 
@@ -96,8 +96,7 @@ export class HeaderComponent extends Component {
      */
     load(container) {
 
-        const $ = getJQuery(),
-            icons = getIcons();
+        const icons = getIcons();
 
         this.container = $(`<header class="header ${this.options.className}"></header>`).appendTo(container);
 

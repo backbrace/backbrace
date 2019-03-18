@@ -1,4 +1,4 @@
-import { get as getJQuery } from '../../providers/jquery';
+import $ from 'jquery';
 import { FieldComponent } from '../../classes/fieldcomponent';
 
 /**
@@ -26,8 +26,7 @@ export class TextFieldComponent extends FieldComponent {
      */
     load(container) {
 
-        const $ = getJQuery(),
-            parent = this.parent.viewer.page.component;
+        const parent = this.parent.viewer.page.component;
         let type = 'text';
 
         super.load(container);

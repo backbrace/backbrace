@@ -5,8 +5,8 @@
  */
 
 import { error } from './error';
+import $ from 'jquery';
 import { debug as logDebug, object as logObject } from './log';
-import { get as getJquery } from './providers/jquery';
 import { PromiseQueue } from './classes/promisequeue';
 
 const promisesError = error('promises');
@@ -85,8 +85,6 @@ function runNextQueue() {
  * );
  */
 export function promiseblock(...args) {
-
-    const $ = getJquery();
 
     if (!currentQueue)
         throw promisesError('noqueue', 'Attempted to run a promise block without a promise queue');
