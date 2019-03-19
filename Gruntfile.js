@@ -14,7 +14,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('git-changelog');
 
   var webpackconfig = require('./webpack.config'),
-    webpackdevconfig = require('./webpack.dev.config'),
     versionInfo = require('./lib/version-info/version-info.js'),
     paths = {
       core: 'packages/backbrace-core/',
@@ -57,29 +56,25 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      dev: merge({
-        mode: 'development',
-        output: {
-          path: path.join(__dirname, 'packages/backbrace-core/dist'),
-          publicPath: 'packages/backbrace-core/dist/',
-          library: 'backbrace',
-          filename: '[name].js'
-        }
-      }, webpackconfig),
       prod: merge({
-        mode: 'production',
         output: {
           path: path.join(__dirname, 'packages/backbrace-core/dist'),
           publicPath: 'packages/backbrace-core/dist/',
           library: 'backbrace',
-          filename: '[name].min.js'
+          filename: '[name].[contenthash:8].min.js',
+          chunkFilename: 'scripts/[name].[contenthash:8].min.js'
         }
-      }, webpackconfig)
+      }, webpackconfig.get())
     },
 
     'webpack-dev-server': {
       sampleapp: {
-        webpack: webpackdevconfig,
+        webpack: merge({
+          output: {
+            library: 'backbrace',
+            filename: '[name].js'
+          }
+        }, webpackconfig.get(true)),
         contentBase: [
           'packages/backbrace-sample-app',
           'packages/backbrace-packages'
@@ -87,7 +82,12 @@ module.exports = function(grunt) {
         port: 8000
       },
       docs: {
-        webpack: webpackdevconfig,
+        webpack: merge({
+          output: {
+            library: 'backbrace',
+            filename: '[name].js'
+          }
+        }, webpackconfig.get(true)),
         contentBase: [
           'packages/backbrace-docs/src',
           'packages/backbrace-packages'
@@ -245,7 +245,7 @@ module.exports = function(grunt) {
     'typings'
   ]);
   grunt.registerTask('build', [
-    'webpack:dev'
+    'webpack:prod'
   ]);
   grunt.registerTask('sampleapp', [
     'copy:packages',
@@ -258,7 +258,6 @@ module.exports = function(grunt) {
   grunt.registerTask('package', [
     'clean',
     'build',
-    'webpack:prod',
     'docs',
     'typings'
   ]);
