@@ -5,7 +5,7 @@
  */
 
 import $ from 'jquery';
-import { promisequeue, reset } from './promises';
+import { reset } from './promises';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
@@ -205,9 +205,7 @@ export function start() {
         throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
 
     // Load startup packages.
-    promisequeue(function() {
-
-        return import(/* webpackChunkName: "app" */'./components/app').then(({ default: AppComponent }) => {
+    import(/* webpackChunkName: "app" */'./components/app').then(({ default: AppComponent }) => {
 
             // Compile JSS and load into a style tag.
             const css = compile(getStyle());
@@ -238,8 +236,8 @@ export function start() {
             if (readyFunc)
                 return readyFunc();
 
-        });
-
+    }).catch((err) => {
+        throw appError('load', err.message || err);
     });
 
 }
