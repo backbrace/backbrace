@@ -2,8 +2,7 @@
 
 (function(window, $) {
 
-    var base = backbrace.style('base');
-    backbrace.setStyle($.extend({}, base, {
+    backbrace.setStyle({
         'body': {
             'overflow-y': 'auto !important',
             'font-family': '%font:family%',
@@ -282,7 +281,7 @@
             'font-weight': '500',
             color: '#666'
         }
-    }));
+    });
 
     // Setup the app.
     backbrace.settings({

@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import 'modules/reset-css/reset.css';
-import 'modules/@mdi/font/css/materialdesignicons.css';
+import '../styles/base.scss';
+import 'modules/@mdi/font/scss/materialdesignicons.scss';
 
 import { dataTable, addDataTable } from '../data';
 import { error } from '../error';

@@ -4,14 +4,12 @@
  * @private
  */
 
-import $ from 'jquery';
 import { globals } from '../globals';
-import { style as base } from './base';
 
 /**
  * Flat style jss object.
  */
-export let style = $.extend({}, base, {
+export let style = {
 
   'body': {
     margin: '0px',
@@ -539,4 +537,4 @@ export let style = $.extend({}, base, {
   '.ui-jqgrid tr.jqfoot td,.ui-jqgrid tr.jqgroup td,.ui-jqgrid tr.jqgrow td': {
     'border-bottom-color': '#CCC !important'
   }
-});
+};
