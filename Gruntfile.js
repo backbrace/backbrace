@@ -61,7 +61,7 @@ module.exports = function(grunt) {
           path: path.join(__dirname, 'packages/backbrace-core/dist'),
           publicPath: 'packages/backbrace-core/dist/',
           library: 'backbrace',
-          filename: '[name].[contenthash:8].min.js',
+          filename: '[name].min.js',
           chunkFilename: 'scripts/[name].[contenthash:8].min.js'
         }
       }, webpackconfig.get())

@@ -27,14 +27,16 @@ exports.get = function(devmode) {
       rules: [
         {
           test: /\.scss$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader'
+          ]
         },
         {
           test: /\.css$/,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader
-            },
+            MiniCssExtractPlugin.loader,
             'css-loader'
           ]
         },
@@ -43,8 +45,8 @@ exports.get = function(devmode) {
           use: [{
             loader: 'file-loader',
             options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
+              name: 'fonts/[name].[hash].[ext]',
+              publicPath: '../'
             }
           }]
         },
@@ -98,11 +100,11 @@ exports.get = function(devmode) {
         entryOnly: true,
         include: 'backbrace.js'
       }),
-      new webpack.DefinePlugin(globals.get()),
+      new webpack.DefinePlugin(globals.get(devmode)),
       new webpack.HashedModuleIdsPlugin(),
       new MiniCssExtractPlugin({
         filename: 'styles/[name].css',
-        chunkFilename: 'styles/[name].css'
+        chunkFilename: 'styles/[name].[contenthash:8].css'
       }),
       new webpack.ProvidePlugin({
         $: 'jquery',
