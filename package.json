@@ -69,6 +69,7 @@
         "jquery-ripple": "^0.2.4",
         "moment": "^2.22.2",
         "reset-css": "^4.0.1",
+        "roboto-fontface": "^0.10.0",
         "sweetalert": "^1.1.3"
     }
 }

@@ -112,11 +112,11 @@ export default class AppComponent extends Component {
 
         let main = $('<div class="main"></div>').appendTo(container);
 
-        $('body').addClass(isMobileDevice() ? 'mobile-app' : 'desktop-app');
+        $('body').addClass([isMobileDevice() ? 'mobile-app' : 'desktop-app', 'bg-body', 'text-body']);
 
         // Add window toolbar.
         if (settings.windowMode)
-            this.windows = $('<div class="main-windows"></div>').appendTo(main);
+            this.windows = $('<div class="main-windows bg-surface text-surface"></div>').appendTo(main);
 
         // Load components.
         let header = new HeaderComponent();

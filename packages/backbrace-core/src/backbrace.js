@@ -45,20 +45,6 @@ export function window(val) {
 }
 
 /**
- * Get an app style.
- * @param {string} name Name of the style.
- * @returns {object} Returns the application style.
- */
-export function style(name) {
-    let s = require('./styles/' + name + '.js');
-    return s.style;
-}
-
-export {
-    set as setStyle
-} from './providers/style';
-
-/**
  * Get the JQuery library.
  * @returns {JQueryStatic} Returns the JQuery library.
  */

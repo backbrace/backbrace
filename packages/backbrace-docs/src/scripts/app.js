@@ -2,6 +2,7 @@
 
 (function(window, $) {
 
+    /*
     backbrace.setStyle({
         'body': {
             'overflow-y': 'auto !important',
@@ -282,6 +283,7 @@
             color: '#666'
         }
     });
+    */
 
     // Setup the app.
     backbrace.settings({
@@ -295,8 +297,9 @@
                 blocker: '/images/logo-portrait-dark.png'
             },
             colors: {
-                primary: '#34495e',
-                background: '#FFF'
+                bgprimary: '#34495e',
+                bgbody: '#FFF',
+                textbody: 'rgba(0, 0, 0, 0.87)'
             }
         }
     });
@@ -306,12 +309,7 @@
         backbrace.settings({
             minify: false,
             debug: true,
-            packages: '/dist',
-            style: {
-                font: {
-                    url: '/dist/roboto/css/roboto/roboto-fontface.css'
-                }
-            }
+            packages: '/dist'
         });
     }
 

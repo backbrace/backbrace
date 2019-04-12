@@ -17,7 +17,6 @@ import {
     isHtml5
 } from './util';
 import { get as getAlert } from './providers/alert';
-import { get as getStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
 
 let app = null,
@@ -155,12 +154,6 @@ export function start() {
         errorHandler(ev.error || ev);
     });
 
-    // Add font css.
-    $('<link>').attr({
-        'href': settings.style.font.url,
-        'rel': 'stylesheet'
-    }).appendTo(window.document.head);
-
     $('<meta>').attr({
         'name': 'Description',
         'content': settings.app.description
@@ -204,14 +197,10 @@ export function start() {
     if ($.isFunction(window.document.getElementsByTagName('*')))
         throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
 
-    // Load startup packages.
-    import(/* webpackChunkName: "app" */'./components/app').then(({ default: AppComponent }) => {
-
-            // Compile JSS and load into a style tag.
-            const css = compile(getStyle());
-            $('<style id="appstyle">')
-                .append(css)
-                .appendTo($('head'));
+    // Load the app component.
+    import(
+        /* webpackChunkName: "app" */
+        './components/app').then(({ default: AppComponent }) => {
 
             app = new AppComponent();
 
@@ -236,9 +225,38 @@ export function start() {
             if (readyFunc)
                 return readyFunc();
 
-    }).catch((err) => {
-        throw appError('load', err.message || err);
+        }).catch((err) => {
+            errorHandler(err);
+        });
+
+    // Load style.
+    if (settings.style.loader)
+        import(
+            /* webpackChunkName: "style" */
+            './styles/loaders/' + settings.style.loader).catch((err) => {
+                errorHandler(err);
+            });
+
+    // Load colors.
+    let jss = {};
+    $.each(settings.style.colors, function(/** @type {string} */classname, color) {
+        if (classname.startsWith('text')) {
+            jss[`.text-${classname.substr(4)}`] = {
+                color: color
+            };
+        } else if (classname.startsWith('bg')) {
+            jss[`.bg-${classname.substr(2)}`] = {
+                'background-color': color
+            };
+            jss[`.border-${classname.substr(2)}`] = {
+                'border-color': color
+            };
+        }
     });
+    let css = compile(jss);
+    $('<style id="appcolors">')
+        .append(css)
+        .appendTo($('head'));
 
 }
 

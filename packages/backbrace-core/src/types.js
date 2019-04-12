@@ -109,14 +109,6 @@
  */
 
 /**
- * Font style.
- * @typedef {object} FontStyle
- * @property {string} [url] URL for the font. Defaults to Roboto font.
- * @property {string} [family] Font family to use for the app. Defaults to `'Roboto', sans-serif`.
- * @property {string} [size] Font size. Defaults to `16px`.
- */
-
-/**
  * Images style.
  * @typedef {object} ImagesStyle
  * @property {string} [logo] URL for the logo image (displayed in the header).
@@ -127,42 +119,28 @@
 /**
  * Colours style.
  * @typedef {object} ColorsStyle
- * @property {string} [primary] Primary color. Displayed most frequently accross the app.
- * @property {string} [primarytext] Primary text color.
- * @property {string} [primaryvar] Primary variant color.
- * @property {string} [primaryvartext] Primary variant text color.
- * @property {string} [secondary] Secondary color.
- * @property {string} [secondarytext] Secondary text color.
- * @property {string} [secondaryvar] Secondary variant color.
- * @property {string} [secondaryvartext] Secondary variant text color.
- * @property {string} [surface] Surface color of components.
- * @property {string} [surfacetext] Surface text color.
- * @property {string} [background] Appears behind content.
- * @property {string} [backgroundtext] Background text color.
- * @property {string} [hover] Hover background color.
- * @property {string} [hovertext] Hover text color.
+ * @property {string} [bgprimary] Primary color. Displayed most frequently accross the app.
+ * @property {string} [textprimary] Primary text color.
+ * @property {string} [bgprimaryvar] Primary variant color.
+ * @property {string} [textprimaryvar] Primary variant text color.
+ * @property {string} [bgsecondary] Secondary color.
+ * @property {string} [textsecondary] Secondary text color.
+ * @property {string} [bgsecondaryvar] Secondary variant color.
+ * @property {string} [textsecondaryvar] Secondary variant text color.
+ * @property {string} [bgsurface] Surface color of components.
+ * @property {string} [textsurface] Surface text color.
+ * @property {string} [bgbody] Appears behind content.
+ * @property {string} [textbody] Background text color.
+ * @property {string} [bghover] Hover background color.
+ * @property {string} [texthover] Hover text color.
  */
 
 /**
- * Screen sizes.
- * @typedef {object} ScreenSizes
- * @property {number} [small] Mobile screen. Defaults to `600`.
- * @property {number} [smallUp] Mobile screen upper. Defaults to `601`.
- * @property {number} [medium] Tablet screen. Defaults to `992`.
- * @property {number} [mediumUp] Tablet screen upper. Defaults to `993`.
- * @property {number} [large] Desktop screen. Defaults to `1200`.
- * @property {number} [largeUp] Desktop screen upper. Defaults to `1201`.
- */
-
-/**
- * App style configuration. Merged with the JSS style at run time.
- *
- * Example: The place holder `%colors:primary%` will merge with the settings.style.colors.header value.
+ * App style configuration.
  * @typedef {object} StyleConfig
- * @property {FontStyle} [font] Font style.
+ * @property {string} [loader] Style loader. Defaults to `materialdesign`.
  * @property {ImagesStyle} [images] Images style.
  * @property {ColorsStyle} [colors] Colors style.
- * @property {ScreenSizes} [screen] Screen sizes.
  */
 
 /**

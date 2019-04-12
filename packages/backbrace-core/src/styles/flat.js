@@ -16,7 +16,6 @@ export let style = {
     'font-family': '%font:family%',
     'font-size': '14px',
     'color': 'rgba(0, 0, 0, 0.87)',
-    background: '%colors:background%',
     '@media only screen and (max-width: %screen:mediumUp%px)': {
       margin: '0',
       'overflow-x': 'visible',
@@ -77,14 +76,12 @@ export let style = {
     display: 'block'
   },
   '.navbar': {
-    color: '%colors:primarytext%',
     top: '0px',
     left: '0px',
     right: '0px',
     'z-index': '3000'
   },
   '.navbar-inner': {
-    'background': '%colors:primary%',
     height: '50px',
     'padding-left': '0px',
     'padding-right': '0px'
@@ -154,7 +151,6 @@ export let style = {
   },
   '.main-windows': {
     width: '100%',
-    background: '%colors:surface%',
     display: 'inline-block',
     'padding-left': '3px',
     'border-bottom': '1px solid #ecf0f1',
@@ -165,8 +161,7 @@ export let style = {
     'top': '0px',
     'position': 'absolute',
     'width': '100vw',
-    'height': '100vh',
-    background: '%colors:surface%'
+    'height': '100vh'
   },
   '.mobile-app .viewer': {
     'height': 'calc(100vh - 110px)',
@@ -196,7 +191,6 @@ export let style = {
     '@media only screen and (min-width: %screen:smallUp%px)': {
       'margin-top': '20px',
       padding: '24px !important',
-      background: '%colors:surface%',
       'min-height': '200px'
     }
   },
@@ -207,7 +201,6 @@ export let style = {
     width: '100%',
     height: '100%',
     'z-index': '30001',
-    background: '%colors:surface%',
     'background-image': `url(${globals.CDNSERVER}/images/placeholder.gif)`,
     'background-repeat': 'no-repeat',
     'background-position': '40px 40px'
