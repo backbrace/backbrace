@@ -102,7 +102,7 @@ export class HeaderComponent extends Component {
 
         this.container = $(`<header class="header ${this.options.className}"></header>`).appendTo(container);
 
-        this.navbar = $('<nav class="navbar bg-primary text-primary fixed"><div class="navbar-inner z-depth-1">'
+        this.navbar = $('<nav class="navbar fixed"><div class="navbar-inner">'
             + '</div></nav>').appendTo(this.container);
 
         // Setup the menu icon.
@@ -118,7 +118,7 @@ export class HeaderComponent extends Component {
         if (this.options.attachMenu) {
 
             // Add a menu.
-            this.menu = $('<div class="menu z-depth-1">'
+            this.menu = $('<div class="menu">'
                 + '<div class="menu-brand">'
                 + (settings.style.images.menuLogo !== '' ?
                     '<img class="menu-logo show-on-large" src="' + settings.style.images.menuLogo + '" />' :

@@ -84,7 +84,7 @@ export class WindowComponent extends Component {
 
         const icons = getIcons();
 
-        this.preloader = $('<div class="preloader bg-surface text-surface' + (!isMobileDevice() ? ' z-depth-1' : '') + '"></div>');
+        this.preloader = $('<div class="preloader"></div>');
         this.loader = $('<div class="overlay"><div class="progress"><div class="indeterminate"></div></div></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
@@ -108,7 +108,7 @@ export class WindowComponent extends Component {
         this.container = $('<div class="col ' + this.options.className + '" />')
             .appendTo(container);
 
-        $('<div id="window' + this.id + '" class="window ' + (!isMobileDevice() ? ' z-depth-1 bg-surface text-surface' : '') + '" />')
+        $('<div id="window' + this.id + '" class="window" />')
             .append(this.preloader)
             .append(this.loader)
             .append(this.titlebar)

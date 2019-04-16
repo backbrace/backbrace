@@ -141,6 +141,61 @@ export function ready(func) {
 }
 
 /**
+ * Load the app colors from the settings into a new style tag.
+ * @returns {void}
+ */
+function loadColors() {
+
+    let jss = {},
+        selectors = ['', ':hover', ':active', ':focus'];
+
+    // Loop through the colors and add classes.
+    $.each(settings.style.colors, function(/** @type {string} */classname, color) {
+        selectors.forEach(function(sel) {
+            let csssel = `${sel.replace(':', '-')}${sel}`;
+            if (classname.startsWith('text')) {
+                jss[`.text-${classname.substr(4)}${csssel}`] = {
+                    color: color
+                };
+            } else if (classname.startsWith('bg')) {
+                jss[`.bg-${classname.substr(2)}${csssel}`] = {
+                    'background-color': color
+                };
+                jss[`.border-${classname.substr(2)}${csssel}`] = {
+                    'border-color': color
+                };
+            }
+        });
+    });
+
+    //Compile the jss.
+    let css = compile(jss);
+    $('<style id="appcolors">')
+        .append(css)
+        .appendTo($('head'));
+}
+
+/**
+ * Load the app style with a loader script. After the style is loaded, the app colors will be loaded.
+ * @returns {void} Promises to load the style.
+ */
+function loadStyle() {
+
+    if (settings.style.loader) {
+        import(
+            /* webpackChunkName: "style" */
+            './styles/loaders/' + settings.style.loader).then(({ default: load }) => {
+                load();
+                loadColors();
+            }).catch((err) => {
+                errorHandler(err);
+            });
+    } else {
+        loadColors();
+    }
+}
+
+/**
  * Start the app.
  * @method start
  * @memberof module:backbrace
@@ -204,6 +259,8 @@ export function start() {
 
             app = new AppComponent();
 
+            loadStyle();
+
             app.load($('body'));
 
             if (!settings.windowMode) {
@@ -228,35 +285,6 @@ export function start() {
         }).catch((err) => {
             errorHandler(err);
         });
-
-    // Load style.
-    if (settings.style.loader)
-        import(
-            /* webpackChunkName: "style" */
-            './styles/loaders/' + settings.style.loader).catch((err) => {
-                errorHandler(err);
-            });
-
-    // Load colors.
-    let jss = {};
-    $.each(settings.style.colors, function(/** @type {string} */classname, color) {
-        if (classname.startsWith('text')) {
-            jss[`.text-${classname.substr(4)}`] = {
-                color: color
-            };
-        } else if (classname.startsWith('bg')) {
-            jss[`.bg-${classname.substr(2)}`] = {
-                'background-color': color
-            };
-            jss[`.border-${classname.substr(2)}`] = {
-                'border-color': color
-            };
-        }
-    });
-    let css = compile(jss);
-    $('<style id="appcolors">')
-        .append(css)
-        .appendTo($('head'));
 
 }
 

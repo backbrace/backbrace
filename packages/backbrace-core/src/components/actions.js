@@ -46,7 +46,7 @@ export class ActionsComponent extends Component {
      */
     load(container) {
         super.load(container);
-        this.container.addClass('actions-bar unselectable no-padding col s12' + (isMobileDevice() ? ' z-depth-1' : ''));
+        this.container.addClass('actions-bar unselectable no-padding col s12');
         return this;
     }
 
