@@ -1,5 +1,11 @@
 @import "media.scss";
 
+$breakpoints: (
+  "phone": 600px,
+  "tablet": 992px,
+  "desktop": 1200px
+);
+
 $max-columns: 12;
 
 .unselectable {
