@@ -139,6 +139,7 @@
  * App style configuration.
  * @typedef {object} StyleConfig
  * @property {string} [loader] Style loader. Defaults to `materialdesign`.
+ * @property {string} [css] CSS URL to load.
  * @property {ImagesStyle} [images] Images style.
  * @property {ColorsStyle} [colors] Colors style.
  */

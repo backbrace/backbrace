@@ -28,6 +28,7 @@ export let settings = {
     },
     style: {
         loader: 'materialdesign',
+        css: '',
         images: {
             logo: '',
             menuLogo: '',

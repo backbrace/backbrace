@@ -176,22 +176,34 @@ function loadColors() {
 }
 
 /**
+ * Load external CSS.
+ * @returns {void}
+ */
+function loadCSS() {
+    if (settings.style.css !== '')
+        $(`<link rel="stylesheet" href="${settings.style.css}" >`)
+            .appendTo($('head'));
+}
+
+/**
  * Load the app style with a loader script. After the style is loaded, the app colors will be loaded.
- * @returns {void} Promises to load the style.
+ * @returns {void}
  */
 function loadStyle() {
 
-    if (settings.style.loader) {
+    if (settings.style.loader !== '') {
         import(
             /* webpackChunkName: "style" */
             './styles/loaders/' + settings.style.loader).then(({ default: load }) => {
                 load();
                 loadColors();
+                loadCSS();
             }).catch((err) => {
                 errorHandler(err);
             });
     } else {
         loadColors();
+        loadCSS();
     }
 }
 
