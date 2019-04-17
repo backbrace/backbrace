@@ -35,8 +35,8 @@ export function settings(newsettings) {
  * Get/set the window provider.
  * @method window
  * @memberof module:backbrace
- * @param {(Window|object)} [val] Window instance to set.
- * @returns {(Window|object)} Returns the window instance.
+ * @param {(Window|Object)} [val] Window instance to set.
+ * @returns {Window} Returns the window instance.
  */
 export function window(val) {
     if (isDefined(val))

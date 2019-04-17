@@ -306,7 +306,7 @@ export function start() {
  * @memberof module:backbrace
  * @param {string} name Name of the page to load.
  * @param {ViewerOptions} [options] Page viewer options.
- * @param {object} [params] Page params.
+ * @param {Object} [params] Page params.
  * @returns {void}
  */
 export function loadPage(name, options = {}, params = {}) {

@@ -33,7 +33,7 @@
 
 /**
  * Server Instance
- * @typedef {object} ServerInstance
+ * @typedef {Object} ServerInstance
  * @property {function():(JQueryPromise|void)} autoLogin Attempt to auto login.
  */
 
@@ -74,7 +74,7 @@
 
 /**
  * Alert instance.
- * @typedef {object} AlertInstance
+ * @typedef {Object} AlertInstance
  * @property {AlertInstanceMessage} message Show a message box.
  * @property {AlertInstanceConfirm} confirm Show a confirmation box.
  * @property {AlertInstanceError} error Show an error message box.
@@ -89,13 +89,13 @@
 
 /**
  * Icons instance.
- * @typedef {object} IconsInstance
+ * @typedef {Object} IconsInstance
  * @property {IconsInstanceGet} get Get an icon by name.
  */
 
 /**
  * App configuration.
- * @typedef {object} AppConfig
+ * @typedef {Object} AppConfig
  * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Backbrace App`.
  * @property {string} [version] App version. Defaults to `0.1.0`.
  * @property {string} [title] App tite (displays in browser window). Defaults to `New Backbrace App`.
@@ -104,13 +104,13 @@
 
 /**
  * Meta data configuration.
- * @typedef {object} MetaConfig
+ * @typedef {Object} MetaConfig
  * @property {string} [dir] Meta data root directory. Defaults to `./meta`.
  */
 
 /**
  * Images style.
- * @typedef {object} ImagesStyle
+ * @typedef {Object} ImagesStyle
  * @property {string} [logo] URL for the logo image (displayed in the header).
  * @property {string} [menuLogo] URL for the menu logo image (displayed at the top of the main menu).
  * @property {string} [blocker] URL for the blocker image (displayed while the loader is shown).
@@ -118,7 +118,7 @@
 
 /**
  * Colours style.
- * @typedef {object} ColorsStyle
+ * @typedef {Object} ColorsStyle
  * @property {string} [bgprimary] Primary color. Displayed most frequently accross the app.
  * @property {string} [textprimary] Primary text color.
  * @property {string} [bgprimaryvar] Primary variant color.
@@ -137,7 +137,7 @@
 
 /**
  * App style configuration.
- * @typedef {object} StyleConfig
+ * @typedef {Object} StyleConfig
  * @property {string} [loader] Style loader. Defaults to `materialdesign`.
  * @property {string} [css] CSS URL to load.
  * @property {ImagesStyle} [images] Images style.
@@ -146,7 +146,7 @@
 
 /**
  * Application settings.
- * @typedef {object} Settings
+ * @typedef {Object} Settings
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
  * @property {boolean} [minify] Load minified packages. Defaults to `true`.
  * @property {boolean} [guiAllowed] GUI allowed flag.
@@ -159,7 +159,7 @@
 
 /**
  * Global variables.
- * @typedef {object} Globals
+ * @typedef {Object} Globals
  * @property {string} [CDNSERVER] CDN server URL.
  * @property {boolean} [DEVMODE] If `true` then we are running in a development environment.
  */
@@ -178,14 +178,14 @@
 */
 
 /**
- * @typedef {object} HeaderOptions
+ * @typedef {Object} HeaderOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.
  * @property {string} [className] Header class.
  */
 
 /**
- * @typedef {object} ViewerOptions
+ * @typedef {Object} ViewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
  * @property {boolean} [temp] If `true` the page uses temp data.
@@ -193,7 +193,7 @@
  */
 
 /**
- * @typedef {object} WindowOptions
+ * @typedef {Object} WindowOptions
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
  * @property {boolean} [hasParent] If `true` sets the window as a child window.
@@ -202,13 +202,13 @@
  */
 
 /**
- * @typedef {object} Route
+ * @typedef {Object} Route
  * @property {string} path Path to match.
  * @property {string} page Page to load.
  */
 
 /**
- * @typedef {object} PageFieldMeta
+ * @typedef {Object} PageFieldMeta
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
@@ -230,7 +230,7 @@ export let pagefield = {
 };
 
 /**
- * @typedef {object} PageActionMeta
+ * @typedef {Object} PageActionMeta
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
@@ -246,7 +246,7 @@ export let pageaction = {
 };
 
 /**
- * @typedef {object} PageSectionMeta
+ * @typedef {Object} PageSectionMeta
  * @property {string} name Name of the section.
  * @property {string} text Caption of the section.
  * @property {string} pageName Display a subpage in this section.
@@ -264,7 +264,7 @@ export let pagesection = {
 };
 
 /**
- * @typedef {object} PageMeta
+ * @typedef {Object} PageMeta
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
  * @property {string} component Component for the whole page (defaults to `cardpage`).
@@ -288,7 +288,7 @@ export let pagemeta = {
 };
 
 /**
- * @typedef {object} TableColumnMeta
+ * @typedef {Object} TableColumnMeta
  * @property {string} name Name of the column.
  * @property {string} caption Caption of the column.
  * @property {string} type  Data type for the column.
@@ -300,7 +300,7 @@ export let tablecolumn = {
 };
 
 /**
- * @typedef {object} TableMeta
+ * @typedef {Object} TableMeta
  * @property {string} name Name of the table.
  * @property {string} controller Table controller.
  * @property {string} data Table data (if from a file).

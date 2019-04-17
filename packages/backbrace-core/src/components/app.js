@@ -151,7 +151,7 @@ export default class AppComponent extends Component {
      * Load a page.
      * @param {string} name Name of the page to load.
      * @param {ViewerOptions} [options] Page viewer options.
-     * @param {object} [params] Page params.
+     * @param {Object} [params] Page params.
      * @returns {void}
      */
     loadPage(name, options = {}, params = {}) {

@@ -49,7 +49,7 @@ export class FieldComponent extends Component {
     /**
      * @description
      * Update the field from the data source.
-     * @param {object} data Data source.
+     * @param {Object} data Data source.
      * @returns {FieldComponent|JQueryPromise} Returns itself for chaining.
      */
     update(data) {

@@ -24,7 +24,7 @@ export class ViewerComponent extends Component {
      * @constructor
      * @param {string} name Page name.
      * @param {ViewerOptions} [options] Viewer options.
-     * @param {object} [params] Page params.
+     * @param {Object} [params] Page params.
      */
     constructor(name, { title, hasParent = false, temp = false, updateHistory = null } = {}, params = {}) {
 
@@ -89,7 +89,7 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * Page params.
-         * @type {object}
+         * @type {Object}
          */
         this.params = params;
 
