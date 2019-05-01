@@ -161,6 +161,7 @@
  * @typedef {Object} Globals
  * @property {string} [CDNSERVER] CDN server URL.
  * @property {boolean} [DEVMODE] If `true` then we are running in a development environment.
+ * @property {string} [FULLVERSION] Returns the full version number.
  */
 
 /**

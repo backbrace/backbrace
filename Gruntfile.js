@@ -59,7 +59,6 @@ module.exports = function(grunt) {
       prod: merge({
         output: {
           path: path.join(__dirname, 'packages/backbrace-core/dist'),
-          publicPath: 'packages/backbrace-core/dist/',
           library: 'backbrace',
           filename: '[name].min.js',
           chunkFilename: 'scripts/[name].[contenthash:8].min.js'

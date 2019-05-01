@@ -32,6 +32,19 @@ export function settings(newsettings) {
 }
 
 /**
+ * Set the public path.
+ * @method publicPath
+ * @memberof module:backbrace
+ * @param {string} path Public path to set.
+ * @returns {void}
+ */
+export function publicPath(path) {
+    // @ts-ignore
+    // eslint-disable-next-line camelcase,no-undef
+    __webpack_public_path__ = path;
+}
+
+/**
  * Get/set the window provider.
  * @method window
  * @memberof module:backbrace
