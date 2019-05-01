@@ -1,6 +1,3 @@
-packages/backbrace-packages/dist/**
-#TEMP!!!!
-packages/backbrace-packages/src/**
 packages/backbrace-core/dist/**
 packages/backbrace-sample-app/service-worker.js
 packages/backbrace-docs/src/service-worker.js

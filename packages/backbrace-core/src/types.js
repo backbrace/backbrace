@@ -151,7 +151,6 @@
  * @property {boolean} [minify] Load minified packages. Defaults to `true`.
  * @property {boolean} [guiAllowed] GUI allowed flag.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
- * @property {string} [packages] Packages URL.
  * @property {AppConfig} [app] App config.
  * @property {MetaConfig} [meta] Meta data config.
  * @property {StyleConfig} [style] Style config.

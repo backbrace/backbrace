@@ -1,12 +1,6 @@
 import * as util from '../src/util';
 import { get as getWindow, set as setWindow } from '../src/providers/window';
 
-import { settings } from '../src/settings';
-
-beforeAll(function() {
-    settings.packages = '../../base/packages/backbrace-packages/dist';
-});
-
 describe('util', function() {
 
     describe('uid', function() {

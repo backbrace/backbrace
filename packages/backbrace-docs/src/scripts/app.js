@@ -26,8 +26,7 @@
     if (backbrace.globals.DEVMODE) {
         backbrace.settings({
             minify: false,
-            debug: true,
-            packages: '/dist'
+            debug: true
         });
     }
 

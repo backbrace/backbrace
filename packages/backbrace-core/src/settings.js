@@ -4,8 +4,6 @@
  * @private
  */
 
-import { globals } from './globals';
-
 /**
  * App settings object.
  * @type {Settings}
@@ -16,7 +14,6 @@ export let settings = {
     minify: true,
     guiAllowed: true,
     windowMode: true,
-    packages: `${globals.CDNSERVER}/packages`,
     app: {
         name: 'Backbrace App',
         version: '1.0.0',
