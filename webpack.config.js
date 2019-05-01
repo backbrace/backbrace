@@ -18,9 +18,11 @@ exports.get = function(devmode) {
     resolve: {
       alias: {
         'jquery': 'npm/jquery/dist/jquery.js',
+        'jquery-ui': 'npm/jquery-ui-dist/jquery-ui.js',
         'moment': 'npm/moment/moment.js',
         'sweetalert': 'npm/sweetalert/dist/sweetalert-dev.js',
-        'npm': path.join(__dirname, './node_modules')
+        'npm': path.join(__dirname, './node_modules'),
+        'modules': path.join(__dirname, './modules')
       }
     },
     module: {
@@ -41,7 +43,7 @@ exports.get = function(devmode) {
           ]
         },
         {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          test: /\.(woff(2)?|ttf|eot|svg|png)(\?v=\d+\.\d+\.\d+)?$/,
           use: [{
             loader: 'file-loader',
             options: {

@@ -1,3 +1,8 @@
+import 'jquery-ui';
+import 'npm/jquery-ui-dist/jquery-ui.css';
+import 'modules/jqgrid/jquery.jqGrid.js';
+import 'modules/jqgrid/ui.jqgrid.css';
+import 'modules/jqgrid/i18n/grid.locale-en.js';
 import $ from 'jquery';
 import { formatField } from '../../format';
 import { findInput, isMobileDevice, uid } from '../../util';

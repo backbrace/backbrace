@@ -13,6 +13,7 @@
     ],
     "exclude": [
         "node_modules",
+        "modules",
         "lib",
         "packages/backbrace-core/dist",
         "packages/backbrace-core/src/types.js"
