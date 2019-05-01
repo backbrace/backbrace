@@ -1,15 +1,49 @@
-import 'modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
+/**
+ * Material design loader module.
+ * @module materialdesignloader
+ * @private
+ */
+
+import 'npm/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
+import 'npm/@mdi/font/scss/materialdesignicons.scss';
 import '../materialdesign.scss';
 
 import $ from 'jquery';
 import { compile } from '../../jss';
 import { settings } from '../../settings';
+import { set as setIcon } from '../../providers/icons';
 
 /**
  * Style Load function. Runs after the style sheets have been imported.
+ * @ignore
  * @returns {void}
  */
 export default function load() {
+
+    setIcon({
+        get: function(name, className) {
+
+            // Set defaults.
+            name = name || 'alert';
+
+            // Map template.
+            if (name.indexOf('%') === 0) {
+                if (name === '%new%') {
+                    name = 'plus';
+                } else if (name === '%delete%') {
+                    name = 'close';
+                } else {
+                    name = name.replace(/%/g, '');
+                }
+            }
+
+            // Prepend mdi- if missing.
+            if (name.indexOf('mdi-') !== 0)
+                name = 'mdi-' + name;
+
+            return '<i class="mdi ' + name + (className ? ' ' + className : '') + '" />';
+        }
+    });
 
     // Load the style overrides.
     const colors = settings.style.colors,
@@ -24,7 +58,7 @@ export default function load() {
             background: `${colors.bgprimary}`,
             color: `${colors.textprimary}`
         },
-        '.main-windows': {
+        '.main-windows,.window': {
             background: `${colors.bgsurface}`
         },
         '.main-windows-btn.active': {
