@@ -117,36 +117,6 @@ export function formatString(str, ...args) {
 }
 
 /**
- * Deep map.
- * @private
- * @param {*} obj Object.
- * @param {*} f Function.
- * @param {*} [ctx] Context.
- * @returns {*} Map.
- */
-export function deepMap(obj, f, ctx) {
-  if (Array.isArray(obj)) {
-    return obj.map(function(val, key) {
-      return (typeof val === 'object') ? deepMap(val, f, ctx) : f.call(ctx, val, key);
-    });
-  } else if (typeof obj === 'object') {
-    let res = {},
-      key;
-    for (key in obj) {
-      let val = obj[key];
-      if (typeof val === 'object') {
-        res[key] = deepMap(val, f, ctx);
-      } else {
-        res[key] = f.call(ctx, val, key);
-      }
-    }
-    return res;
-  } else {
-    return obj;
-  }
-}
-
-/**
  * Bind a message event listener to the window.
  * @private
  * @returns {void}

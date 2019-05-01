@@ -4,8 +4,6 @@
  * @private
  */
 
-import { settings } from './settings';
-
 /**
  * Iterate through an object.
  * @private
@@ -19,28 +17,6 @@ function forEach(obj, iterator, context) {
         for (let key in obj)
             if (Object.prototype.hasOwnProperty.call(obj, key))
                 iterator.call(context, obj[key], key, obj);
-}
-
-/**
- * Merge the JSS with the config.
- * @param {string} val JSS value to merge.
- * @returns {string} Merged JSS value.
- */
-function mergeConfig(val) {
-
-    // Loop through the style config.
-    forEach(settings.style, function(styleitem, stylekey) {
-
-        // Loop though the sub config (colors,images,etc).
-        forEach(styleitem, function(item, key) {
-
-            // Check for a merge field and replace.
-            if (val.indexOf('%' + stylekey + ':' + key + '%') !== -1)
-                val = val.replace('%' + stylekey + ':' + key + '%', item);
-        });
-    });
-
-    return val;
 }
 
 /**
@@ -63,23 +39,23 @@ export function compile(obj) {
 
             if (typeof styleName === 'string'
                 && styleName.indexOf && styleName.indexOf('@media') === 0) {
-                othercss += mergeConfig(styleName) + '{' + className + '{';
+                othercss += styleName + '{' + className + '{';
                 forEach(style, function(otherstyle, osName) {
-                    othercss += mergeConfig(osName.toString()) + ': ' + mergeConfig(otherstyle) + ';';
+                    othercss += osName.toString() + ': ' + otherstyle + ';';
                 });
                 othercss += '}}';
             } else if (Array.isArray(style)) {
                 forEach(style, function(substyle) {
-                    css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(substyle) + ';';
+                    css += styleName.toString() + ': ' + substyle + ';';
                 });
             } else if (typeof style === 'object') {
-                css += mergeConfig(styleName.toString()) + '{';
+                css += styleName.toString() + '{';
                 forEach(style, function(multistyle, msName) {
-                    css += mergeConfig(msName.toString()) + ': ' + mergeConfig(multistyle) + ';';
+                    css += msName.toString() + ': ' + multistyle + ';';
                 });
                 css += '}';
             } else {
-                css += mergeConfig(styleName.toString()) + ': ' + mergeConfig(style) + ';';
+                css += styleName.toString() + ': ' + style + ';';
             }
         });
 
