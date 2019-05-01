@@ -6,7 +6,7 @@
  */
 
 import moment from 'moment';
-import 'modules/moment/locale/en-au.js';
+import 'npm/moment/locale/en-au.js';
 
 import { isDefined } from './util';
 

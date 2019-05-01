@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import 'modules/jquery-ripple/jquery.ripple.js';
-import 'modules/jquery-ripple/jquery.ripple.scss';
+import 'npm/jquery-ripple/jquery.ripple.js';
+import 'npm/jquery-ripple/jquery.ripple.scss';
 import { settings } from '../settings';
 import { get as getIcons } from '../providers/icons';
 import { Component } from '../classes/component';

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import 'modules/reset-css/reset.css';
+import 'npm/reset-css/reset.css';
 import '../styles/base.scss';
 import 'modules/@mdi/font/scss/materialdesignicons.scss';
 

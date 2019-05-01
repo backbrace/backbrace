@@ -5,7 +5,7 @@
  */
 
 import swal from 'sweetalert';
-import 'modules/sweetalert/dist/sweetalert.css';
+import 'npm/sweetalert/dist/sweetalert.css';
 
 import { width } from './util';
 import { get as getWindow } from './providers/window';

@@ -17,10 +17,10 @@ exports.get = function(devmode) {
     devServer: {},
     resolve: {
       alias: {
-        'jquery': 'modules/jquery/dist/jquery.js',
-        'moment': 'modules/moment/moment.js',
-        'sweetalert': 'modules/sweetalert/dist/sweetalert-dev.js',
-        'modules': path.join(__dirname, './node_modules')
+        'jquery': 'npm/jquery/dist/jquery.js',
+        'moment': 'npm/moment/moment.js',
+        'sweetalert': 'npm/sweetalert/dist/sweetalert-dev.js',
+        'npm': path.join(__dirname, './node_modules')
       }
     },
     module: {
