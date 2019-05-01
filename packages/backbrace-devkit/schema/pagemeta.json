@@ -33,13 +33,6 @@
             "description": "Filters for the page",
             "type": "string"
         },
-        "actions": {
-            "description": "Page actions.",
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/pageActionMeta"
-            }
-        },
         "sections": {
             "description": "Page sections.",
             "type": "array",
@@ -154,6 +147,13 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/pageFieldMeta"
+                    }
+                },
+                "actions": {
+                    "description": "Page actions.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/pageActionMeta"
                     }
                 }
             },

@@ -8,7 +8,6 @@ import { page, table } from '../meta';
 import { settings } from '../settings';
 import { noop } from '../util';
 import { Component } from '../classes/component';
-import { ActionsComponent } from './actions';
 
 const viewerError = error('viewer');
 
@@ -67,13 +66,6 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * Page actions component.
-         * @type {ActionsComponent}
-         */
-        this.actions = new ActionsComponent();
-
-        /**
-         * @description
          * The component that renders over the entire window.
          * @type {PageComponent}
          */
@@ -110,8 +102,6 @@ export class ViewerComponent extends Component {
         // Unload sub components.
         this.pageComponent.unload();
         this.pageComponent = null;
-        this.actions.unload();
-        this.actions = null;
         this.container.parent().remove();
         super.unload();
     }
@@ -179,12 +169,6 @@ export class ViewerComponent extends Component {
             },
 
             () => {
-
-                // Add actions.
-                //this.actions.load(this.window.toolbar);
-                $.each(this.page.actions, (i, action) => this.actions.addAction(action, (action, func) => {
-                    this.actionRunner(action, func);
-                }));
 
                 // Load the page component.
                 let comp = this.page.component;

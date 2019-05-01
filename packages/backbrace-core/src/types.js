@@ -252,6 +252,7 @@ export let pageaction = {
  * @property {string} icon Section icon.
  * @property {string} className Classes to add to the section.
  * @property {PageFieldMeta[]} fields Page section fields.
+ * @property {PageActionMeta[]} actions Page actions.
  */
 export let pagesection = {
   name: '',
@@ -259,7 +260,8 @@ export let pagesection = {
   pageName: '',
   icon: '',
   className: '',
-  fields: []
+  fields: [],
+  actions: []
 };
 
 /**
@@ -271,7 +273,6 @@ export let pagesection = {
  * @property {string} tableName Name of the page's datasource.
  * @property {string} icon Icon to use for the page.
  * @property {string} filters Filters for the page.
- * @property {PageActionMeta[]} actions Page actions.
  * @property {PageSectionMeta[]} sections Page sections.
  */
 export let pagemeta = {
@@ -282,7 +283,6 @@ export let pagemeta = {
   tableName: '',
   icon: '',
   filters: '',
-  actions: [],
   sections: []
 };
 

@@ -93,13 +93,6 @@ export function page(name) {
             // Extend the page.
             let pge = $.extend({}, defaults.page, json);
 
-            // Extend the page actions.
-            pge.actions = [];
-            (json.actions || []).forEach(function(action) {
-                action.text = action.text || action.name;
-                pge.actions.push($.extend({}, defaults.pageaction, action));
-            });
-
             // Extend the page sections.
             pge.sections = [];
             (json.sections || []).forEach(function(section) {
@@ -111,6 +104,12 @@ export function page(name) {
                 $.each(section.fields, function(index, field) {
                     field.caption = field.caption || field.name;
                     section.fields[index] = $.extend({}, defaults.pagefield, field);
+                });
+
+                // Extend the page section actions.
+                $.each(section.actions, function(index, action) {
+                    action.text = action.text || action.name;
+                    section.actions[index] = $.extend({}, defaults.pageaction, action);
                 });
             });
 
