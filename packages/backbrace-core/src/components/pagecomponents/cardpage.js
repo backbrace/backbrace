@@ -3,6 +3,7 @@ import { PageComponent } from '../../classes/pagecomponent';
 import { ViewerComponent } from '../viewer';
 import { WindowComponent } from '../window';
 import { isMobileDevice } from '../../util';
+import { closePage } from '../../app';
 
 /**
  * @class
@@ -91,7 +92,8 @@ export class CardPageComponent extends PageComponent {
                 let win = new WindowComponent({
                     className: section.className,
                     hasParent: i > 0,
-                    icon: section.icon
+                    icon: section.icon,
+                    onClose: () => closePage(this.viewer.id)
                 });
                 win.load(cont).setTitle(section.text);
 
