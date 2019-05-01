@@ -189,9 +189,17 @@ export class ViewerComponent extends Component {
                 // Load the page component.
                 let comp = this.page.component;
                 if (comp.indexOf('.js') === -1) {
-                    let Control = require('./pagecomponents/' + comp + '.js').default;
+                    return promiseblock(
+                        () => {
+                            return import(
+                                /* webpackChunkName: "[request]" */
+                                './pagecomponents/' + comp + '.js');
+                        },
+                        ({ default: Control }) => {
                     this.pageComponent = new Control(this);
                     return this.pageComponent.load(this.container);
+                }
+                    );
                 }
             },
 

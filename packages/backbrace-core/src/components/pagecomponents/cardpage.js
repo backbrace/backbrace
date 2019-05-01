@@ -130,11 +130,22 @@ export class CardPageComponent extends PageComponent {
             }
             if (comp.indexOf('.js') === -1) {
 
-                let Control = require('../fieldcomponents/' + comp + '.js').default,
-                    cont = new Control(this, field);
+                return promiseblock(
+
+                    () => {
+                        return import(
+                            /* webpackChunkName: "[request]" */
+                            `../fieldcomponents/${comp}.js`);
+                    },
+                    ({ default: Control }) => {
+
+                        let cont = new Control(this, field);
                 this.fields.set(field.name, cont);
 
                 return cont.load(win.main);
+            }
+
+                );
             }
         });
     }

@@ -1,7 +1,11 @@
 import $ from 'jquery';
 import 'npm/reset-css/reset.css';
 import '../styles/base.scss';
-import 'modules/@mdi/font/scss/materialdesignicons.scss';
+
+import '../classes/fieldcomponent';
+import '../classes/pagecomponent';
+import './actions';
+import './window';
 
 import { dataTable, addDataTable } from '../data';
 import { error } from '../error';
@@ -46,7 +50,7 @@ function addStatusPage(code, description) {
  * @description
  * App component.
  */
-export default class AppComponent extends Component {
+export class AppComponent extends Component {
 
     /**
      * @constructor
@@ -301,3 +305,5 @@ export default class AppComponent extends Component {
     }
 
 }
+
+export default AppComponent;

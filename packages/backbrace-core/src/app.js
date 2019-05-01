@@ -4,8 +4,10 @@
  * @private
  */
 
+import './providers/icons';
+
 import $ from 'jquery';
-import { reset } from './promises';
+import { reset, promisequeue } from './promises';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
@@ -142,6 +144,7 @@ export function ready(func) {
 
 /**
  * Load the app colors from the settings into a new style tag.
+ * @private
  * @returns {void}
  */
 function loadColors() {
@@ -177,6 +180,7 @@ function loadColors() {
 
 /**
  * Load external CSS.
+ * @private
  * @returns {void}
  */
 function loadCSS() {
@@ -187,20 +191,24 @@ function loadCSS() {
 
 /**
  * Load the app style with a loader script. After the style is loaded, the app colors will be loaded.
- * @returns {void}
+ * @private
+ * @returns {JQueryPromise} Promises to return after loading the style.
  */
 function loadStyle() {
 
     if (settings.style.loader !== '') {
+        let def = $.Deferred();
         import(
-            /* webpackChunkName: "style" */
+            /* webpackChunkName: "style-[request]" */
             './styles/loaders/' + settings.style.loader).then(({ default: load }) => {
                 load();
                 loadColors();
                 loadCSS();
+                def.resolve();
             }).catch((err) => {
                 errorHandler(err);
             });
+        return def.promise();
     } else {
         loadColors();
         loadCSS();
@@ -269,30 +277,35 @@ export function start() {
         /* webpackChunkName: "app" */
         './components/app').then(({ default: AppComponent }) => {
 
-            app = new AppComponent();
+            promisequeue(
 
-            loadStyle();
+                () => loadStyle(),
 
-            app.load($('body'));
+                () => {
 
-            if (!settings.windowMode) {
+                    app = new AppComponent();
+                    app.load($('body'));
 
-                addRoute({ path: '**', page: 'status/404' });
+                    if (!settings.windowMode) {
 
-                window.onpopstate = function(event) {
-                    var r = matchRoute(window.location.pathname);
-                    if (r) {
-                        app.loadPage(r.page, {}, r.params);
+                        addRoute({ path: '**', page: 'status/404' });
+
+                        window.onpopstate = function(event) {
+                            var r = matchRoute(window.location.pathname);
+                            if (r) {
+                                app.loadPage(r.page, {}, r.params);
+                            }
+                        };
+
+                        let route = matchRoute(window.location.pathname);
+                        if (route)
+                            app.loadPage(route.page, {}, route.params);
                     }
-                };
 
-                let route = matchRoute(window.location.pathname);
-                if (route)
-                    app.loadPage(route.page, {}, route.params);
-            }
-
-            if (readyFunc)
-                return readyFunc();
+                    if (readyFunc)
+                        return readyFunc();
+                }
+            );
 
         }).catch((err) => {
             errorHandler(err);
@@ -311,4 +324,14 @@ export function start() {
  */
 export function loadPage(name, options = {}, params = {}) {
     app.loadPage(name, options, params);
+}
+
+/**
+ * Close an opened page.
+ * @ignore
+ * @param {number} id ID of the page to close.
+ * @returns {void}
+ */
+export function closePage(id) {
+    app.closePage(id);
 }
