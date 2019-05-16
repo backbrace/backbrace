@@ -19,9 +19,12 @@ export function get(url) {
 
     const d = $.Deferred();
 
-    $.get(url, function(data) {
+    $.get({
+        url: url,
+        cache: true
+    }).then(function(data) {
         d.resolve(data);
-    }).fail(function() {
+    }).fail(function(xhr, status, err) {
         d.resolve(null);
     });
 

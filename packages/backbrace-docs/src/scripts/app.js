@@ -28,6 +28,8 @@
             minify: false,
             debug: true
         });
+    } else {
+        backbrace.publicPath('./backbrace/');
     }
 
     // Register the service worker.

@@ -170,11 +170,13 @@ export class AppComponent extends Component {
             () => {
 
                 if (this.currentPage())
-                    this.currentPage().showLoad();
+                    this.currentPage().hide().hideLoad();
 
                 // Add a window shorcut.
-                if (settings.windowMode)
-                    this.addWindowToToolbar(pge.id);
+                if (settings.windowMode) {
+                    $('.main-windows-btn').removeClass('active');
+                    this.addWindowToToolbar(pge.id).addClass('active');
+                }
 
                 // Load the page component.
                 return pge.load(this.maincontainer);
@@ -183,9 +185,6 @@ export class AppComponent extends Component {
 
                 if (!settings.windowMode && window.history && options.updateHistory)
                     window.history.pushState(null, pge.title, options.updateHistory);
-
-                if (this.currentPage())
-                    this.currentPage().hideLoad();
 
                 // Add the page to the loaded pages.
                 this.pages.set(pge.id, pge);
@@ -265,8 +264,7 @@ export class AppComponent extends Component {
                 // Open next page.
                 if (this.pages.size > 0) {
                     const nextpge = Array.from(this.pages.values())[this.pages.size - 1];
-                    nextpge.show();
-                    this.activePage = nextpge.id;
+                    this.showPage(nextpge.id);
                 }
             }
 

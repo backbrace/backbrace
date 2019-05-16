@@ -4,7 +4,9 @@ var path = require('path'),
   webpack = require('webpack'),
   globals = require('./lib/globals/global-vars'),
   versionInfo = require('./lib/version-info/version-info.js'),
-  MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+  CopyPlugin = require('copy-webpack-plugin'),
+  replace = require('buffer-replace');
 
 exports.get = function(devmode) {
   return {
@@ -112,7 +114,17 @@ exports.get = function(devmode) {
         $: 'jquery',
         jQuery: 'jquery',
         'window.jQuery': 'jquery'
-      })
+      }),
+      new CopyPlugin([
+        {
+          from: './packages/backbrace-core/include/*', flatten: true, transform: function(content, path) {
+            return replace(content, 'FULLVERSION', versionInfo.currentVersion.full);
+          }
+        },
+        {
+          from: './packages/backbrace-devkit/tern/defs/*', to: 'json', flatten: true
+        }
+      ])
     ]
   };
 };

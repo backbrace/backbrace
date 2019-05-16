@@ -27,13 +27,6 @@ export class ActionComponent extends Component {
         this.action = action;
 
         /**
-         * @description
-         * Function to run on click.
-         * @type {ActionRunnerOnClick}
-         */
-        this.onclick = null;
-
-        /**
         * @description
         * Action runner function.
         * @type {ActionRunner}
@@ -63,19 +56,8 @@ export class ActionComponent extends Component {
         this.container.append('&nbsp;' + this.action.text);
         if (this.action.className)
             this.container.addClass(this.action.className);
-        this.container.ripple().click(() => this.actionRunner(this.action, this.onclick));
+        this.container.ripple().click(() => this.actionRunner(this.action));
         this.container.appendTo(container);
-        return this;
-    }
-
-    /**
-     * @description
-     * Set the on click function.
-     * @param {ActionRunnerOnClick} func On click function.
-     * @returns {ActionComponent} Returns itself for chaining.
-     */
-    click(func) {
-        this.onclick = func;
         return this;
     }
 

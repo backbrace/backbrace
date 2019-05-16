@@ -1,4 +1,4 @@
-var CACHE_NAME = 'BBCache-V0.1.0-alpha.1';
+var CACHE_NAME = 'backbrace-FULLVERSION';
 
 self.addEventListener('install', function(event) {
     event.waitUntil(

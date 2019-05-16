@@ -6,7 +6,7 @@ backbrace.controller('guide', function(viewer) {
         page = viewer.pageComponent;
 
     // Set the page template.
-    page.template = '{{html}}';
+    page.template = '<div style="min-height:60vh">{{html}}</div>';
 
     // Filter the data.
     viewer.onBeforeUpdate = function(data) {

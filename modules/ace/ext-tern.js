@@ -1816,13 +1816,6 @@ ace.define("ace/tern/tern_server", ["require", "exports", "module", "ace/range",
             this.server = new WorkerServer(this, this.options.workerClass);
         }
         else {
-            if (this.options.defs && this.options.defs.length > 0) {
-                var tmp = [];
-                for (var i = 0; i < this.options.defs.length; i++) {
-                    tmp.push(eval('def_' + this.options.defs[i]));
-                }
-                this.options.defs = tmp;
-            }
 
             this.server = new tern.Server({
                 getFile: function(name, c) {

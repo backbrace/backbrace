@@ -10,11 +10,8 @@
         "docs"
     ],
     "files": [
-        "src/*",
+        "dist/*",
         "README.md",
         "LICENSE"
-    ],
-    "devDependencies": {
-        "@backbrace/devkit": "0.1.0-alpha.2"
-    }
+    ]
 }

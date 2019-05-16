@@ -25,7 +25,7 @@ This will output the typings to `packages/backbrace-devkit/typings/types.d.ts`
 From the project root:
 
 ```sh
-./node_modules/rollup/bin/rollup packages/backbrace-core/src/backbrace.js --format iife --name "backbrace" --file packages/backbrace-devkit/tern/temp/backbrace.js
+./node_modules/rollup/bin/rollup -c rollup.config.js
 ```
 
 Then run:

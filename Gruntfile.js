@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     paths = {
       core: 'packages/backbrace-core/',
       devkit: 'packages/backbrace-devkit/',
-      packages: 'packages/backbrace-packages/',
+      docs: 'packages/backbrace-docs/',
       sampleapp: 'packages/backbrace-sample-app/'
     };
 
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
       dist: [
         'packages/backbrace-core/dist',
         'packages/backbrace-devkit/typings',
-        'packages/backbrace-packages/dist'
+        'packages/backbrace-docs/dist'
       ],
       tmp: ['tmp']
     },
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
           path: path.join(__dirname, 'packages/backbrace-core/dist'),
           library: 'backbrace',
           filename: '[name].min.js',
-          chunkFilename: 'scripts/[name].[contenthash:8].min.js'
+          chunkFilename: '[name].[contenthash:8].min.js'
         }
       }, webpackconfig.get())
     },
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         ],
         port: 8000
       },
-      docs: {
+      localdocs: {
         webpack: merge({
           output: {
             library: 'backbrace',
@@ -92,6 +92,7 @@ module.exports = function(grunt) {
         port: 8000,
         historyApiFallback: true,
         watchContentBase: false,
+        writeToDisk: true,
         before(app, server) {
           const chokidar = require("chokidar");
           const files = [
@@ -194,6 +195,19 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+
+    copy: {
+      docs: {
+        files: [
+          {
+            expand: true, cwd: 'packages/backbrace-docs/src', src: ['**'], dest: paths.docs + 'dist', rename: function(dest, src) {
+              return dest + '/' + src.replace('production.html', 'index.html');
+            }
+          },
+          { expand: true, cwd: 'packages/backbrace-core/dist', src: ['**'], dest: paths.docs + 'dist/backbrace' }
+        ]
+      }
     }
 
   });
@@ -223,12 +237,13 @@ module.exports = function(grunt) {
     'webpack-dev-server:sampleapp'
   ]);
   grunt.registerTask('localdocs', [
-    'webpack-dev-server:docs'
+    'webpack-dev-server:localdocs'
   ]);
   grunt.registerTask('package', [
     'clean',
     'build',
     'docs',
+    'copy:docs',
     'typings'
   ]);
   grunt.registerTask('default', ['package']);

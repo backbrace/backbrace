@@ -2,8 +2,25 @@ import * as ace from '../../../../../node_modules/brace/index.js';
 import 'npm/brace/mode/javascript';
 import 'npm/brace/theme/monokai';
 import { closePage } from '../../app';
+import { promiseblock } from '../../promises';
+import { get } from '../../http';
 import { PageComponent } from '../../classes/pagecomponent';
 import { WindowComponent } from '../window';
+
+let defs = [];
+
+/**
+ * Load a tern definition file.
+ * @private
+ * @param {string} file File to load.
+ * @returns {JQueryPromise} Promises to return after loading the definition file.
+ */
+function loadDef(file) {
+    return promiseblock(
+        () => get('json/backbrace.json'),
+        (def) => defs.push(def)
+    );
+}
 
 /**
  * @class
@@ -33,7 +50,7 @@ export class EditorPageComponent extends PageComponent {
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {Component} Promise to load the card.
+     * @returns {JQueryPromise} Promise to load the card.
      */
     load(cont) {
 
@@ -48,22 +65,33 @@ export class EditorPageComponent extends PageComponent {
             .setTitle(page.caption)
             .main.append('<textarea id="txtEditor" />');
 
-        let editor = ace.edit('txtEditor');
-        editor.setTheme('ace/theme/monokai');
-        editor.session.setMode('ace/mode/javascript');
-        require('../../../../../modules/ace/ext-tern.js');
-        ace.acequire('ace/ext/tern');
-        editor.setOptions({
-            enableTern: {
-                defs: ['browser', 'ecma5', 'jquery', 'bbtypes', 'backbrace'],
-                useWorker: false
-            },
-            enableBasicAutocompletion: true,
-            enableSnippets: true,
-            enableLiveAutocompletion: true
-        });
+        return promiseblock(
 
-        return this;
+            () => loadDef('json/browser'),
+            () => loadDef('json/ecma5'),
+            () => loadDef('json/jquery'),
+            () => loadDef('json/backbrace-types'),
+            () => loadDef('json/backbrace'),
+
+            () => {
+
+                let editor = ace.edit('txtEditor');
+                editor.setTheme('ace/theme/monokai');
+                editor.session.setMode('ace/mode/javascript');
+                require('../../../../../modules/ace/ext-tern.js');
+                ace.acequire('ace/ext/tern');
+                editor.setOptions({
+                    enableTern: {
+                        defs: defs,
+                        useWorker: false
+                    },
+                    enableBasicAutocompletion: true,
+                    enableSnippets: true,
+                    enableLiveAutocompletion: true
+                });
+            }
+
+        );
     }
 
     /**

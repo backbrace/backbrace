@@ -91,6 +91,13 @@ export class ViewerComponent extends Component {
          * @type {DataCallback}
          */
         this.onBeforeUpdate = null;
+
+        /**
+         * @description
+         * On action click.
+         * @type {Map<string, GenericFunction>}
+         */
+        this.onActionClick = new Map();
     }
 
     /**
@@ -180,9 +187,9 @@ export class ViewerComponent extends Component {
                                 './pagecomponents/' + comp + '.js');
                         },
                         ({ default: Control }) => {
-                    this.pageComponent = new Control(this);
-                    return this.pageComponent.load(this.container);
-                }
+                            this.pageComponent = new Control(this);
+                            return this.pageComponent.load(this.container);
+                        }
                     );
                 }
             },
@@ -266,10 +273,13 @@ export class ViewerComponent extends Component {
      * @description
      * Run a page action.
      * @param {PageActionMeta} action Action meta data.
-     * @param {Function} func Function to run.
      * @returns {void}
      */
-    actionRunner(action, func) {
+    actionRunner(action) {
+
+        let func = this.onActionClick.get(action.name);
+        if (!func)
+            return;
 
         this.showLoad();
 

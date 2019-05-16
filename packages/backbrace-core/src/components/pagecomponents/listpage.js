@@ -242,7 +242,7 @@ export class ListPageComponent extends PageComponent {
     /**
      * @description
      * Bind the list page to a data source.
-     * @param {object[]} data Array of data.
+     * @param {Object[]} data Array of data.
      * @returns {PageComponent} Returns a promise to update the list page.
      */
     update(data) {

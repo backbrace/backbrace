@@ -1,0 +1,48 @@
+{
+    "$schema": "../../node_modules/@backbrace/devkit/schema/pagemeta.json",
+    "name": "test",
+    "controller": "page/test.js",
+    "caption": "Test Page",
+    "icon": "account",
+    "sections": [
+        {
+            "name": "General",
+            "fields": [
+                {
+                    "name": "First Name",
+                    "type": "Text"
+                },
+                {
+                    "name": "Last Name",
+                    "type": "Text"
+                }
+            ],
+            "actions": [
+                {
+                    "name": "Code",
+                    "icon": "language-javascript"
+                },
+                {
+                    "name": "Save Page",
+                    "icon": "check"
+                }
+            ]
+        },
+        {
+            "name": "Stuff",
+            "icon": "account",
+            "className": "s12 m6",
+            "fields": [
+                {
+                    "name": "Account #",
+                    "type": "Text"
+                }
+            ]
+        },
+        {
+            "name": "Junk",
+            "icon": "trash-can",
+            "className": "s12 m6"
+        }
+    ]
+}

@@ -1,4 +1,5 @@
 import { promiseblock, promiseeach } from '../../promises';
+import { ActionsComponent } from '../actions';
 import { PageComponent } from '../../classes/pagecomponent';
 import { ViewerComponent } from '../viewer';
 import { WindowComponent } from '../window';
@@ -97,6 +98,13 @@ export class CardPageComponent extends PageComponent {
                 });
                 win.load(cont).setTitle(section.text);
 
+                // Add actions.
+                let actions = new ActionsComponent();
+                actions.load(win.toolbar);
+                section.actions.forEach((action) => actions.addAction(action, (action) => {
+                    this.viewer.actionRunner(action);
+                }));
+
                 this.subwindows.set(section.name, win);
                 return this.loadFields(win, section.fields);
 
@@ -142,10 +150,10 @@ export class CardPageComponent extends PageComponent {
                     ({ default: Control }) => {
 
                         let cont = new Control(this, field);
-                this.fields.set(field.name, cont);
+                        this.fields.set(field.name, cont);
 
-                return cont.load(win.main);
-            }
+                        return cont.load(win.main);
+                    }
 
                 );
             }
@@ -155,7 +163,7 @@ export class CardPageComponent extends PageComponent {
     /**
      * @description
      * Update the card page with a data source.
-     * @param {object[]} data Array of data.
+     * @param {Object[]} data Array of data.
      * @returns {JQueryPromise} Returns a promise to update the card page.
      */
     update(data) {

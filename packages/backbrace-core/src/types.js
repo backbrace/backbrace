@@ -19,7 +19,6 @@
  * Action runner function.
  * @typedef {Function} ActionRunner
  * @param {PageActionMeta} action Action meta data.
- * @param {Function} func Function to run.
  * @returns {void}
  */
 
@@ -33,7 +32,7 @@
 
 /**
  * Server Instance
- * @typedef {Object} ServerInstance
+ * @typedef ServerInstance
  * @property {function():(JQueryPromise|void)} autoLogin Attempt to auto login.
  */
 
@@ -74,7 +73,7 @@
 
 /**
  * Alert instance.
- * @typedef {Object} AlertInstance
+ * @typedef AlertInstance
  * @property {AlertInstanceMessage} message Show a message box.
  * @property {AlertInstanceConfirm} confirm Show a confirmation box.
  * @property {AlertInstanceError} error Show an error message box.
@@ -82,20 +81,20 @@
 
 /**
  * @callback IconsInstanceGet
- * @param {string} [name] Name of the icon.
+ * @param {string} name Name of the icon.
  * @param {string} [className] Classes to add to the icon.
  * @returns {string} Icon html string.
  */
 
 /**
  * Icons instance.
- * @typedef {Object} IconsInstance
- * @property {IconsInstanceGet} get Get an icon by name.
+ * @typedef IconsInstance
+ * @property {IconsInstanceGet} [get] Get an icon by name.
  */
 
 /**
  * App configuration.
- * @typedef {Object} AppConfig
+ * @typedef AppConfig
  * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Backbrace App`.
  * @property {string} [version] App version. Defaults to `0.1.0`.
  * @property {string} [title] App tite (displays in browser window). Defaults to `New Backbrace App`.
@@ -104,13 +103,13 @@
 
 /**
  * Meta data configuration.
- * @typedef {Object} MetaConfig
+ * @typedef MetaConfig
  * @property {string} [dir] Meta data root directory. Defaults to `./meta`.
  */
 
 /**
  * Images style.
- * @typedef {Object} ImagesStyle
+ * @typedef ImagesStyle
  * @property {string} [logo] URL for the logo image (displayed in the header).
  * @property {string} [menuLogo] URL for the menu logo image (displayed at the top of the main menu).
  * @property {string} [blocker] URL for the blocker image (displayed while the loader is shown).
@@ -118,7 +117,7 @@
 
 /**
  * Colours style.
- * @typedef {Object} ColorsStyle
+ * @typedef ColorsStyle
  * @property {string} [bgprimary] Primary color. Displayed most frequently accross the app.
  * @property {string} [textprimary] Primary text color.
  * @property {string} [bgprimaryvar] Primary variant color.
@@ -137,7 +136,7 @@
 
 /**
  * App style configuration.
- * @typedef {Object} StyleConfig
+ * @typedef StyleConfig
  * @property {string} [loader] Style loader. Defaults to `materialdesign`.
  * @property {string} [css] CSS URL to load.
  * @property {ImagesStyle} [images] Images style.
@@ -146,7 +145,7 @@
 
 /**
  * Application settings.
- * @typedef {Object} Settings
+ * @typedef Settings
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
  * @property {boolean} [minify] Load minified packages. Defaults to `true`.
  * @property {boolean} [guiAllowed] GUI allowed flag.
@@ -158,10 +157,10 @@
 
 /**
  * Global variables.
- * @typedef {Object} Globals
- * @property {string} [CDNSERVER] CDN server URL.
- * @property {boolean} [DEVMODE] If `true` then we are running in a development environment.
- * @property {string} [FULLVERSION] Returns the full version number.
+ * @typedef Globals
+ * @property {string} CDNSERVER CDN server URL.
+ * @property {boolean} DEVMODE If `true` then we are running in a development environment.
+ * @property {string} FULLVERSION Returns the full version number.
  */
 
 /**
@@ -178,14 +177,14 @@
 */
 
 /**
- * @typedef {Object} HeaderOptions
+ * @typedef HeaderOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.
  * @property {string} [className] Header class.
  */
 
 /**
- * @typedef {Object} ViewerOptions
+ * @typedef ViewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
  * @property {boolean} [temp] If `true` the page uses temp data.
@@ -193,7 +192,7 @@
  */
 
 /**
- * @typedef {Object} WindowOptions
+ * @typedef WindowOptions
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
  * @property {boolean} [hasParent] If `true` sets the window as a child window.
@@ -202,13 +201,13 @@
  */
 
 /**
- * @typedef {Object} Route
+ * @typedef Route
  * @property {string} path Path to match.
  * @property {string} page Page to load.
  */
 
 /**
- * @typedef {Object} PageFieldMeta
+ * @typedef PageFieldMeta
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
@@ -230,7 +229,7 @@ export let pagefield = {
 };
 
 /**
- * @typedef {Object} PageActionMeta
+ * @typedef PageActionMeta
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
@@ -246,7 +245,7 @@ export let pageaction = {
 };
 
 /**
- * @typedef {Object} PageSectionMeta
+ * @typedef PageSectionMeta
  * @property {string} name Name of the section.
  * @property {string} text Caption of the section.
  * @property {string} pageName Display a subpage in this section.
@@ -266,7 +265,7 @@ export let pagesection = {
 };
 
 /**
- * @typedef {Object} PageMeta
+ * @typedef PageMeta
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
  * @property {string} component Component for the whole page (defaults to `cardpage`).
@@ -288,7 +287,7 @@ export let pagemeta = {
 };
 
 /**
- * @typedef {Object} TableColumnMeta
+ * @typedef TableColumnMeta
  * @property {string} name Name of the column.
  * @property {string} caption Caption of the column.
  * @property {string} type  Data type for the column.
@@ -300,7 +299,7 @@ export let tablecolumn = {
 };
 
 /**
- * @typedef {Object} TableMeta
+ * @typedef TableMeta
  * @property {string} name Name of the table.
  * @property {string} controller Table controller.
  * @property {string} data Table data (if from a file).

@@ -1,0 +1,7 @@
+{
+    "$schema": "../../node_modules/@backbrace/devkit/schema/pagemeta.json",
+    "name": "editor",
+    "component": "editorpage",
+    "caption": "Code Editor",
+    "sections": []
+}
