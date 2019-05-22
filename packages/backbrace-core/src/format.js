@@ -12,7 +12,7 @@ import { isDefined } from './util';
 
 /**
  * Format a field value to a string.
- * @param {PageFieldMeta} field Page field.
+ * @param {pageFieldMeta} field Page field.
  * @param {*} value Value to format.
  * @returns {string} Returns the formatted field value.
  */

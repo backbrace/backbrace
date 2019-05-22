@@ -318,7 +318,7 @@ export function start() {
  * @method loadPage
  * @memberof module:backbrace
  * @param {string} name Name of the page to load.
- * @param {ViewerOptions} [options] Page viewer options.
+ * @param {viewerOptions} [options] Page viewer options.
  * @param {Object} [params] Page params.
  * @returns {void}
  */

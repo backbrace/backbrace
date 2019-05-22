@@ -6,7 +6,7 @@
 
 import { get as getWindow } from './window';
 
-/** @type {AlertInstance} */
+/** @type {alertInstance} */
 let instance = {
 
     message: function(msg, callback, title) {
@@ -37,7 +37,7 @@ let instance = {
 
 /**
  * Get the alert provider instance.
- * @returns {AlertInstance} Returns the alert provider instance.
+ * @returns {alertInstance} Returns the alert provider instance.
  */
 export function get() {
     return instance;
@@ -45,7 +45,7 @@ export function get() {
 
 /**
  * Set the alert provider instance.
- * @param {AlertInstance} ref Alert provider instance to set.
+ * @param {alertInstance} ref Alert provider instance to set.
  * @returns {void}
  */
 export function set(ref) {

@@ -12,29 +12,29 @@ import { settings } from './settings';
 import * as types from './types';
 
 const defaults = {
-    /** @type {PageMeta} */
+    /** @type {pageMeta} */
     page: types.pagemeta,
-    /** @type {PageFieldMeta} */
+    /** @type {pageFieldMeta} */
     pagefield: types.pagefield,
-    /** @type {PageActionMeta} */
+    /** @type {pageActionMeta} */
     pageaction: types.pageaction,
-    /** @type {PageSectionMeta} */
+    /** @type {pageSectionMeta} */
     pagesection: types.pagesection,
-    /** @type {TableMeta} */
+    /** @type {tableMeta} */
     table: types.tablemeta,
-    /** @type {TableColumnMeta} */
+    /** @type {tableColumnMeta} */
     tablecolumn: types.tablecolumn
 },
     metaError = error('meta');
 
 /**
- * @type {Map<string, PageMeta>}
+ * @type {Map<string, pageMeta>}
  * @private
  */
 let pagecache = new Map();
 
 /**
- * @type {Map<string, TableMeta>}
+ * @type {Map<string, tableMeta>}
  * @private
  */
 let tablecache = new Map();
@@ -42,7 +42,7 @@ let tablecache = new Map();
 /**
  * Add a page to the page cache.
  * @param {string} name Name of the page.
- * @param {PageMeta} pge Page meta.
+ * @param {pageMeta} pge Page meta.
  * @returns {void}
  */
 export function addPage(name, pge) {
@@ -54,7 +54,7 @@ export function addPage(name, pge) {
 /**
  * Add a table to the table cache.
  * @param {string} name Name of the table.
- * @param {TableMeta} tbl Table meta.
+ * @param {tableMeta} tbl Table meta.
  * @returns {void}
  */
 export function addTable(name, tbl) {
@@ -79,7 +79,7 @@ export function page(name) {
             return get(settings.meta.dir + name + '.json');
         },
 
-        (/** @type {PageMeta} */json) => {
+        (/** @type {pageMeta} */json) => {
 
             if (!json)
                 return null;
@@ -134,7 +134,7 @@ export function table(name) {
             return get(settings.meta.dir + name + '.json');
         },
 
-        (/** @type {TableMeta} */json) => {
+        (/** @type {tableMeta} */json) => {
 
             if (!json)
                 return null;

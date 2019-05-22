@@ -8,7 +8,7 @@
  * Iterate through an object.
  * @private
  * @param {Object} obj Object to iterate through.
- * @param {function(*,Key,object):void} iterator Iterator function to call.
+ * @param {function(*,key,object):void} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {void}
  */

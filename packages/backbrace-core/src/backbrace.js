@@ -13,8 +13,8 @@ import * as windowprovider from './providers/window';
  * Get/Set the application settings.
  * @method settings
  * @memberof module:backbrace
- * @param {Settings} [newsettings] Settings to set.
- * @returns {Settings} Returns the app settings.
+ * @param {settingsConfig} [newsettings] Settings to set.
+ * @returns {settingsConfig} Returns the app settings.
  * @example
  * // Turn on debug mode and don't minify the resources.
  * backbrace.settings({

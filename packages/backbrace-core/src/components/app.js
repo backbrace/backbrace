@@ -154,7 +154,7 @@ export class AppComponent extends Component {
     /**
      * Load a page.
      * @param {string} name Name of the page to load.
-     * @param {ViewerOptions} [options] Page viewer options.
+     * @param {viewerOptions} [options] Page viewer options.
      * @param {Object} [params] Page params.
      * @returns {void}
      */

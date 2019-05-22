@@ -6,7 +6,7 @@
 
 /**
  * App settings object.
- * @type {Settings}
+ * @type {settingsConfig}
  */
 export let settings = {
 

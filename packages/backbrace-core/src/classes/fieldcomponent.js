@@ -11,7 +11,7 @@ export class FieldComponent extends Component {
     /**
      * @constructor
      * @param {PageComponent} parent Parent page component.
-     * @param {PageFieldMeta} field Field meta data.
+     * @param {pageFieldMeta} field Field meta data.
      */
     constructor(parent, field) {
 
@@ -27,7 +27,7 @@ export class FieldComponent extends Component {
         /**
          * @description
          * Field meta data.
-         * @type {PageFieldMeta}
+         * @type {pageFieldMeta}
          */
         this.field = field;
 

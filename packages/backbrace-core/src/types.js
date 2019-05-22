@@ -1,29 +1,29 @@
 /**
- * @typedef {(number|string)} Key
+ * @typedef {(number|string)} key
  */
 
 /**
  * Alias for `Function`. Use this where you have repeatable function params.
- * @typedef {Function} GenericFunction
+ * @typedef {Function} genericFunction
  * @param {...*} [args] Function arguments.
  */
 
 /**
  * Error handler function.
- * @typedef {Function} ErrorHandler
+ * @typedef {Function} errorHandler
  * @param {(string|Error)} msg Error message.
  * @param {...*} [args] Function arguments.
  */
 
 /**
  * Action runner function.
- * @typedef {Function} ActionRunner
- * @param {PageActionMeta} action Action meta data.
+ * @typedef {Function} actionRunner
+ * @param {pageActionMeta} action Action meta data.
  * @returns {void}
  */
 
 /**
- * @typedef {Function} ErrorInstance
+ * @typedef {Function} errorInstance
  * @param {string} code Error code.
  * @param {string} message Error message.
  * @param {...*} args Message arguments.
@@ -31,13 +31,7 @@
  */
 
 /**
- * Server Instance
- * @typedef ServerInstance
- * @property {function():(JQueryPromise|void)} autoLogin Attempt to auto login.
- */
-
-/**
- * @callback AlertInstanceMessage
+ * @callback alertInstanceMessage
  * @param {string} msg Message to display.
  * @param {function()} [callbackFn] Callback function to execute after the alert is dismissed.
  * @param {string} [title] Title of the alert.
@@ -45,15 +39,15 @@
  */
 
 /**
- * @callback AlertInstanceConfirmCallback
+ * @callback alertInstanceConfirmCallback
  * @param {boolean} ret `true` if the user clicked the `OK` button.
  * @returns {void}
  */
 
 /**
- * @callback AlertInstanceConfirm
+ * @callback alertInstanceConfirm
  * @param {string} msg Message to display.
- * @param {AlertInstanceConfirmCallback} callbackFn Callback function to execute after the alert is dismissed.
+ * @param {alertInstanceConfirmCallback} callbackFn Callback function to execute after the alert is dismissed.
  * @param {string} [title] Title of the alert.
  * @param {string} [yescaption] Caption of the "yes" button.
  * @param {string} [nocaption] Caption of the "no" button.
@@ -61,26 +55,26 @@
  */
 
 /**
- * @callback AlertInstanceError
+ * @callback alertInstanceError
  * @param {string} msg Message to display.
  * @returns {void}
  */
 
 /**
- * @callback ActionRunnerOnClick
+ * @callback actionRunnerOnClick
  * @returns {(void|JQueryPromise<any>)}
  */
 
 /**
  * Alert instance.
- * @typedef AlertInstance
- * @property {AlertInstanceMessage} message Show a message box.
- * @property {AlertInstanceConfirm} confirm Show a confirmation box.
- * @property {AlertInstanceError} error Show an error message box.
+ * @typedef alertInstance
+ * @property {alertInstanceMessage} message Show a message box.
+ * @property {alertInstanceConfirm} confirm Show a confirmation box.
+ * @property {alertInstanceError} error Show an error message box.
  */
 
 /**
- * @callback IconsInstanceGet
+ * @callback iconsInstanceGet
  * @param {string} name Name of the icon.
  * @param {string} [className] Classes to add to the icon.
  * @returns {string} Icon html string.
@@ -88,13 +82,13 @@
 
 /**
  * Icons instance.
- * @typedef IconsInstance
- * @property {IconsInstanceGet} [get] Get an icon by name.
+ * @typedef iconsInstance
+ * @property {iconsInstanceGet} [get] Get an icon by name.
  */
 
 /**
  * App configuration.
- * @typedef AppConfig
+ * @typedef appConfig
  * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Backbrace App`.
  * @property {string} [version] App version. Defaults to `0.1.0`.
  * @property {string} [title] App tite (displays in browser window). Defaults to `New Backbrace App`.
@@ -103,13 +97,13 @@
 
 /**
  * Meta data configuration.
- * @typedef MetaConfig
+ * @typedef metaConfig
  * @property {string} [dir] Meta data root directory. Defaults to `./meta`.
  */
 
 /**
  * Images style.
- * @typedef ImagesStyle
+ * @typedef imagesConfig
  * @property {string} [logo] URL for the logo image (displayed in the header).
  * @property {string} [menuLogo] URL for the menu logo image (displayed at the top of the main menu).
  * @property {string} [blocker] URL for the blocker image (displayed while the loader is shown).
@@ -117,7 +111,7 @@
 
 /**
  * Colours style.
- * @typedef ColorsStyle
+ * @typedef colorsConfig
  * @property {string} [bgprimary] Primary color. Displayed most frequently accross the app.
  * @property {string} [textprimary] Primary text color.
  * @property {string} [bgprimaryvar] Primary variant color.
@@ -136,28 +130,28 @@
 
 /**
  * App style configuration.
- * @typedef StyleConfig
+ * @typedef styleConfig
  * @property {string} [loader] Style loader. Defaults to `materialdesign`.
  * @property {string} [css] CSS URL to load.
- * @property {ImagesStyle} [images] Images style.
- * @property {ColorsStyle} [colors] Colors style.
+ * @property {imagesConfig} [images] Images style.
+ * @property {colorsConfig} [colors] Colors style.
  */
 
 /**
  * Application settings.
- * @typedef Settings
+ * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
  * @property {boolean} [minify] Load minified packages. Defaults to `true`.
  * @property {boolean} [guiAllowed] GUI allowed flag.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
- * @property {AppConfig} [app] App config.
- * @property {MetaConfig} [meta] Meta data config.
- * @property {StyleConfig} [style] Style config.
+ * @property {appConfig} [app] App config.
+ * @property {metaConfig} [meta] Meta data config.
+ * @property {styleConfig} [style] Style config.
  */
 
 /**
  * Global variables.
- * @typedef Globals
+ * @typedef globals
  * @property {string} CDNSERVER CDN server URL.
  * @property {boolean} DEVMODE If `true` then we are running in a development environment.
  * @property {string} FULLVERSION Returns the full version number.
@@ -165,26 +159,26 @@
 
 /**
 * Callback function for creating a controller.
-* @callback ControllerCallback
+* @callback controllerCallback
 * @param {ViewerComponent} viewer Viewer component.
 * @returns {void}
 */
 
 /**
-* @callback DataCallback
+* @callback dataCallback
 * @param {any[]} data Data array.
 * @returns {void}
 */
 
 /**
- * @typedef HeaderOptions
+ * @typedef headerOptions
  * @property {string} [menuIcon] Menu icon.
  * @property {boolean} [attachMenu] Attach a menu to the header.
  * @property {string} [className] Header class.
  */
 
 /**
- * @typedef ViewerOptions
+ * @typedef viewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
  * @property {boolean} [temp] If `true` the page uses temp data.
@@ -192,7 +186,7 @@
  */
 
 /**
- * @typedef WindowOptions
+ * @typedef windowOptions
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
  * @property {boolean} [hasParent] If `true` sets the window as a child window.
@@ -201,13 +195,13 @@
  */
 
 /**
- * @typedef Route
+ * @typedef routeConfig
  * @property {string} path Path to match.
  * @property {string} page Page to load.
  */
 
 /**
- * @typedef PageFieldMeta
+ * @typedef pageFieldMeta
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
@@ -229,7 +223,7 @@ export let pagefield = {
 };
 
 /**
- * @typedef PageActionMeta
+ * @typedef pageActionMeta
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
@@ -245,14 +239,14 @@ export let pageaction = {
 };
 
 /**
- * @typedef PageSectionMeta
+ * @typedef pageSectionMeta
  * @property {string} name Name of the section.
  * @property {string} text Caption of the section.
  * @property {string} pageName Display a subpage in this section.
  * @property {string} icon Section icon.
  * @property {string} className Classes to add to the section.
- * @property {PageFieldMeta[]} fields Page section fields.
- * @property {PageActionMeta[]} actions Page actions.
+ * @property {pageFieldMeta[]} fields Page section fields.
+ * @property {pageActionMeta[]} actions Page actions.
  */
 export let pagesection = {
   name: '',
@@ -265,7 +259,7 @@ export let pagesection = {
 };
 
 /**
- * @typedef PageMeta
+ * @typedef pageMeta
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
  * @property {string} component Component for the whole page (defaults to `cardpage`).
@@ -273,7 +267,7 @@ export let pagesection = {
  * @property {string} tableName Name of the page's datasource.
  * @property {string} icon Icon to use for the page.
  * @property {string} filters Filters for the page.
- * @property {PageSectionMeta[]} sections Page sections.
+ * @property {pageSectionMeta[]} sections Page sections.
  */
 export let pagemeta = {
   name: '',
@@ -287,7 +281,7 @@ export let pagemeta = {
 };
 
 /**
- * @typedef TableColumnMeta
+ * @typedef tableColumnMeta
  * @property {string} name Name of the column.
  * @property {string} caption Caption of the column.
  * @property {string} type  Data type for the column.
@@ -299,11 +293,11 @@ export let tablecolumn = {
 };
 
 /**
- * @typedef TableMeta
+ * @typedef tableMeta
  * @property {string} name Name of the table.
  * @property {string} controller Table controller.
  * @property {string} data Table data (if from a file).
- * @property {TableColumnMeta[]} columns Table columns.
+ * @property {tableColumnMeta[]} columns Table columns.
  */
 export let tablemeta = {
   name: '',

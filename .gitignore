@@ -3,6 +3,7 @@
 node_modules/
 npm-debug.log
 .DS_Store
+/dist/
 /packages/backbrace-core/dist/
 /packages/backbrace-docs/dist/
 /packages/backbrace-devkit/typings/

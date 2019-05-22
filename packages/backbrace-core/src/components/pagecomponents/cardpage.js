@@ -126,7 +126,7 @@ export class CardPageComponent extends PageComponent {
      * @description
      * Load the fields for a section.
      * @param {WindowComponent} win Window to load the fields into.
-     * @param {PageFieldMeta[]} fields Fields to load.
+     * @param {pageFieldMeta[]} fields Fields to load.
      * @returns {JQueryPromise} Promise to return after we load the fields.
      */
     loadFields(win, fields) {

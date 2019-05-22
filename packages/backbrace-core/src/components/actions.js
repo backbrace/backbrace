@@ -53,8 +53,8 @@ export class ActionsComponent extends Component {
     /**
      * @description
      * Add an action button.
-     * @param {PageActionMeta} action Action meta data.
-     * @param {ActionRunner} runfunc Action runner function.
+     * @param {pageActionMeta} action Action meta data.
+     * @param {actionRunner} runfunc Action runner function.
      * @returns {ActionsComponent} Returns itself for chaining.
      */
     addAction(action, runfunc) {

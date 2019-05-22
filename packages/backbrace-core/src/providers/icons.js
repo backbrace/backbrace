@@ -4,7 +4,7 @@
  * @private
  */
 
-/** @type {IconsInstance} */
+/** @type {iconsInstance} */
 let instance = {
     get: function(name) {
         return name;
@@ -13,7 +13,7 @@ let instance = {
 
 /**
  * Get the icon provider instance.
- * @returns {IconsInstance} Returns the icon provider instance.
+ * @returns {iconsInstance} Returns the icon provider instance.
  */
 export function get() {
     return instance;
@@ -21,7 +21,7 @@ export function get() {
 
 /**
  * Set the icon provider instance.
- * @param {IconsInstance} val Icon provider instance to set.
+ * @param {iconsInstance} val Icon provider instance to set.
  * @returns {void}
  */
 export function set(val) {

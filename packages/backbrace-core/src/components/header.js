@@ -15,7 +15,7 @@ export class HeaderComponent extends Component {
 
     /**
      * @constructor
-     * @param {HeaderOptions} [options] Header options.
+     * @param {headerOptions} [options] Header options.
      */
     constructor({ menuIcon = 'menu', attachMenu = true, className = '' } = {}) {
 
@@ -24,7 +24,7 @@ export class HeaderComponent extends Component {
         /**
          * @description
          * Options for the header component.
-         * @type {HeaderOptions}
+         * @type {headerOptions}
          */
         this.options = { menuIcon, attachMenu, className };
 

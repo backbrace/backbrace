@@ -13,6 +13,8 @@
   ],
   "files": [
     "schema/*",
+    "tern/*",
+    "typings/*",
     "README.md",
     "LICENSE"
   ]

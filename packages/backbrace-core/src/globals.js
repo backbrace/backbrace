@@ -12,7 +12,7 @@
 /**
  * Global variables.
  * @name globals
- * @type {Globals}
+ * @type {globals}
  * @memberof module:backbrace
  */
 export const globals = {

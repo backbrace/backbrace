@@ -18,7 +18,7 @@ const moduleError = error('module');
  * @method controller
  * @memberof module:backbrace
  * @param {string} name Name of the controller to create.
- * @param {ControllerCallback} definition Definition of the controller.
+ * @param {controllerCallback} definition Definition of the controller.
  * @returns {void}
  */
 export function controller(name, definition) {

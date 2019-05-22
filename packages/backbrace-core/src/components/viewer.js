@@ -22,7 +22,7 @@ export class ViewerComponent extends Component {
     /**
      * @constructor
      * @param {string} name Page name.
-     * @param {ViewerOptions} [options] Viewer options.
+     * @param {viewerOptions} [options] Viewer options.
      * @param {Object} [params] Page params.
      */
     constructor(name, { title, hasParent = false, temp = false, updateHistory = null } = {}, params = {}) {
@@ -46,21 +46,21 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * Viewer options.
-         * @type {ViewerOptions}
+         * @type {viewerOptions}
          */
         this.options = { title, hasParent, temp, updateHistory };
 
         /**
          * @description
          * Page meta data.
-         * @type {PageMeta}
+         * @type {pageMeta}
          */
         this.page = null;
 
         /**
          * @description
          * Table meta data.
-         * @type {TableMeta}
+         * @type {tableMeta}
          */
         this.table = null;
 
@@ -88,14 +88,14 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * On before update of the viewer.
-         * @type {DataCallback}
+         * @type {dataCallback}
          */
         this.onBeforeUpdate = null;
 
         /**
          * @description
          * On action click.
-         * @type {Map<string, GenericFunction>}
+         * @type {Map<string, genericFunction>}
          */
         this.onActionClick = new Map();
     }
@@ -272,7 +272,7 @@ export class ViewerComponent extends Component {
     /**
      * @description
      * Run a page action.
-     * @param {PageActionMeta} action Action meta data.
+     * @param {pageActionMeta} action Action meta data.
      * @returns {void}
      */
     actionRunner(action) {

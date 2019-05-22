@@ -5,7 +5,7 @@
  */
 
 /**
- * @type {Route[]}
+ * @type {routeConfig[]}
  * @private
  **/
 let routes = [];
@@ -14,7 +14,7 @@ let routes = [];
  * Add a new route.
  * @method route
  * @memberof module:backbrace
- * @param  {...Route} args One or more routes to add.
+ * @param  {...routeConfig} args One or more routes to add.
  * @returns {void}
  */
 export function route(...args) {

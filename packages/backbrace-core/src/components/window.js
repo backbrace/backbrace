@@ -13,7 +13,7 @@ export class WindowComponent extends Component {
 
     /**
      * @constructor
-     * @param {WindowOptions} [options] Window options.
+     * @param {windowOptions} [options] Window options.
      */
     constructor({
         hasParent = false,
@@ -28,7 +28,7 @@ export class WindowComponent extends Component {
         /**
          * @description
          * Options for the window component.
-         * @type {WindowOptions}
+         * @type {windowOptions}
          */
         this.options = {
             className,
@@ -136,7 +136,7 @@ export class WindowComponent extends Component {
     /**
      * Add a title bar icon.
      * @param {string} icon Icon name.
-     * @param {GenericFunction} onclick On click function.
+     * @param {genericFunction} onclick On click function.
      * @returns {void}
      */
     addTitlebarIcon(icon, onclick) {

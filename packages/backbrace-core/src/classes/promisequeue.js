@@ -27,7 +27,7 @@ export class PromiseQueue {
          */
         this.func = func;
         /**
-         * @type {GenericFunction[][]}
+         * @type {genericFunction[][]}
          * @description
          * Function queue.
          */
@@ -43,7 +43,7 @@ export class PromiseQueue {
     /**
      * @description
      * Create a new promise queue and run the first function.
-     * @param {...GenericFunction} args Functions to run.
+     * @param {...genericFunction} args Functions to run.
      * @returns {void}
      */
     createQueue(...args) {
@@ -146,7 +146,7 @@ export class PromiseQueue {
     /**
      * @description
      * Insert functions into the start of the current promiseblock.
-     * @param {...GenericFunction} args Functions to run.
+     * @param {...genericFunction} args Functions to run.
      * @returns {void}
      */
     insert(...args) {

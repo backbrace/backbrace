@@ -12,7 +12,7 @@ export class TextFieldComponent extends FieldComponent {
     /**
      * @constructor
      * @param {PageComponent} parent Parent component.
-     * @param {PageFieldMeta} field Field meta data.
+     * @param {pageFieldMeta} field Field meta data.
      */
     constructor(parent, field) {
         super(parent, field);

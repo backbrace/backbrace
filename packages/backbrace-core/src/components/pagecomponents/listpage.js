@@ -103,7 +103,7 @@ export class ListPageComponent extends PageComponent {
          * @ignore
          * @description
          * Add a column to the grid.
-         * @param {PageFieldMeta} field Page field meta data.
+         * @param {pageFieldMeta} field Page field meta data.
          * @returns {void}
          */
         let addColumn = (field) => {

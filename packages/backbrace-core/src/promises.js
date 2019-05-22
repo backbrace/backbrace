@@ -72,7 +72,7 @@ function runNextQueue() {
  *
  * Each function will be run in order.
  *
- * @param {...GenericFunction} args Functions to run.
+ * @param {...genericFunction} args Functions to run.
  * @returns {JQueryPromise<any>} Promise to run the functions.
  * @example
  * return backbrace.promiseblock(
@@ -119,7 +119,7 @@ export function promiseinsert(...args) {
  * Loop through an array using `promiseblock`.
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
- * @param {function(T,Key,ArrayLike<T>):(void|JQueryPromise<any>)} iterator Iterator function to call.
+ * @param {function(T,key,ArrayLike<T>):(void|JQueryPromise<any>)} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {JQueryPromise<any>} Promise to return after we are done looping.
  */
@@ -154,7 +154,7 @@ export function promiseeach(obj, iterator, context) {
  * @memberof module:backbrace
  * @description
  * Start a new promise queue to execute code when possible.
- * @param {...GenericFunction} args Functions to run.
+ * @param {...genericFunction} args Functions to run.
  * @returns {void}
  */
 export function promisequeue(...args) {

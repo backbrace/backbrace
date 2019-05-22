@@ -12,8 +12,8 @@ export class ActionComponent extends Component {
 
     /**
      * @constructor
-     * @param {PageActionMeta} action Action meta data.
-     * @param {ActionRunner} actionRunner Action runner function. Wraps the on click function.
+     * @param {pageActionMeta} action Action meta data.
+     * @param {actionRunner} actionRunner Action runner function. Wraps the on click function.
      */
     constructor(action, actionRunner) {
 
@@ -22,14 +22,14 @@ export class ActionComponent extends Component {
         /**
          * @description
          * Page action meta data.
-         * @type {PageActionMeta}
+         * @type {pageActionMeta}
          */
         this.action = action;
 
         /**
         * @description
         * Action runner function.
-        * @type {ActionRunner}
+        * @type {actionRunner}
         */
         this.actionRunner = actionRunner;
     }
