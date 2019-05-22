@@ -124,7 +124,7 @@ module.exports = function(grunt) {
           destination: 'packages/backbrace-docs/src/meta/data',
           config: 'jsdoc.conf.json',
           template: './node_modules/@backbrace/jsdoc-json',
-          tutorials: 'packages/backbrace-docs/content',
+          tutorials: 'packages/backbrace-docs/content'
         }
       },
       typings: {
@@ -141,8 +141,7 @@ module.exports = function(grunt) {
           'packages/backbrace-core/src/log.js',
           'packages/backbrace-core/src/util.js',
           'packages/backbrace-core/src/http.js',
-          'packages/backbrace-core/src/route.js',
-          'packages/backbrace-core/src/providers/style.js'
+          'packages/backbrace-core/src/route.js'
         ],
         options: {
           private: false,
@@ -150,7 +149,20 @@ module.exports = function(grunt) {
           template: 'node_modules/@backbrace/dts-generator/dist',
           config: './packages/backbrace-devkit/jsdoc.conf.json'
         }
-      }
+      },
+      tern: {
+        src: [
+          'packages/backbrace-core/src/*.js',
+          'packages/backbrace-core/src/*/*.js',
+          'packages/backbrace-core/src/*/*/*.js'
+        ],
+        options: {
+          destination: './packages/backbrace-devkit/tern/defs',
+          template: './node_modules/@backbrace/jsdoc-tern',
+          config: 'jsdoc.conf.json',
+          package: 'package.json'
+        }
+      },
     },
 
     file_append: {
@@ -226,9 +238,10 @@ module.exports = function(grunt) {
     'jsdoc:typings',
     'file_append:typings'
   ]);
-  grunt.registerTask('generate', 'Generate docs and typings', [
+  grunt.registerTask('generate', 'Generate docs and devkit', [
     'docs',
-    'typings'
+    'typings',
+    'jsdoc:tern'
   ]);
   grunt.registerTask('build', [
     'webpack:prod'
@@ -242,9 +255,8 @@ module.exports = function(grunt) {
   grunt.registerTask('package', [
     'clean',
     'build',
-    'docs',
-    'copy:docs',
-    'typings'
+    'generate',
+    'copy:docs'
   ]);
   grunt.registerTask('default', ['package']);
 

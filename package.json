@@ -54,8 +54,6 @@
         "node-sass": "^4.12.0",
         "npm": "^6.9.0",
         "npm-run": "^5.0.1",
-        "rollup": "^0.67.4",
-        "rollup-plugin-sass": "^1.2.2",
         "sass-loader": "^7.1.0",
         "semver": "^5.7.0",
         "shelljs": "^0.8.3",

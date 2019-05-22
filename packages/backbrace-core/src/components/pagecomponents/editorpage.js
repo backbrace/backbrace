@@ -17,7 +17,7 @@ let defs = [];
  */
 function loadDef(file) {
     return promiseblock(
-        () => get('json/backbrace.json'),
+        () => get(`json/${file}.json`),
         (def) => defs.push(def)
     );
 }
@@ -67,11 +67,10 @@ export class EditorPageComponent extends PageComponent {
 
         return promiseblock(
 
-            () => loadDef('json/browser'),
-            () => loadDef('json/ecma5'),
-            () => loadDef('json/jquery'),
-            () => loadDef('json/backbrace-types'),
-            () => loadDef('json/backbrace'),
+            () => loadDef('browser'),
+            () => loadDef('ecma5'),
+            () => loadDef('jquery'),
+            () => loadDef('backbrace'),
 
             () => {
 
