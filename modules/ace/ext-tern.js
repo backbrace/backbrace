@@ -1802,7 +1802,8 @@ ace.define("ace/autocomplete", ["require", "exports", "module", "ace/keyboard/ha
 ace.define("ace/tern/tern_server", ["require", "exports", "module", "ace/range", "ace/lib/dom"], function(acerequire, exports, module) {
     "use strict";
     var TernServer = function(options) {
-        var self = this;
+        var self = this,
+            tern = options.tern;
         this.options = options || {};
         var plugins = this.options.plugins || (this.options.plugins = {});
         if (!plugins.hasOwnProperty('doc_comment')) plugins.doc_comment = {};
@@ -3971,24 +3972,9 @@ ace.define("ace/tern/tern", ["require", "exports", "module", "ace/config", "ace/
     var aceTs;
     var createTernServer = function(cb) {
         var src = ternOptions.workerScript || config.moduleUrl('worker/tern');
-        if (ternOptions.useWorker === false) {
-            var id = 'ace_tern_files';
-            if (document.getElementById(id)) inner();
-            else {
-                var el = document.createElement('script');
-                el.setAttribute('id', id);
-                document.head.appendChild(el);
-                el.onload = inner;
-                el.setAttribute('src', src);
-            }
-        }
-        else inner();
-
-        function inner() {
-            if (!ternOptions.workerScript) ternOptions.workerScript = src;
-            aceTs = new TernServer(ternOptions);
-            cb();
-        }
+        if (!ternOptions.workerScript) ternOptions.workerScript = src;
+        aceTs = new TernServer(ternOptions);
+        cb();
     };
     var editor_for_OnCusorChange = null;
     var debounceArgHints;

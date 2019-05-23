@@ -1,4 +1,6 @@
 import * as ace from '../../../../../node_modules/brace/index.js';
+import * as tern from '../../../../../node_modules/tern/lib/tern.js';
+import 'modules/ace/ext-tern';
 import 'npm/brace/mode/javascript';
 import 'npm/brace/theme/monokai';
 import { closePage } from '../../app';
@@ -77,15 +79,15 @@ export class EditorPageComponent extends PageComponent {
                 let editor = ace.edit('txtEditor');
                 editor.setTheme('ace/theme/monokai');
                 editor.session.setMode('ace/mode/javascript');
-                require('../../../../../modules/ace/ext-tern.js');
                 ace.acequire('ace/ext/tern');
                 editor.setOptions({
                     enableTern: {
+                        tern: tern,
                         defs: defs,
                         useWorker: false
                     },
                     enableBasicAutocompletion: true,
-                    enableSnippets: true,
+                    enableSnippets: false,
                     enableLiveAutocompletion: true
                 });
             }
