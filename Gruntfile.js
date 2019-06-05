@@ -252,7 +252,8 @@ module.exports = function(grunt) {
   grunt.registerTask('changelog', ['git_changelog:dist']);
   grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
-    'package',
+    'clean',
+    'build',
     'test:core'
   ]);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
