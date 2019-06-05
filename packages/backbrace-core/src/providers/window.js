@@ -16,9 +16,7 @@ export function get() {
 
 /**
  * Set the window provider instance.
- * @method setWindow
- * @memberof module:backbrace
- * @param {(Window|object)} val Window provider instance to set.
+ * @param {(Window|Object)} val Window provider instance to set.
  * @returns {void}
  */
 export function set(val) {

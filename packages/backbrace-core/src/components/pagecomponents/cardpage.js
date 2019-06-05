@@ -1,9 +1,10 @@
 import { promiseblock, promiseeach } from '../../promises';
-import { get as getJQuery } from '../../providers/jquery';
+import { ActionsComponent } from '../actions';
 import { PageComponent } from '../../classes/pagecomponent';
 import { ViewerComponent } from '../viewer';
 import { WindowComponent } from '../window';
 import { isMobileDevice } from '../../util';
+import { closePage } from '../../app';
 
 /**
  * @class
@@ -50,15 +51,13 @@ export class CardPageComponent extends PageComponent {
      */
     unload() {
 
-        const $ = getJQuery();
-
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.unload());
+        Array.from(this.subwindows.values()).forEach((win) => win.unload());
         this.subwindows = null;
 
-        $.each(Array.from(this.subpages.values()), (index, page) => page.unload());
+        Array.from(this.subpages.values()).forEach((page) => page.unload());
         this.subpages = null;
 
-        $.each(Array.from(this.fields.values()), (index, cont) => cont.unload());
+        Array.from(this.fields.values()).forEach((cont) => cont.unload());
         this.fields = null;
 
         super.unload();
@@ -94,9 +93,17 @@ export class CardPageComponent extends PageComponent {
                 let win = new WindowComponent({
                     className: section.className,
                     hasParent: i > 0,
-                    icon: section.icon
+                    icon: section.icon,
+                    onClose: () => closePage(this.viewer.id)
                 });
                 win.load(cont).setTitle(section.text);
+
+                // Add actions.
+                let actions = new ActionsComponent();
+                actions.load(win.toolbar);
+                section.actions.forEach((action) => actions.addAction(action, (action) => {
+                    this.viewer.actionRunner(action);
+                }));
 
                 this.subwindows.set(section.name, win);
                 return this.loadFields(win, section.fields);
@@ -119,7 +126,7 @@ export class CardPageComponent extends PageComponent {
      * @description
      * Load the fields for a section.
      * @param {WindowComponent} win Window to load the fields into.
-     * @param {PageFieldMeta[]} fields Fields to load.
+     * @param {pageFieldDesign[]} fields Fields to load.
      * @returns {JQueryPromise} Promise to return after we load the fields.
      */
     loadFields(win, fields) {
@@ -133,11 +140,22 @@ export class CardPageComponent extends PageComponent {
             }
             if (comp.indexOf('.js') === -1) {
 
-                let Control = require('../fieldcomponents/' + comp + '.js').default,
-                    cont = new Control(this, field);
-                this.fields.set(field.name, cont);
+                return promiseblock(
 
-                return cont.load(win.main);
+                    () => {
+                        return import(
+                            /* webpackChunkName: "[request]" */
+                            `../fieldcomponents/${comp}.js`);
+                    },
+                    ({ default: Control }) => {
+
+                        let cont = new Control(this, field);
+                        this.fields.set(field.name, cont);
+
+                        return cont.load(win.main);
+                    }
+
+                );
             }
         });
     }
@@ -145,7 +163,7 @@ export class CardPageComponent extends PageComponent {
     /**
      * @description
      * Update the card page with a data source.
-     * @param {object[]} data Array of data.
+     * @param {Object[]} data Array of data.
      * @returns {JQueryPromise} Returns a promise to update the card page.
      */
     update(data) {
@@ -191,10 +209,8 @@ export class CardPageComponent extends PageComponent {
      */
     show() {
 
-        const $ = getJQuery();
-
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.show());
-        $.each(Array.from(this.subpages.values()), (index, page) => page.show());
+        Array.from(this.subwindows.values()).forEach((win) => win.show());
+        Array.from(this.subpages.values()).forEach((page) => page.show());
 
         return this;
     }
@@ -206,10 +222,8 @@ export class CardPageComponent extends PageComponent {
      */
     hide() {
 
-        const $ = getJQuery();
-
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.hide());
-        $.each(Array.from(this.subpages.values()), (index, page) => page.hide());
+        Array.from(this.subwindows.values()).forEach((win) => win.hide());
+        Array.from(this.subpages.values()).forEach((page) => page.hide());
 
         return this;
     }
@@ -221,12 +235,10 @@ export class CardPageComponent extends PageComponent {
      */
     showLoad() {
 
-        const $ = getJQuery();
-
         super.showLoad();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.show());
-        $.each(Array.from(this.subpages.values()), (index, page) => page.showLoad());
+        Array.from(this.subwindows.values()).forEach((win) => win.loader.show());
+        Array.from(this.subpages.values()).forEach((page) => page.showLoad());
 
         return this;
     }
@@ -238,12 +250,10 @@ export class CardPageComponent extends PageComponent {
      */
     hideLoad() {
 
-        const $ = getJQuery();
-
         super.hideLoad();
 
-        $.each(Array.from(this.subwindows.values()), (index, win) => win.loader.hide());
-        $.each(Array.from(this.subpages.values()), (index, page) => page.hideLoad());
+        Array.from(this.subwindows.values()).forEach((win) => win.loader.hide());
+        Array.from(this.subpages.values()).forEach((page) => page.hideLoad());
 
         return this;
     }
@@ -254,9 +264,7 @@ export class CardPageComponent extends PageComponent {
      */
     hidePreLoad() {
 
-        const $ = getJQuery();
-
-        $.each(Array.from(this.subwindows.values()), (index, win) => {
+        Array.from(this.subwindows.values()).forEach((win, index) => {
             win.preloader.hide();
             // Remove the progress bars from sub windows.
             if (index > 0)

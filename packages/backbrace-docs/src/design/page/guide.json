@@ -1,0 +1,13 @@
+{
+    "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
+    "name": "index",
+    "data": "design/data/tutorials.json",
+    "component": "templatepage",
+    "controller": "page/guide.js",
+    "sections": [
+        {
+            "name": "footer",
+            "pageName": "page/footer"
+        }
+    ]
+}

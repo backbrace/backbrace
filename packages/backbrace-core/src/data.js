@@ -6,11 +6,11 @@
 
 import { error } from './error';
 
-const dataError = error('meta');
+const dataError = error('data');
 
 /**
+ * @ignore
  * @type {Map<string, any[]>}
- * @private
  */
 let dataTables = new Map();
 

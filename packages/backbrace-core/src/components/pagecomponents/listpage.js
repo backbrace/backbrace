@@ -1,8 +1,12 @@
+import 'jquery-ui';
+import 'npm/jquery-ui-dist/jquery-ui.css';
+import 'modules/jqgrid/jquery.jqGrid.js';
+import 'modules/jqgrid/ui.jqgrid.css';
+import 'modules/jqgrid/i18n/grid.locale-en.js';
+import $ from 'jquery';
 import { formatField } from '../../format';
-import * as packagemanager from '../../packagemanager';
 import { findInput, isMobileDevice, uid } from '../../util';
 import { get as getIcons } from '../../providers/icons';
-import { get as getJQuery } from '../../providers/jquery';
 import { PageComponent } from '../../classes/pagecomponent';
 
 /**
@@ -50,8 +54,6 @@ export class ListPageComponent extends PageComponent {
      */
     load() {
 
-        const $ = getJQuery();
-
         /**
          * @ignore
          * @description
@@ -75,8 +77,7 @@ export class ListPageComponent extends PageComponent {
          * @returns {*} Returns the new value.
          */
         function customValue(elem, op, value) {
-            const $ = getJQuery(),
-                editor = findInput($(elem));
+            const editor = findInput($(elem));
             if (op === 'set' && editor) {
                 editor.val(value);
             }
@@ -89,7 +90,7 @@ export class ListPageComponent extends PageComponent {
          * @ignore
          * @description
          * On key press event handler for cell editors.
-         * @param {JQuery.Event} ev Key press event.
+         * @param {JQuery.KeyDownEvent} ev Key press event.
          * @returns {boolean} Returns `false` to cancel bubbling.
          */
         function onKeyPress(ev) {
@@ -102,7 +103,7 @@ export class ListPageComponent extends PageComponent {
          * @ignore
          * @description
          * Add a column to the grid.
-         * @param {PageFieldMeta} field Page field meta data.
+         * @param {pageFieldDesign} field Page field design.
          * @returns {void}
          */
         let addColumn = (field) => {
@@ -159,84 +160,81 @@ export class ListPageComponent extends PageComponent {
             });
         };
 
-        // Load the jqgrid package (for desktop).
-        packagemanager.add('jqgrid');
-        packagemanager.load(() => {
+        //TODO - FIX
+        //this.viewer.window.main.addClass('list-component');
 
-            this.viewer.window.main.addClass('list-component');
+        // Add the rowid column (desktop only).
+        if (!isMobileDevice()) {
 
-            // Add the rowid column (desktop only).
-            if (!isMobileDevice()) {
-
-                this.colNames.push(' ');
-                this.columns.push({
-                    name: 'RowId',
-                    index: 'RowId',
-                    width: '20px',
-                    fixed: true,
-                    editable: false,
-                    sortable: true,
-                    search: false,
-                    align: 'center',
-                    classes: 'row-id',
-                    hidedlg: true,
-                    formatter: (cellvalue, options, rowObject) => {
-                        const icons = getIcons();
-                        let temp = false;
-                        if (this.viewer.options.temp)
-                            temp = true;
-                        if (rowObject.NewRecord && !temp) {
-                            return icons.get('%new%');
-                        }
-                        return cellvalue;
+            this.colNames.push(' ');
+            this.columns.push({
+                name: 'RowId',
+                index: 'RowId',
+                width: '20px',
+                fixed: true,
+                editable: false,
+                sortable: true,
+                search: false,
+                align: 'center',
+                classes: 'row-id',
+                hidedlg: true,
+                formatter: (cellvalue, options, rowObject) => {
+                    const icons = getIcons();
+                    let temp = false;
+                    if (this.viewer.options.temp)
+                        temp = true;
+                    if (rowObject.NewRecord && !temp) {
+                        return icons.get('%new%');
                     }
+                    return cellvalue;
+                }
+            });
+
+            $.each(this.viewer.page.sections, function(i, section) {
+                $.each(section.fields, function(j, field) {
+                    addColumn(field);
                 });
+            });
 
-                $.each(this.viewer.page.sections, function(i, section) {
-                    $.each(section.fields, function(j, field) {
-                        addColumn(field);
-                    });
-                });
+            // Create the grid.
+            this.grid = $('<table id="' + uid() + '" style="border: none"></table>');
+            this.container = $('<div class="grid-container" />')
+                .append(this.grid);
+            //TODO - FIX
+            //.appendTo(this.viewer.window.main);
 
-                // Create the grid.
-                this.grid = $('<table id="' + uid() + '" style="border: none"></table>');
-                this.container = $('<div class="grid-container" />')
-                    .append(this.grid)
-                    .appendTo(this.viewer.window.main);
+            this.grid.jqGrid({
+                datatype: 'local',
+                data: [],
+                autowidth: false,
+                height: 'auto',
+                width: null,
+                colNames: this.colNames,
+                colModel: this.columns,
+                shrinkToFit: false,
+                rowNum: 50000,
+                pginput: false,
+                viewrecords: true,
+                cellEdit: true,
+                multiselect: false,
+                cellsubmit: 'clientArray',
+                sortable: true,
+                multiSort: true,
+                scrollrows: true,
+                autoencode: true
+            });
 
-                this.grid.jqGrid({
-                    datatype: 'local',
-                    data: [],
-                    autowidth: false,
-                    height: 'auto',
-                    width: null,
-                    colNames: this.colNames,
-                    colModel: this.columns,
-                    shrinkToFit: false,
-                    rowNum: 50000,
-                    pginput: false,
-                    viewrecords: true,
-                    cellEdit: true,
-                    multiselect: false,
-                    cellsubmit: 'clientArray',
-                    sortable: true,
-                    multiSort: true,
-                    scrollrows: true,
-                    autoencode: true
-                });
+        } else {
 
-            } else {
+            // Create the grid.
+            this.grid = $('<table style="border: none;width:100%;"><tbody></tbody></table>');
+            this.container = $('<div />')
+                .append(this.grid);
+            //TODO - FIX
+            //.appendTo(this.viewer.window.main);
+            //this.viewer.window.container.css('padding', '0');
 
-                // Create the grid.
-                this.grid = $('<table style="border: none;width:100%;"><tbody></tbody></table>');
-                this.container = $('<div />')
-                    .append(this.grid)
-                    .appendTo(this.viewer.window.main);
-                this.viewer.window.container.css('padding', '0');
-
-            }
-
-        });
+        }
 
         return this;
     }
@@ -244,13 +242,12 @@ export class ListPageComponent extends PageComponent {
     /**
      * @description
      * Bind the list page to a data source.
-     * @param {object[]} data Array of data.
+     * @param {Object[]} data Array of data.
      * @returns {PageComponent} Returns a promise to update the list page.
      */
     update(data) {
 
-        const $ = getJQuery(),
-            icons = getIcons();
+        const icons = getIcons();
         let r = data || [];
 
         if (!isMobileDevice()) {

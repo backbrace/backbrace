@@ -4,25 +4,25 @@
  * @private
  */
 
+import $ from 'jquery';
 import { error } from './error';
-import { get as getJQuery } from './providers/jquery';
 
 /**
  * Send a HTTP get request.
- * @method get
- * @memberof module:backbrace
  * @param {string} url Absolute or relative URL to get.
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
  * found, it will return `null`.
  */
 export function get(url) {
 
-    const $ = getJQuery(),
-        d = $.Deferred();
+    const d = $.Deferred();
 
-    $.get(url, function(data) {
+    $.get({
+        url: url,
+        cache: true
+    }).then(function(data) {
         d.resolve(data);
-    }).fail(function() {
+    }).fail(function(xhr, status, err) {
         d.resolve(null);
     });
 
@@ -31,14 +31,10 @@ export function get(url) {
 
 /**
  * Send a HTTP post request.
- * @method post
- * @memberof module:backbrace
  * @param {string} url Absolute or relative URL to get.
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`.
  */
 export function post(url) {
-
-    const $ = getJQuery();
 
     let d = $.Deferred();
 

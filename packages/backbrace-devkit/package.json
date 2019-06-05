@@ -1,6 +1,6 @@
 {
   "name": "@backbrace/devkit",
-  "version": "0.1.0-alpha.2",
+  "version": "0.2.0",
   "description": "Development tools specialized for backbrace.",
   "repository": "ttps://github.com/backbrace/backbrace/tree/master/packages/backbrace-devkit",
   "author": "Paul Fisher <paulfisher53@gmail.com>",
@@ -13,6 +13,8 @@
   ],
   "files": [
     "schema/*",
+    "tern/*",
+    "typings/*",
     "README.md",
     "LICENSE"
   ]

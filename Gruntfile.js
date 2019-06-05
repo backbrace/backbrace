@@ -1,10 +1,8 @@
 'use strict';
 
 var path = require('path'),
-  webpack = require('webpack'),
   merge = require('webpack-merge'),
-  moment = require('moment'),
-  globals = require('./lib/globals/global-vars');
+  moment = require('moment');
 
 module.exports = function(grunt) {
 
@@ -16,10 +14,10 @@ module.exports = function(grunt) {
   var webpackconfig = require('./webpack.config'),
     versionInfo = require('./lib/version-info/version-info.js'),
     paths = {
-      core: 'packages/backbrace-core/',
-      devkit: 'packages/backbrace-devkit/',
-      packages: 'packages/backbrace-packages/',
-      sampleapp: 'packages/backbrace-sample-app/'
+      core: 'packages/backbrace-core',
+      devkit: 'packages/backbrace-devkit',
+      docs: 'packages/backbrace-docs',
+      sampleapp: 'packages/backbrace-sample-app'
     };
 
   //Project configuration.
@@ -28,9 +26,13 @@ module.exports = function(grunt) {
     //Clean directories.
     clean: {
       dist: [
-        'packages/backbrace-core/dist',
-        'packages/backbrace-devkit/typings',
-        'packages/backbrace-packages/dist'
+        paths.core + '/dist',
+        paths.schema + '/schema/icons.json',
+        paths.schema + '/schema/pagedesign.json',
+        paths.schema + '/schema/tabledesign.json',
+        paths.schema + '/tern/defs/backbrace.json',
+        paths.schema + '/typings',
+        paths.docs + '/dist'
       ],
       tmp: ['tmp']
     },
@@ -39,8 +41,8 @@ module.exports = function(grunt) {
     eslint: {
       all: {
         src: [
-          'packages/backbrace-core/src/**/*.js',
-          'packages/backbrace-core/test/**/*.js'
+          paths.core + '/src/**/*.js',
+          paths.core + '/test/**/*.js'
         ]
       }
     },
@@ -56,78 +58,122 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      dev: merge({
-        mode: 'development',
-        output: {
-          path: path.join(__dirname, 'packages/backbrace-core/dist'),
-          publicPath: 'packages/backbrace-core/dist/',
-          library: 'backbrace',
-          filename: '[name].js'
-        }
-      }, webpackconfig),
       prod: merge({
-        mode: 'production',
         output: {
-          path: path.join(__dirname, 'packages/backbrace-core/dist'),
-          publicPath: 'packages/backbrace-core/dist/',
+          path: path.join(__dirname, paths.core + '/dist'),
           library: 'backbrace',
-          filename: '[name].min.js'
+          filename: '[name].min.js',
+          chunkFilename: '[name].[contenthash:8].min.js'
         }
-      }, webpackconfig)
+      }, webpackconfig.get())
     },
 
     'webpack-dev-server': {
       sampleapp: {
-        webpack: {
-          mode: 'none',
-          entry: {
-            backbrace: ['./packages/backbrace-core/src/backbrace.js']
-          },
-          devtool: 'source-map',
-          devServer: {},
+        webpack: merge({
           output: {
             library: 'backbrace',
             filename: '[name].js'
-          },
-          plugins: [
-            new webpack.DefinePlugin(globals.get(true))
-          ]
-        },
-        publicPath: '/scripts',
-        contentBase: ['packages/backbrace-sample-app', 'packages/backbrace-packages'],
-        port: 8000
+          }
+        }, webpackconfig.get(true)),
+        contentBase: [
+          paths.sampleapp + '/src'
+        ],
+        port: 8000,
+        writeToDisk: true
+      },
+      localdocs: {
+        webpack: merge({
+          output: {
+            library: 'backbrace',
+            filename: '[name].js'
+          }
+        }, webpackconfig.get(true)),
+        contentBase: [
+          paths.docs + '/src'
+        ],
+        port: 8000,
+        historyApiFallback: true,
+        watchContentBase: false,
+        writeToDisk: true,
+        before(app, server) {
+          const chokidar = require("chokidar");
+          const files = [
+            '**/*.js',
+            '**/*.json'
+          ];
+          const options = {
+            // chokidar options can be found in it's docs
+            followSymlinks: false,
+            depth: 5, // opens chokidar's depth up just in case.
+          }
+          let watcher = chokidar.watch(files, options)
+          watcher
+            .on('all', _ => {
+              server.sockWrite(server.sockets, 'content-changed');
+            })
+        }
       }
     },
 
     jsdoc: {
       dist: {
-        src: ['packages/backbrace-core/src/*.js', 'packages/backbrace-core/src/*/*.js', 'packages/backbrace-core/src/*/*/*.js', 'README.md'],
+        src: [
+          paths.core + '/src/*.js',
+          paths.core + '/src/*/*.js',
+          paths.core + '/src/*/*/*.js'
+        ],
         options: {
-          destination: 'docs',
-          config: 'jsdoc.conf.json'
+          destination: paths.docs + '/src/design/data',
+          config: 'jsdoc.conf.json',
+          template: './node_modules/@backbrace/jsdoc-json',
+          tutorials: paths.docs + '/content'
         }
       },
       typings: {
         src: [
-          'packages/backbrace-core/src/types.js',
-          'packages/backbrace-core/src/classes/*.js',
-          'packages/backbrace-core/src/components/*.js',
-          'packages/backbrace-core/src/components/*/*.js',
-          'packages/backbrace-core/src/backbrace.js',
-          'packages/backbrace-core/src/globals.js',
-          'packages/backbrace-core/src/app.js',
-          'packages/backbrace-core/src/promises.js',
-          'packages/backbrace-core/src/module.js',
-          'packages/backbrace-core/src/log.js',
-          'packages/backbrace-core/src/util.js',
-          'packages/backbrace-core/src/http.js',
-          'packages/backbrace-core/src/providers/style.js'
+          paths.core + '/src/types.js',
+          paths.core + '/src/classes/*.js',
+          paths.core + '/src/components/*.js',
+          paths.core + '/src/components/*/*.js',
+          paths.core + '/src/backbrace.js',
+          paths.core + '/src/globals.js',
+          paths.core + '/src/app.js',
+          paths.core + '/src/promises.js',
+          paths.core + '/src/module.js',
+          paths.core + '/src/log.js',
+          paths.core + '/src/util.js',
+          paths.core + '/src/http.js',
+          paths.core + '/src/route.js'
         ],
         options: {
-          private: false,
-          destination: './packages/backbrace-devkit/typings',
+          private: true,
+          destination: paths.devkit + '/typings',
           template: 'node_modules/@backbrace/dts-generator/dist',
-          config: './packages/backbrace-devkit/jsdoc.conf.json'
+          config: paths.devkit + '/jsdoc.conf.json'
+        }
+      },
+      tern: {
+        src: [
+          paths.core + '/src/*.js',
+          paths.core + '/src/*/*.js',
+          paths.core + '/src/*/*/*.js'
+        ],
+        options: {
+          destination: paths.devkit + '/tern/defs',
+          template: './node_modules/@backbrace/jsdoc-tern',
+          config: 'jsdoc.conf.json',
+          package: 'package.json'
+        }
+      },
+      schema: {
+        src: [
+          paths.core + '/src/types.js'
+        ],
+        options: {
+          destination: paths.devkit + '/schema',
+          template: './scripts/schema',
+          config: 'jsdoc.conf.json'
         }
       }
     },
@@ -142,33 +188,9 @@ module.exports = function(grunt) {
             "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: @backbrace/dts-generator\n" +
             "*/\n\n",
-          input: './packages/backbrace-devkit/typings/types.d.ts',
-          output: './packages/backbrace-devkit/typings/types.d.ts'
+          input: paths.devkit + '/typings/types.d.ts',
+          output: paths.devkit + '/typings/types.d.ts'
         }]
-      }
-    },
-
-    copy: {
-      packages: {
-        files: [
-          { expand: true, cwd: paths.packages + 'node_modules/@mdi/font', src: ['css/**', 'fonts/**', 'scss/**', '*.md'], dest: paths.packages + 'dist/materialdesignicons' },
-          { expand: true, cwd: paths.packages + 'node_modules/ace-builds/src', src: ['**'], dest: paths.packages + 'dist/ace/src' },
-          { expand: true, cwd: paths.packages + 'node_modules/ace-builds/src-min', src: ['**'], dest: paths.packages + 'dist/ace/min' },
-          { expand: true, cwd: paths.packages + 'src/ace', src: ['**'], dest: paths.packages + 'dist/ace' },
-          { expand: true, cwd: paths.packages + 'node_modules/jquery/dist', src: ['**'], dest: paths.packages + 'dist/jquery' },
-          { expand: true, cwd: paths.packages + 'node_modules/jquery-ripple', src: ['*.js', '*.css', '*.md'], dest: paths.packages + 'dist/jquery-ripple' },
-          { expand: true, cwd: paths.packages + 'node_modules/jquery-ui-dist', src: ['**'], dest: paths.packages + 'dist/jquery-ui' },
-          { expand: true, cwd: paths.packages + 'node_modules/moment', src: ['locale/**', 'moment.js', '*.md', 'LICENSE'], dest: paths.packages + 'dist/moment' },
-          { expand: true, cwd: paths.packages + 'node_modules/moment/min', src: ['moment.min.js'], dest: paths.packages + 'dist/moment' },
-          { expand: true, cwd: paths.packages + 'node_modules/reset-css', src: ['**'], dest: paths.packages + 'dist/resetcss' },
-          { expand: true, cwd: paths.packages + 'node_modules/roboto-fontface', src: ['**'], dest: paths.packages + 'dist/roboto' },
-          {
-            expand: true, cwd: paths.packages + 'node_modules/sweetalert/dist', src: ['**'], dest: paths.packages + 'dist/sweetalert', rename: function(dest, src) {
-              return dest + '/' + src.replace('-dev', '');
-            }
-          },
-          { expand: true, cwd: paths.packages + 'src/jqgrid', src: ['**'], dest: paths.packages + 'dist/jqgrid' }
-        ]
       }
     },
 
@@ -198,6 +220,29 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+
+    copy: {
+      sampleapp: {
+        files: [
+          {
+            expand: true, cwd: paths.sampleapp + '/src', src: ['**'], dest: paths.sampleapp + '/dist', rename: function(dest, src) {
+              return dest + '/' + src.replace('production.html', 'index.html');
+            }
+          },
+          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.sampleapp + '/dist/backbrace' }
+        ]
+      },
+      docs: {
+        files: [
+          {
+            expand: true, cwd: paths.docs + '/src', src: ['**'], dest: paths.docs + '/dist', rename: function(dest, src) {
+              return dest + '/' + src.replace('production.html', 'index.html');
+            }
+          },
+          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/backbrace' }
+        ]
+      }
     }
 
   });
@@ -207,8 +252,6 @@ module.exports = function(grunt) {
   grunt.registerTask('changelog', ['git_changelog:dist']);
   grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
-    'package',
-    'copy:packages',
     'test:core'
   ]);
   grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
@@ -217,23 +260,27 @@ module.exports = function(grunt) {
     'jsdoc:typings',
     'file_append:typings'
   ]);
-  grunt.registerTask('generate', 'Generate docs and typings', [
+  grunt.registerTask('generate', 'Generate docs and devkit', [
     'docs',
-    'typings'
+    'typings',
+    'jsdoc:tern',
+    'jsdoc:schema'
   ]);
   grunt.registerTask('build', [
-    'webpack:dev'
+    'webpack:prod'
   ]);
   grunt.registerTask('sampleapp', [
-    'copy:packages',
     'webpack-dev-server:sampleapp'
+  ]);
+  grunt.registerTask('localdocs', [
+    'webpack-dev-server:localdocs'
   ]);
   grunt.registerTask('package', [
     'clean',
+    'generate',
     'build',
-    'webpack:prod',
-    'docs',
-    'typings'
+    'copy:sampleapp',
+    'copy:docs'
   ]);
   grunt.registerTask('default', ['package']);
 

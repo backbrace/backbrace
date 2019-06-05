@@ -11,7 +11,7 @@ export class FieldComponent extends Component {
     /**
      * @constructor
      * @param {PageComponent} parent Parent page component.
-     * @param {PageFieldMeta} field Field meta data.
+     * @param {pageFieldDesign} field Field design.
      */
     constructor(parent, field) {
 
@@ -26,8 +26,8 @@ export class FieldComponent extends Component {
 
         /**
          * @description
-         * Field meta data.
-         * @type {PageFieldMeta}
+         * Field design.
+         * @type {pageFieldDesign}
          */
         this.field = field;
 
@@ -49,7 +49,7 @@ export class FieldComponent extends Component {
     /**
      * @description
      * Update the field from the data source.
-     * @param {object} data Data source.
+     * @param {Object} data Data source.
      * @returns {FieldComponent|JQueryPromise} Returns itself for chaining.
      */
     update(data) {

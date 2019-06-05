@@ -1,0 +1,17 @@
+{
+    "name": "@backbrace/docs",
+    "version": "0.1.0",
+    "description": "Backbrace documentation website.",
+    "repository": "https://github.com/backbrace/backbrace/tree/master/packages/backbrace-docs",
+    "author": "Paul Fisher <paulfisher53@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "backbrace",
+        "docs"
+    ],
+    "files": [
+        "dist/*",
+        "README.md",
+        "LICENSE"
+    ]
+}

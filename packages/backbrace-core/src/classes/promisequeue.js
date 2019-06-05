@@ -1,6 +1,6 @@
+import $ from 'jquery';
 import { debug as logDebug } from '../log';
 import { uid, setZeroTimeout } from '../util';
-import { get as getJQuery } from '../providers/jquery';
 
 /**
  * @class
@@ -27,7 +27,7 @@ export class PromiseQueue {
          */
         this.func = func;
         /**
-         * @type {GenericFunction[][]}
+         * @type {genericFunction[][]}
          * @description
          * Function queue.
          */
@@ -43,13 +43,12 @@ export class PromiseQueue {
     /**
      * @description
      * Create a new promise queue and run the first function.
-     * @param {...GenericFunction} args Functions to run.
+     * @param {...genericFunction} args Functions to run.
      * @returns {void}
      */
     createQueue(...args) {
 
         // Create a new queue.
-        const $ = getJQuery();
         let queue = [];
 
         // Add the function blocks to the new queue if they are not null.
@@ -74,8 +73,7 @@ export class PromiseQueue {
      */
     resolveQueue(result) {
 
-        const $ = getJQuery(),
-            i = this.queue.length - 1,
+        const i = this.queue.length - 1,
             arr = [result];
 
         if (this.queue.length === 0)
@@ -148,7 +146,7 @@ export class PromiseQueue {
     /**
      * @description
      * Insert functions into the start of the current promiseblock.
-     * @param {...GenericFunction} args Functions to run.
+     * @param {...genericFunction} args Functions to run.
      * @returns {void}
      */
     insert(...args) {

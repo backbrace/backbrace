@@ -1,0 +1,13 @@
+{
+    "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
+    "name": "API List",
+    "data": "design/data/modules.json",
+    "component": "templatepage",
+    "controller": "page/apihome.js",
+    "sections": [
+        {
+            "name": "footer",
+            "pageName": "page/footer"
+        }
+    ]
+}

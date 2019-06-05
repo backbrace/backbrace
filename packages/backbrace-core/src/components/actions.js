@@ -1,5 +1,4 @@
 import { isMobileDevice } from '../util';
-import { get as getJQuery } from '../providers/jquery';
 import { ActionComponent } from './action';
 import { Component } from '../classes/component';
 
@@ -31,10 +30,8 @@ export class ActionsComponent extends Component {
      */
     unload() {
 
-        const $ = getJQuery();
-
         // Unload each button.
-        $.each(Array.from(this.actions.values()), function(index, btn) {
+        Array.from(this.actions.values()).forEach(function(btn) {
             btn.unload();
         });
 
@@ -49,15 +46,15 @@ export class ActionsComponent extends Component {
      */
     load(container) {
         super.load(container);
-        this.container.addClass('actions-bar unselectable no-padding col s12' + (isMobileDevice() ? ' z-depth-1' : ''));
+        this.container.addClass('actions-bar unselectable no-padding col s12');
         return this;
     }
 
     /**
      * @description
      * Add an action button.
-     * @param {PageActionMeta} action Action meta data.
-     * @param {ActionRunner} runfunc Action runner function.
+     * @param {pageActionDesign} action Action design.
+     * @param {actionRunner} runfunc Action runner function.
      * @returns {ActionsComponent} Returns itself for chaining.
      */
     addAction(action, runfunc) {

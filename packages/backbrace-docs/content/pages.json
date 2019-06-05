@@ -1,0 +1,13 @@
+{
+    "guides": {
+        "title": "Backbrace Guides",
+        "children": {
+            "quickstart": {
+                "title": "Quickstart Guide"
+            }
+        }
+    },
+    "license": {
+        "title": "License"
+    }
+}
