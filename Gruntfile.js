@@ -203,7 +203,7 @@ module.exports = function(grunt) {
           version_name: versionInfo.currentVersion.full,
           intro: moment().format('YYYY-MM-DD'),
           logo: versionInfo.previousVersions.slice(-1).pop(),
-          tag: 'v' + versionInfo.previousVersions.slice(-1).pop(),
+          tag: versionInfo.previousVersions.slice(-1).pop(),
           "sections": [
             {
               "title": "Bug Fixes",
