@@ -1,6 +1,7 @@
 'use strict';
 
-var webpack = require('webpack'),
+var path = require('path'),
+  webpack = require('webpack'),
   globals = require('./lib/globals/global-vars');
 
 module.exports = function(config) {
@@ -20,7 +21,6 @@ module.exports = function(config) {
     browserNoActivityTimeout: 30000,
     reporters: ['spec'],
     files: [
-      { pattern: 'packages/backbrace-packages/dist/**', included: false, served: true, watched: false, nocache: true },
       'packages/backbrace-core/test/**/*.js'
     ],
     preprocessors: {
@@ -28,8 +28,23 @@ module.exports = function(config) {
     },
     webpack: {
       cache: true,
+      resolve: {
+        alias: {
+          'jquery': 'npm/jquery/dist/jquery.js',
+          'jquery-ui': 'npm/jquery-ui-dist/jquery-ui.js',
+          'moment': 'npm/moment/moment.js',
+          'sweetalert': 'npm/sweetalert/dist/sweetalert-dev.js',
+          'npm': path.join(__dirname, './node_modules'),
+          'modules': path.join(__dirname, './modules')
+        }
+      },
       plugins: [
-        new webpack.DefinePlugin(globals.get())
+        new webpack.DefinePlugin(globals.get()),
+        new webpack.ProvidePlugin({
+          $: 'jquery',
+          jQuery: 'jquery',
+          'window.jQuery': 'jquery'
+        })
       ]
     },
     webpackMiddleware: {
