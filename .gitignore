@@ -7,7 +7,7 @@ npm-debug.log
 /packages/backbrace-core/dist/
 /packages/backbrace-sample-app/dist/
 /packages/backbrace-docs/dist/
-/packages/backbrace-devkit/typings/
+/packages/backbrace-devkit/typings/types.d.ts
 /packages/backbrace-devkit/schema/icons.json
 /packages/backbrace-devkit/schema/pagedesign.json
 /packages/backbrace-devkit/schema/tabledesign.json
