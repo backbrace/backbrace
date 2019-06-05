@@ -3,12 +3,12 @@
 	"name": "Backbrace - Sample App",
 	"icons": [
 		{
-			"src": "192x192-icon.png",
+			"src": "./images/192x192-icon.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
 		{
-			"src": "512x512-icon.png",
+			"src": "./images/512x512-icon.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}

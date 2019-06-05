@@ -1,6 +1,6 @@
 {
     "name": "@backbrace/sample-app",
-    "version": "0.1.0-alpha.1",
+    "version": "0.2.0",
     "description": "Sample backbrace app.",
     "repository": "https://github.com/backbrace/backbrace/tree/master/packages/backbrace-sample-app",
     "author": "Paul Fisher <paulfisher53@gmail.com>",
@@ -9,10 +9,9 @@
         "backbrace",
         "sample"
     ],
-    "dependencies": {
-        "@backbrace/packages": "0.1.0-alpha.2"
-    },
-    "devDependencies": {
-        "@backbrace/devkit": "0.1.0-alpha.1"
-    }
+    "files": [
+        "dist/*",
+        "README.md",
+        "LICENSE"
+    ]
 }
