@@ -72,6 +72,7 @@ The following is the list of supported scopes:
 
 * **core**
 * **devkit**
+* **docs**
 * **sample-app**
 
 There are currently a few exceptions to the "use package name" rule:
