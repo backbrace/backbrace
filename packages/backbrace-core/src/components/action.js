@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import { get as getIcons } from '../providers/icons';
-import { get as getJQuery } from '../providers/jquery';
 import { Component } from '../classes/component';
 
 /**
@@ -12,8 +12,8 @@ export class ActionComponent extends Component {
 
     /**
      * @constructor
-     * @param {PageActionMeta} action Action meta data.
-     * @param {ActionRunner} actionRunner Action runner function. Wraps the on click function.
+     * @param {pageActionDesign} action Action design.
+     * @param {actionRunner} actionRunner Action runner function. Wraps the on click function.
      */
     constructor(action, actionRunner) {
 
@@ -21,22 +21,15 @@ export class ActionComponent extends Component {
 
         /**
          * @description
-         * Page action meta data.
-         * @type {PageActionMeta}
+         * Page action design.
+         * @type {pageActionDesign}
          */
         this.action = action;
 
         /**
-         * @description
-         * Function to run on click.
-         * @type {ActionRunnerOnClick}
-         */
-        this.onclick = null;
-
-        /**
         * @description
         * Action runner function.
-        * @type {ActionRunner}
+        * @type {actionRunner}
         */
         this.actionRunner = actionRunner;
     }
@@ -49,8 +42,7 @@ export class ActionComponent extends Component {
      */
     load(container) {
 
-        const $ = getJQuery(),
-            icons = getIcons();
+        const icons = getIcons();
 
         //Default the icon.
         if (!this.action.icon && this.action.name)
@@ -64,19 +56,8 @@ export class ActionComponent extends Component {
         this.container.append('&nbsp;' + this.action.text);
         if (this.action.className)
             this.container.addClass(this.action.className);
-        this.container.ripple().click(() => this.actionRunner(this.action, this.onclick));
+        this.container.ripple().click(() => this.actionRunner(this.action));
         this.container.appendTo(container);
-        return this;
-    }
-
-    /**
-     * @description
-     * Set the on click function.
-     * @param {ActionRunnerOnClick} func On click function.
-     * @returns {ActionComponent} Returns itself for chaining.
-     */
-    click(func) {
-        this.onclick = func;
         return this;
     }
 

@@ -2,14 +2,17 @@
  * @description
  * Formatter module.
  * @module format
+ * @private
  */
 
+import moment from 'moment';
+import 'npm/moment/locale/en-au.js';
+
 import { isDefined } from './util';
-import { get as moment } from './providers/moment';
 
 /**
  * Format a field value to a string.
- * @param {PageFieldMeta} field Page field.
+ * @param {pageFieldDesign} field Page field.
  * @param {*} value Value to format.
  * @returns {string} Returns the formatted field value.
  */

@@ -4,8 +4,10 @@
  * @private
  */
 
+import swal from 'sweetalert';
+import 'npm/sweetalert/dist/sweetalert.css';
+
 import { width } from './util';
-import { get as getSwal } from './providers/swal';
 import { get as getWindow } from './providers/window';
 
 let queue = [],
@@ -15,11 +17,10 @@ let queue = [],
 
 /**
  * Load the module.
+ * @ignore
  * @returns {void}
  */
 function load() {
-
-    const swal = getSwal();
 
     //Overwrite the close function.
     originalClose = swal.close;
@@ -36,10 +37,10 @@ function load() {
 
 /**
  * Open a sweet alert or queue it if one is already open.
+ * @ignore
  * @returns {void}
  */
 function openSwal() {
-    const swal = getSwal();
     if (isOpen || isClosing) {
         queue.push(arguments);
     } else {
@@ -50,6 +51,7 @@ function openSwal() {
 
 /**
  * Sweetalert close event.
+ * @ignore
  * @returns {void}
  */
 function onClosed() {
@@ -60,6 +62,7 @@ function onClosed() {
 
 /**
  * Fix alert messages.
+ * @ignore
  * @param {string} msg Alert message to fix.
  * @returns {string} Alert message
  */

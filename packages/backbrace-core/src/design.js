@@ -1,76 +1,74 @@
 /**
- * Meta data module. Get object meta data from cache, JSON files or data.
- * @module meta
+ * Design module. Get object designs from cache, JSON files or data.
+ * @module design
  * @private
  */
 
+import $ from 'jquery';
 import { error } from './error';
 import { promiseblock } from './promises';
 import { get } from './http';
 import { settings } from './settings';
 import * as types from './types';
-import { get as getJQuery } from './providers/jquery';
 
 const defaults = {
-    /** @type {PageMeta} */
-    page: types.pagemeta,
-    /** @type {PageFieldMeta} */
+    /** @type {pageDesign} */
+    page: types.pagedesign,
+    /** @type {pageFieldDesign} */
     pagefield: types.pagefield,
-    /** @type {PageActionMeta} */
+    /** @type {pageActionDesign} */
     pageaction: types.pageaction,
-    /** @type {PageSectionMeta} */
+    /** @type {pageSectionDesign} */
     pagesection: types.pagesection,
-    /** @type {TableMeta} */
-    table: types.tablemeta,
-    /** @type {TableColumnMeta} */
+    /** @type {tableDesign} */
+    table: types.tabledesign,
+    /** @type {tableColumnDesign} */
     tablecolumn: types.tablecolumn
 },
-    metaError = error('meta');
+    designError = error('design');
 
 /**
- * @type {Map<string, PageMeta>}
- * @private
+ * @ignore
+ * @type {Map<string, pageDesign>}
  */
 let pagecache = new Map();
 
 /**
- * @type {Map<string, TableMeta>}
- * @private
+ * @ignore
+ * @type {Map<string, tableDesign>}
  */
 let tablecache = new Map();
 
 /**
  * Add a page to the page cache.
  * @param {string} name Name of the page.
- * @param {PageMeta} pge Page meta.
+ * @param {pageDesign} pge Page design.
  * @returns {void}
  */
 export function addPage(name, pge) {
     if (pagecache.has(name))
-        metaError('exists', 'Page {0} already exists in the page cache.', name);
+        designError('exists', 'Page {0} already exists in the page cache.', name);
     pagecache.set(name, pge);
 }
 
 /**
  * Add a table to the table cache.
  * @param {string} name Name of the table.
- * @param {TableMeta} tbl Table meta.
+ * @param {tableDesign} tbl Table design.
  * @returns {void}
  */
 export function addTable(name, tbl) {
     if (tablecache.has(name))
-        metaError('exists', 'Table {0} already exists in the table cache.', name);
+        designError('exists', 'Table {0} already exists in the table cache.', name);
     tablecache.set(name, tbl);
 }
 
 /**
- * Get page object meta data.
+ * Get page object design.
  * @param {string} name Name of the page to get.
- * @returns {JQueryPromise} Promise to get the page meta data.
+ * @returns {JQueryPromise} Promise to get the page design.
  */
 export function page(name) {
-
-    const $ = getJQuery();
 
     return promiseblock(
 
@@ -78,10 +76,10 @@ export function page(name) {
         () => {
             if (pagecache.has(name))
                 return pagecache.get(name);
-            return get(settings.meta.dir + name + '.json');
+            return get(settings.dir.design + name + '.json');
         },
 
-        (/** @type {PageMeta} */json) => {
+        (/** @type {pageDesign} */json) => {
 
             if (!json)
                 return null;
@@ -95,16 +93,9 @@ export function page(name) {
             // Extend the page.
             let pge = $.extend({}, defaults.page, json);
 
-            // Extend the page actions.
-            pge.actions = [];
-            $.each(json.actions, function(index, action) {
-                action.text = action.text || action.name;
-                pge.actions.push($.extend({}, defaults.pageaction, action));
-            });
-
             // Extend the page sections.
             pge.sections = [];
-            $.each(json.sections, function(index, section) {
+            (json.sections || []).forEach(function(section) {
 
                 section.text = section.text || section.name;
                 pge.sections.push($.extend({}, defaults.pagesection, section));
@@ -114,6 +105,12 @@ export function page(name) {
                     field.caption = field.caption || field.name;
                     section.fields[index] = $.extend({}, defaults.pagefield, field);
                 });
+
+                // Extend the page section actions.
+                $.each(section.actions, function(index, action) {
+                    action.text = action.text || action.name;
+                    section.actions[index] = $.extend({}, defaults.pageaction, action);
+                });
             });
 
             return pge;
@@ -122,13 +119,11 @@ export function page(name) {
 }
 
 /**
- * Get table object meta data.
+ * Get table object design.
  * @param {string} name Name of the table to get.
- * @returns {JQueryPromise} Promise to get the table meta data.
+ * @returns {JQueryPromise} Promise to get the table design.
  */
 export function table(name) {
-
-    const $ = getJQuery();
 
     return promiseblock(
 
@@ -136,10 +131,10 @@ export function table(name) {
         () => {
             if (tablecache.has(name))
                 return tablecache.get(name);
-            return get(settings.meta.dir + name + '.json');
+            return get(settings.dir.design + name + '.json');
         },
 
-        (/** @type {TableMeta} */json) => {
+        (/** @type {tableDesign} */json) => {
 
             if (!json)
                 return null;
@@ -152,7 +147,7 @@ export function table(name) {
 
             // Extend the table columns.
             tbl.columns = [];
-            $.each(json.columns, function(index, column) {
+            (json.columns || []).forEach(function(column) {
                 column.caption = column.caption || column.name;
                 tbl.columns.push($.extend({}, defaults.tablecolumn, column));
             });

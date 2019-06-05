@@ -1,5 +1,7 @@
+import $ from 'jquery';
+import 'npm/jquery-ripple/jquery.ripple.js';
+import 'npm/jquery-ripple/jquery.ripple.scss';
 import { settings } from '../settings';
-import { get as getJQuery } from '../providers/jquery';
 import { get as getIcons } from '../providers/icons';
 import { Component } from '../classes/component';
 
@@ -13,7 +15,7 @@ export class HeaderComponent extends Component {
 
     /**
      * @constructor
-     * @param {HeaderOptions} [options] Header options.
+     * @param {headerOptions} [options] Header options.
      */
     constructor({ menuIcon = 'menu', attachMenu = true, className = '' } = {}) {
 
@@ -22,7 +24,7 @@ export class HeaderComponent extends Component {
         /**
          * @description
          * Options for the header component.
-         * @type {HeaderOptions}
+         * @type {headerOptions}
          */
         this.options = { menuIcon, attachMenu, className };
 
@@ -96,12 +98,11 @@ export class HeaderComponent extends Component {
      */
     load(container) {
 
-        const $ = getJQuery(),
-            icons = getIcons();
+        const icons = getIcons();
 
         this.container = $(`<header class="header ${this.options.className}"></header>`).appendTo(container);
 
-        this.navbar = $('<nav class="navbar fixed"><div class="navbar-inner z-depth-1">'
+        this.navbar = $('<nav class="navbar fixed"><div class="navbar-inner">'
             + '</div></nav>').appendTo(this.container);
 
         // Setup the menu icon.
@@ -117,7 +118,7 @@ export class HeaderComponent extends Component {
         if (this.options.attachMenu) {
 
             // Add a menu.
-            this.menu = $('<div class="menu z-depth-1">'
+            this.menu = $('<div class="menu">'
                 + '<div class="menu-brand">'
                 + (settings.style.images.menuLogo !== '' ?
                     '<img class="menu-logo show-on-large" src="' + settings.style.images.menuLogo + '" />' :

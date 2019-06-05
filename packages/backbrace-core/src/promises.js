@@ -5,8 +5,8 @@
  */
 
 import { error } from './error';
+import $ from 'jquery';
 import { debug as logDebug, object as logObject } from './log';
-import { get as getJquery } from './providers/jquery';
 import { PromiseQueue } from './classes/promisequeue';
 
 const promisesError = error('promises');
@@ -24,9 +24,6 @@ let currentQueue = null;
 let promisequeues = [];
 
 /**
- * @method reset
- * @ignore
- * @description
  * Reset all promise queues.
  * @returns {void}
  */
@@ -50,10 +47,8 @@ export function reset() {
 }
 
 /**
- * @method runNextQueue
- * @private
- * @description
  * Run the next promise queue in the queue.
+ * @ignore
  * @returns {void}
  */
 function runNextQueue() {
@@ -65,14 +60,12 @@ function runNextQueue() {
 }
 
 /**
- * @method promiseblock
- * @memberof module:backbrace
  * @description
  * Setup a new block of functions to run.
  *
  * Each function will be run in order.
  *
- * @param {...GenericFunction} args Functions to run.
+ * @param {...genericFunction} args Functions to run.
  * @returns {JQueryPromise<any>} Promise to run the functions.
  * @example
  * return backbrace.promiseblock(
@@ -86,8 +79,6 @@ function runNextQueue() {
  */
 export function promiseblock(...args) {
 
-    const $ = getJquery();
-
     if (!currentQueue)
         throw promisesError('noqueue', 'Attempted to run a promise block without a promise queue');
 
@@ -99,9 +90,6 @@ export function promiseblock(...args) {
 }
 
 /**
- * @method promiseinsert
- * @memberof module:backbrace
- * @description
  * Insert code into the current promise block.
  * @param {...Function} args Functions to run.
  * @returns {void}
@@ -115,13 +103,10 @@ export function promiseinsert(...args) {
 }
 
 /**
- * @method promiseeach
- * @memberof module:backbrace
- * @description
  * Loop through an array using `promiseblock`.
  * @template T
  * @param {ArrayLike<T>} obj Object to iterate through.
- * @param {function(T,Key,ArrayLike<T>):(void|JQueryPromise<any>)} iterator Iterator function to call.
+ * @param {function(T,key,ArrayLike<T>):(void|JQueryPromise<any>)} iterator Iterator function to call.
  * @param {*} [context] Context to run the iterator function.
  * @returns {JQueryPromise<any>} Promise to return after we are done looping.
  */
@@ -152,11 +137,8 @@ export function promiseeach(obj, iterator, context) {
 }
 
 /**
- * @method promisequeue
- * @memberof module:backbrace
- * @description
  * Start a new promise queue to execute code when possible.
- * @param {...GenericFunction} args Functions to run.
+ * @param {...genericFunction} args Functions to run.
  * @returns {void}
  */
 export function promisequeue(...args) {

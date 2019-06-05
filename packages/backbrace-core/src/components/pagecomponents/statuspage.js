@@ -1,5 +1,5 @@
+import $ from 'jquery';
 import { PageComponent } from '../../classes/pagecomponent';
-import { get as getJQuery } from '../../providers/jquery';
 
 /**
  * @class
@@ -28,7 +28,6 @@ export class StatusPageComponent extends PageComponent {
      * @returns {Component} Promise to load the card.
      */
     load(container) {
-        const $ = getJQuery();
         $('<div class="status-title">Oops!</div>').appendTo(container);
         this.description = $('<div class="status-description" />').appendTo(container);
         this.code = $('<div class="status-code" />').appendTo(container);
@@ -42,7 +41,6 @@ export class StatusPageComponent extends PageComponent {
      * @returns {Component} Returns itself for chaining.
      */
     update(data) {
-        const $ = getJQuery();
         let d = $.grep(data, (val) => val.code === this.viewer.page.name);
         if (d.length === 0) {
             this.description.html('Status not found.');

@@ -9,6 +9,12 @@
  *     Or gives undesired access to variables likes document or window?    *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+/**
+ * Sanitize user input.
+ * @module sanitize
+ * @private
+ */
+
 import { get as getWindow } from './providers/window';
 
 const tagWhitelist = {
@@ -31,10 +37,8 @@ const tagWhitelist = {
     };
 
 /**
- * @method decode
- * @ignore
- * @description
  * Decode HTML.
+ * @method decode
  * @param {string} str HTML string to decode.
  * @returns {string} Returns the decoded string.
  */
@@ -44,9 +48,8 @@ export const decode = (function() {
         element = window.document.createElement('textarea');
 
     /**
-     * @ignore
-     * @description
      * Decode html entity string.
+     * @ignore
      * @param {string} str String to decode.
      * @returns {string} Decoded string.
      */
@@ -65,9 +68,6 @@ export const decode = (function() {
 })();
 
 /**
- * @method sanitizeHtml
- * @ignore
- * @description
  * Sanitize a HTML string.
  * @param {string} input String to sanitize.
  * @returns {string} Sanitized string.

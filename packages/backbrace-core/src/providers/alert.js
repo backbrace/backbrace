@@ -5,9 +5,11 @@
  */
 
 import { get as getWindow } from './window';
-import { settings } from '../settings';
 
-/** @type {AlertInstance} */
+/**
+ * @type {alertInstance}
+ * @ignore
+ */
 let instance = {
 
     message: function(msg, callback, title) {
@@ -28,8 +30,8 @@ let instance = {
         let window = getWindow();
         // Add error to body if it is loaded...
         if (window.document.body) {
-            window.document.body.innerHTML = `<div style="padding: 30px; font-family: ${settings.style.font.family};font-size: ${settings.style.font.size};` +
-                `overflow-wrap: break-word;"><h1 style="font-size: 120%;font-weight:bold;margin:8px 0 8px 0;">Oops, we had an issue</h1>${msg}</div>`;
+            window.document.body.innerHTML = `<div style="padding: 30px;overflow-wrap: break-word;">
+            <h1 style="font-size: 120%;font-weight:bold;margin:8px 0 8px 0;">Oops, we had an issue</h1>${msg}</div>`;
         } else {
             window.alert(msg);
         }
@@ -38,7 +40,7 @@ let instance = {
 
 /**
  * Get the alert provider instance.
- * @returns {AlertInstance} Returns the alert provider instance.
+ * @returns {alertInstance} Returns the alert provider instance.
  */
 export function get() {
     return instance;
@@ -46,7 +48,7 @@ export function get() {
 
 /**
  * Set the alert provider instance.
- * @param {AlertInstance} ref Alert provider instance to set.
+ * @param {alertInstance} ref Alert provider instance to set.
  * @returns {void}
  */
 export function set(ref) {

@@ -1,14 +1,14 @@
+import $ from 'jquery';
 import { promiseblock, promisequeue } from '../promises';
 import { dataTable } from '../data';
-import { load as loadModule, get as getModule } from '../module';
+import { load as loadModule } from '../module';
 import { error } from '../error';
 import { get } from '../http';
-import { page, table } from '../meta';
+import { page, table } from '../design';
 import { settings } from '../settings';
-import { get as getJQuery } from '../providers/jquery';
+import { noop } from '../util';
 import { Component } from '../classes/component';
-import { ActionsComponent } from './actions';
-import { PageComponent } from '../classes/pagecomponent';
+import { get as getIcons } from '../providers/icons';
 
 const viewerError = error('viewer');
 
@@ -23,8 +23,8 @@ export class ViewerComponent extends Component {
     /**
      * @constructor
      * @param {string} name Page name.
-     * @param {ViewerOptions} [options] Viewer options.
-     * @param {object} [params] Page params.
+     * @param {viewerOptions} [options] Viewer options.
+     * @param {Object} [params] Page params.
      */
     constructor(name, { title, hasParent = false, temp = false, updateHistory = null } = {}, params = {}) {
 
@@ -47,30 +47,23 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * Viewer options.
-         * @type {ViewerOptions}
+         * @type {viewerOptions}
          */
         this.options = { title, hasParent, temp, updateHistory };
 
         /**
          * @description
-         * Page meta data.
-         * @type {PageMeta}
+         * Page design.
+         * @type {pageDesign}
          */
         this.page = null;
 
         /**
          * @description
-         * Table meta data.
-         * @type {TableMeta}
+         * Table design.
+         * @type {tableDesign}
          */
         this.table = null;
-
-        /**
-         * @description
-         * Page actions component.
-         * @type {ActionsComponent}
-         */
-        this.actions = new ActionsComponent();
 
         /**
          * @description
@@ -82,16 +75,30 @@ export class ViewerComponent extends Component {
         /**
          * @description
          * Data source of the viewer.
-         * @type {object[]}
+         * @type {any[]}
          */
         this.data = null;
 
         /**
          * @description
          * Page params.
-         * @type {object}
+         * @type {Object}
          */
         this.params = params;
+
+        /**
+         * @description
+         * On before update of the viewer.
+         * @type {dataCallback}
+         */
+        this.onBeforeUpdate = null;
+
+        /**
+         * @description
+         * On action click.
+         * @type {Map<string, genericFunction>}
+         */
+        this.onActionClick = new Map();
     }
 
     /**
@@ -103,8 +110,6 @@ export class ViewerComponent extends Component {
         // Unload sub components.
         this.pageComponent.unload();
         this.pageComponent = null;
-        this.actions.unload();
-        this.actions = null;
         this.container.parent().remove();
         super.unload();
     }
@@ -117,8 +122,6 @@ export class ViewerComponent extends Component {
      */
     load(container) {
 
-        const $ = getJQuery();
-
         let cont = $('<div>').appendTo(container);
 
         super.load(cont);
@@ -127,26 +130,26 @@ export class ViewerComponent extends Component {
 
         return promiseblock(
 
-            // Get the page meta data.
+            // Get the page design.
             () => page(this.name),
 
             (page) => {
 
-                // Page meta data not found.
+                // Page design not found.
                 if (page === null)
-                    throw viewerError('nometa', 'Cannot find page meta data \'{0}\'', this.name);
+                    throw viewerError('nodesign', 'Cannot find page design \'{0}\'', this.name);
 
                 this.page = page;
 
-                // Get the table meta data.
-                if (this.page.tableName)
+                // Get the page data.
+                if (this.page.data && this.page.dataType === 'table')
                     return promiseblock(
-                        () => table(this.page.tableName),
+                        () => table(this.page.data),
                         (table) => {
 
-                            // Table meta data not found.
+                            // Table design not found.
                             if (table === null)
-                                throw viewerError('nometa', 'Cannot find table meta data \'{0}\'', this.page.tableName);
+                                throw viewerError('nodesign', 'Cannot find table design \'{0}\'', this.page.data);
 
                             this.table = table;
 
@@ -175,25 +178,17 @@ export class ViewerComponent extends Component {
 
             () => {
 
-                // Add actions.
-                //this.actions.load(this.window.toolbar);
-                $.each(this.page.actions, (i, action) => this.actions.addAction(action, (action, func) => {
-                    this.actionRunner(action, func);
-                }));
-
                 // Load the page component.
                 let comp = this.page.component;
                 if (comp.indexOf('.js') === -1) {
-                    let Control = require('./pagecomponents/' + comp + '.js').default;
-                    this.pageComponent = new Control(this);
-                    return this.pageComponent.load(this.container);
-                } else {
-                    // Load from a module.
                     return promiseblock(
-                        () => loadModule(comp),
                         () => {
-                            let control = getModule(comp);
-                            this.pageComponent = control(new PageComponent(this));
+                            return import(
+                                /* webpackChunkName: "[request]" */
+                                './pagecomponents/' + comp + '.js');
+                        },
+                        ({ default: Control }) => {
+                            this.pageComponent = new Control(this);
                             return this.pageComponent.load(this.container);
                         }
                     );
@@ -213,7 +208,7 @@ export class ViewerComponent extends Component {
                 if (this.page.controller !== '')
                     return promiseblock(
                         () => loadModule(this.page.controller),
-                        () => getModule(this.page.controller)(this)
+                        (mod) => mod(this)
                     );
             },
 
@@ -223,11 +218,11 @@ export class ViewerComponent extends Component {
                     if (this.table.controller !== '')
                         return promiseblock(
                             () => loadModule(this.table.controller),
-                            () => getModule(this.table.controller)(this)
+                            (mod) => mod(this)
                         );
                 } : null,
 
-            () => this.update(),
+            //() => this.update(),
 
             () => {
                 this.pageComponent.hidePreLoad();
@@ -243,17 +238,23 @@ export class ViewerComponent extends Component {
      */
     update() {
 
-        if (this.table) {
+        if (this.page.data) {
             this.showLoad();
             return promiseblock(
                 () => {
-                    // Load the data source from a file.
-                    if (this.table.data.indexOf('.json') !== -1) {
-                        return get(this.table.data);
-                    } else if (this.table.data.indexOf('datatable/') === 0) {
-                        return {
-                            data: dataTable(this.table.data.substr(10))
-                        };
+                    if (this.table) {
+                        // Load the data source from a file.
+                        if (this.table.data.indexOf('.json') !== -1) {
+                            return get(this.table.data);
+                        } else if (this.table.data.indexOf('datatable/') === 0) {
+                            return {
+                                data: dataTable(this.table.data.substr(10))
+                            };
+                        }
+                    } else {
+                        if (this.page.dataType === 'json') {
+                            return get(this.page.data);
+                        }
                     }
                 },
                 (data) => {
@@ -261,6 +262,10 @@ export class ViewerComponent extends Component {
                     // Save the data.
                     this.data = data.data || data;
 
+                    // On before update.
+                    return (this.onBeforeUpdate || noop)(this.data);
+                },
+                () => {
                     // Update the page component.
                     return this.pageComponent.update(this.data);
                 },
@@ -274,11 +279,14 @@ export class ViewerComponent extends Component {
     /**
      * @description
      * Run a page action.
-     * @param {PageActionMeta} action Action meta data.
-     * @param {Function} func Function to run.
+     * @param {pageActionDesign} action Action design.
      * @returns {void}
      */
-    actionRunner(action, func) {
+    actionRunner(action) {
+
+        let func = this.onActionClick.get(action.name);
+        if (!func)
+            return;
 
         this.showLoad();
 
@@ -331,11 +339,11 @@ export class ViewerComponent extends Component {
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     setTitle(title) {
-        const $ = getJQuery();
+        const icons = getIcons();
         this.title = title;
         this.pageComponent.setTitle(title);
         if (settings.windowMode) {
-            $('#win' + this.id).find('span').html(`${title}`);
+            $('#win' + this.id).find('span').html(`${icons.get(this.page.icon)} ${title}`);
         } else {
             window.document.title = settings.app.title + (title !== '' ? ' - ' + title : '');
         }

@@ -1,4 +1,4 @@
-import { get as getJquery } from '../providers/jquery';
+import $ from 'jquery';
 import { get as getIcons } from '../providers/icons';
 import { Component } from '../classes/component';
 import { isMobileDevice } from '../util';
@@ -13,7 +13,7 @@ export class WindowComponent extends Component {
 
     /**
      * @constructor
-     * @param {WindowOptions} [options] Window options.
+     * @param {windowOptions} [options] Window options.
      */
     constructor({
         hasParent = false,
@@ -28,7 +28,7 @@ export class WindowComponent extends Component {
         /**
          * @description
          * Options for the window component.
-         * @type {WindowOptions}
+         * @type {windowOptions}
          */
         this.options = {
             className,
@@ -82,10 +82,9 @@ export class WindowComponent extends Component {
      */
     load(container) {
 
-        const $ = getJquery(),
-            icons = getIcons();
+        const icons = getIcons();
 
-        this.preloader = $('<div class="preloader' + (!isMobileDevice() ? ' z-depth-1' : '') + '"></div>');
+        this.preloader = $('<div class="preloader"></div>');
         this.loader = $('<div class="overlay"><div class="progress"><div class="indeterminate"></div></div></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
@@ -109,7 +108,7 @@ export class WindowComponent extends Component {
         this.container = $('<div class="col ' + this.options.className + '" />')
             .appendTo(container);
 
-        $('<div id="window' + this.id + '" class="window ' + (!isMobileDevice() ? ' z-depth-1' : '') + '" />')
+        $('<div id="window' + this.id + '" class="window" />')
             .append(this.preloader)
             .append(this.loader)
             .append(this.titlebar)
@@ -127,8 +126,7 @@ export class WindowComponent extends Component {
      * @returns {WindowComponent} Returns itself for chaining.
      */
     setTitle(title) {
-        const $ = getJquery(),
-            icons = getIcons();
+        const icons = getIcons();
         $('#title' + this.id).html(
             (this.options.icon ? icons.get(this.options.icon) + ' ' : '')
             + title);
@@ -138,12 +136,11 @@ export class WindowComponent extends Component {
     /**
      * Add a title bar icon.
      * @param {string} icon Icon name.
-     * @param {GenericFunction} onclick On click function.
+     * @param {genericFunction} onclick On click function.
      * @returns {void}
      */
     addTitlebarIcon(icon, onclick) {
-        const $ = getJquery(),
-            icons = getIcons();
+        const icons = getIcons();
         $(icons.get('%refresh%'))
             .addClass('unselectable title-icon')
             .appendTo(this.titlebar)
