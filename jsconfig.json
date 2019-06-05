@@ -2,16 +2,18 @@
     "compilerOptions": {
         "checkJs": true,
         "target": "es6",
-        "module": "es6",
+        "module": "esNext",
         "allowSyntheticDefaultImports": true
     },
     "include": [
         "packages/backbrace-devkit",
         "packages/backbrace-core",
-        "packages/backbrace-sample-app"
+        "packages/backbrace-sample-app",
+        "packages/backbrace-docs/src"
     ],
     "exclude": [
         "node_modules",
+        "modules",
         "lib",
         "packages/backbrace-core/dist",
         "packages/backbrace-core/src/types.js"

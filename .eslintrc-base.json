@@ -165,7 +165,7 @@
                 "preferType": {
                     "Boolean": "boolean",
                     "Number": "number",
-                    "Object": "object",
+                    "object": "Object",
                     "String": "string",
                     "function": "Function"
                 }
