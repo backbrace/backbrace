@@ -1,3 +1,12 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/backbrace/backbrace/compare/0.1.0-alpha.2...0.2.0) (2019-06-05)
+
+## Features
+
+* **docs:** add `docs` package (#18)
+  ([c97930c5](https://github.com/backbrace/backbrace/commit/c97930c50897f4f53e3a23e76dbec574c135217e))
+
+
 <a name="0.1.0-alpha.2"></a>
 # [0.1.0-alpha.2](https://github.com/backbrace/backbrace/compare/0.1.0-alpha.1...0.1.0-alpha.2) (2019-01-08)
 

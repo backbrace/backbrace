@@ -202,8 +202,8 @@ module.exports = function(grunt) {
           file: './tmp/CHANGELOG.md',
           version_name: versionInfo.currentVersion.full,
           intro: moment().format('YYYY-MM-DD'),
-          logo: versionInfo.previousVersions.slice(-1).pop(),
-          tag: versionInfo.previousVersions.slice(-1).pop(),
+          logo: versionInfo.previousVersions.slice(-2).shift(),
+          tag: versionInfo.previousVersions.slice(-2).shift(),
           "sections": [
             {
               "title": "Bug Fixes",
