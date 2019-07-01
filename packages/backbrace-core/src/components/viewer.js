@@ -1,16 +1,50 @@
 import $ from 'jquery';
-import { promiseblock, promisequeue } from '../promises';
+import { promiseblock, promiseeach } from '../promises';
 import { dataTable } from '../data';
 import { load as loadModule } from '../module';
 import { error } from '../error';
 import { get } from '../http';
 import { page, table } from '../design';
 import { settings } from '../settings';
-import { noop } from '../util';
-import { Component } from '../classes/component';
+import { Component } from './component';
 import { get as getIcons } from '../providers/icons';
 
 const viewerError = error('viewer');
+
+/**
+ * Get data from a data source.
+ * @param {string} data Data source.
+ * @param {tableDesign} [table] Table design.
+ * @param {dataCallback} [dataCallback] Data callback.
+ * @returns {JQueryPromise<any[]>} Promise to return the data.
+ */
+function getData(data, table, dataCallback) {
+    if (data) {
+        return promiseblock(
+            () => {
+                if (table) { // Load the data from a table.
+                    if (table.data.endsWith('.json')) {
+                        return get(table.data);
+                    } else if (table.data.indexOf('datatable/') === 0) {
+                        return {
+                            data: dataTable(table.data.substr(10))
+                        };
+                    }
+                } else { // Load from a JSON file.
+                    if (data.endsWith('.json')) {
+                        return get(data);
+                    }
+                }
+            },
+            (data) => {
+                data = data.data || data;
+                if (dataCallback)
+                    return dataCallback(data);
+                return data;
+            }
+        );
+    }
+}
 
 /**
  * @class
@@ -67,17 +101,17 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * The component that renders over the entire window.
-         * @type {PageComponent}
-         */
-        this.pageComponent = null;
-
-        /**
-         * @description
          * Data source of the viewer.
          * @type {any[]}
          */
         this.data = null;
+
+        /**
+         * @description
+         * Page sections.
+         * @type {Map<string, SectionComponent>}
+         */
+        this.sections = new Map();
 
         /**
          * @description
@@ -88,17 +122,13 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * On before update of the viewer.
-         * @type {dataCallback}
+         * Viewer events.
+         * @type {viewerEvents}
          */
-        this.onBeforeUpdate = null;
-
-        /**
-         * @description
-         * On action click.
-         * @type {Map<string, genericFunction>}
-         */
-        this.onActionClick = new Map();
+        this.events = {
+            beforeUpdate: null,
+            actionClick: new Map()
+        };
     }
 
     /**
@@ -107,9 +137,10 @@ export class ViewerComponent extends Component {
      * @returns {void}
      */
     unload() {
-        // Unload sub components.
-        this.pageComponent.unload();
-        this.pageComponent = null;
+
+        Array.from(this.sections.values()).forEach((cont) => cont.unload());
+        this.sections = null;
+
         this.container.parent().remove();
         super.unload();
     }
@@ -142,7 +173,7 @@ export class ViewerComponent extends Component {
                 this.page = page;
 
                 // Get the page data.
-                if (this.page.data && this.page.dataType === 'table')
+                if (this.page.data && !this.page.data.endsWith('.json'))
                     return promiseblock(
                         () => table(this.page.data),
                         (table) => {
@@ -178,21 +209,30 @@ export class ViewerComponent extends Component {
 
             () => {
 
-                // Load the page component.
-                let comp = this.page.component;
-                if (comp.indexOf('.js') === -1) {
-                    return promiseblock(
-                        () => {
-                            return import(
-                                /* webpackChunkName: "[request]" */
-                                './pagecomponents/' + comp + '.js');
-                        },
-                        ({ default: Control }) => {
-                            this.pageComponent = new Control(this);
-                            return this.pageComponent.load(this.container);
-                        }
-                    );
-                }
+                // Load the page sections.
+                return promiseeach(this.page.sections, (section) => {
+
+                    let comp = section.component;
+                    if (comp.indexOf('.js') === -1) {
+                        return promiseblock(
+                            () => {
+                                return import(
+                                    /* webpackChunkName: "[request]" */
+                                    './sectioncomponents/' + comp + '.js');
+                            },
+                            ({ default: Control }) => {
+                                /**
+                                 * @ignore
+                                 * @type {SectionComponent}
+                                 */
+                                let cont = new Control(this, section);
+                                this.sections.set(section.name, cont);
+                                return cont.load(this.container);
+                            }
+                        );
+                    }
+
+                });
             },
 
             () => {
@@ -225,7 +265,7 @@ export class ViewerComponent extends Component {
             //() => this.update(),
 
             () => {
-                this.pageComponent.hidePreLoad();
+                Array.from(this.sections.values()).forEach((cont) => cont.hidePreLoad());
             }
 
         );
@@ -242,32 +282,24 @@ export class ViewerComponent extends Component {
             this.showLoad();
             return promiseblock(
                 () => {
-                    if (this.table) {
-                        // Load the data source from a file.
-                        if (this.table.data.indexOf('.json') !== -1) {
-                            return get(this.table.data);
-                        } else if (this.table.data.indexOf('datatable/') === 0) {
-                            return {
-                                data: dataTable(this.table.data.substr(10))
-                            };
-                        }
-                    } else {
-                        if (this.page.dataType === 'json') {
-                            return get(this.page.data);
-                        }
-                    }
+                    return getData(this.page.data, this.table, this.events.beforeUpdate);
                 },
                 (data) => {
 
                     // Save the data.
-                    this.data = data.data || data;
+                    this.data = data;
 
-                    // On before update.
-                    return (this.onBeforeUpdate || noop)(this.data);
-                },
-                () => {
-                    // Update the page component.
-                    return this.pageComponent.update(this.data);
+                    // Update the sections.
+                    return promiseeach(Array.from(this.sections.values()), (comp) => {
+
+                        if (comp.design.data) {
+                            return promiseblock(
+                                () => getData(comp.design.data, null, comp.events.beforeUpdate),
+                                (data) => comp.update(data)
+                            );
+                        }
+                        return comp.update(this.data);
+                    });
                 },
                 () => {
                     this.hideLoad();
@@ -278,39 +310,13 @@ export class ViewerComponent extends Component {
 
     /**
      * @description
-     * Run a page action.
-     * @param {pageActionDesign} action Action design.
-     * @returns {void}
-     */
-    actionRunner(action) {
-
-        let func = this.onActionClick.get(action.name);
-        if (!func)
-            return;
-
-        this.showLoad();
-
-        promisequeue(() => {
-            return promiseblock(
-                func ? function() {
-                    return func();
-                } : null,
-                () => {
-                    this.hideLoad();
-                }
-            );
-        });
-    }
-
-    /**
-     * @description
      * Show the viewer component.
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     show() {
 
-        // Show components.
-        this.pageComponent.show();
+        // Show sections.
+        Array.from(this.sections.values()).forEach((cont) => cont.show());
 
         this.container.show();
 
@@ -326,8 +332,8 @@ export class ViewerComponent extends Component {
 
         this.container.hide();
 
-        // Hide components.
-        this.pageComponent.hide();
+        // Hide sections.
+        Array.from(this.sections.values()).forEach((cont) => cont.hide());
 
         return this;
     }
@@ -339,9 +345,10 @@ export class ViewerComponent extends Component {
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     setTitle(title) {
+
         const icons = getIcons();
         this.title = title;
-        this.pageComponent.setTitle(title);
+
         if (settings.windowMode) {
             $('#win' + this.id).find('span').html(`${icons.get(this.page.icon)} ${title}`);
         } else {
@@ -355,7 +362,7 @@ export class ViewerComponent extends Component {
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     showLoad() {
-        this.pageComponent.showLoad();
+        Array.from(this.sections.values()).forEach((cont) => cont.showLoad());
         return this;
     }
 
@@ -364,7 +371,7 @@ export class ViewerComponent extends Component {
      * @returns {ViewerComponent} Returns itself for chaining.
      */
     hideLoad() {
-        this.pageComponent.hideLoad();
+        Array.from(this.sections.values()).forEach((cont) => cont.hideLoad());
         return this;
     }
 

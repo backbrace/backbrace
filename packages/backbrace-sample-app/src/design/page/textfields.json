@@ -1,0 +1,60 @@
+{
+    "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
+    "name": "textfields",
+    "caption": "Text Field Component",
+    "data": "design/data/sample.json",
+    "sections": [
+        {
+            "name": "States",
+            "className": "s12 m6 l6",
+            "actions": [
+                {
+                    "name": "poop",
+                    "icon": "account"
+                }
+            ],
+            "fields": [
+                {
+                    "name": "Normal"
+                },
+                {
+                    "name": "Disabled",
+                    "editable": false
+                }
+            ]
+        },
+        {
+            "name": "Bind Data",
+            "className": "s12 m6 l6",
+            "fields": [
+                {
+                    "name": "String",
+                    "dataName": "string"
+                },
+                {
+                    "name": "Integer",
+                    "dataName": "integer"
+                },
+                {
+                    "name": "Decimal",
+                    "dataName": "decimal"
+                }
+            ]
+        },
+        {
+            "name": "Types",
+            "className": "s12 m6 l6",
+            "fields": [
+                {
+                    "name": "Email"
+                },
+                {
+                    "name": "Money"
+                },
+                {
+                    "name": "Password"
+                }
+            ]
+        }
+    ]
+}

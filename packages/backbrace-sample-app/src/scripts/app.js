@@ -41,7 +41,7 @@
             });
 
     backbrace.ready(function() {
-        backbrace.loadPage('page/test');
+        backbrace.loadPage('page/textfields');
     });
 
     // Start the app!

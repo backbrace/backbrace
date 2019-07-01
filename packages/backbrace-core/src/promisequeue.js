@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import { debug as logDebug } from '../log';
-import { uid, setZeroTimeout } from '../util';
+import { debug as logDebug } from './log';
+import { uid, setZeroTimeout } from './util';
 
 /**
  * @class

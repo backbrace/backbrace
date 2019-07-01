@@ -158,13 +158,14 @@
 * Callback function for creating a controller.
 * @callback controllerCallback
 * @param {ViewerComponent} viewer Viewer component.
+* @param {SectionComponent} [section] Section component (section controllers only).
 * @returns {void}
 */
 
 /**
 * @callback dataCallback
 * @param {any[]} data Data array.
-* @returns {void}
+* @returns {JQueryPromise<any[]>|any[]} Promises to return the data.
 */
 
 /**
@@ -180,6 +181,12 @@
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
  * @property {boolean} [temp] If `true` the page uses temp data.
  * @property {string} [updateHistory] Add a url path to the browser history.
+ */
+
+/**
+ * @typedef viewerEvents
+ * @property {dataCallback} beforeUpdate Runs before the data is bound to the component.
+ * @property {Map<string, genericFunction>} actionClick Runs on click of an action.
  */
 
 /**
@@ -202,6 +209,7 @@
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
+ * @property {string} dataName  Name of the field in the data source.
  * @property {string} component Custom component to use for the field.
  * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
@@ -211,6 +219,7 @@
 export let pagefield = {
   name: '',
   caption: '',
+  dataName: '',
   type: 'Text',
   component: '',
   width: '100px',
@@ -242,6 +251,9 @@ export let pageaction = {
  * @property {string} pageName Display a subpage in this section.
  * @property {string} icon Section icon.
  * @property {string} className Classes to add to the section.
+ * @property {string} component Component for the section (defaults to `cardpage`).
+ * @property {string} controller Section controller.
+ * @property {string} data Data source for the section (if empty, uses the pages data source).
  * @property {pageFieldDesign[]} fields Page section fields.
  * @property {pageActionDesign[]} actions Page actions.
  */
@@ -251,6 +263,9 @@ export let pagesection = {
   pageName: '',
   icon: '',
   className: '',
+  component: 'cardpage',
+  controller: '',
+  data: '',
   fields: [],
   actions: []
 };
@@ -259,9 +274,7 @@ export let pagesection = {
  * @typedef pageDesign
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
- * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
- * @property {string} dataType Type of datasource (defaults to `json`).
  * @property {string} data Data source for the page.
  * @property {string} icon Icon to use for the page.
  * @property {string} filters Filters for the page.
@@ -270,9 +283,7 @@ export let pagesection = {
 export let pagedesign = {
   name: '',
   caption: '',
-  component: 'cardpage',
   controller: '',
-  dataType: 'json',
   data: '',
   icon: '',
   filters: '',

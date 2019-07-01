@@ -6,7 +6,7 @@ backbrace.controller('api', function(viewer) {
     var $ = backbrace.jquery(),
         editurl = 'https://github.com/backbrace/backbrace/edit/master{0}?message=docs(core)%3A%20describe%20your%20change...{1}',
         sourceurl = 'https://github.com/backbrace/backbrace/tree/master{0}{1}',
-        page = viewer.pageComponent,
+        page = viewer.sections.get('main'),
         path = viewer.options.updateHistory || window.location.pathname,
         membertemplate = '<a id="{{name}}"></a><table class="method-table"><thead><tr><th><div>{{name}}' +
             '<a title="Link to this heading" class="heading-link" aria-hidden="true" href="' + path + '#{{name}}' +
@@ -69,7 +69,7 @@ backbrace.controller('api', function(viewer) {
         return s;
     }
 
-    viewer.onBeforeUpdate = function(data) {
+    viewer.events.beforeUpdate = function(data) {
 
         var modname = viewer.params['module'],
             res = $.grep(data, function(val) {
@@ -85,8 +85,8 @@ backbrace.controller('api', function(viewer) {
 
         if (res.length === 0) {
 
-            viewer.data = [];
             backbrace.loadPage('status/404');
+            return [];
 
         } else {
 
@@ -200,8 +200,6 @@ backbrace.controller('api', function(viewer) {
                     d.properties = properties.length > 0 ? '<h4>Properties</h4>' + properties.join('<br>') : '';
                     d.methods = methods.length > 0 ? '<h4>Methods</h4>' + methods.join('<br>') : '';
 
-                    viewer.data = [d];
-
                     backbrace.promisequeue(function() {
 
                         //Process links.
@@ -215,6 +213,8 @@ backbrace.controller('api', function(viewer) {
                         if (window.location.hash !== '')
                             $(window).scrollTop($(window.location.hash).position().top - 80);
                     });
+
+                    return [d];
                 }
             );
 

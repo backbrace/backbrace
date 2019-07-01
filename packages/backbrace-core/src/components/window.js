@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import { get as getIcons } from '../providers/icons';
-import { Component } from '../classes/component';
+import { Component } from './component';
 import { isMobileDevice } from '../util';
 
 /**

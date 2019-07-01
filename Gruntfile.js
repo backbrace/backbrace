@@ -26,13 +26,15 @@ module.exports = function(grunt) {
     //Clean directories.
     clean: {
       dist: [
+        'dist',
         paths.core + '/dist',
         paths.schema + '/schema/icons.json',
         paths.schema + '/schema/pagedesign.json',
         paths.schema + '/schema/tabledesign.json',
         paths.schema + '/tern/defs/backbrace.json',
         paths.schema + '/typings',
-        paths.docs + '/dist'
+        paths.docs + '/dist',
+        paths.sampleapp + '/dist'
       ],
       tmp: ['tmp']
     },
@@ -133,7 +135,6 @@ module.exports = function(grunt) {
       typings: {
         src: [
           paths.core + '/src/types.js',
-          paths.core + '/src/classes/*.js',
           paths.core + '/src/components/*.js',
           paths.core + '/src/components/*/*.js',
           paths.core + '/src/backbrace.js',

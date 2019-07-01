@@ -3,11 +3,9 @@ import * as tern from '../../../../../node_modules/tern/lib/tern.js';
 import 'modules/ace/ext-tern';
 import 'npm/brace/mode/javascript';
 import 'npm/brace/theme/monokai';
-import { closePage } from '../../app';
 import { promiseblock } from '../../promises';
 import { get } from '../../http';
-import { PageComponent } from '../../classes/pagecomponent';
-import { WindowComponent } from '../window';
+import { SectionComponent } from '../sectioncomponent';
 import { settings } from '../../settings';
 
 let defs = [];
@@ -27,26 +25,19 @@ function loadDef(file) {
 
 /**
  * @class
- * @extends {PageComponent}
+ * @extends {SectionComponent}
  * @description
  * Code editor component class.
  */
-export class EditorPageComponent extends PageComponent {
+export class EditorPageComponent extends SectionComponent {
 
     /**
      * @constructor
      * @param {ViewerComponent} viewer Viewer component.
+     * @param {pageSectionDesign} design Section design.
      */
-    constructor(viewer) {
-
-        super(viewer);
-
-        /**
-         * Page window.
-         * @type {WindowComponent}
-         */
-        this.window = null;
-
+    constructor(viewer, design) {
+        super(viewer, design);
     }
 
     /**
@@ -57,16 +48,10 @@ export class EditorPageComponent extends PageComponent {
      */
     load(cont) {
 
-        const page = this.viewer.page;
-        this.window = new WindowComponent({
-            icon: page.icon,
-            onClose: () => closePage(this.viewer.id)
-        });
+        // Load the section component.
+        super.load(cont);
 
-        this.window
-            .load(cont)
-            .setTitle(page.caption)
-            .main.append(`<div id="editor${this.id}" class="editor">`);
+        this.window.main.append(`<div id="editor${this.id}" class="editor">`);
 
         return promiseblock(
 
@@ -95,57 +80,6 @@ export class EditorPageComponent extends PageComponent {
             }
 
         );
-    }
-
-    /**
-     * @description
-     * Show the card component.
-     * @returns {EditorPageComponent} Returns itself for chaining.
-     */
-    show() {
-        this.window.show();
-        return this;
-    }
-
-    /**
-     * @description
-     * Hide the card component.
-     * @returns {EditorPageComponent} Returns itself for chaining.
-     */
-    hide() {
-        this.window.hide();
-        return this;
-    }
-
-    /**
-     * @description
-     * Show the loader.
-     * @returns {EditorPageComponent} Returns itself for chaining.
-     */
-    showLoad() {
-        super.showLoad();
-        this.window.loader.show();
-        return this;
-    }
-
-    /**
-     * @description
-     * Show the loader.
-     * @returns {EditorPageComponent} Returns itself for chaining.
-     */
-    hideLoad() {
-        super.hideLoad();
-        this.window.loader.hide();
-        return this;
-    }
-
-    /**
-     * Hide the preloader.
-     * @returns {EditorPageComponent} Returns itself for chaining.
-     */
-    hidePreLoad() {
-        this.window.preloader.hide();
-        return this;
     }
 }
 

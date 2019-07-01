@@ -1,6 +1,6 @@
 import { isMobileDevice } from '../util';
 import { ActionComponent } from './action';
-import { Component } from '../classes/component';
+import { Component } from './component';
 
 /**
  * @class
