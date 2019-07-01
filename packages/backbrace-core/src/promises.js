@@ -7,7 +7,7 @@
 import { error } from './error';
 import $ from 'jquery';
 import { debug as logDebug, object as logObject } from './log';
-import { PromiseQueue } from './classes/promisequeue';
+import { PromiseQueue } from './promisequeue';
 
 const promisesError = error('promises');
 

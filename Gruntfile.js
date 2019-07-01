@@ -133,7 +133,6 @@ module.exports = function(grunt) {
       typings: {
         src: [
           paths.core + '/src/types.js',
-          paths.core + '/src/classes/*.js',
           paths.core + '/src/components/*.js',
           paths.core + '/src/components/*/*.js',
           paths.core + '/src/backbrace.js',

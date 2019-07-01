@@ -242,6 +242,8 @@ export let pageaction = {
  * @property {string} pageName Display a subpage in this section.
  * @property {string} icon Section icon.
  * @property {string} className Classes to add to the section.
+ * @property {string} component Component for the section (defaults to `cardpage`).
+ * @property {string} data Data source for the section (if empty, uses the pages data source).
  * @property {pageFieldDesign[]} fields Page section fields.
  * @property {pageActionDesign[]} actions Page actions.
  */
@@ -251,6 +253,8 @@ export let pagesection = {
   pageName: '',
   icon: '',
   className: '',
+  component: 'cardpage',
+  data: '',
   fields: [],
   actions: []
 };
@@ -259,9 +263,7 @@ export let pagesection = {
  * @typedef pageDesign
  * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
- * @property {string} component Component for the whole page (defaults to `cardpage`).
  * @property {string} controller Page controller.
- * @property {string} dataType Type of datasource (defaults to `json`).
  * @property {string} data Data source for the page.
  * @property {string} icon Icon to use for the page.
  * @property {string} filters Filters for the page.
@@ -270,9 +272,7 @@ export let pagesection = {
 export let pagedesign = {
   name: '',
   caption: '',
-  component: 'cardpage',
   controller: '',
-  dataType: 'json',
   data: '',
   icon: '',
   filters: '',

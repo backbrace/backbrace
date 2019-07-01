@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { FieldComponent } from '../../classes/fieldcomponent';
+import { FieldComponent } from '../fieldcomponent';
 
 /**
  * @class
@@ -11,7 +11,7 @@ export class TextFieldComponent extends FieldComponent {
 
     /**
      * @constructor
-     * @param {PageComponent} parent Parent component.
+     * @param {SectionComponent} parent Parent component.
      * @param {pageFieldDesign} field Field design.
      */
     constructor(parent, field) {
@@ -26,7 +26,7 @@ export class TextFieldComponent extends FieldComponent {
      */
     load(container) {
 
-        const parent = this.parent.viewer.page.component;
+        const parent = this.parent.design.component;
         let type = 'text';
 
         super.load(container);

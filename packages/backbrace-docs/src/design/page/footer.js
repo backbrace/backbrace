@@ -3,7 +3,7 @@
 backbrace.controller('footer', function(viewer) {
 
     var $ = backbrace.jquery(),
-        page = viewer.pageComponent;
+        page = viewer.sections.get('main');
 
     // Set the page template.
     page.template = '{{html}}';

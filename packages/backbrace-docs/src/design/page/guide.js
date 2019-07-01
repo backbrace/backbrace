@@ -3,10 +3,10 @@
 backbrace.controller('guide', function(viewer) {
 
     var $ = backbrace.jquery(),
-        page = viewer.pageComponent;
+        main = viewer.sections.get('main');
 
     // Set the page template.
-    page.template = '<div style="min-height:60vh">{{html}}</div>';
+    main.template = '<div style="min-height:60vh">{{html}}</div>';
 
     // Filter the data.
     viewer.onBeforeUpdate = function(data) {

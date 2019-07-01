@@ -1,10 +1,10 @@
 {
     "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
-    "name": "code",
-    "component": "editorpage",
+    "name": "Source Code (Javascript)",
     "sections": [
         {
-            "name": "main"
+            "name": "Source Code",
+            "component": "editorpage"
         }
     ]
 }

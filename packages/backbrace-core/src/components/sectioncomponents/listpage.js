@@ -7,23 +7,24 @@ import $ from 'jquery';
 import { formatField } from '../../format';
 import { findInput, isMobileDevice, uid } from '../../util';
 import { get as getIcons } from '../../providers/icons';
-import { PageComponent } from '../../classes/pagecomponent';
+import { SectionComponent } from '../sectioncomponent';
 
 /**
  * @class
- * @extends {PageComponent}
+ * @extends {SectionComponent}
  * @description
  * List component.
  */
-export class ListPageComponent extends PageComponent {
+export class ListPageComponent extends SectionComponent {
 
     /**
      * @constructor
      * @param {ViewerComponent} viewer Viewer component.
+     * @param {pageSectionDesign} design Section design.
      */
-    constructor(viewer) {
+    constructor(viewer, design) {
 
-        super(viewer);
+        super(viewer, design);
 
         /**
          * @description
@@ -50,9 +51,13 @@ export class ListPageComponent extends PageComponent {
     /**
      * @description
      * Load the component.
-     * @returns {Component} Returns itself for chaining.
+     * @param {JQuery} cont Container to load into.
+     * @returns {ListPageComponent} Returns itself for chaining.
      */
-    load() {
+    load(cont) {
+
+        // Load the section component.
+        super.load(cont);
 
         /**
          * @ignore
@@ -243,7 +248,7 @@ export class ListPageComponent extends PageComponent {
      * @description
      * Bind the list page to a data source.
      * @param {Object[]} data Array of data.
-     * @returns {PageComponent} Returns a promise to update the list page.
+     * @returns {SectionComponent} Returns a promise to update the list page.
      */
     update(data) {
 

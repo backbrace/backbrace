@@ -2,8 +2,8 @@ import $ from 'jquery';
 import 'npm/reset-css/reset.css';
 import '../styles/base.scss';
 
-import '../classes/fieldcomponent';
-import '../classes/pagecomponent';
+import './fieldcomponent';
+import './sectioncomponent';
 import './actions';
 import './window';
 
@@ -16,7 +16,7 @@ import { settings } from '../settings';
 import * as sweetalert from '../sweetalert';
 import { isMobileDevice } from '../util';
 import { set as setAlert } from '../providers/alert';
-import { Component } from '../classes/component';
+import { Component } from './component';
 import { HeaderComponent } from './header';
 import { ViewerComponent } from './viewer';
 import { pagedesign, tabledesign } from '../types';

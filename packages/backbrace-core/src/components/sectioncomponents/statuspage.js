@@ -1,21 +1,22 @@
 import $ from 'jquery';
-import { PageComponent } from '../../classes/pagecomponent';
+import { SectionComponent } from '../sectioncomponent';
 
 /**
  * @class
- * @extends {PageComponent}
+ * @extends {SectionComponent}
  * @description
  * Page component for displaying HTTP status messages.
  */
-export class StatusPageComponent extends PageComponent {
+export class StatusPageComponent extends SectionComponent {
 
     /**
      * @constructor
      * @param {ViewerComponent} viewer Viewer component.
+     * @param {pageSectionDesign} design Section design.
      */
-    constructor(viewer) {
+    constructor(viewer, design) {
 
-        super(viewer);
+        super(viewer, design);
 
         this.title = null;
 
@@ -25,7 +26,7 @@ export class StatusPageComponent extends PageComponent {
      * @description
      * Load the component.
      * @param {JQuery} container Container to load into.
-     * @returns {Component} Promise to load the card.
+     * @returns {StatusPageComponent} Promise to load the card.
      */
     load(container) {
         $('<div class="status-title">Oops!</div>').appendTo(container);

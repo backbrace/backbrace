@@ -1,6 +1,5 @@
 packages/backbrace-core/dist/**
-packages/backbrace-sample-app/service-worker.js
-packages/backbrace-docs/src/service-worker.js
+packages/backbrace-core/include/service-worker.js
 lib/**
 scripts/**
 node_modules/**

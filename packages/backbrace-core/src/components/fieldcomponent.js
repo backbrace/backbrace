@@ -10,7 +10,7 @@ export class FieldComponent extends Component {
 
     /**
      * @constructor
-     * @param {PageComponent} parent Parent page component.
+     * @param {SectionComponent} parent Parent page component.
      * @param {pageFieldDesign} field Field design.
      */
     constructor(parent, field) {
@@ -20,7 +20,7 @@ export class FieldComponent extends Component {
         /**
          * @description
          * Parent component.
-         * @type {PageComponent}
+         * @type {SectionComponent}
          */
         this.parent = parent;
 
