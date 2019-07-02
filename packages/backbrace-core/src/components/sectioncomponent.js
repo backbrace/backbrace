@@ -1,6 +1,8 @@
 import { Component } from './component';
 import { ActionsComponent } from './actions';
 import { WindowComponent } from './window';
+import { promiseblock } from '../promises';
+import { load as loadModule } from '../module';
 
 /**
  * @class
@@ -39,6 +41,20 @@ export class SectionComponent extends Component {
          * @type {pageSectionDesign}
          */
         this.design = design;
+
+        /**
+         * @description
+         * Data source of the section.
+         * @type {any[]}
+         */
+        this.data = null;
+
+        /**
+         * @description
+         * On before update of the section.
+         * @type {dataCallback}
+         */
+        this.onBeforeUpdate = null;
     }
 
     /**
@@ -66,7 +82,19 @@ export class SectionComponent extends Component {
             this.viewer.actionRunner(action);
         }));
 
-        return this;
+        return this.attachController();
+    }
+
+    /**
+     * Attach the section controller
+     * @returns {JQueryPromise} Promises to attach the controller.
+     */
+    attachController() {
+        if (this.design.controller)
+            return promiseblock(
+                () => loadModule(this.design.controller),
+                (mod) => mod(this.viewer, this)
+            );
     }
 
     /**

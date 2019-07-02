@@ -158,13 +158,14 @@
 * Callback function for creating a controller.
 * @callback controllerCallback
 * @param {ViewerComponent} viewer Viewer component.
+* @param {SectionComponent} [section] Section component (section controllers only).
 * @returns {void}
 */
 
 /**
 * @callback dataCallback
 * @param {any[]} data Data array.
-* @returns {void}
+* @returns {JQueryPromise<any[]>|any[]} Promises to return the data.
 */
 
 /**
@@ -243,6 +244,7 @@ export let pageaction = {
  * @property {string} icon Section icon.
  * @property {string} className Classes to add to the section.
  * @property {string} component Component for the section (defaults to `cardpage`).
+ * @property {string} controller Section controller.
  * @property {string} data Data source for the section (if empty, uses the pages data source).
  * @property {pageFieldDesign[]} fields Page section fields.
  * @property {pageActionDesign[]} actions Page actions.

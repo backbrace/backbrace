@@ -6,11 +6,45 @@ import { error } from '../error';
 import { get } from '../http';
 import { page, table } from '../design';
 import { settings } from '../settings';
-import { noop } from '../util';
 import { Component } from './component';
 import { get as getIcons } from '../providers/icons';
 
 const viewerError = error('viewer');
+
+/**
+ * Get data from a data source.
+ * @param {string} data Data source.
+ * @param {tableDesign} [table] Table design.
+ * @param {dataCallback} [dataCallback] Data callback.
+ * @returns {JQueryPromise<any[]>} Promise to return the data.
+ */
+function getData(data, table, dataCallback) {
+    if (data) {
+        return promiseblock(
+            () => {
+                if (table) { // Load the data from a table.
+                    if (table.data.endsWith('.json')) {
+                        return get(table.data);
+                    } else if (table.data.indexOf('datatable/') === 0) {
+                        return {
+                            data: dataTable(table.data.substr(10))
+                        };
+                    }
+                } else { // Load from a JSON file.
+                    if (data.endsWith('.json')) {
+                        return get(data);
+                    }
+                }
+            },
+            (data) => {
+                data = data.data || data;
+                if (dataCallback)
+                    return dataCallback(data);
+                return data;
+            }
+        );
+    }
+}
 
 /**
  * @class
@@ -191,7 +225,10 @@ export class ViewerComponent extends Component {
                                     './sectioncomponents/' + comp + '.js');
                             },
                             ({ default: Control }) => {
-                                /** @type {SectionComponent} */
+                                /**
+                                 * @ignore
+                                 * @type {SectionComponent}
+                                 */
                                 let cont = new Control(this, section);
                                 this.sections.set(section.name, cont);
                                 return cont.load(this.container);
@@ -249,33 +286,22 @@ export class ViewerComponent extends Component {
             this.showLoad();
             return promiseblock(
                 () => {
-                    if (this.table) {
-                        // Load the data source from a file.
-                        if (this.table.data.indexOf('.json') !== -1) {
-                            return get(this.table.data);
-                        } else if (this.table.data.indexOf('datatable/') === 0) {
-                            return {
-                                data: dataTable(this.table.data.substr(10))
-                            };
-                        }
-                    } else {
-                        if (this.page.data.endsWith('json')) {
-                            return get(this.page.data);
-                        }
-                    }
+                    return getData(this.page.data, this.table, this.onBeforeUpdate);
                 },
                 (data) => {
 
                     // Save the data.
-                    this.data = data.data || data;
-
-                    // On before update.
-                    return (this.onBeforeUpdate || noop)(this.data);
-                },
-                () => {
+                    this.data = data;
 
                     // Update the sections.
                     return promiseeach(Array.from(this.sections.values()), (comp) => {
+
+                        if (comp.design.data) {
+                            return promiseblock(
+                                () => getData(comp.design.data, null, comp.onBeforeUpdate),
+                                (data) => comp.update(data)
+                            );
+                        }
                         return comp.update(this.data);
                     });
                 },

@@ -16,23 +16,24 @@ backbrace.controller('guide', function(viewer) {
             d = null;
 
         // Get the guide from the data.
-        viewer.data = $.grep(data, function(val) {
+        data = $.grep(data, function(val) {
             return val.name.toLowerCase() === name && (!p || p.toLowerCase() === val.parent.toLowerCase());
         });
 
-        if (viewer.data.length === 0) {
+        if (data.length === 0) {
 
-            viewer.data = [];
             backbrace.loadPage('status/404');
 
         } else {
 
-            d = viewer.data[0];
+            d = data[0];
 
             // Set the title.
             viewer.setTitle(name === 'index' ? '' : ' - ' + d.title);
 
         }
+
+        return data;
     };
 
 });

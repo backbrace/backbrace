@@ -23,11 +23,11 @@ export class TemplatePageComponent extends SectionComponent {
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {TemplatePageComponent} Returns itself for chaining.
+     * @returns {JQueryPromise} Promises to load the component.
      */
     load(cont) {
         this.container = $('<div />').appendTo(cont);
-        return this;
+        return this.attachController();
     }
 
     /**

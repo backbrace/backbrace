@@ -10,7 +10,9 @@
         },
         {
             "name": "footer",
-            "component": "templatepage"
+            "component": "templatepage",
+            "data": "design/data/tutorials.json",
+            "controller": "section/footer.js"
         }
     ]
 }
