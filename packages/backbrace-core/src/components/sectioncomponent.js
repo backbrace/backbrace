@@ -1,7 +1,7 @@
 import { Component } from './component';
 import { ActionsComponent } from './actions';
 import { WindowComponent } from './window';
-import { promiseblock } from '../promises';
+import { promiseblock, promisequeue } from '../promises';
 import { load as loadModule } from '../module';
 
 /**
@@ -51,10 +51,13 @@ export class SectionComponent extends Component {
 
         /**
          * @description
-         * On before update of the section.
-         * @type {dataCallback}
+         * Section events.
+         * @type {viewerEvents}
          */
-        this.onBeforeUpdate = null;
+        this.events = {
+            beforeUpdate: null,
+            actionClick: new Map()
+        };
     }
 
     /**
@@ -79,7 +82,7 @@ export class SectionComponent extends Component {
         let actions = new ActionsComponent();
         actions.load(this.window.toolbar);
         this.design.actions.forEach((action) => actions.addAction(action, (action) => {
-            this.viewer.actionRunner(action);
+            this.actionRunner(action);
         }));
 
         return this.attachController();
@@ -95,6 +98,35 @@ export class SectionComponent extends Component {
                 () => loadModule(this.design.controller),
                 (mod) => mod(this.viewer, this)
             );
+    }
+
+    /**
+     * @description
+     * Run a page action.
+     * @param {pageActionDesign} action Action design.
+     * @returns {void}
+     */
+    actionRunner(action) {
+
+        let func = this.events.actionClick.get(action.name);
+        if (!func) {
+            func = this.viewer.events.actionClick.get(action.name);
+            if (!func)
+                return;
+        }
+
+        this.viewer.showLoad();
+
+        promisequeue(() => {
+            return promiseblock(
+                func ? function() {
+                    return func();
+                } : null,
+                () => {
+                    this.viewer.hideLoad();
+                }
+            );
+        });
     }
 
     /**

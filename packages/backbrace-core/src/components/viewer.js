@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { promiseblock, promisequeue, promiseeach } from '../promises';
+import { promiseblock, promiseeach } from '../promises';
 import { dataTable } from '../data';
 import { load as loadModule } from '../module';
 import { error } from '../error';
@@ -122,17 +122,13 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * On before update of the viewer.
-         * @type {dataCallback}
+         * Viewer events.
+         * @type {viewerEvents}
          */
-        this.onBeforeUpdate = null;
-
-        /**
-         * @description
-         * On action click.
-         * @type {Map<string, genericFunction>}
-         */
-        this.onActionClick = new Map();
+        this.events = {
+            beforeUpdate: null,
+            actionClick: new Map()
+        };
     }
 
     /**
@@ -286,7 +282,7 @@ export class ViewerComponent extends Component {
             this.showLoad();
             return promiseblock(
                 () => {
-                    return getData(this.page.data, this.table, this.onBeforeUpdate);
+                    return getData(this.page.data, this.table, this.events.beforeUpdate);
                 },
                 (data) => {
 
@@ -298,7 +294,7 @@ export class ViewerComponent extends Component {
 
                         if (comp.design.data) {
                             return promiseblock(
-                                () => getData(comp.design.data, null, comp.onBeforeUpdate),
+                                () => getData(comp.design.data, null, comp.events.beforeUpdate),
                                 (data) => comp.update(data)
                             );
                         }
@@ -310,32 +306,6 @@ export class ViewerComponent extends Component {
                 }
             );
         }
-    }
-
-    /**
-     * @description
-     * Run a page action.
-     * @param {pageActionDesign} action Action design.
-     * @returns {void}
-     */
-    actionRunner(action) {
-
-        let func = this.onActionClick.get(action.name);
-        if (!func)
-            return;
-
-        this.showLoad();
-
-        promisequeue(() => {
-            return promiseblock(
-                func ? function() {
-                    return func();
-                } : null,
-                () => {
-                    this.hideLoad();
-                }
-            );
-        });
     }
 
     /**

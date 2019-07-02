@@ -10,12 +10,12 @@ backbrace.controller('apihome', function(viewer) {
         '<label class="api-type {{kind}}" style="margin-right: 10px;"><a route="api/{{name}}">' +
         '{{kindInitials}}</label> {{name}} {{access}}</a></div>';
 
-    // We need this because of all of the floating elements,
+    // We need this because of all of the floating elements.
     main.container.css('overflow', 'hidden');
 
     // Filter and sort the data.
     viewer.onBeforeUpdate = function(data) {
-        viewer.data = data.map(function(value) { // Add extra fields.
+        return data.map(function(value) { // Add extra fields.
             value.kindInitials = value.kind.substr(0, 1);
             if (value.access)
                 value.access = '(' + value.access + ')';

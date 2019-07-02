@@ -2,12 +2,17 @@
     "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
     "name": "api",
     "data": "design/data/modules.json",
-    "component": "templatepage",
     "controller": "page/api.js",
     "sections": [
         {
+            "name": "main",
+            "component": "templatepage"
+        },
+        {
             "name": "footer",
-            "pageName": "page/footer"
+            "component": "templatepage",
+            "data": "design/data/tutorials.json",
+            "controller": "section/footer.js"
         }
     ]
 }

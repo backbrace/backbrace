@@ -184,6 +184,12 @@
  */
 
 /**
+ * @typedef viewerEvents
+ * @property {dataCallback} beforeUpdate Runs before the data is bound to the component.
+ * @property {Map<string, genericFunction>} actionClick Runs on click of an action.
+ */
+
+/**
  * @typedef windowOptions
  * @property {string} [icon] Window icon.
  * @property {Function} [onClose] On close function of the window.
@@ -256,6 +262,7 @@ export let pagesection = {
   icon: '',
   className: '',
   component: 'cardpage',
+  controller: '',
   data: '',
   fields: [],
   actions: []
