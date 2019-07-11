@@ -6,7 +6,7 @@
     "sections": [
         {
             "name": "States",
-            "className": "s12 m6 l6",
+            "className": "col-sm-12 col-md-6 col-lg-6",
             "actions": [
                 {
                     "name": "poop",
@@ -25,7 +25,7 @@
         },
         {
             "name": "Bind Data",
-            "className": "s12 m6 l6",
+            "className": "col-sm-12 col-md-6 col-lg-6",
             "fields": [
                 {
                     "name": "String",
@@ -38,12 +38,16 @@
                 {
                     "name": "Decimal",
                     "dataName": "decimal"
+                },
+                {
+                    "name": "Boolean",
+                    "dataName": "boolean"
                 }
             ]
         },
         {
             "name": "Types",
-            "className": "s12 m6 l6",
+            "className": "col-sm-12 col-md-6 col-lg-6",
             "fields": [
                 {
                     "name": "Email"

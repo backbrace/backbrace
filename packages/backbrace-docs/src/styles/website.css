@@ -147,6 +147,13 @@ footer p {
   text-decoration: none;
   color: #fff;
 }
+footer .grid-fluid {
+  justify-content: center;
+  display: flex;
+}
+.mobile-app footer .grid-fluid {
+  display: block;
+}
 .ovr-link {
   color: #000;
   text-decoration: none;
