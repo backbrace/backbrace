@@ -103,9 +103,9 @@ export class WindowComponent extends Component {
         this.toolbar = $('<div class="row no-margin" />');
 
         if (!this.options.className || this.options.className === '')
-            this.options.className = 's12';
+            this.options.className = 'col-sm-12';
 
-        this.container = $('<div class="col ' + this.options.className + '" />')
+        this.container = $('<div class="' + this.options.className + '" />')
             .appendTo(container);
 
         $('<div id="window' + this.id + '" class="window" />')

@@ -26,7 +26,7 @@ export class TemplatePageComponent extends SectionComponent {
      * @returns {JQueryPromise} Promises to load the component.
      */
     load(cont) {
-        this.container = $('<div />').appendTo(cont);
+        this.container = $('<div style="width:100%" />').appendTo(cont);
         return this.attachController();
     }
 

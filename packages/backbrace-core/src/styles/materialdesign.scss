@@ -197,7 +197,7 @@ h6 {
 }
 .desktop-app .window {
   margin-top: 20px;
-  min-height: 200px;
+  height: 100%;
 }
 .preloader {
   position: absolute;
@@ -348,6 +348,13 @@ h6 {
   height: 100%;
   opacity: 0.6;
   z-index: 30000;
+}
+
+[class*="col-"] {
+  margin: 1em 0;
+}
+.control-container {
+  margin: 0;
 }
 
 .ace_editor {

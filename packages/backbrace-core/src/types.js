@@ -225,7 +225,7 @@ export let pagefield = {
   width: '100px',
   editable: true,
   hidden: false,
-  className: 's12 m6'
+  className: 'col-sm-12 col-md-6'
 };
 
 /**

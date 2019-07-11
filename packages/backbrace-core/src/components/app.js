@@ -132,10 +132,7 @@ export class AppComponent extends Component {
             header.showMenu();
         });
 
-        this.maincontainer = $('<div class="row"></div>');
-        $('<div class="container"></div>')
-            .append(this.maincontainer)
-            .appendTo(main);
+        this.maincontainer = $('<div class="container"></div>').appendTo(main);
 
         return this;
     }

@@ -2,6 +2,7 @@
     {
         "string": "Foo",
         "integer": 1,
-        "decimal": "5.5"
+        "decimal": "5.5",
+        "boolean": true
     }
 ]

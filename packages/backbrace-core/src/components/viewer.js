@@ -141,7 +141,7 @@ export class ViewerComponent extends Component {
         Array.from(this.sections.values()).forEach((cont) => cont.unload());
         this.sections = null;
 
-        this.container.parent().remove();
+        this.container.remove();
         super.unload();
     }
 
@@ -153,11 +153,9 @@ export class ViewerComponent extends Component {
      */
     load(container) {
 
-        let cont = $('<div>').appendTo(container);
+        super.load(container);
 
-        super.load(cont);
-
-        this.container.addClass('viewer');
+        this.container.addClass('viewer row');
 
         return promiseblock(
 
