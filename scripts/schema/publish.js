@@ -80,7 +80,7 @@ exports.publish = function(data, opts, tutorials) {
     generate(tableschema, tableschema, 'tableDesign')
     fs.writeFileSync(opts.destination + '/tabledesign.json', JSON.stringify(tableschema, null, 2));
 
-    fs.readFile('../node_modules/@mdi/font/css/materialdesignicons.min.css', 'utf8', function(err, data) {
+    fs.readFile('./node_modules/@mdi/font/css/materialdesignicons.min.css', 'utf8', function(err, data) {
         if (err) throw err;
         var reg = new RegExp(/\.mdi\-?([_a-zA-Z\-]+[\w\-])\:before*\s*\{/gm);
         var matches = data.match(reg);
