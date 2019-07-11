@@ -9,7 +9,7 @@ backbrace.controller('guide', function(viewer) {
     main.template = '<div style="min-height:60vh">{{html}}</div>';
 
     // Filter the data.
-    viewer.onBeforeUpdate = function(data) {
+    viewer.events.beforeUpdate = function(data) {
 
         var name = viewer.params['name'] || 'index',
             p = viewer.params['parent'],

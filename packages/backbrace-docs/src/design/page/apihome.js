@@ -14,7 +14,7 @@ backbrace.controller('apihome', function(viewer) {
     main.container.css('overflow', 'hidden');
 
     // Filter and sort the data.
-    viewer.onBeforeUpdate = function(data) {
+    viewer.events.beforeUpdate = function(data) {
         return data.map(function(value) { // Add extra fields.
             value.kindInitials = value.kind.substr(0, 1);
             if (value.access)

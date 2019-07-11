@@ -32,9 +32,9 @@ export class TextFieldComponent extends FieldComponent {
         super.load(container);
 
         if (parent === 'cardpage') {
-            this.container.addClass('control-container col ' + this.field.className);
+            this.container.addClass('control-container col ' + this.design.className);
             this.label = $('<label for="cont' + this.id + '" class="control-label"></label>')
-                .text(this.field.caption)
+                .text(this.design.caption)
                 .appendTo(this.container);
         }
 

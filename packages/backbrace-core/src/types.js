@@ -209,6 +209,7 @@
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
+ * @property {string} dataName  Name of the field in the data source.
  * @property {string} component Custom component to use for the field.
  * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
@@ -218,6 +219,7 @@
 export let pagefield = {
   name: '',
   caption: '',
+  dataName: '',
   type: 'Text',
   component: '',
   width: '100px',

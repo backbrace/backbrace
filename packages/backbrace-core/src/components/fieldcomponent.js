@@ -29,7 +29,7 @@ export class FieldComponent extends Component {
          * Field design.
          * @type {pageFieldDesign}
          */
-        this.field = field;
+        this.design = field;
 
         /**
          * @description
@@ -53,7 +53,7 @@ export class FieldComponent extends Component {
      * @returns {FieldComponent|JQueryPromise} Returns itself for chaining.
      */
     update(data) {
-        let fieldData = data ? data[this.field.name] : null;
+        let fieldData = data ? data[this.design.dataName || this.design.name] : null;
         if (this.control)
             this.control.val(fieldData);
         return this;

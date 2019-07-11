@@ -69,7 +69,7 @@ backbrace.controller('api', function(viewer) {
         return s;
     }
 
-    viewer.onBeforeUpdate = function(data) {
+    viewer.events.beforeUpdate = function(data) {
 
         var modname = viewer.params['module'],
             res = $.grep(data, function(val) {

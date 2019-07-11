@@ -8,7 +8,7 @@ backbrace.controller('footer', function(viewer, section) {
     section.template = '{{html}}';
 
     // Filter the data.
-    section.onBeforeUpdate = function(data) {
+    section.events.beforeUpdate = function(data) {
         return $.grep(data, function(val) {
             return val.name.toLowerCase() === 'footer';
         });
