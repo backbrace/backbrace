@@ -1,0 +1,75 @@
+//Header component.
+
+.header {
+  display: block;
+}
+
+.navbar {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 3000;
+}
+
+.navbar-inner {
+  height: 50px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.navbar-brand {
+  float: left;
+  font-size: 1.2em;
+  font-weight: normal;
+  line-height: 32px;
+  margin: 8px 80px 0 8px;
+}
+
+.navbar-logo {
+  max-height: 35px;
+}
+
+.mobile-app .navbar-logo {
+  margin-top: 7px;
+}
+
+.menu-icon {
+  cursor: pointer;
+  float: left;
+  width: 50px;
+  height: 50px;
+  font-size: 35px;
+  max-height: 50px;
+  text-align: center;
+  padding: 8px;
+}
+
+.menu {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: -300px;
+  width: 300px;
+  height: 100vh;
+  background: #fff;
+  z-index: 30001;
+}
+
+.menu-brand {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.menu-logo {
+  max-height: 40px;
+}
+
+.profile-img {
+  display: none;
+  margin: 5px;
+  float: right;
+  width: 40px;
+  height: 40px;
+}

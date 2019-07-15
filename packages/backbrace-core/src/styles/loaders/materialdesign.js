@@ -6,7 +6,7 @@
 
 import 'npm/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
 import 'npm/@mdi/font/scss/materialdesignicons.scss';
-import '../materialdesign.scss';
+import '../materialdesign/materialdesign.scss';
 
 import $ from 'jquery';
 import { compile } from '../../jss';
@@ -73,7 +73,7 @@ export default function load() {
             background: `${colors.bghover}`,
             color: `${colors.texthover}`
         },
-        '.viewer-full': {
+        '.mobile-app .viewer': {
             background: `${colors.bgsurface}`
         },
         '.mobile-app .actions-bar': {
@@ -85,7 +85,7 @@ export default function load() {
             background: `${colors.bghover}`,
             color: `${colors.texthover}`
         },
-        '.control-input:focus': {
+        '.field-input:focus': {
             'border-color': `${colors.bgprimary}`,
             'border-width': '2px'
         },

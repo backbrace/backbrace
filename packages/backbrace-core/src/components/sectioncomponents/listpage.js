@@ -203,7 +203,7 @@ export class ListPageComponent extends SectionComponent {
 
             // Create the grid.
             this.grid = $('<table id="' + uid() + '" style="border: none"></table>');
-            this.container = $('<div class="grid-container" />')
+            this.container = $('<div class="list-container" />')
                 .append(this.grid);
             //TODO - FIX
             //.appendTo(this.viewer.window.main);

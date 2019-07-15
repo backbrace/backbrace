@@ -127,7 +127,7 @@ export class HeaderComponent extends Component {
                 + '<ul id="mnuMain" /></div>').appendTo(this.container);
 
             // Add profile image.
-            this.profileImage = $('<img class="circle-img profile-img" />')
+            this.profileImage = $('<img class="shape-circle profile-img" />')
                 .appendTo($('.navbar-inner'));
 
             $(window.document).on('click', (event) => {

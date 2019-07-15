@@ -31,3 +31,12 @@
 .no-margin {
   margin: 0px !important;
 }
+
+.shape-circle {
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-spacing: 0px;
+}

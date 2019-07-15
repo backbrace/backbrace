@@ -85,7 +85,7 @@ export class WindowComponent extends Component {
         const icons = getIcons();
 
         this.preloader = $('<div class="preloader"></div>');
-        this.loader = $('<div class="overlay"><div class="progress"><div class="indeterminate"></div></div></div>').hide();
+        this.loader = $('<div class="overlay"></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
 
