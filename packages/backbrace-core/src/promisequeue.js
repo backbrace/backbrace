@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import { debug as logDebug } from './log';
-import { uid, setZeroTimeout } from './util';
+import { uid } from './util';
+import { errorHandler } from './app';
 
 /**
  * @class
@@ -38,13 +39,19 @@ export class PromiseQueue {
          * Function that is currently executing.
          */
         this.currFunction = null;
+        /**
+         * @type {promiseErrorHandler}
+         * @description
+         * Error handler.
+         */
+        this.errorHandler = null;
     }
 
     /**
      * @description
      * Create a new promise queue and run the first function.
      * @param {...genericFunction} args Functions to run.
-     * @returns {void}
+     * @returns {JQueryPromise} Promises to run the first function.
      */
     createQueue(...args) {
 
@@ -62,14 +69,14 @@ export class PromiseQueue {
         logDebug(`Created new queue: #${this.queue.length - 1} with ${queue.length} functions.`);
 
         // Resolve the first function in the queue.
-        setZeroTimeout(() => this.resolveQueue(null));
+        return this.resolveQueue(null);
     }
 
     /**
      * @description
      * Run the current function in the queue. Catch any errors.
      * @param {*} [result] Result from the last method to send into the current function.
-     * @returns {void}
+     * @returns {JQueryPromise} Promises to resolve the queue.
      */
     resolveQueue(result) {
 
@@ -92,23 +99,26 @@ export class PromiseQueue {
         // Don't run null functions.
         if (this.currFunction == null) {
             logDebug('No function! Running next function.');
-            this.runNextFunction();
-            return;
+            return this.runNextFunction();
         }
 
         logDebug(this.currFunction.toString());
 
-        $.when(
+        return $.when(
             // Run the function.
             this.currFunction.apply(null, arr)
-        ).then((result2) => this.runNextFunction(result2));
+        ).then((result2) => this.runNextFunction(result2)).catch((e) => {
+            errorHandler(e);
+            if (this.errorHandler)
+                this.errorHandler(e);
+        });
     }
 
     /**
      * @description
      * Run the next function in the queue.
      * @param {*} [result] Result from the last method to send into the next function.
-     * @returns {void}
+     * @returns {JQueryPromise} Promises to run the next function.
      */
     runNextFunction(result) {
 
@@ -116,7 +126,7 @@ export class PromiseQueue {
 
         if (this.queue.length > 0) {
             this.queue[this.queue.length - 1].shift();
-            setZeroTimeout(() => this.resolveQueue(result));
+            return this.resolveQueue(result);
         }
     }
 
@@ -174,5 +184,14 @@ export class PromiseQueue {
             currQueue.splice(index, 0, arg);
             index += 1;
         }
+    }
+
+    /**
+     * Error handler.
+     * @param {promiseErrorHandler} fn Error handler.
+     * @returns {void}
+     */
+    error(fn) {
+        this.errorHandler = fn;
     }
 }

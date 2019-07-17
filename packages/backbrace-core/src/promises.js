@@ -5,7 +5,6 @@
  */
 
 import { error } from './error';
-import $ from 'jquery';
 import { debug as logDebug, object as logObject } from './log';
 import { PromiseQueue } from './promisequeue';
 
@@ -82,11 +81,7 @@ export function promiseblock(...args) {
     if (!currentQueue)
         throw promisesError('noqueue', 'Attempted to run a promise block without a promise queue');
 
-    let w = $.Deferred();
-
-    PromiseQueue.prototype.createQueue.apply(currentQueue, args);
-
-    return w.promise();
+    return PromiseQueue.prototype.createQueue.apply(currentQueue, args);
 }
 
 /**
@@ -139,7 +134,7 @@ export function promiseeach(obj, iterator, context) {
 /**
  * Start a new promise queue to execute code when possible.
  * @param {...genericFunction} args Functions to run.
- * @returns {void}
+ * @returns {PromiseQueue} Returns the promise queue.
  */
 export function promisequeue(...args) {
 
@@ -156,4 +151,6 @@ export function promisequeue(...args) {
     // If nothing is running, run this queue.
     if (!currentQueue)
         runNextQueue();
+
+    return queue;
 }

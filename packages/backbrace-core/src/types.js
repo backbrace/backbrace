@@ -16,6 +16,13 @@
  */
 
 /**
+ * Promise queue error handler function.
+ * @typedef {Function} promiseErrorHandler
+ * @param {(string|Error)} msg Error message.
+ * @returns {void}
+ */
+
+/**
  * Action runner function.
  * @typedef {Function} actionRunner
  * @param {pageActionDesign} action Action design.
