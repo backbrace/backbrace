@@ -201,7 +201,11 @@ export class AppComponent extends Component {
                     }).attr('processed', 'true');
                 });
             }
-        );
+        ).error(() => {
+            pge.unload();
+            if (this.activePage)
+                this.showPage(this.activePage);
+        });
     }
 
     /**
@@ -267,8 +271,6 @@ export class AppComponent extends Component {
     showPage(id) {
 
         promisequeue(() => {
-            if (id === this.activePage)
-                return;
 
             // Hide the currently active page.
             if (this.currentPage())

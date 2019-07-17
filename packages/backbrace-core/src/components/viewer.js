@@ -141,6 +141,9 @@ export class ViewerComponent extends Component {
         Array.from(this.sections.values()).forEach((cont) => cont.unload());
         this.sections = null;
 
+        if (settings.windowMode)
+            $('#win' + this.id).remove();
+
         this.container.remove();
         super.unload();
     }
