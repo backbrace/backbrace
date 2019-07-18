@@ -74,6 +74,7 @@ export class SectionComponent extends Component {
             icon: this.design.icon
         });
         this.window.load(cont);
+        this.container = this.window.main;
 
         // Set the window title.
         this.setTitle(this.design.text);

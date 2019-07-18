@@ -249,6 +249,16 @@ export let pageaction = {
 };
 
 /**
+ * @typedef sectionOptions
+ * @property {string} template TemplatePageComponent Option. Template HTML.
+ * @property {boolean} useWindowComponent TemplatePageComponent Option. Use a window component.
+ */
+export let sectionoptions = {
+  template: '',
+  useWindowComponent: false
+};
+
+/**
  * @typedef pageSectionDesign
  * @property {string} name Name of the section.
  * @property {string} text Caption of the section.
@@ -256,6 +266,7 @@ export let pageaction = {
  * @property {string} icon Section icon.
  * @property {string} className Classes to add to the section.
  * @property {string} component Component for the section (defaults to `cardpage`).
+ * @property {sectionOptions} options Section component options.
  * @property {string} controller Section controller.
  * @property {string} data Data source for the section (if empty, uses the pages data source).
  * @property {pageFieldDesign[]} fields Page section fields.
@@ -268,6 +279,7 @@ export let pagesection = {
   icon: '',
   className: '',
   component: 'cardpage',
+  options: sectionoptions,
   controller: '',
   data: '',
   fields: [],
