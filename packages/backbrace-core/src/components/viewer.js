@@ -173,6 +173,10 @@ export class ViewerComponent extends Component {
 
                 this.page = page;
 
+                // No close?
+                if (this.page.noclose && settings.windowMode)
+                    $('#win' + this.id).find('i').remove();
+
                 // Get the page data.
                 if (this.page.data && !this.page.data.endsWith('.json'))
                     return promiseblock(

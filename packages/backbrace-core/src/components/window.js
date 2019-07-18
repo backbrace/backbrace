@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
-import { isMobileDevice } from '../util';
 
 /**
  * @class
@@ -16,10 +15,7 @@ export class WindowComponent extends Component {
      * @param {windowOptions} [options] Window options.
      */
     constructor({
-        hasParent = false,
-        closeBtn = true,
         icon,
-        onClose,
         className = ''
     } = {}) {
 
@@ -32,10 +28,7 @@ export class WindowComponent extends Component {
          */
         this.options = {
             className,
-            hasParent,
-            closeBtn,
-            icon,
-            onClose
+            icon
         };
 
         /**
@@ -82,22 +75,12 @@ export class WindowComponent extends Component {
      */
     load(container) {
 
-        const icons = getIcons();
-
         this.preloader = $('<div class="preloader"></div>');
         this.loader = $('<div class="overlay"></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
 
-        this.titlebar.append('<h5 id="title' + this.id + '" class="title ' +
-            (this.options.hasParent ? 'alt' : '') + ' unselectable cuttext" />');
-
-        if (this.options.closeBtn === true && !this.options.hasParent && !isMobileDevice()) {
-            $(icons.get('%close%'))
-                .addClass('unselectable title-icon')
-                .appendTo(this.titlebar)
-                .click(() => this.options.onClose());
-        }
+        this.titlebar.append('<h6 id="title' + this.id + '" class="title unselectable cuttext" />');
 
         this.main = $('<div class="row" />');
         this.toolbar = $('<div class="row no-margin" />');

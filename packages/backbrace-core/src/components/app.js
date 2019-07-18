@@ -16,6 +16,7 @@ import { settings } from '../settings';
 import * as sweetalert from '../sweetalert';
 import { isMobileDevice } from '../util';
 import { set as setAlert } from '../providers/alert';
+import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
 import { HeaderComponent } from './header';
 import { ViewerComponent } from './viewer';
@@ -171,7 +172,7 @@ export class AppComponent extends Component {
                 // Add a window shorcut.
                 if (settings.windowMode) {
                     $('.main-windows-btn').removeClass('active');
-                    this.addWindowToToolbar(pge.id).addClass('active');
+                    this.addWindowToToolbar(pge).addClass('active');
                 }
 
                 // Load the page component.
@@ -210,19 +211,26 @@ export class AppComponent extends Component {
 
     /**
      * Add a window to the windows toolbar.
-     * @param {number} id ID of the window.
+     * @param {ViewerComponent} viewer Page viewer.
      * @returns {JQuery} Returns the shortcut button.
      */
-    addWindowToToolbar(id) {
-        return $('<div id="win' + id + '" class="main-windows-btn unselectable" data-ripple></div>')
+    addWindowToToolbar(viewer) {
+        const icons = getIcons(),
+            closeBtn = $(icons.get('%close%'))
+                .click((ev) => {
+                    this.closePage(viewer.id);
+                    ev.preventDefault();
+                    return false;
+                });
+        return $('<div id="win' + viewer.id + '" class="main-windows-btn unselectable" data-ripple></div>')
             .hide()
             .appendTo(this.windows)
             .append('<span />')
+            .append(closeBtn)
             .click(() => {
-                this.showPage(id);
+                this.showPage(viewer.id);
             })
-            .fadeIn(300)
-            .ripple();
+            .fadeIn(300);
     }
 
     /**
@@ -237,7 +245,10 @@ export class AppComponent extends Component {
             // Unload the page.
             if (!this.pages.has(id))
                 throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+
             const pge = this.pages.get(id);
+            if (settings.windowMode && pge.page.noclose)
+                return;
             pge.unload();
 
             // Remove the page from the loaded pages.

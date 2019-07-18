@@ -199,9 +199,6 @@
 /**
  * @typedef windowOptions
  * @property {string} [icon] Window icon.
- * @property {Function} [onClose] On close function of the window.
- * @property {boolean} [hasParent] If `true` sets the window as a child window.
- * @property {boolean} [closeBtn] Add a close button to the window.
  * @property {string} [className] Window class style.
  */
 
@@ -285,6 +282,7 @@ export let pagesection = {
  * @property {string} data Data source for the page.
  * @property {string} icon Icon to use for the page.
  * @property {string} filters Filters for the page.
+ * @property {boolean} noclose Don't allow the page to be closed (in windowed mode).
  * @property {pageSectionDesign[]} sections Page sections.
  */
 export let pagedesign = {
@@ -294,6 +292,7 @@ export let pagedesign = {
   data: '',
   icon: '',
   filters: '',
+  noclose: false,
   sections: []
 };
 
