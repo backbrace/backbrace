@@ -1,14 +1,32 @@
 language: node_js
-sudo: false
+sudo: required
 node_js:
   - '6'
 
-before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
+dist: xenial
+
+env:
+  - browser=chrome
+
+addons:
+  chrome: stable
+
+before_script:
+  - |
+    case $browser in
+      chrome)
+        sudo apt-get update -qq && sudo apt-get install -y chromium-chromedriver
+        export PATH=$PATH:/usr/lib/chromium-browser/
+        chromedriver -v
+        ;;
+    esac
+
+services:
+  - xvfb
 
 script:
   - ./scripts/travis/build.sh
 
-services:
-  - xvfb
+branches:
+  only:
+    - master
