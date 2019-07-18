@@ -11,6 +11,8 @@ exports.publish = function(data, opts, tutorials) {
 
     var docs = data().get();
 
+    var reftypes = ['sectionOptions'];
+
     function getType(docs_, name_) {
         for (var d in docs_) {
             if (docs_[d].name && docs_[d].name === name_)
@@ -30,13 +32,30 @@ exports.publish = function(data, opts, tutorials) {
         if (!ty)
             return;
         ty.properties.forEach(function(prop) {
+
             var p = {
                 "description": convertDescription(prop.description),
                 "type": prop.type.names.join('|')
             }, t = null;
-            if (prop.name === 'icon')
+
+            if (prop.name === 'icon') {
+
                 p.$ref = "icons.json";
-            if (p.type.indexOf('Array') === 0) {
+
+            } else if (reftypes.indexOf(p.type) !== -1) {
+
+                p.$ref = "#/definitions/" + p.type;
+                root.definitions[p.type] = {
+                    "description": p.type + " Object",
+                    "type": "object",
+                    "properties": {
+                    }
+                }
+                generate(root, root.definitions[p.type], p.type);
+                delete p.type;
+
+            } else if (p.type.indexOf('Array') === 0) {
+
                 t = p.type.replace(/Array\.\</g, '').replace(/\>/g, '');
                 p.type = "array";
                 p.items = {
@@ -48,7 +67,7 @@ exports.publish = function(data, opts, tutorials) {
                     "properties": {
                     }
                 }
-                generate(root, root.definitions[t], t)
+                generate(root, root.definitions[t], t);
             }
             schema.properties[prop.name] = p;
         });
