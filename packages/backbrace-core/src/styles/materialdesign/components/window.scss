@@ -27,6 +27,8 @@
 
 .title {
   display: inline-block;
+  margin-top: 5px;
+  text-transform: uppercase;
 }
 
 .title-icon {
@@ -49,4 +51,10 @@
   height: 100%;
   opacity: 0.6;
   z-index: 30000;
+}
+
+.supporting-text {
+  padding: 25px;
+  color: rgba(0, 0, 0, 0.54);
+  width: 90%;
 }
