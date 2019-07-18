@@ -22,8 +22,8 @@ backbrace.controller('apihome', function(viewer) {
             return value;
         }).sort(function(a, b) { // Sort the data.
             if (a.kind === b.kind)
-                return a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1;
-            return a.kind < b.kind ? 1 : -1;
+                return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+            return a.kind > b.kind ? 1 : -1;
         });
     };
 

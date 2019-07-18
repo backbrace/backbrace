@@ -86,9 +86,12 @@ export class TemplatePageComponent extends SectionComponent {
         // Is it a repeating template?
         let repeater = this.container.find('[bb-repeat=true]');
         if (repeater.length > 0) {
-            let templ = repeater[0].outerHTML;
+            let templ = repeater[0].outerHTML,
+                last = repeater;
             data.forEach(function(d) {
-                repeater.after(mergeData(templ, d));
+                let md = $(mergeData(templ, d));
+                last.after(md);
+                last = md;
             });
             repeater.remove();
         } else {
