@@ -283,34 +283,33 @@ export class ViewerComponent extends Component {
      */
     update() {
 
-        if (this.page.data) {
-            this.showLoad();
-            return promiseblock(
-                () => {
+        this.showLoad();
+        return promiseblock(
+            () => {
+                if (this.page.data)
                     return getData(this.page.data, this.table, this.events.beforeUpdate);
-                },
-                (data) => {
+            },
+            (data) => {
 
-                    // Save the data.
-                    this.data = data;
+                // Save the data.
+                this.data = data || [];
 
-                    // Update the sections.
-                    return promiseeach(Array.from(this.sections.values()), (comp) => {
+                // Update the sections.
+                return promiseeach(Array.from(this.sections.values()), (comp) => {
 
-                        if (comp.design.data) {
-                            return promiseblock(
-                                () => getData(comp.design.data, null, comp.events.beforeUpdate),
-                                (data) => comp.update(data)
-                            );
-                        }
-                        return comp.update(this.data);
-                    });
-                },
-                () => {
-                    this.hideLoad();
-                }
-            );
-        }
+                    if (comp.design.data) {
+                        return promiseblock(
+                            () => getData(comp.design.data, null, comp.events.beforeUpdate),
+                            (data) => comp.update(data)
+                        );
+                    }
+                    return comp.update(this.data);
+                });
+            },
+            () => {
+                this.hideLoad();
+            }
+        );
     }
 
     /**
