@@ -1,3 +1,34 @@
+<a name="0.2.1"></a>
+# [0.2.1](https://github.com/backbrace/backbrace/compare/0.2.0...0.2.1) (2019-07-23)
+
+## Bug Fixes
+
+* **core:** section data source not retrieved when the page has no data source
+  ([0d82fa94](https://github.com/backbrace/backbrace/commit/0d82fa9487e4a42b11c2d93801f5d715dda513fb))
+* **core:** fix typography in `materialdesign` style
+  ([10e2952d](https://github.com/backbrace/backbrace/commit/10e2952d8cf7eb839d4f703150afafbac513e2aa))
+* **core:** fix repeater sort on `templatepage` component
+  ([3b72fa16](https://github.com/backbrace/backbrace/commit/3b72fa1646443f82f8b7b11bd299e683313c5937))
+* **core:** close the page if it errors on load
+  ([bfdb3613](https://github.com/backbrace/backbrace/commit/bfdb36136c659dee2a9194abf442d3e44075c448))
+
+## Features
+
+* **core:** add `options` to `pagesectiondesign`
+  ([837b369e](https://github.com/backbrace/backbrace/commit/837b369e831ea55d2454ca3c6392e9f72a27c394))
+* **core:** move close button to the windows toolbar in windowed mode
+  ([40727f31](https://github.com/backbrace/backbrace/commit/40727f31f5f0903d31c3dcf7fcc3a4a7f6c7f1c4))
+* **core:** add new function to `promisequeue` called `error` for error handling
+  ([93ecea23](https://github.com/backbrace/backbrace/commit/93ecea237efd5d390658250dc11ec6f1bc56c08f))
+* **core:** update layout system #21
+  ([48f6ec12](https://github.com/backbrace/backbrace/commit/48f6ec12510e20c84f3558e8255f0d28fdffeaee))
+* **core:** added new properties for `pageSectionDesign`
+  ([a9b15b5b](https://github.com/backbrace/backbrace/commit/a9b15b5bf29f491f3235c33d78a4fd9b90fa80e5))
+
+* **sample-app:** add dashboard
+  ([511ae0d2](https://github.com/backbrace/backbrace/commit/511ae0d2f6f9a7e8b789e67c237ba10c147ea5ea))
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/backbrace/backbrace/compare/0.1.0-alpha.2...0.2.0) (2019-06-05)
 

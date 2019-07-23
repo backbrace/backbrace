@@ -1,6 +1,6 @@
 {
   "name": "@backbrace/core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Backbrace core library.",
   "repository": "https://github.com/backbrace/backbrace/tree/master/packages/backbrace-core",
   "author": "Paul Fisher <paulfisher53@gmail.com>",
