@@ -5,9 +5,10 @@
     // Setup the app.
     backbrace.settings({
         app: {
-            title: 'Test'
+            title: 'Backbrace - Samples'
         },
         style: {
+            css: './styles/samples.css',
             images: {
                 logo: './images/logo-landscape.png',
                 blocker: './images/logo-portrait-dark.png'
@@ -41,7 +42,7 @@
             });
 
     backbrace.ready(function() {
-        backbrace.loadPage('page/textfields');
+        backbrace.loadPage('page/dashboard');
     });
 
     // Start the app!

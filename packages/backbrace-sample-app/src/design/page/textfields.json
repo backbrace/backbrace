@@ -1,18 +1,12 @@
 {
     "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
     "name": "textfields",
-    "caption": "Text Field Component",
+    "caption": "Text Fields",
     "data": "design/data/sample.json",
     "sections": [
         {
             "name": "States",
-            "className": "col-sm-12 col-md-6 col-lg-6",
-            "actions": [
-                {
-                    "name": "poop",
-                    "icon": "account"
-                }
-            ],
+            "className": "col-sm-12 col-md-6",
             "fields": [
                 {
                     "name": "Normal"
@@ -24,30 +18,8 @@
             ]
         },
         {
-            "name": "Bind Data",
-            "className": "col-sm-12 col-md-6 col-lg-6",
-            "fields": [
-                {
-                    "name": "String",
-                    "dataName": "string"
-                },
-                {
-                    "name": "Integer",
-                    "dataName": "integer"
-                },
-                {
-                    "name": "Decimal",
-                    "dataName": "decimal"
-                },
-                {
-                    "name": "Boolean",
-                    "dataName": "boolean"
-                }
-            ]
-        },
-        {
             "name": "Types",
-            "className": "col-sm-12 col-md-6 col-lg-6",
+            "className": "col-sm-12 col-md-6",
             "fields": [
                 {
                     "name": "Email"

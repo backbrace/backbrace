@@ -1,0 +1,9 @@
+[
+    {
+        "name": "textfields",
+        "caption": "Text Fields",
+        "description": "Textual input components.",
+        "icon": "textbox.png",
+        "color": "#2ecc71"
+    }
+]
