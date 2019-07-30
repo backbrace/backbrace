@@ -244,11 +244,8 @@ pre.source {
   padding: 16px;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
-pre > b {
-  color: #0984e3;
-}
-pre > i {
-  color: #e67e22;
+pre.example {
+  font-size: 100%;
 }
 .sig .source {
   background: #fff;

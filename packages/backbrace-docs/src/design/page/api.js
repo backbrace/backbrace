@@ -155,7 +155,7 @@ backbrace.controller('api', function(viewer) {
                             if (val.examples) {
                                 val.desc += '<br><h5>Examples</h5>';
                                 $.each(val.examples, function(i, ex) {
-                                    val.desc += '<pre class="source">' + ex + '</pre>';
+                                    val.desc += '<pre class="source example"><code class="javascript">' + ex + '</code></pre>';
                                 });
                             }
 

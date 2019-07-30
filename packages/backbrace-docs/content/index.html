@@ -11,20 +11,25 @@
 <article style="margin-top: 150px;">
     <div class="row">
         <div class="col m6 s12" style="margin-bottom: 20px;">
-            <pre class="source">
+            <pre><code class="json">
 {
-    <b>"name":</b> <i>"index"</i>,
-    <b>"tableName":</b> <i>"table/tutorials"</i>,
-    <b>"component":</b> <i>"templatepage"</i>,
-    <b>"controller":</b> <i>"controllers/guide.js"</i>,
-    <b>"sections":</b> [
+    "name": "index",
+    "data": "design/data/tutorials.json",
+    "controller": "page/guide.js",
+    "sections": [
         {
-            <b>"name":</b> <i>"footer"</i>,
-            <b>"pageName":</b> <i>"page/footer"</i>
+            "name": "main",
+            "component": "templatepage"
+        },
+        {
+            "name": "footer",
+            "component": "templatepage",
+            "data": "design/data/tutorials.json",
+            "controller": "section/footer.js"
         }
     ]
 }
-            </pre>
+            </code></pre>
         </div>
         <div class="col m6 s12">
             <div class="">
