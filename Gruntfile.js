@@ -65,7 +65,7 @@ module.exports = function(grunt) {
           path: path.join(__dirname, paths.core + '/dist'),
           library: 'backbrace',
           filename: '[name].min.js',
-          chunkFilename: '[name].[contenthash:8].min.js'
+          chunkFilename: '[name].min.js'
         }
       }, webpackconfig.get())
     },
@@ -82,6 +82,7 @@ module.exports = function(grunt) {
           paths.sampleapp + '/src'
         ],
         port: 8000,
+        compress: true,
         writeToDisk: true
       },
       localdocs: {
@@ -95,6 +96,7 @@ module.exports = function(grunt) {
           paths.docs + '/src'
         ],
         port: 8000,
+        compress: true,
         historyApiFallback: true,
         watchContentBase: false,
         writeToDisk: true,

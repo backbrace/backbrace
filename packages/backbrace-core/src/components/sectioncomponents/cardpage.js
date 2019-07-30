@@ -77,6 +77,7 @@ export class CardPageComponent extends SectionComponent {
                     () => {
                         return import(
                             /* webpackChunkName: "[request]" */
+                            /* webpackPrefetch: true */
                             `../fieldcomponents/${comp}.js`);
                     },
                     ({ default: Control }) => {

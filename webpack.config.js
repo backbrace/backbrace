@@ -45,11 +45,21 @@ exports.get = function(devmode) {
           ]
         },
         {
-          test: /\.(woff(2)?|ttf|eot|svg|png)(\?v=\d+\.\d+\.\d+)?$/,
+          test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
           use: [{
             loader: 'file-loader',
             options: {
-              name: 'fonts/[name].[hash].[ext]',
+              name: 'fonts/[name].[ext]',
+              publicPath: '../'
+            }
+          }]
+        },
+        {
+          test: /\.(svg|png)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [{
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[ext]',
               publicPath: '../'
             }
           }]
@@ -105,10 +115,9 @@ exports.get = function(devmode) {
         include: 'backbrace.js'
       }),
       new webpack.DefinePlugin(globals.get(devmode)),
-      new webpack.HashedModuleIdsPlugin(),
       new MiniCssExtractPlugin({
         filename: 'styles/[name].css',
-        chunkFilename: 'styles/[name].[contenthash:8].css'
+        chunkFilename: 'styles/[name].css'
       }),
       new webpack.ProvidePlugin({
         $: 'jquery',

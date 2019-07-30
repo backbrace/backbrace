@@ -58,13 +58,14 @@ export function load(name) {
 
         const d = $.Deferred();
 
-        $.getScript(settings.dir.design + name)
-            .done(function() {
-                d.resolve(get(name));
-            })
-            .fail(function() {
-                throw moduleError('noexists', 'Cannot find module \'{0}\'', name);
-            });
+        $.getScript({
+            url: settings.dir.design + name,
+            cache: true
+        }).done(function() {
+            d.resolve(get(name));
+        }).fail(function() {
+            throw moduleError('noexists', 'Cannot find module \'{0}\'', name);
+        });
 
         return d.promise();
 

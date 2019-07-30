@@ -175,6 +175,8 @@ export class AppComponent extends Component {
                     this.addWindowToToolbar(pge).addClass('active');
                 }
 
+                $('.placeholder-content').hide();
+
                 // Load the page component.
                 return pge.load(this.maincontainer);
             },
