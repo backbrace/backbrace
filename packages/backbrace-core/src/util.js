@@ -8,10 +8,8 @@ import $ from 'jquery';
 import { get as getWindow } from './providers/window';
 
 let id = (new Date()).getTime(),
-  timeouts = [],
   devMode = null;
-const messageName = 'ztm',
-  toString = Object.prototype.toString;
+const toString = Object.prototype.toString;
 
 /**
  * A function that performs no operations.
@@ -102,42 +100,6 @@ export function formatString(str, ...args) {
 }
 
 /**
- * Bind a message event listener to the window.
- * @returns {void}
- */
-export function bindMessageEvent() {
-  const window = getWindow();
-  window.addEventListener('message', function windowMessageEvent(event) {
-    if (event.source === window && event.data === messageName) {
-      event.stopPropagation();
-      if (timeouts.length)
-        timeouts.shift()();
-    }
-  }, true);
-}
-
-/**
- * Clear all current message timeouts.
- * @internal
- * @returns {void}
- */
-export function clearTimeouts() {
-  timeouts = [];
-}
-
-/**
- * Run a function asyncroniously. Runs faster than setTimeout(fn, 0).
- * @internal
- * @param {Function} fn Function to run after 0 seconds.
- * @returns {void}
- */
-export function setZeroTimeout(fn) {
-  const window = getWindow();
-  timeouts.push(fn);
-  window.postMessage(messageName, '*');
-}
-
-/**
  * Get the width of the window.
  * @returns {number} Width of the window.
  */
@@ -186,6 +148,3 @@ export function isDevMode() {
   }
   return devMode;
 }
-
-// Bind the message event to the browser window.
-bindMessageEvent();

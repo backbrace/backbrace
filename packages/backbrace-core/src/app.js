@@ -13,11 +13,7 @@ import { compile } from './jss';
 import { error as logError } from './log';
 import { settings } from './settings';
 import { route as addRoute, match as matchRoute } from './route';
-import {
-    setZeroTimeout,
-    isDefined,
-    isHtml5
-} from './util';
+import { isDefined, isHtml5 } from './util';
 import { get as getAlert } from './providers/alert';
 import { get as getWindow } from './providers/window';
 
@@ -70,7 +66,7 @@ export function message(msg, callbackFn, title) {
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
         if (callbackFn)
-            setZeroTimeout(callbackFn);
+            callbackFn();
         return;
     }
 
@@ -95,7 +91,7 @@ export function confirm(msg, callbackFn, title, yescaption, nocaption) {
     // If there is no gui, just run the callback.
     if (!settings.guiAllowed) {
         if (callbackFn)
-            setZeroTimeout(callbackFn);
+            callbackFn(null);
         return;
     }
 

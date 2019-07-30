@@ -87,12 +87,4 @@ describe('util', function() {
         });
     });
 
-    describe('setZeroTimeout', function() {
-        it('should run a function async', function(done) {
-            util.setZeroTimeout(function() {
-                done();
-            });
-        });
-    });
-
 });
