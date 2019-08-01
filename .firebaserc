@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "backbrace-io"
+  },
+  "targets": {
+    "backbrace-io": {
+      "hosting": {
+        "backbrace-io": [
+          "backbrace-io"
+        ]
+      }
+    }
+  }
+}
