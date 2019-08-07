@@ -59,7 +59,7 @@ export class Component {
      * @returns {Component|JQueryPromise} Returns itself for chaining.
      */
     load(container) {
-        this.container = $('<div />').appendTo(container);
+        this.container = $('<div class="component" />').appendTo(container);
         return this;
     }
 

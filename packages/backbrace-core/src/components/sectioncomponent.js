@@ -162,14 +162,4 @@ export class SectionComponent extends Component {
         return this;
     }
 
-    /**
-     * Hide the preloader.
-     * @returns {SectionComponent} Returns itself for chaining.
-     */
-    hidePreLoad() {
-        if (this.window)
-            this.window.preloader.hide();
-        return this;
-    }
-
 }

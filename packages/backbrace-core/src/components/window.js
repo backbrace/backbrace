@@ -59,12 +59,6 @@ export class WindowComponent extends Component {
          */
         this.loader = null;
 
-        /**
-         * @description
-         * Pre-loader overlay.
-         * @type {JQuery}
-         */
-        this.preloader = null;
     }
 
     /**
@@ -75,7 +69,6 @@ export class WindowComponent extends Component {
      */
     load(container) {
 
-        this.preloader = $('<div class="preloader"></div>');
         this.loader = $('<div class="overlay"></div>').hide();
 
         this.titlebar = $('<div class="title-bar unselectable" />');
@@ -92,7 +85,6 @@ export class WindowComponent extends Component {
             .appendTo(container);
 
         $('<div id="window' + this.id + '" class="window" />')
-            .append(this.preloader)
             .append(this.loader)
             .append(this.titlebar)
             .append(this.toolbar)

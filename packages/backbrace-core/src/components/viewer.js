@@ -8,6 +8,7 @@ import { page, table } from '../design';
 import { settings } from '../settings';
 import { Component } from './component';
 import { get as getIcons } from '../providers/icons';
+import { get as getProgress } from '../providers/progress';
 
 const viewerError = error('viewer');
 
@@ -129,6 +130,13 @@ export class ViewerComponent extends Component {
             beforeUpdate: null,
             actionClick: new Map()
         };
+
+        /**
+         * @description
+         * Progress meter.
+         * @type {JQuery}
+         */
+        this.progress = null;
     }
 
     /**
@@ -158,7 +166,8 @@ export class ViewerComponent extends Component {
 
         super.load(container);
 
-        this.container.addClass('viewer row');
+        this.container.addClass('viewer row').hide();
+        this.progress = $(getProgress()).appendTo(container);
 
         return promiseblock(
 
@@ -241,13 +250,7 @@ export class ViewerComponent extends Component {
                 });
             },
 
-            () => {
-
-                this.setTitle(this.options.title || this.page.caption);
-
-                // Show the page.
-                this.show();
-            },
+            () => this.setTitle(this.options.title || this.page.caption),
 
             // Get the page contoller (from file).
             () => {
@@ -267,12 +270,6 @@ export class ViewerComponent extends Component {
                             (mod) => mod(this)
                         );
                 } : null,
-
-            //() => this.update(),
-
-            () => {
-                Array.from(this.sections.values()).forEach((cont) => cont.hidePreLoad());
-            }
 
         );
     }
@@ -309,6 +306,13 @@ export class ViewerComponent extends Component {
             },
             () => {
                 this.hideLoad();
+
+                // Hide the progress meter.
+                if (this.progress) {
+                    this.progress.remove();
+                    this.progress = null;
+                    this.show();
+                }
             }
         );
     }
