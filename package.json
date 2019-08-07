@@ -14,7 +14,7 @@
         "LICENSE"
     ],
     "scripts": {
-        "firebase": "firebase deploy --only hosting:backbrace-io",
+        "firebase": "firebase deploy --only hosting:backbrace-io"
     },
     "devDependencies": {
         "@babel/core": "^7.4.4",
