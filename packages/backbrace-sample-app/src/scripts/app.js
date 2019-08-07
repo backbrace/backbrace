@@ -36,7 +36,7 @@
 
     // Register the service worker.
     if ('serviceWorker' in window.navigator)
-        window.navigator.serviceWorker.register('/service-worker.js' + (backbrace.settings().debug ? '?debug=true' : ''))
+        window.navigator.serviceWorker.register((!backbrace.globals.DEVMODE ? './backbrace' : '') + '/service-worker.js' + (backbrace.settings().debug ? '?debug=true' : ''))
             .then(function(reg) {
                 backbrace.serviceWorker(reg);
             });
