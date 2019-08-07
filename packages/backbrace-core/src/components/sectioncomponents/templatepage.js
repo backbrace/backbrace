@@ -99,7 +99,7 @@ export class TemplatePageComponent extends SectionComponent {
         } else {
             if (data.length > 0) {
                 this.container.html(mergeData(this.template, data[0]));
-            } else {
+            } else if (this.template.includes('{{')) {
                 this.container.html('');
             }
         }
