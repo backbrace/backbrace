@@ -85,8 +85,7 @@ backbrace.controller('api', function(viewer) {
 
         if (res.length === 0) {
 
-            backbrace.loadPage('status/404');
-            return [];
+            backbrace.routeError('404', 'We can\'t seem to find the page you\'re looking for.');
 
         } else {
 
