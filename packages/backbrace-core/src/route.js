@@ -4,6 +4,9 @@
  * @private
  */
 
+import $ from 'jquery';
+import { loadPage } from './app';
+
 /**
  * @type {routeConfig[]}
  * @ignore
@@ -69,4 +72,21 @@ export function match(path) {
         }
     });
     return ret;
+}
+
+/**
+ * Process all links on the current page.
+ * @returns {void}
+ */
+export function processLinks() {
+    $('[route]').each((index, val) => {
+        var a = $(val);
+        if (a.attr('processed') === 'true')
+            return;
+        a.css('cursor', 'pointer').on('click', () => {
+            var r = match(a.attr('route'));
+            if (r)
+                loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
+        }).attr('processed', 'true');
+    });
 }

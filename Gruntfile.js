@@ -141,6 +141,7 @@ module.exports = function(grunt) {
           paths.core + '/src/components/*/*.js',
           paths.core + '/src/backbrace.js',
           paths.core + '/src/globals.js',
+          paths.core + '/src/routeerror.js',
           paths.core + '/src/app.js',
           paths.core + '/src/promises.js',
           paths.core + '/src/module.js',

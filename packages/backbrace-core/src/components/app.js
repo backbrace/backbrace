@@ -7,11 +7,8 @@ import './sectioncomponent';
 import './actions';
 import './window';
 
-import { dataTable, addDataTable } from '../data';
 import { error } from '../error';
-import { addTable, addPage } from '../design';
 import { promisequeue } from '../promises';
-import { match as matchRoute } from '../route';
 import { settings } from '../settings';
 import * as sweetalert from '../sweetalert';
 import { isMobileDevice } from '../util';
@@ -20,29 +17,9 @@ import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
 import { HeaderComponent } from './header';
 import { ViewerComponent } from './viewer';
-import { pagedesign, tabledesign } from '../types';
+import { processLinks } from '../route';
 
 const appError = error('appcomponent');
-
-/**
- * Add a status page to the app.
- * @private
- * @param {string} code Status code.
- * @param {string} description Status description.
- * @returns {void}
- */
-function addStatusPage(code, description) {
-    let pge = $.extend({}, pagedesign),
-        tbl = dataTable('status');
-    pge.name = code;
-    pge.component = 'statuspage';
-    pge.tableName = 'builtin/status';
-    addPage('status/' + code, pge);
-    tbl.push({
-        code: code,
-        description: description
-    });
-}
 
 /**
  * @class
@@ -79,6 +56,13 @@ export class AppComponent extends Component {
          */
         this.windows = null;
 
+        /**
+         * @description
+         * Current error.
+         * @type {Component}
+         */
+        this.currError = null;
+
         this.activePage = 0;
 
         // Lets upgrade alerts...
@@ -93,18 +77,6 @@ export class AppComponent extends Component {
                 sweetalert.show(msg, null, 'Application Error');
             }
         });
-
-        // Add status table.
-        addDataTable('status');
-        let tbl = tabledesign;
-        tbl.name = 'status';
-        tbl.data = 'datatable/status';
-        addTable('builtin/status', tbl);
-
-        // Add status pages.
-        addStatusPage('400', 'Seems like a bad request has happened.');
-        addStatusPage('404', 'We can\'t seem to find the page you were looking for.');
-
     }
 
     /**
@@ -163,6 +135,11 @@ export class AppComponent extends Component {
         if (!settings.windowMode && curr)
             this.closePage(curr.id);
 
+        if (this.currError) {
+            this.currError.unload();
+            this.currError = null;
+        }
+
         promisequeue(
             () => {
 
@@ -192,20 +169,13 @@ export class AppComponent extends Component {
                 return pge.update();
             },
             () => {
-                //Process links.
-                $('[route]').each((index, val) => {
-                    var a = $(val);
-                    if (a.attr('processed') === 'true')
-                        return;
-                    a.css('cursor', 'pointer').on('click', () => {
-                        var r = matchRoute(a.attr('route'));
-                        if (r)
-                            this.loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
-                    }).attr('processed', 'true');
-                });
+                processLinks();
             }
         ).error(() => {
             pge.unload();
+            this.pages.delete(pge.id);
+            if (this.activePage === pge.id)
+                this.activePage = 0;
             if (this.activePage)
                 this.showPage(this.activePage);
         });

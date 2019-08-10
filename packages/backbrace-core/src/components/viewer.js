@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import { promiseblock, promiseeach } from '../promises';
-import { dataTable } from '../data';
 import { load as loadModule } from '../module';
 import { error } from '../error';
 import { get } from '../http';
@@ -26,10 +25,6 @@ function getData(data, table, dataCallback) {
                 if (table) { // Load the data from a table.
                     if (table.data.endsWith('.json')) {
                         return get(table.data);
-                    } else if (table.data.indexOf('datatable/') === 0) {
-                        return {
-                            data: dataTable(table.data.substr(10))
-                        };
                     }
                 } else { // Load from a JSON file.
                     if (data.endsWith('.json')) {

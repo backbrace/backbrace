@@ -36,6 +36,8 @@ import $ from 'jquery';
 import { settings as appSettings } from './settings';
 import { isDefined } from './util';
 import * as windowprovider from './providers/window';
+import { error as err } from './error';
+import { RouteError } from './routeerror';
 
 /**
  * Get/Set the application settings.
@@ -85,6 +87,28 @@ export function window(val) {
  */
 export function jquery() {
     return $;
+}
+
+/**
+ * Throw an application error.
+ * @param {string} code Error code.
+ * @param {string} msg Error message.
+ * @param  {...any} [args] Arguments to merge into the message.
+ * @returns {void}
+ */
+export function error(code, msg, ...args) {
+    throw err('backbrace')(code, msg, args);
+}
+
+/**
+ * Throw a route error.
+ * @param {string} code Error code.
+ * @param {string} msg Error message.
+ * @param  {...any} [args] Arguments to merge into the message.
+ * @returns {void}
+ */
+export function routeError(code, msg, ...args) {
+    throw err('route', RouteError)(code, msg, args);
 }
 
 export {

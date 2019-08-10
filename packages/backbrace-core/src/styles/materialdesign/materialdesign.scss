@@ -2,6 +2,7 @@
 @import "./resets.scss";
 @import "./typography.scss";
 @import "./progress.scss";
+@import "./components/routeerror.scss";
 
 // Components.
 @import "./components/header.scss";
@@ -12,7 +13,6 @@
 @import "./components/field.scss";
 
 // Section components.
-@import "./components/statuspage.scss";
 @import "./components/listpage.scss";
 
 // External override.

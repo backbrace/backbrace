@@ -12,13 +12,17 @@ import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
 import { settings } from './settings';
-import { route as addRoute, match as matchRoute } from './route';
+import { match as matchRoute } from './route';
 import { isDefined, isHtml5 } from './util';
 import { get as getAlert } from './providers/alert';
 import { get as getWindow } from './providers/window';
+import { RouteError } from './routeerror';
+import { RouteErrorComponent } from './components/routeerror';
 
-let app = null,
-    readyFunc = null,
+/** @type {AppComponent} */
+let app = null;
+
+let readyFunc = null,
     suppressNextError = false;
 
 const appError = error('app');
@@ -103,7 +107,7 @@ export function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
 /**
  * Display an error and kill the current execution.
- * @param {Error} err Error to display.
+ * @param {Error|RouteError} err Error to display.
  * @returns {void}
  */
 export function errorHandler(err) {
@@ -114,8 +118,20 @@ export function errorHandler(err) {
 
     // Run error handling.
     if (!suppressNextError) {
+
+        // Clear the last error.
+        if (app.currError) {
+            app.currError.unload();
+            app.currError = null;
+        }
+
         reset();
-        alert.error(err.message);
+
+        if (err instanceof RouteError) {
+            app.currError = new RouteErrorComponent(err).load($('body'));
+        } else {
+            alert.error(err.message);
+        }
     }
 
     suppressNextError = false;
@@ -275,8 +291,6 @@ export function start() {
                     app.load($('body'));
 
                     if (!settings.windowMode) {
-
-                        addRoute({ path: '**', page: 'status/404' });
 
                         window.onpopstate = function(event) {
                             var r = matchRoute(window.location.pathname);
