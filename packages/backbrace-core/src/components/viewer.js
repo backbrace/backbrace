@@ -147,6 +147,9 @@ export class ViewerComponent extends Component {
         if (settings.windowMode)
             $('#win' + this.id).remove();
 
+        if (this.progress)
+            this.progress.remove();
+
         this.container.remove();
         super.unload();
     }
