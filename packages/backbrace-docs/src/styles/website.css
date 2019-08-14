@@ -3,6 +3,8 @@ body {
 }
 .navbar-inner {
   height: 64px;
+}
+.navbar {
   -webkit-box-shadow: 0px 0px;
   box-shadow: 0px 0px;
 }
