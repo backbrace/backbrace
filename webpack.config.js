@@ -112,7 +112,7 @@ exports.get = function(devmode) {
           '\n' + versionInfo.currentPackage.author +
           '\nLicense: ' + versionInfo.currentPackage.license,
         entryOnly: true,
-        include: 'backbrace.js'
+        include: 'backbrace.min.js'
       }),
       new webpack.DefinePlugin(globals.get(devmode)),
       new MiniCssExtractPlugin({
