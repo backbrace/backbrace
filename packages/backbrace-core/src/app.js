@@ -204,7 +204,6 @@ function loadStyle() {
         let def = $.Deferred();
         import(
             /* webpackChunkName: "style-[request]" */
-            /* webpackPrefetch: true */
             './styles/loaders/' + settings.style.loader).then(({ default: load }) => {
                 load();
                 loadColors();
@@ -278,7 +277,6 @@ export function start() {
     // Load the app component.
     import(
         /* webpackChunkName: "app" */
-        /* webpackPrefetch: true */
         './components/app').then(({ default: AppComponent }) => {
 
             promisequeue(

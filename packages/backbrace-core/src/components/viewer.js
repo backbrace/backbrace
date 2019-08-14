@@ -230,7 +230,6 @@ export class ViewerComponent extends Component {
                             () => {
                                 return import(
                                     /* webpackChunkName: "[request]" */
-                                    /* webpackPrefetch: true */
                                     './sectioncomponents/' + comp + '.js');
                             },
                             ({ default: Control }) => {
