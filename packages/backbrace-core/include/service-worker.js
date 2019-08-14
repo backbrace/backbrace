@@ -2,15 +2,7 @@ var CACHE_NAME = 'backbrace-FULLVERSION';
 
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(function(cache) {
-            return cache.addAll(
-                [
-                    'index.html',
-                    'manifest.json',
-                    'scripts/app.js'
-                ]
-            );
-        }).then(function() {
+        caches.open(CACHE_NAME).then(function() {
             return self.skipWaiting();
         })
     );
