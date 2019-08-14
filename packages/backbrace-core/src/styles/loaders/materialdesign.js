@@ -101,7 +101,7 @@ export default function load() {
             background: `${colors.bgsurface}`
         },
         // Add Shadows.
-        '.navbar-inner,.menu': {
+        '.navbar,.menu': {
             '-webkit-box-shadow': `${shadow}`,
             'box-shadow': `${shadow}`
         },
