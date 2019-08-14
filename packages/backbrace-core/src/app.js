@@ -305,7 +305,10 @@ export function start() {
                     if (readyFunc)
                         return readyFunc();
                 }
-            );
+            ).error(function() {
+                // Hide the palceholder.
+                $('.placeholder-content').hide();
+            });
 
         }).catch((err) => {
             errorHandler(err);

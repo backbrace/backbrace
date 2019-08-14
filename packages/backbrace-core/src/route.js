@@ -6,6 +6,10 @@
 
 import $ from 'jquery';
 import { loadPage } from './app';
+import { error } from './error';
+import { RouteError } from './routeerror';
+
+const routeError = error('route', RouteError);
 
 /**
  * @type {routeConfig[]}
@@ -71,6 +75,11 @@ export function match(path) {
             }
         }
     });
+
+    // No routes were matched...
+    if (!ret)
+        throw routeError('404', 'We can\'t seem to find the page you\'re looking for.');
+
     return ret;
 }
 
