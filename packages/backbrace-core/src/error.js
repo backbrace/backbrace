@@ -4,7 +4,8 @@
  * @private
  */
 
-import { isDevMode, formatString } from './util';
+import { formatString } from './util';
+import { settings } from './settings';
 
 /**
  * Create a rich error object.
@@ -15,7 +16,7 @@ import { isDevMode, formatString } from './util';
 export function error(scope, ErrorClass) {
     ErrorClass = ErrorClass || Error;
     return function(code, message, ...args) {
-        let errMessage = (isDevMode() ? '[' + (scope ? scope + ':' : '') + code + '] ' : '') + formatString(message, ...args);
+        let errMessage = (settings.debug ? '[' + (scope ? scope + ':' : '') + code + '] ' : '') + formatString(message, ...args);
         return new ErrorClass(errMessage);
     };
 }
