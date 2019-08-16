@@ -10,16 +10,18 @@ import { error } from './error';
 /**
  * Send a HTTP get request.
  * @param {string} url Absolute or relative URL to get.
+ * @param {string} [dataType] Set the dataType header.
  * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
  * found, it will return `null`.
  */
-export function get(url) {
+export function get(url, dataType) {
 
     const d = $.Deferred();
 
     $.get({
         url: url,
-        cache: true
+        cache: true,
+        dataType: dataType
     }).then(function(data) {
         d.resolve(data);
     }).fail(function(xhr, status, err) {
