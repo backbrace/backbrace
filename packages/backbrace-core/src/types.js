@@ -250,12 +250,16 @@ export let pageaction = {
 
 /**
  * @typedef sectionOptions
- * @property {string} template TemplatePageComponent Option. Template HTML.
- * @property {boolean} useWindowComponent TemplatePageComponent Option. Use a window component.
+ * @property {string} type Type of section.
+ * @property {string} template Templatepage component option. Template HTML.
+ * @property {boolean} useWindowComponent Templatepage component option. Use a window component.
+ * @property {string} file Editorpage component option. File to load into the editor.
  */
 export let sectionoptions = {
+  type: '',
   template: '',
-  useWindowComponent: false
+  useWindowComponent: false,
+  file: ''
 };
 
 /**
