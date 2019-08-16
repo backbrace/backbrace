@@ -35,6 +35,9 @@ body {
 .viewer {
   margin-top: 20px;
 }
+a.link {
+  color: #3498db;
+}
 .mobile-app .viewer {
   padding-left: 10px;
   padding-right: 10px;
@@ -47,6 +50,11 @@ p {
   line-height: 1.4em;
   letter-spacing: 0.3px;
 }
+
+p.desc {
+  margin-top: 35px;
+}
+
 h1 {
   font-size: 2em;
   line-height: 110%;
@@ -268,7 +276,4 @@ pre.example {
   font-size: 1.2em;
   font-weight: 500;
   color: #666;
-}
-[class*="col-"] {
-  margin: 0;
 }

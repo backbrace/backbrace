@@ -6,7 +6,7 @@ backbrace.controller('apihome', function(viewer) {
 
     // Set the page template.
     main.template = '<h1 style="margin: 30px;">' + viewer.page.name + '</h1>' +
-        '<div bb-repeat="true" class="col-sm-12 col-md-6 col-lg-4" style="line-height: 3em; font-size: 1em; display:inline-block;">' +
+        '<div bb-repeat="true" class="col-sm-12 col-md-6 col-lg-4" style="line-height: 3em; font-size: 1em; display:inline-block; margin: 0;">' +
         '<label class="api-type {{kind}}" style="margin-right: 10px;"><a route="api/{{name}}">' +
         '{{kindInitials}}</label> {{name}} {{access}}</a></div>';
 

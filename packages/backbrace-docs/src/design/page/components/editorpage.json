@@ -1,0 +1,59 @@
+{
+    "$schema": "../../../../../backbrace-devkit/schema/pagedesign.json",
+    "name": "editorpage",
+    "caption": "Editorpage Component",
+    "controller": "page/components/component.js",
+    "sections": [
+        {
+            "name": "Title",
+            "component": "templatepage",
+            "options": {
+                "template": "<p>The editorpage component is used to display and allow the user to edit code. It supports many languages ie. Javascript, JSON</p>"
+            }
+        },
+        {
+            "name": "Javascript Editor",
+            "component": "editorpage",
+            "options": {
+                "file": "/design/page/components/component.js"
+            }
+        },
+        {
+            "name": "Javascript Editor Source",
+            "text": "Source",
+            "component": "templatepage",
+            "options": {
+                "useWindowComponent": true
+            }
+        },
+        {
+            "name": "JSON Desc",
+            "component": "templatepage",
+            "options": {
+                "template": "<p class='desc'>By default, the editorpage uses <code>javascript</code> mode but the <code>type</code> option can be used to load other languages.</p>"
+            }
+        },
+        {
+            "name": "JSON Editor",
+            "component": "editorpage",
+            "options": {
+                "type": "json",
+                "file": "/design/page/components/editorpage.json"
+            }
+        },
+        {
+            "name": "JSON Editor Source",
+            "text": "Source",
+            "component": "templatepage",
+            "options": {
+                "useWindowComponent": true
+            }
+        },
+        {
+            "name": "footer",
+            "component": "templatepage",
+            "data": "design/data/tutorials.json",
+            "controller": "section/footer.js"
+        }
+    ]
+}

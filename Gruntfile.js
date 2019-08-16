@@ -16,8 +16,7 @@ module.exports = function(grunt) {
     paths = {
       core: 'packages/backbrace-core',
       devkit: 'packages/backbrace-devkit',
-      docs: 'packages/backbrace-docs',
-      sampleapp: 'packages/backbrace-sample-app'
+      docs: 'packages/backbrace-docs'
     };
 
   //Project configuration.
@@ -33,8 +32,7 @@ module.exports = function(grunt) {
         paths.schema + '/schema/tabledesign.json',
         paths.schema + '/tern/defs/backbrace.json',
         paths.schema + '/typings',
-        paths.docs + '/dist',
-        paths.sampleapp + '/dist'
+        paths.docs + '/dist'
       ],
       tmp: ['tmp']
     },
@@ -71,20 +69,6 @@ module.exports = function(grunt) {
     },
 
     'webpack-dev-server': {
-      sampleapp: {
-        webpack: merge({
-          output: {
-            library: 'backbrace',
-            filename: '[name].js'
-          }
-        }, webpackconfig.get(true)),
-        contentBase: [
-          paths.sampleapp + '/src'
-        ],
-        port: 8000,
-        compress: true,
-        writeToDisk: true
-      },
       localdocs: {
         webpack: merge({
           output: {
@@ -227,16 +211,6 @@ module.exports = function(grunt) {
     },
 
     copy: {
-      sampleapp: {
-        files: [
-          {
-            expand: true, cwd: paths.sampleapp + '/src', src: ['**'], dest: paths.sampleapp + '/dist', rename: function(dest, src) {
-              return dest + '/' + src.replace('production.html', 'index.html');
-            }
-          },
-          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.sampleapp + '/dist/backbrace' }
-        ]
-      },
       docs: {
         files: [
           {
@@ -273,9 +247,6 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'webpack:prod'
   ]);
-  grunt.registerTask('sampleapp', [
-    'webpack-dev-server:sampleapp'
-  ]);
   grunt.registerTask('localdocs', [
     'webpack-dev-server:localdocs'
   ]);
@@ -283,7 +254,6 @@ module.exports = function(grunt) {
     'clean',
     'generate',
     'build',
-    'copy:sampleapp',
     'copy:docs'
   ]);
   grunt.registerTask('default', ['package']);

@@ -50,7 +50,8 @@
         { path: ':name', page: 'page/guide' },
         { path: ':parent/:name', page: 'page/guide' },
         { path: 'api', page: 'page/apihome' },
-        { path: 'api/:module', page: 'page/api' }
+        { path: 'api/:module', page: 'page/api' },
+        { path: 'components/:name', page: 'page/components/:name' }
     );
 
     backbrace.ready(function() {

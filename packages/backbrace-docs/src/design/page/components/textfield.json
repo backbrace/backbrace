@@ -1,0 +1,101 @@
+{
+    "$schema": "../../../../../backbrace-devkit/schema/pagedesign.json",
+    "name": "textfield",
+    "caption": "Textfield Component",
+    "controller": "page/components/component.js",
+    "sections": [
+        {
+            "name": "Title",
+            "component": "templatepage",
+            "options": {
+                "template": "<p>Text fields are a common feature in most user interfaces. It can be initially or programmatically disabled.</p>"
+            }
+        },
+        {
+            "name": "States",
+            "className": "col-md-6",
+            "fields": [
+                {
+                    "name": "Normal"
+                },
+                {
+                    "name": "Disabled",
+                    "editable": false
+                }
+            ]
+        },
+        {
+            "name": "States Source",
+            "text": "Source",
+            "className": "col-md-6",
+            "component": "templatepage",
+            "options": {
+                "useWindowComponent": true
+            }
+        },
+        {
+            "name": "Types Desc",
+            "component": "templatepage",
+            "options": {
+                "template": "<p class='desc'>Text fields can be also used to validate different types of values.</p>"
+            }
+        },
+        {
+            "name": "Types",
+            "className": "col-md-6",
+            "fields": [
+                {
+                    "name": "Email"
+                },
+                {
+                    "name": "Money"
+                },
+                {
+                    "name": "Password"
+                }
+            ]
+        },
+        {
+            "name": "Types Source",
+            "text": "Source",
+            "className": "col-md-6",
+            "component": "templatepage",
+            "options": {
+                "useWindowComponent": true
+            }
+        },
+        {
+            "name": "Data Desc",
+            "component": "templatepage",
+            "options": {
+                "template": "<p class='desc'>Data can be loaded into a textfield by using the <code>dataName</code> property.</p>"
+            }
+        },
+        {
+            "name": "Data",
+            "className": "col-md-6",
+            "data": "design/data/sample.json",
+            "fields": [
+                {
+                    "name": "String",
+                    "dataName": "string"
+                }
+            ]
+        },
+        {
+            "name": "Data Source",
+            "text": "Source",
+            "className": "col-md-6",
+            "component": "templatepage",
+            "options": {
+                "useWindowComponent": true
+            }
+        },
+        {
+            "name": "footer",
+            "component": "templatepage",
+            "data": "design/data/tutorials.json",
+            "controller": "section/footer.js"
+        }
+    ]
+}

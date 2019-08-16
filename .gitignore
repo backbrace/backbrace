@@ -5,7 +5,6 @@ npm-debug.log
 .DS_Store
 /dist/
 /packages/backbrace-core/dist/
-/packages/backbrace-sample-app/dist/
 /packages/backbrace-docs/dist/
 /packages/backbrace-devkit/typings/types.d.ts
 /packages/backbrace-devkit/schema/icons.json

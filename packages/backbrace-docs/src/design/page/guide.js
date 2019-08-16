@@ -29,7 +29,7 @@ backbrace.controller('guide', function(viewer) {
             d = data[0];
 
             // Set the title.
-            viewer.setTitle(name === 'index' ? '' : ' - ' + d.title);
+            viewer.setTitle(name === 'index' ? '' : d.title);
 
         }
 
