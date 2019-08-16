@@ -1,5 +1,19 @@
 var CACHE_NAME = 'backbrace-FULLVERSION';
 
+self.addEventListener('install', function(event) {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(function(cache) {
+                console.log('Installed cache');
+                return cache.addAll([
+                    '/'
+                ]);
+            }).then(function() {
+                return self.skipWaiting();
+            })
+    );
+});
+
 self.addEventListener('activate', function(event) {
 
     var cacheWhitelist = [CACHE_NAME];
@@ -13,6 +27,7 @@ self.addEventListener('activate', function(event) {
                 return null;
             });
         }).then(function() {
+            console.log('Removed old cache');
             return self.clients.claim();
         })
     );
