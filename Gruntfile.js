@@ -218,7 +218,8 @@ module.exports = function(grunt) {
               return dest + '/' + src.replace('production.html', 'index.html');
             }
           },
-          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/backbrace' }
+          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/backbrace' },
+          { src: paths.core + '/dist/service-worker.js', dest: paths.docs + '/dist/service-worker.js' }
         ]
       }
     }

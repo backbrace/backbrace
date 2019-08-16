@@ -2,9 +2,15 @@ var CACHE_NAME = 'backbrace-FULLVERSION';
 
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open(CACHE_NAME).then(function() {
-            return self.skipWaiting();
-        })
+        caches.open(CACHE_NAME)
+            .then(function(cache) {
+                console.log('Installed cache');
+                return cache.addAll([
+                    '/'
+                ]);
+            }).then(function() {
+                return self.skipWaiting();
+            })
     );
 });
 
@@ -21,6 +27,7 @@ self.addEventListener('activate', function(event) {
                 return null;
             });
         }).then(function() {
+            console.log('Removed old cache');
             return self.clients.claim();
         })
     );
@@ -30,7 +37,7 @@ self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.open(CACHE_NAME).then(function(cache) {
             return cache.match(event.request).then(function(response) {
-                var skip = navigator.onLine && event.request.url.indexOf('backbrace.js') !== -1;
+                var skip = false;
                 if (self.location.search.toLowerCase().indexOf('debug=true') !== -1)
                     skip = true;
                 // Cache hit - return response
