@@ -53,7 +53,8 @@ export function match(path) {
             } else {
                 let p2 = route.path.split('/'),
                     res = true,
-                    params = [];
+                    params = [],
+                    page = route.page;
                 if (parr.length !== p2.length)
                     return;
                 parr.forEach(function(p1, index) {
@@ -64,12 +65,14 @@ export function match(path) {
                         p2[index].indexOf(':') === -1) {
                         res = false;
                     }
-                    if (res && p2[index].indexOf(':') === 0)
+                    if (res && p2[index].indexOf(':') === 0) {
                         params[p2[index].substr(1)] = p1;
+                        page = page.replace(p2[index], p1);
+                    }
                 });
                 if (res)
                     ret = {
-                        page: route.page,
+                        page: page,
                         params: params
                     };
             }
