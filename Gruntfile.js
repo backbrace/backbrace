@@ -62,6 +62,7 @@ module.exports = function(grunt) {
         output: {
           path: path.join(__dirname, paths.core + '/dist'),
           library: 'backbrace',
+          libraryTarget: 'window',
           filename: '[name].min.js',
           chunkFilename: '[name].min.js'
         }
