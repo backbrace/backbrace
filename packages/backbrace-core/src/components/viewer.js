@@ -123,6 +123,7 @@ export class ViewerComponent extends Component {
          */
         this.events = {
             beforeUpdate: null,
+            afterUpdate: null,
             actionClick: new Map()
         };
 
@@ -295,10 +296,14 @@ export class ViewerComponent extends Component {
                     if (comp.design.data) {
                         return promiseblock(
                             () => getData(comp.design.data, null, comp.events.beforeUpdate),
-                            (data) => comp.update(data)
+                            (data) => comp.update(data),
+                            comp.events.afterUpdate ? () => comp.events.afterUpdate(data) : null
                         );
                     }
-                    return comp.update(this.data);
+                    return promiseblock(
+                        () => comp.update(this.data),
+                        this.events.afterUpdate ? () => this.events.afterUpdate(data) : null
+                    );
                 });
             },
             () => {

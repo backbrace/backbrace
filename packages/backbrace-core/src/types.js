@@ -193,6 +193,7 @@
 /**
  * @typedef viewerEvents
  * @property {dataCallback} beforeUpdate Runs before the data is bound to the component.
+ * @property {function()} afterUpdate Runs after the data is bound to the component.
  * @property {Map<string, genericFunction>} actionClick Runs on click of an action.
  */
 
