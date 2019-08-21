@@ -43,7 +43,7 @@ function getData(data, table, dataCallback) {
 }
 
 /**
- * @class
+ * @class ViewerComponent
  * @extends {Component}
  * @description
  * Page viewer component. Used to display a page.
@@ -51,7 +51,7 @@ function getData(data, table, dataCallback) {
 export class ViewerComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs ViewerComponent
      * @param {string} name Page name.
      * @param {viewerOptions} [options] Viewer options.
      * @param {Object} [params] Page params.

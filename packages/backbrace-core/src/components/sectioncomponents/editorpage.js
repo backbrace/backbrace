@@ -28,7 +28,7 @@ function loadDef(file) {
 }
 
 /**
- * @class
+ * @class EditorPageComponent
  * @extends {SectionComponent}
  * @description
  * Code editor component class.
@@ -36,7 +36,7 @@ function loadDef(file) {
 export class EditorPageComponent extends SectionComponent {
 
     /**
-     * @constructor
+     * @constructs EditorPageComponent
      * @param {ViewerComponent} viewer Viewer component.
      * @param {pageSectionDesign} design Section design.
      */

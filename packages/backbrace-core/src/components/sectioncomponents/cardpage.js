@@ -2,7 +2,7 @@ import { promiseblock, promiseeach } from '../../promises';
 import { SectionComponent } from '../sectioncomponent';
 
 /**
- * @class
+ * @class CardPageComponent
  * @extends {SectionComponent}
  * @description
  * Card component class.
@@ -10,7 +10,7 @@ import { SectionComponent } from '../sectioncomponent';
 export class CardPageComponent extends SectionComponent {
 
     /**
-     * @constructor
+     * @constructs CardPageComponent
      * @param {ViewerComponent} viewer Viewer component.
      * @param {pageSectionDesign} design Section design.
      */

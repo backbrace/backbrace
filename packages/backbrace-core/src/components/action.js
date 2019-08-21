@@ -3,7 +3,7 @@ import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
 
 /**
- * @class
+ * @class ActionComponent
  * @extends {Component}
  * @description
  * Action button component.
@@ -11,7 +11,7 @@ import { Component } from './component';
 export class ActionComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs ActionComponent
      * @param {pageActionDesign} action Action design.
      * @param {actionRunner} actionRunner Action runner function. Wraps the on click function.
      */

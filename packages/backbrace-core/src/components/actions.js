@@ -3,7 +3,7 @@ import { ActionComponent } from './action';
 import { Component } from './component';
 
 /**
- * @class
+ * @class ActionsComponent
  * @extends {Component}
  * @description
  * Actions bar component.
@@ -11,7 +11,7 @@ import { Component } from './component';
 export class ActionsComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs ActionsComponent
      */
     constructor() {
         super();

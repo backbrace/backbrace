@@ -5,7 +5,7 @@ import { promiseblock, promisequeue } from '../promises';
 import { load as loadModule } from '../module';
 
 /**
- * @class
+ * @class SectionComponent
  * @extends {Component}
  * @description
  * Section component base class.
@@ -13,7 +13,7 @@ import { load as loadModule } from '../module';
 export class SectionComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs SectionComponent
      * @param {ViewerComponent} viewer Parent viewer.
      * @param {pageSectionDesign} design Section design.
      */

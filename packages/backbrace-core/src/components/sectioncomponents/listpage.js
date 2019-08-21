@@ -10,7 +10,7 @@ import { get as getIcons } from '../../providers/icons';
 import { SectionComponent } from '../sectioncomponent';
 
 /**
- * @class
+ * @class ListPageComponent
  * @extends {SectionComponent}
  * @description
  * List component.
@@ -18,7 +18,7 @@ import { SectionComponent } from '../sectioncomponent';
 export class ListPageComponent extends SectionComponent {
 
     /**
-     * @constructor
+     * @constructs ListPageComponent
      * @param {ViewerComponent} viewer Viewer component.
      * @param {pageSectionDesign} design Section design.
      */

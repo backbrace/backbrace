@@ -4,7 +4,7 @@ import 'npm/jquery-ui-dist/jquery-ui.css';
 import { TextFieldComponent } from './textfield';
 
 /**
- * @class
+ * @class DateFieldComponent
  * @extends {TextFieldComponent}
  * @description
  * Date field component.
@@ -12,7 +12,7 @@ import { TextFieldComponent } from './textfield';
 export class DateFieldComponent extends TextFieldComponent {
 
     /**
-     * @constructor
+     * @constructs DateFieldComponent
      * @param {SectionComponent} parent Parent component.
      * @param {pageFieldDesign} field Field design.
      */

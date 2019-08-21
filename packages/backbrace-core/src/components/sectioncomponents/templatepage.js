@@ -5,7 +5,7 @@ import hljs from 'highlight.js';
 import 'npm/highlight.js/styles/a11y-dark.css';
 
 /**
- * @class
+ * @class TemplatePageComponent
  * @extends {SectionComponent}
  * @description
  * Generic page component which renders a HTML template.
@@ -13,7 +13,7 @@ import 'npm/highlight.js/styles/a11y-dark.css';
 export class TemplatePageComponent extends SectionComponent {
 
     /**
-     * @constructor
+     * @constructs TemplatePageComponent
      * @param {ViewerComponent} viewer Viewer component.
      * @param {pageSectionDesign} design Section design.
      */
