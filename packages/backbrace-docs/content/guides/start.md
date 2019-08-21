@@ -29,6 +29,12 @@ You don't need to install anything on your computer: you'll build the web app us
 
 </div>
 
+CodeSandbox creates a basic Backbrace app. We've created this particular app with a dashboard section.
+
+<figure class="z-depth-1">
+    <img width="350" src="/images/guide/start/new-app.png" alt="Starter web app">
+</figure>
+
 <div class="callout is-helpful">
 <header class="file-header">src/scripts/app.js</header>
 
