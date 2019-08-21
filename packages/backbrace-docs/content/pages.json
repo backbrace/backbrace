@@ -1,9 +1,9 @@
 {
     "guides": {
-        "title": "Backbrace Guides",
+        "title": "Introduction to the Backbrace docs",
         "children": {
-            "quickstart": {
-                "title": "Quickstart Guide"
+            "start": {
+                "title": "Getting Started with Backbrace"
             }
         }
     },
