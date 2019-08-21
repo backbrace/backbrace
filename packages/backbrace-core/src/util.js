@@ -5,6 +5,7 @@
  */
 
 import $ from 'jquery';
+import Clipboard from 'clipboard';
 import { get as getWindow } from './providers/window';
 
 let id = (new Date()).getTime();
@@ -127,4 +128,30 @@ export function findInput(elem) {
   }
 
   return null;
+}
+
+/**
+ * Highlight the syntax of a pre code element.
+ * @param {HTMLElement} elem Element to highlight.
+ * @returns {void}
+ */
+export function highlightSyntax(elem) {
+  import('highlight.js').then((hljs) => hljs.highlightBlock(elem));
+}
+
+/**
+ * Add clipboard event to an element.
+ * @param {HTMLElement} trigger Element to trigger the clipboard event.
+ * @param {string} text Text to copy.
+ * @param {*} success Function to run on success.
+ * @returns {ClipboardJS} Returns a clipboard js object.
+ */
+export function clipboard(trigger, text, success) {
+  var clipboard = new Clipboard(trigger, {
+    text: function() {
+      return text;
+    }
+  });
+  clipboard.on('success', success);
+  return clipboard;
 }

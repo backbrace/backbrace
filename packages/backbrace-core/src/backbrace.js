@@ -22,8 +22,10 @@
  * @borrows module:promises.promiseeach as promiseeach
  * @borrows module:route.route as route
  * @borrows module:route.match as matchRoute
+ * @borrows module:util.clipboard as clipboard
  * @borrows module:util.findInput as findInput
  * @borrows module:util.formatString as formatString
+ * @borrows module:util.highlightSyntax as highlightSyntax
  * @borrows module:util.isDefined as isDefined
  * @borrows module:util.isError as isError
  * @borrows module:util.isHtml5 as isHtml5
@@ -116,8 +118,10 @@ export {
 } from './globals';
 
 export {
+    clipboard,
     findInput,
     formatString,
+    highlightSyntax,
     isDefined,
     isError,
     isHtml5,

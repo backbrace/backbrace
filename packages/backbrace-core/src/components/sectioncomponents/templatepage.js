@@ -1,8 +1,6 @@
 import $ from 'jquery';
 import { globals } from '../../globals';
 import { SectionComponent } from '../sectioncomponent';
-import hljs from 'highlight.js';
-import 'npm/highlight.js/styles/a11y-dark.css';
 
 /**
  * @class TemplatePageComponent
@@ -103,11 +101,6 @@ export class TemplatePageComponent extends SectionComponent {
                 this.container.html('');
             }
         }
-
-        // Syntax highlighting.
-        this.container.find('pre code').each(function(i, ele) {
-            hljs.highlightBlock(ele);
-        });
 
         return this;
     }
