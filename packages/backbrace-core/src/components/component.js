@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { uid } from '../util';
 
 /**
- * @class
+ * @class Component
  * @description
  * Component class.
  *
@@ -11,7 +11,7 @@ import { uid } from '../util';
 export class Component {
 
     /**
-     * @constructor
+     * @constructs Component
      */
     constructor() {
 

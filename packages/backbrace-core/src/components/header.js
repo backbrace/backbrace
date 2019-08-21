@@ -6,7 +6,7 @@ import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
 
 /**
- * @class
+ * @class HeaderComponent
  * @extends {Component}
  * @description
  * Header component.
@@ -14,7 +14,7 @@ import { Component } from './component';
 export class HeaderComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs HeaderComponent
      * @param {headerOptions} [options] Header options.
      */
     constructor({ menuIcon = 'menu', attachMenu = true, className = '' } = {}) {

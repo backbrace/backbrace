@@ -1,7 +1,7 @@
 import { Component } from './component';
 
 /**
- * @class
+ * @class FieldComponent
  * @extends {Component}
  * @description
  * Field component base class.
@@ -9,7 +9,7 @@ import { Component } from './component';
 export class FieldComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs FieldComponent
      * @param {SectionComponent} parent Parent page component.
      * @param {pageFieldDesign} field Field design.
      */

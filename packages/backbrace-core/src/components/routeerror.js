@@ -2,7 +2,7 @@ import { Component } from './component';
 import { processLinks } from '../route';
 
 /**
- * @class
+ * @class RouteErrorComponent
  * @extends {Component}
  * @description
  * Route error.
@@ -10,7 +10,7 @@ import { processLinks } from '../route';
 export class RouteErrorComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs RouteErrorComponent
      * @param {RouteError} err Error object.
      */
     constructor(err) {

@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { FieldComponent } from '../fieldcomponent';
 
 /**
- * @class
+ * @class TextFieldComponent
  * @extends {FieldComponent}
  * @description
  * Textbox component.
@@ -10,7 +10,7 @@ import { FieldComponent } from '../fieldcomponent';
 export class TextFieldComponent extends FieldComponent {
 
     /**
-     * @constructor
+     * @constructs TextFieldComponent
      * @param {SectionComponent} parent Parent component.
      * @param {pageFieldDesign} field Field design.
      */

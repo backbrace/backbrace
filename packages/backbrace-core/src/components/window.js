@@ -3,7 +3,7 @@ import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
 
 /**
- * @class
+ * @class WindowComponent
  * @extends {Component}
  * @description
  * Window component.
@@ -11,7 +11,7 @@ import { Component } from './component';
 export class WindowComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs WindowComponent
      * @param {windowOptions} [options] Window options.
      */
     constructor({

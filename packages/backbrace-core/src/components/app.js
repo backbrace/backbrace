@@ -22,7 +22,7 @@ import { processLinks } from '../route';
 const appError = error('appcomponent');
 
 /**
- * @class
+ * @class AppComponent
  * @extends {Component}
  * @description
  * App component.
@@ -30,7 +30,7 @@ const appError = error('appcomponent');
 export class AppComponent extends Component {
 
     /**
-     * @constructor
+     * @constructs AppComponent
      */
     constructor() {
 

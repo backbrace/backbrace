@@ -4,14 +4,14 @@ import { uid } from './util';
 import { errorHandler } from './app';
 
 /**
- * @class
+ * @class PromiseQueue
  * @description
  * Promises Queue class.
  */
 export class PromiseQueue {
 
     /**
-     * @constructor
+     * @constructs PromiseQueue
      * @param {function():*} func Queue function to execute.
      */
     constructor(func) {
