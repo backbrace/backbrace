@@ -58,8 +58,8 @@
 
         $('.navbar-brand').attr('route', '/');
 
-        //$('<div class="header-link"><a route="api">API</a></div>')
-        //   .appendTo($('.navbar-inner'));
+        $('<div class="header-link"><a route="guides">docs</a></div>')
+            .appendTo($('.navbar-inner'));
 
     });
 

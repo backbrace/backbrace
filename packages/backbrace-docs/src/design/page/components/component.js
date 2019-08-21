@@ -2,6 +2,8 @@ backbrace.controller('component', function(viewer) {
 
     var page = viewer.page;
 
+    viewer.container.css('padding-bottom', '50px');
+
     return backbrace.promiseblock(
         function() {
             // Get the design on the page.
@@ -13,7 +15,7 @@ backbrace.controller('component', function(viewer) {
 
                 // Handle title section.
                 if (s.name === 'Title')
-                    viewer.sections.get(s.name).template = '<a class="link" route="components">< Components</a>' +
+                    viewer.sections.get(s.name).template = '<a route="components"><i class="mdi mdi-chevron-left-circle"></i> Components</a>' +
                         '<h4>' + page.caption + '</h4>' +
                         s.options.template;
 
