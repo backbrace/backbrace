@@ -28,3 +28,17 @@ You don't need to install anything on your computer: you'll build the web app us
 * To copy a code example from this tutorial, click the icon at the top right of the code example box, and then paste the code snippet from the clipboard into CodeSandbox.
 
 </div>
+
+<div class="callout is-helpful">
+<header class="file-header">src/scripts/app.js</header>
+
+<pre><code class="javascript">
+backbrace.settings({
+  windowMode: false,
+  style: {
+    css: "styles/app.css"
+  }
+});
+</code><pre>
+
+</div>
