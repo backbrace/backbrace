@@ -15,7 +15,7 @@ backbrace.controller('api', function(viewer) {
             '</div></th></tr></thead>' +
             '<tbody>' +
             '<tr {{showDesc}}><td class="desc">{{desc}}</td></tr>' +
-            '<tr><td class="sig"><pre class="source">{{signature}}</pre></td></tr>' +
+            '<tr><td class="sig"><pre class="source overview">{{signature}}</pre></td></tr>' +
             '<tr {{showParams}}><td class="desc"><h5>Parameters</h5><table style="width:100%">{{paramRows}}</table></td></tr>' +
             '<tr {{showReturns}}><td class="desc"><h5>Returns</h5><br><code>{{returnsType}}</code><br>{{returnsDesc}}</td></tr>' +
             '</table>';
@@ -190,7 +190,7 @@ backbrace.controller('api', function(viewer) {
 
                         });
 
-                    d.overview = '<pre class="source"><span style="color:#9b59b6">' + d.kind + '</span> ' +
+                    d.overview = '<pre class="source overview"><span style="color:#9b59b6">' + d.kind + '</span> ' +
                         convertLink(d.name, links) + (d.extends ? ' <span style="color:#9b59b6">extends</span> ' +
                             convertLink(d.extends, links) : '') + ' {<br>' +
                         d.overview + '}</pre>';
@@ -218,6 +218,22 @@ backbrace.controller('api', function(viewer) {
             );
 
         }
+    };
+
+    viewer.events.afterUpdate = function() {
+        // Syntax highlighting.
+        viewer.container.find('pre code').each(function(i, ele) {
+            var btn = $('<i class="mdi mdi-content-copy copy-source" title="Click to copy source"></i>').prependTo($(ele).parent());
+            var clipboard = backbrace.clipboard(btn[0], ele.innerHTML);
+            clipboard.on('success', function() {
+                // TODO MAKE COMPONENT
+                var notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
+                setTimeout(function() {
+                    notify.remove();
+                }, 2000);
+            });
+            backbrace.highlightSyntax(ele);
+        });
     };
 
 });

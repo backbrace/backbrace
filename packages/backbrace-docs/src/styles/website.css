@@ -266,22 +266,37 @@ code {
   line-height: 1.45;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
+pre {
+  background: rgba(241, 241, 241, 0.5);
+  padding: 5px;
+  border-radius: 3px;
+  margin: 5px;
+}
 pre.source {
   margin-top: 10px;
   background-color: #f6f8fa;
   border-radius: 3px;
-  font-size: 85%;
+  font-size: 100%;
   line-height: 1.45;
   overflow: auto;
   padding: 16px;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
-pre.example {
-  font-size: 100%;
+.source.overview {
+  font-size: 85%;
+}
+.source.example {
+  font-size: 95%;
 }
 .sig .source {
   background: #fff;
   margin-top: 0;
+}
+
+.copy-source {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .docs-card {
@@ -294,4 +309,100 @@ pre.example {
   -webkit-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12),
     0 1px 5px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.file-header {
+  text-transform: none !important;
+  font-weight: 300 !important;
+  font-size: 15px !important;
+}
+
+/*
+
+Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: transparent;
+  color: black;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #800;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-section,
+.hljs-title,
+.hljs-name {
+  color: #008;
+}
+
+.hljs-variable,
+.hljs-template-variable {
+  color: #660;
+}
+
+.hljs-string,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-regexp {
+  color: #080;
+}
+
+.hljs-literal,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-meta,
+.hljs-number,
+.hljs-link {
+  color: #066;
+}
+
+.hljs-title,
+.hljs-doctag,
+.hljs-type,
+.hljs-attr,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-params {
+  color: #606;
+}
+
+.hljs-attribute,
+.hljs-subst {
+  color: #000;
+}
+
+.hljs-formula {
+  background-color: #eee;
+  font-style: italic;
+}
+
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #9b703f;
+}
+
+.hljs-addition {
+  background-color: #baeeba;
+}
+
+.hljs-deletion {
+  background-color: #ffc8bd;
+}
+
+.hljs-doctag,
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
 }

@@ -48,4 +48,20 @@ backbrace.controller('guide', function(viewer) {
         return data;
     };
 
+    viewer.events.afterUpdate = function() {
+        // Syntax highlighting.
+        main.container.find('pre code').each(function(i, ele) {
+            var btn = $('<i class="mdi mdi-content-copy copy-source" title="Click to copy source"></i>').prependTo($(ele).parent());
+            var clipboard = backbrace.clipboard(btn[0], ele.innerHTML);
+            clipboard.on('success', function() {
+                // TODO MAKE COMPONENT
+                var notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
+                setTimeout(function() {
+                    notify.remove();
+                }, 2000);
+            });
+            backbrace.highlightSyntax(ele);
+        });
+    };
+
 });
