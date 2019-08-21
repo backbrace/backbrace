@@ -5,7 +5,6 @@
  */
 
 import $ from 'jquery';
-import { error } from './error';
 import { promiseblock } from './promises';
 import { get } from './http';
 import { settings } from './settings';
@@ -24,8 +23,7 @@ const defaults = {
     table: types.tabledesign,
     /** @type {tableColumnDesign} */
     tablecolumn: types.tablecolumn
-},
-    designError = error('design');
+};
 
 /**
  * @ignore
@@ -38,30 +36,6 @@ let pagecache = new Map();
  * @type {Map<string, tableDesign>}
  */
 let tablecache = new Map();
-
-/**
- * Add a page to the page cache.
- * @param {string} name Name of the page.
- * @param {pageDesign} pge Page design.
- * @returns {void}
- */
-export function addPage(name, pge) {
-    if (pagecache.has(name))
-        designError('exists', 'Page {0} already exists in the page cache.', name);
-    pagecache.set(name, pge);
-}
-
-/**
- * Add a table to the table cache.
- * @param {string} name Name of the table.
- * @param {tableDesign} tbl Table design.
- * @returns {void}
- */
-export function addTable(name, tbl) {
-    if (tablecache.has(name))
-        designError('exists', 'Table {0} already exists in the table cache.', name);
-    tablecache.set(name, tbl);
-}
 
 /**
  * Get page object design.
