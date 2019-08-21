@@ -3,10 +3,18 @@
 backbrace.controller('guide', function(viewer) {
 
     var $ = backbrace.jquery(),
-        main = viewer.sections.get('main');
+        main = viewer.sections.get('main'),
+        editurl = 'https://github.com/backbrace/backbrace/edit/master/packages/backbrace-docs/content/{0}.md?message=docs(core)%3A%20describe%20your%20change...';
 
     // Set the page template.
-    main.template = '<div style="min-height:60vh">{{html}}</div>';
+    main.template = '<div style="min-height:60vh">{{githublink}}{{html}}</div>';
+
+    function addGithubLink(name, parent) {
+        parent = parent || name;
+        return '<a title="Suggest a change" class="suggest-link" aria-hidden="true" href="' +
+            backbrace.formatString(editurl, parent + '/' + name) +
+            '"><i class="mdi mdi-pencil"></i></a>';
+    }
 
     // Filter the data.
     viewer.events.beforeUpdate = function(data) {
@@ -18,6 +26,10 @@ backbrace.controller('guide', function(viewer) {
         // Get the guide from the data.
         data = $.grep(data, function(val) {
             return val.name.toLowerCase() === name && (!p || p.toLowerCase() === val.parent.toLowerCase());
+        }).map(function(val) {
+            if (val.type === 2)
+                val.githublink = addGithubLink(val.name, val.parent);
+            return val;
         });
 
         if (data.length === 0) {
