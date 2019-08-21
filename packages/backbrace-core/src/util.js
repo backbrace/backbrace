@@ -143,15 +143,13 @@ export function highlightSyntax(elem) {
  * Add clipboard event to an element.
  * @param {HTMLElement} trigger Element to trigger the clipboard event.
  * @param {string} text Text to copy.
- * @param {*} success Function to run on success.
  * @returns {ClipboardJS} Returns a clipboard js object.
  */
-export function clipboard(trigger, text, success) {
+export function clipboard(trigger, text) {
   var clipboard = new Clipboard(trigger, {
     text: function() {
       return text;
     }
   });
-  clipboard.on('success', success);
   return clipboard;
 }
