@@ -272,6 +272,9 @@ pre {
   border-radius: 3px;
   margin: 5px;
 }
+.callout pre {
+  background: transparent;
+}
 pre.source {
   margin-top: 10px;
   background-color: #f6f8fa;
