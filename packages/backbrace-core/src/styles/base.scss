@@ -40,3 +40,9 @@
   -webkit-border-radius: 50%;
   border-spacing: 0px;
 }
+
+@media only screen and (max-width: 640px) {
+  .hide-small {
+    display: none !important;
+  }
+}
