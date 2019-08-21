@@ -58,7 +58,7 @@
 
         $('.navbar-brand').attr('route', '/');
 
-        $('<div class="header-link"><a route="guides">docs</a></div>')
+        $('<div class="header-link hide-small"><a route="guides">docs</a></div>')
             .appendTo($('.navbar-inner'));
 
     });
