@@ -8,6 +8,7 @@ import $ from 'jquery';
 import { error } from './error';
 import { settings } from './settings';
 import { isDefined } from './util';
+import { get as getWindow } from './providers/window';
 
 let modules = {};
 
@@ -50,27 +51,30 @@ export function exists(name) {
 /**
  * Load a module from a file.
  * @param {string} name File name. We will attempt to load the file from the design dir.
- * @returns {JQueryPromise|function(*)} Promise to return after we load the module.
+ * @returns {JQueryPromise<*>} Promise to return after we load the module.
  */
 export function load(name) {
+
+    const d = $.Deferred(),
+        window = getWindow();
+
     // Check if we are loading a js file and the module doesn't exist.
     if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
 
-        const d = $.Deferred();
-
-        $.getScript({
-            url: settings.dir.design + name,
-            cache: true
-        }).done(function() {
-            d.resolve(get(name));
-        }).fail(function() {
+        let script = window.document.createElement('script');
+        script.type = 'module';
+        script.src = settings.dir.design + name;
+        script.onerror = function() {
             throw moduleError('noexists', 'Cannot find module \'{0}\'', name);
-        });
-
-        return d.promise();
+        };
+        script.onload = function() {
+            d.resolve(get(name));
+        };
+        window.document.head.appendChild(script);
 
     } else {
-        return get(name);
+        window.setTimeout(() => d.resolve(get(name)), 10);
     }
 
+    return d.promise();
 }
