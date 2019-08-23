@@ -1,36 +1,37 @@
-'use strict';
+/**
+ * @license
+ * Copyright Paul Fisher <paulfisher53@gmail.com> All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://backbrace.io/mitlicense
+ */
 
-backbrace.controller('guide', function(viewer) {
+import { highlight } from '../modules/util.js';
+import * as templates from '../modules/templates.js';
+import * as settings from '../modules/settings.js';
 
-    var $ = backbrace.jquery(),
-        main = viewer.sections.get('main'),
-        editurl = 'https://github.com/backbrace/backbrace/edit/master/packages/backbrace-docs/content/{0}.md?message=docs(core)%3A%20describe%20your%20change...';
+backbrace.controller('guide', (viewer) => {
 
-    // Set the page template.
-    main.template = '<div style="min-height:60vh">{{githublink}}{{html}}</div>';
-
-    function addGithubLink(name, parent) {
-        parent = parent || name;
-        return '<a title="Suggest a change" class="suggest-link" aria-hidden="true" href="' +
-            backbrace.formatString(editurl, parent + '/' + name) +
-            '"><i class="mdi mdi-pencil"></i></a>';
-    }
+    let main = viewer.sections.get('main');
+    main.template = templates.GUIDE;
 
     // Filter the data.
-    viewer.events.beforeUpdate = function(data) {
+    viewer.events.beforeUpdate = (data) => {
 
-        var name = viewer.params['name'] || 'index',
+        let name = viewer.params['name'] || 'index',
             p = viewer.params['parent'],
             d = null;
 
         // Get the guide from the data.
-        data = $.grep(data, function(val) {
-            return val.name.toLowerCase() === name && (!p || p.toLowerCase() === val.parent.toLowerCase());
-        }).map(function(val) {
-            if (val.type === 2)
-                val.githublink = addGithubLink(val.name, val.parent);
-            return val;
-        });
+        data = data.filter((val) => val.name.toLowerCase() === name && (!p || p.toLowerCase() === val.parent.toLowerCase()))
+            .map((val) => {
+                // Add edit icon (markdown pages only).
+                if (val.type === 2)
+                    val.githublink = `<a title="Suggest a change" class="suggest-link" aria-hidden="true"
+                    href="${settings.EDIT_DOCS_URL}/content/${val.parent || val.name}/${val.name}.md?message=docs(core)%3A%20describe%20your%20change...">
+                    <i class="mdi mdi-pencil"></i></a>`;
+                return val;
+            });
 
         if (data.length === 0) {
 
@@ -48,20 +49,6 @@ backbrace.controller('guide', function(viewer) {
         return data;
     };
 
-    viewer.events.afterUpdate = function() {
-        // Syntax highlighting.
-        main.container.find('pre code').each(function(i, ele) {
-            var btn = $('<i class="mdi mdi-content-copy copy-source" title="Click to copy source"></i>').prependTo($(ele).parent());
-            var clipboard = backbrace.clipboard(btn[0], ele.innerHTML);
-            clipboard.on('success', function() {
-                // TODO MAKE COMPONENT
-                var notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
-                setTimeout(function() {
-                    notify.remove();
-                }, 2000);
-            });
-            backbrace.highlightSyntax(ele);
-        });
-    };
+    viewer.events.afterUpdate = () => highlight(viewer);
 
 });
