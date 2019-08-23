@@ -53,7 +53,7 @@
             "name": "footer",
             "component": "templatepage",
             "data": "design/data/tutorials.json",
-            "controller": "section/footer.js"
+            "controller": "page/footer.js"
         }
     ]
 }
