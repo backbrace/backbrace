@@ -297,15 +297,15 @@ export class ViewerComponent extends Component {
                         return promiseblock(
                             () => getData(comp.design.data, null, comp.events.beforeUpdate),
                             (data) => comp.update(data),
-                            comp.events.afterUpdate ? () => comp.events.afterUpdate(data) : null
+                            comp.events.afterUpdate ? () => comp.events.afterUpdate() : null
                         );
                     }
                     return promiseblock(
-                        () => comp.update(this.data),
-                        this.events.afterUpdate ? () => this.events.afterUpdate(data) : null
+                        () => comp.update(this.data)
                     );
                 });
             },
+            this.events.afterUpdate ? () => this.events.afterUpdate() : null,
             () => {
                 this.hideLoad();
 
