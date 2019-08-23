@@ -56,6 +56,7 @@ export class SectionComponent extends Component {
          */
         this.events = {
             beforeUpdate: null,
+            afterUpdate: null,
             actionClick: new Map()
         };
     }
