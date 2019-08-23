@@ -1,86 +1,46 @@
-'use strict';
+/**
+ * @license
+ * Copyright Paul Fisher <paulfisher53@gmail.com> All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://backbrace.io/mitlicense
+ */
 
-// API Page Controller.
-backbrace.controller('api', function(viewer) {
+import { highlight, mergeData, convertLink } from '../modules/util.js';
+import * as templates from '../modules/templates.js';
+import * as settings from '../modules/settings.js';
 
-    var $ = backbrace.jquery(),
-        editurl = 'https://github.com/backbrace/backbrace/edit/master{0}?message=docs(core)%3A%20describe%20your%20change...{1}',
-        sourceurl = 'https://github.com/backbrace/backbrace/tree/master{0}{1}',
+/**
+ * Add API github links.
+ * @param {string} file File path.
+ * @param {number} lineno Line number.
+ * @returns {string} Returns the github API link.
+ */
+function addGithubLinks(file, lineno) {
+    return `<a title="View source" class="suggest-link" aria-hidden="true" href="${settings.MASTER_TREE}${file}#L${lineno}">
+        <i class="mdi mdi-code-tags"></i></a>
+        <a title="Suggest a change" class="suggest-link" aria-hidden="true" href="${settings.EDIT_MASTER}${file}?message=docs(core)%3A%20describe%20your%20change...#L${lineno}">
+        <i class="mdi mdi-pencil"></i></a>`;
+}
+
+backbrace.controller('api', (viewer) => {
+
+    let $ = backbrace.jquery(),
         page = viewer.sections.get('main'),
-        path = viewer.options.updateHistory || window.location.pathname,
-        membertemplate = '<a id="{{name}}"></a><table class="method-table"><thead><tr><th><div>{{name}}' +
-            '<a title="Link to this heading" class="heading-link" aria-hidden="true" href="' + path + '#{{name}}' +
-            '"><i class="mdi mdi-link"></i></a>' +
-            '{{githubLinks}}' +
-            '</div></th></tr></thead>' +
-            '<tbody>' +
-            '<tr {{showDesc}}><td class="desc">{{desc}}</td></tr>' +
-            '<tr><td class="sig"><pre class="source overview">{{signature}}</pre></td></tr>' +
-            '<tr {{showParams}}><td class="desc"><h5>Parameters</h5><table style="width:100%">{{paramRows}}</table></td></tr>' +
-            '<tr {{showReturns}}><td class="desc"><h5>Returns</h5><br><code>{{returnsType}}</code><br>{{returnsDesc}}</td></tr>' +
-            '</table>';
+        membertemplate = templates.API_MEMBER;
 
     // Set the page template.
-    page.template = '<h1 class="api-heading">{{name}}</h1>' +
-        '<label class="api-type {{kind}}">{{access}} {{kind}}&nbsp;</label>' +
-        '{{githubLinks}}<section class="desc">{{desc}}</section>' +
-        '<div class="api-body">' +
-        '{{overview}}' +
-        '{{constructors}}' +
-        '{{properties}}' +
-        '{{methods}}' +
-        '</div>';
-
-    function addGithubLinks(file, lineno) {
-        return '<a title="View source" class="suggest-link" aria-hidden="true" href="' +
-            backbrace.formatString(sourceurl, file, '#L' + lineno) +
-            '"><i class="mdi mdi-code-tags"></i></a>' +
-            '<a title="Suggest a change" class="suggest-link" aria-hidden="true" href="' +
-            backbrace.formatString(editurl, file, '#L' + lineno) +
-            '"><i class="mdi mdi-pencil"></i></a>';
-    }
-
-    function convertLink(val, links) {
-        var vals = val.split('|'),
-            ret = [],
-            encv = '',
-            t = '';
-        $.each(vals, function(index, v) {
-            encv = v.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            t = v.replace(/Array\.</g, '').replace(/>/g, '');
-            if (links.indexOf(t) === -1) {
-                ret.push('<span style="color:blue">' + encv + '</span>');
-            } else {
-                ret.push('<a style="color:#1abc9c;text-decoration:underline;" route="api/' + t + '">' + encv + '</a>');
-            }
-        });
-        return ret.join('|');
-    }
-
-    function mergeData(templ, d) {
-
-        var s = templ,
-            check = new RegExp('\\{\\{((.*?))\\}\\}', 'g'),
-            fields = s.match(check);
-        $.each(fields, function(i, f) {
-            var fieldname = f.replace(check, '$1');
-            s = s.replace('{{' + fieldname + '}}', d[fieldname] || '');
-        });
-        return s;
-    }
+    page.template = templates.API;
 
     viewer.events.beforeUpdate = function(data) {
 
-        var modname = viewer.params['module'],
-            res = $.grep(data, function(val) {
-                return val.name === modname;
-            }).map(function(val) {
-                val.githubLinks = addGithubLinks(val.file, val.lineno);
-                return val;
-            }),
-            links = $.map(data, function(val) {
-                return val.name;
-            }),
+        let modname = viewer.params['module'],
+            res = data.filter((val) => val.name === modname)
+                .map((val) => {
+                    val.githubLinks = addGithubLinks(val.file, val.lineno);
+                    return val;
+                }),
+            links = data.map((val) => val.name),
             d = null;
 
         if (res.length === 0) {
@@ -95,50 +55,52 @@ backbrace.controller('api', function(viewer) {
             viewer.setTitle(d.name);
 
             return backbrace.promiseblock(
-                function() {
-                    return backbrace.get('/design/data/members.json');
-                },
-                function(members) {
 
-                    var constructors = [],
+                // Get the member data.
+                () => backbrace.get('/design/data/members.json'),
+
+                (members) => {
+
+                    let constructors = [],
                         properties = [],
                         methods = [],
                         prepend = '';
 
                     // Transform the members array.
-                    members = $.grep(members, function(val) {
-                        var isMember = val.memberof === d.name && (val.kind === 'function' || val.kind === 'callback'),
+                    members = members.filter((val) => {
+                        let isMember = val.memberof === d.name && (val.kind === 'function' || val.kind === 'callback'),
                             isProperty = val.memberof === d.name && (val.kind === 'property' || val.kind === 'member'),
                             isConstruct = val.memberof === d.name && val.kind === 'constructor';
                         return (isMember || isProperty || isConstruct) && !val.ignore;
-                    }).map(function(val) {
+                    }).map((val) => {
                         val.sort = 1;
                         if (val.kind === 'property' || val.kind === 'member')
                             val.sort = 2;
                         if (val.kind === 'function' || val.kind === 'callback')
                             val.sort = 3;
                         return val;
-                    }).sort(function(a, b) {
+                    }).sort((a, b) => {
                         if (a.sort === b.sort)
                             return a.name > b.name ? 1 : -1;
                         return a.sort > b.sort ? 1 : -1;
                     });
 
                     d.overview = '';
-                    prepend = d.kind === 'module' ? '<span style="color:#9b59b6">' + d.name + '</span>.' : '<span style="color:#9b59b6">this</span>.';
+                    prepend = d.kind === 'module' ? `<span style="color:#9b59b6">${d.name}</span>.` : '<span style="color:#9b59b6">this</span>.';
 
                     if (members.length > 0)
-                        $.each(members, function(index, val) {
+                        members.forEach((val) => {
 
-                            var params = [];
+                            let params = [];
 
                             // Defaults.
                             val.paramRows = '';
                             val.returns = val.returns || { type: 'void' };
                             val.desc = val.desc || '';
+                            val.browserPath = viewer.options.updateHistory || window.location.pathname;
 
                             if (val.params)
-                                $.each(val.params, function(i, p) {
+                                val.params.forEach((p) => {
                                     if (p.name === 'args')
                                         p.name = '...' + p.name;
                                     params.push(p.name + (p.optional ? '?' : '') + ': ' + convertLink(p.type, links));
@@ -153,7 +115,7 @@ backbrace.controller('api', function(viewer) {
 
                             if (val.examples) {
                                 val.desc += '<br><h5>Examples</h5>';
-                                $.each(val.examples, function(i, ex) {
+                                val.examples.forEach((ex) => {
                                     val.desc += '<pre class="source example"><code class="javascript">' + ex + '</code></pre>';
                                 });
                             }
@@ -199,14 +161,12 @@ backbrace.controller('api', function(viewer) {
                     d.properties = properties.length > 0 ? '<h4>Properties</h4>' + properties.join('<br>') : '';
                     d.methods = methods.length > 0 ? '<h4>Methods</h4>' + methods.join('<br>') : '';
 
-                    backbrace.promisequeue(function() {
+                    backbrace.promisequeue(() => {
 
                         //Process links.
-                        $('a[anchor]').each(function() {
-                            var a = $(this);
-                            a.on('click', function() {
-                                $(window).scrollTop($(a.attr('anchor')).position().top - 80);
-                            });
+                        $('a[anchor]').each((i, ele) => {
+                            let a = $(ele);
+                            a.on('click', () => $(window).scrollTop($(a.attr('anchor')).position().top - 80));
                         });
 
                         if (window.location.hash !== '')
@@ -220,20 +180,6 @@ backbrace.controller('api', function(viewer) {
         }
     };
 
-    viewer.events.afterUpdate = function() {
-        // Syntax highlighting.
-        viewer.container.find('pre code').each(function(i, ele) {
-            var btn = $('<i class="mdi mdi-content-copy copy-source" title="Click to copy source"></i>').prependTo($(ele).parent());
-            var clipboard = backbrace.clipboard(btn[0], ele.innerHTML);
-            clipboard.on('success', function() {
-                // TODO MAKE COMPONENT
-                var notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
-                setTimeout(function() {
-                    notify.remove();
-                }, 2000);
-            });
-            backbrace.highlightSyntax(ele);
-        });
-    };
+    viewer.events.afterUpdate = () => highlight(viewer);
 
 });
