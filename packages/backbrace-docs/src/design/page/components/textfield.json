@@ -1,7 +1,7 @@
 {
     "$schema": "../../../../../backbrace-devkit/schema/pagedesign.json",
     "name": "textfield",
-    "caption": "Textfield Component",
+    "caption": "TextField Component",
     "controller": "page/components/component.js",
     "sections": [
         {

@@ -32,15 +32,15 @@ backbrace.controller('api', (viewer) => {
     // Set the page template.
     page.template = templates.API;
 
-    viewer.events.beforeUpdate = function(data) {
+    viewer.beforeUpdate = function() {
 
         let modname = viewer.params['module'],
-            res = data.filter((val) => val.name === modname)
+            res = viewer.data.filter((val) => val.name === modname)
                 .map((val) => {
                     val.githubLinks = addGithubLinks(val.file, val.lineno);
                     return val;
                 }),
-            links = data.map((val) => val.name),
+            links = viewer.data.map((val) => val.name),
             d = null;
 
         if (res.length === 0) {
@@ -173,13 +173,13 @@ backbrace.controller('api', (viewer) => {
                             $(window).scrollTop($(window.location.hash).position().top - 80);
                     });
 
-                    return [d];
+                    viewer.data = [d];
                 }
             );
 
         }
     };
 
-    viewer.events.afterUpdate = () => highlight(viewer);
+    viewer.afterUpdate = () => highlight(viewer);
 
 });

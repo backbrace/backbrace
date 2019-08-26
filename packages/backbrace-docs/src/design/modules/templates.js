@@ -48,3 +48,12 @@ export const API_MEMBER = `<a id="{{name}}"></a><table class="method-table"><the
 <tr {{showParams}}><td class="desc"><h5>Parameters</h5><table style="width:100%">{{paramRows}}</table></td></tr>
 <tr {{showReturns}}><td class="desc"><h5>Returns</h5><br><code>{{returnsType}}</code><br>{{returnsDesc}}</td></tr>
 </table>`;
+
+/**
+ * Component Template.
+ */
+export const COMPONENT = `<div class="col-sm-12 col-md-6 col-lg-4"
+style="line-height: 3em; font-size: 1em; display:inline-block; margin: 0;">
+<a route="components/{{name}}"><label class="comp-type {{type}}" style="margin-right: 10px;">{{initals}}</label>
+{{caption}}</a>
+</div>`;

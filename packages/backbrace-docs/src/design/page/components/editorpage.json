@@ -1,7 +1,7 @@
 {
     "$schema": "../../../../../backbrace-devkit/schema/pagedesign.json",
     "name": "editorpage",
-    "caption": "Editorpage Component",
+    "caption": "EditorPage Component",
     "controller": "page/components/component.js",
     "sections": [
         {

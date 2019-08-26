@@ -19,7 +19,7 @@ export function highlight(viewer) {
     viewer.container.find('pre code').each((i, ele) => {
 
         // Add the copy button.
-        let btn = $('<i class="mdi mdi-content-copy copy-source" title="Click to copy source"></i>').prependTo($(ele).parent()),
+        let btn = $('<i class="mdi mdi-content-copy copy-source clickable" title="Click to copy source"></i>').prependTo($(ele).parent()),
             clipboard = backbrace.clipboard(btn[0], ele.innerHTML);
         clipboard.on('success', () => {
             let notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
@@ -27,7 +27,12 @@ export function highlight(viewer) {
         });
 
         // Syntax highlighting.
-        backbrace.highlightSyntax(ele);
+        backbrace.highlightSyntax(ele, ele.classList.value);
+
+        // Add other colors.
+        if (ele.classList.value === 'javascript') {
+            ele.innerHTML = ele.innerHTML.replace(/backbrace\./g, '<span class="hljs-built_in">backbrace</span>.');
+        }
     });
 }
 

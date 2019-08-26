@@ -13,6 +13,8 @@ backbrace.controller('footer', (viewer, section) => {
     section.container.css('width', '100vw');
 
     // Filter the data.
-    section.events.beforeUpdate = (data) => data.filter((val) => val.name.toLowerCase() === 'footer');
+    section.beforeUpdate = () => {
+        section.data = section.data.filter(val => val.name.toLowerCase() === 'footer');
+    };
 
 });
