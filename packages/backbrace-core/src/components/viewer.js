@@ -15,10 +15,9 @@ const viewerError = error('viewer');
  * Get data from a data source.
  * @param {string} data Data source.
  * @param {tableDesign} [table] Table design.
- * @param {dataCallback} [dataCallback] Data callback.
  * @returns {JQueryPromise<any[]>} Promise to return the data.
  */
-function getData(data, table, dataCallback) {
+function getData(data, table) {
     if (data) {
         return promiseblock(
             () => {
@@ -33,10 +32,7 @@ function getData(data, table, dataCallback) {
                 }
             },
             (data) => {
-                data = data.data || data;
-                if (dataCallback)
-                    return dataCallback(data);
-                return data;
+                return data.data || data;
             }
         );
     }
@@ -56,7 +52,7 @@ export class ViewerComponent extends Component {
      * @param {viewerOptions} [options] Viewer options.
      * @param {Object} [params] Page params.
      */
-    constructor(name, { title, hasParent = false, temp = false, updateHistory = null } = {}, params = {}) {
+    constructor(name, { title, hasParent = false, updateHistory = null } = {}, params = {}) {
 
         super();
 
@@ -79,7 +75,7 @@ export class ViewerComponent extends Component {
          * Viewer options.
          * @type {viewerOptions}
          */
-        this.options = { title, hasParent, temp, updateHistory };
+        this.options = { title, hasParent, updateHistory };
 
         /**
          * @description
@@ -97,13 +93,6 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * Data source of the viewer.
-         * @type {any[]}
-         */
-        this.data = null;
-
-        /**
-         * @description
          * Page sections.
          * @type {Map<string, SectionComponent>}
          */
@@ -118,21 +107,17 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * Viewer events.
-         * @type {viewerEvents}
-         */
-        this.events = {
-            beforeUpdate: null,
-            afterUpdate: null,
-            actionClick: new Map()
-        };
-
-        /**
-         * @description
          * Progress meter.
          * @type {JQuery}
          */
         this.progress = null;
+
+        /**
+         * @description
+         * Action click events.
+         * @type {Map<string, genericFunction>}
+         */
+        this.click = new Map();
     }
 
     /**
@@ -205,8 +190,8 @@ export class ViewerComponent extends Component {
                             };
 
                             // Merge page and table fields.
-                            $.each(this.page.sections, function(index, section) {
-                                $.each(section.fields, function(index, field) {
+                            this.page.sections.forEach(section => {
+                                section.fields.forEach(field => {
 
                                     let col = getColumn(field.name);
                                     if (col) {
@@ -279,34 +264,51 @@ export class ViewerComponent extends Component {
      */
     update() {
 
+        if (!this.shouldUpdate())
+            return;
+
         this.showLoad();
         return promiseblock(
+
             () => {
                 if (this.page.data)
-                    return getData(this.page.data, this.table, this.events.beforeUpdate);
+                    return promiseblock(
+                        () => getData(this.page.data, this.table),
+                        data => {
+                            this.data = data || [];
+                        }
+                    );
             },
-            (data) => {
 
-                // Save the data.
-                this.data = data || [];
+            () => this.beforeUpdate(),
+
+            () => {
 
                 // Update the sections.
                 return promiseeach(Array.from(this.sections.values()), (comp) => {
-
-                    if (comp.design.data) {
-                        return promiseblock(
-                            () => getData(comp.design.data, null, comp.events.beforeUpdate),
-                            (data) => comp.update(data),
-                            comp.events.afterUpdate ? () => comp.events.afterUpdate() : null
-                        );
-                    }
                     return promiseblock(
-                        () => comp.update(this.data)
+
+                        () => {
+                            if (comp.design.data)
+                                return getData(comp.design.data, null);
+                        },
+
+                        (data) => {
+                            comp.data = data || this.data;
+                            return comp.beforeUpdate();
+                        },
+
+                        () => comp.update(),
+
+                        () => comp.afterUpdate()
                     );
                 });
             },
-            this.events.afterUpdate ? () => this.events.afterUpdate() : null,
+
+            () => this.afterUpdate(),
+
             () => {
+
                 this.hideLoad();
 
                 // Hide the progress meter.

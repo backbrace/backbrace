@@ -12,7 +12,7 @@ import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
 import { settings } from './settings';
-import { match as matchRoute } from './route';
+import { match as matchRoute, processLinks } from './route';
 import { isDefined, isHtml5 } from './util';
 import { get as getAlert } from './providers/alert';
 import { get as getWindow } from './providers/window';
@@ -23,7 +23,8 @@ import { RouteErrorComponent } from './components/routeerror';
 let app = null;
 
 let readyFunc = null,
-    suppressNextError = false;
+    suppressNextError = false,
+    styleLoader = null;
 
 const appError = error('app');
 
@@ -204,8 +205,9 @@ function loadStyle() {
         let def = $.Deferred();
         import(
             /* webpackChunkName: "style-[request]" */
-            './styles/loaders/' + settings.style.loader).then(({ default: load }) => {
-                load();
+            './styles/loaders/' + settings.style.loader).then((loader) => {
+                styleLoader = loader;
+                loader.load();
                 loadColors();
                 loadCSS();
                 def.resolve();
@@ -287,6 +289,12 @@ export function start() {
 
                     app = new AppComponent();
                     app.load($('body'));
+
+                    app.afterUpdate = () => {
+                        processLinks();
+                        if (styleLoader && styleLoader.afterUpdate)
+                            styleLoader.afterUpdate();
+                    };
 
                     if (!settings.windowMode) {
 

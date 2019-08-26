@@ -186,15 +186,7 @@
  * @typedef viewerOptions
  * @property {string} [title] Page title.
  * @property {boolean} [hasParent] If `true` sets the page as a child page.
- * @property {boolean} [temp] If `true` the page uses temp data.
  * @property {string} [updateHistory] Add a url path to the browser history.
- */
-
-/**
- * @typedef viewerEvents
- * @property {dataCallback} beforeUpdate Runs before the data is bound to the component.
- * @property {function()} afterUpdate Runs after the data is bound to the component.
- * @property {Map<string, genericFunction>} actionClick Runs on click of an action.
  */
 
 /**

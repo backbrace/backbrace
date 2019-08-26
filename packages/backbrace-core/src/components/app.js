@@ -17,7 +17,6 @@ import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
 import { HeaderComponent } from './header';
 import { ViewerComponent } from './viewer';
-import { processLinks } from '../route';
 
 const appError = error('appcomponent');
 
@@ -168,9 +167,8 @@ export class AppComponent extends Component {
 
                 return pge.update();
             },
-            () => {
-                processLinks();
-            }
+            () => this.afterUpdate()
+
         ).error(() => {
             pge.unload();
             this.pages.delete(pge.id);
@@ -194,7 +192,7 @@ export class AppComponent extends Component {
                     ev.preventDefault();
                     return false;
                 });
-        return $('<div id="win' + viewer.id + '" class="main-windows-btn unselectable" data-ripple></div>')
+        return $('<div id="win' + viewer.id + '" class="main-windows-btn unselectable"></div>')
             .hide()
             .appendTo(this.windows)
             .append('<span />')

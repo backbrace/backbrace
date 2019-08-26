@@ -185,10 +185,7 @@ export class ListPageComponent extends SectionComponent {
                 hidedlg: true,
                 formatter: (cellvalue, options, rowObject) => {
                     const icons = getIcons();
-                    let temp = false;
-                    if (this.viewer.options.temp)
-                        temp = true;
-                    if (rowObject.NewRecord && !temp) {
+                    if (rowObject.NewRecord) {
                         return icons.get('%new%');
                     }
                     return cellvalue;
@@ -247,13 +244,12 @@ export class ListPageComponent extends SectionComponent {
     /**
      * @description
      * Bind the list page to a data source.
-     * @param {Object[]} data Array of data.
      * @returns {SectionComponent} Returns a promise to update the list page.
      */
-    update(data) {
+    update() {
 
         const icons = getIcons();
-        let r = data || [];
+        let r = this.data || [];
 
         if (!isMobileDevice()) {
             this.grid.jqGrid('clearGridData');

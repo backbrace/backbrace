@@ -108,10 +108,9 @@ export class EditorPageComponent extends SectionComponent {
     /**
      * @description
      * Update the component.
-     * @param {*} data Data to load.
      * @returns {JQueryPromise} Promises to load the editor.
      */
-    update(data) {
+    update() {
         if (!this.design.options.file)
             return;
         return promiseblock(

@@ -50,11 +50,18 @@ export class Component {
          * @type {string}
          */
         this.template = '';
+
+        /**
+         * @description
+         * Component data source.
+         * @type {any[]}
+         */
+        this.data = [];
     }
 
     /**
      * @description
-     * Load the component and append to `container`.
+     * Load the component into a  `container`.
      * @param {JQuery} container Container to load into.
      * @returns {Component|JQueryPromise} Returns itself for chaining.
      */
@@ -65,11 +72,37 @@ export class Component {
 
     /**
      * @description
-     * Update the component with a data source.
-     * @param {any[]} data Data to bind to the component.
+     * Invokes before updating the component.
+     * @returns {boolean} Return false to skip updating of the component.
+     */
+    shouldUpdate() {
+        return true;
+    }
+
+    /**
+     * @description
+     * Invokes before updating the component.
      * @returns {Component|JQueryPromise} Returns itself for chaining.
      */
-    update(data) {
+    beforeUpdate() {
+        return this;
+    }
+
+    /**
+     * @description
+     * Update the component with the data source.
+     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     */
+    update() {
+        return this;
+    }
+
+    /**
+     * @description
+     * Invokes after updating the component.
+     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     */
+    afterUpdate() {
         return this;
     }
 
@@ -86,7 +119,7 @@ export class Component {
 
     /**
      * @description
-     * Show the component if `hide` is `false`.
+     * Show the component if it is not marked as `hidden`.
      * @returns {Component} Returns itself for chaining.
      */
     show() {
