@@ -5,7 +5,6 @@
  */
 
 import $ from 'jquery';
-import Clipboard from 'clipboard';
 import { get as getWindow } from './providers/window';
 
 let id = (new Date()).getTime();
@@ -133,10 +132,19 @@ export function findInput(elem) {
 /**
  * Highlight the syntax of a pre code element.
  * @param {HTMLElement} elem Element to highlight.
+ * @param {string} [lang="javascript"] Language to use.
  * @returns {void}
  */
-export function highlightSyntax(elem) {
-  import('highlight.js').then((hljs) => hljs.highlightBlock(elem));
+export function highlightSyntax(elem, lang) {
+  import('highlight.js').then(hljs => {
+    lang = lang || 'javascript';
+    if (lang === 'javascript')
+      // @ts-ignore
+      hljs.registerLanguage('javascript', require('../../../node_modules/highlight.js/lib/languages/javascript.js'));
+    else if (lang === 'json')
+      hljs.registerLanguage('json', require('../../../node_modules/highlight.js/lib/languages/json.js'));
+    hljs.highlightBlock(elem);
+  });
 }
 
 /**
@@ -146,10 +154,13 @@ export function highlightSyntax(elem) {
  * @returns {ClipboardJS} Returns a clipboard js object.
  */
 export function clipboard(trigger, text) {
-  var clipboard = new Clipboard(trigger, {
-    text: function() {
-      return text;
-    }
-  });
+
+  let Clipboard = require('clipboard'),
+    clipboard = new Clipboard(trigger, {
+      text: function() {
+        return text;
+      }
+    });
+
   return clipboard;
 }
