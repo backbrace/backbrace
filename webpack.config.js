@@ -23,6 +23,7 @@ exports.get = function(devmode) {
         'jquery-ui': 'npm/jquery-ui-dist/jquery-ui.js',
         'moment': 'npm/moment/moment.js',
         'sweetalert': 'npm/sweetalert/dist/sweetalert-dev.js',
+        'highlight.js': 'npm/highlight.js/lib/highlight.js',
         'npm': path.join(__dirname, './node_modules'),
         'modules': path.join(__dirname, './modules')
       }
