@@ -10,11 +10,14 @@ import { highlight } from '../../modules/util.js';
 
 backbrace.controller('component', (viewer) => {
 
-    let page = viewer.page;
+    let page = viewer.page,
+        apilink = `<div class="alert is-important">
+                        <a route="api/${page.caption.replace(/ /g, '')}">Checkout the API for ${page.caption}</a>
+                    </div>`;
 
     viewer.container.css('padding-bottom', '50px');
 
-    viewer.events.afterUpdate = () => highlight(viewer);
+    viewer.afterUpdate = () => highlight(viewer);
 
     return backbrace.promiseblock(
 
@@ -27,8 +30,9 @@ backbrace.controller('component', (viewer) => {
 
                 // Handle title section.
                 if (s.name === 'Title')
-                    viewer.sections.get(s.name).template = `<a route="components"><i class="mdi mdi-chevron-left-circle"></i> Components</a>
+                    viewer.sections.get(s.name).template = `<a route="components">Components</a> > <a route="components/${page.name}">${page.name}</a>
                         <h4>${page.caption}</h4>
+                        ${apilink}
                         ${s.options.template}`;
 
                 // Add section source.

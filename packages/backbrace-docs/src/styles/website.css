@@ -208,30 +208,38 @@ footer .grid-fluid {
   color: #666;
   background: whitesmoke;
 }
+.components {
+  margin-top: 10px;
+}
 .api-heading {
   font-size: 2em;
   line-height: 110%;
   margin: 8px 0;
   display: inline-block;
 }
-.api-type {
+.api-type,
+.comp-type {
   padding: 5px;
   color: #fff;
   border-radius: 4px;
   margin-left: 20px;
   text-transform: uppercase;
+  cursor: pointer;
 }
-.api-type a {
+.api-type a,
+.comp-type a {
   color: #fff;
 }
 
 .api-type.module {
   background: #9b59b6;
 }
-.api-type.typedef {
+.api-type.typedef,
+.comp-type.section {
   background: #3498db;
 }
-.api-type.class {
+.api-type.class,
+.comp-type.field {
   background: #2ecc71;
 }
 .api-body .desc {
