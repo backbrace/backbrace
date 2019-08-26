@@ -1,6 +1,4 @@
 import $ from 'jquery';
-import 'npm/jquery-ripple/jquery.ripple.js';
-import 'npm/jquery-ripple/jquery.ripple.scss';
 import { settings } from '../settings';
 import { get as getIcons } from '../providers/icons';
 import { Component } from './component';
@@ -106,10 +104,9 @@ export class HeaderComponent extends Component {
             + '</div></nav>').appendTo(this.container);
 
         // Setup the menu icon.
-        this.menuIcon = $('<div class="menu-icon" data-ripple></div>')
+        this.menuIcon = $('<div class="menu-icon clickable"></div>')
             .appendTo(this.navbar.children())
-            .html(icons.get(this.options.menuIcon))
-            .ripple();
+            .html(icons.get(this.options.menuIcon));
 
         // Setup title bar.
         this.titleBar = $('<div class="navbar-brand unselectable cuttext">'

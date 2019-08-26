@@ -40,10 +40,9 @@ export class TemplatePageComponent extends SectionComponent {
     /**
      * @description
      * Update the component.
-     * @param {*} data Data to load.
      * @returns {TemplatePageComponent} Returns itself for chaining.
      */
-    update(data) {
+    update() {
 
         let depth = 0;
 
@@ -88,15 +87,15 @@ export class TemplatePageComponent extends SectionComponent {
         if (repeater.length > 0) {
             let templ = repeater[0].outerHTML,
                 last = repeater;
-            data.forEach(function(d) {
+            this.data.forEach(function(d) {
                 let md = $(mergeData(templ, d));
                 last.after(md);
                 last = md;
             });
             repeater.remove();
         } else {
-            if (data.length > 0) {
-                this.container.html(mergeData(this.template, data[0]));
+            if (this.data.length > 0) {
+                this.container.html(mergeData(this.template, this.data[0]));
             } else if (this.template.includes('{{')) {
                 this.container.html('');
             }

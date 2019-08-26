@@ -48,15 +48,14 @@ export class ActionComponent extends Component {
         if (!this.action.icon && this.action.name)
             this.action.icon = '%' + this.action.name.toLowerCase() + '%';
 
-        this.container = $('<div id="' + this.id + '" class="action-button unselectable" ' +
-            'data-ripple></div>');
+        this.container = $('<div id="' + this.id + '" class="action-button unselectable"></div>');
         $(icons.get(this.action.icon, 'action-icon'))
             .appendTo(this.container)
             .css('color', this.action.iconColor);
         this.container.append('&nbsp;' + this.action.text);
         if (this.action.className)
             this.container.addClass(this.action.className);
-        this.container.ripple().click(() => this.actionRunner(this.action));
+        this.container.click(() => this.actionRunner(this.action));
         this.container.appendTo(container);
         return this;
     }

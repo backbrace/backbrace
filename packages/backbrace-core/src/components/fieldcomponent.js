@@ -49,11 +49,10 @@ export class FieldComponent extends Component {
     /**
      * @description
      * Update the field from the data source.
-     * @param {Object} data Data source.
      * @returns {FieldComponent|JQueryPromise} Returns itself for chaining.
      */
-    update(data) {
-        let fieldData = data ? data[this.design.dataName || this.design.name] : null;
+    update() {
+        let fieldData = this.data ? this.data[this.design.dataName || this.design.name] : null;
         if (this.control)
             this.control.val(fieldData);
         return this;

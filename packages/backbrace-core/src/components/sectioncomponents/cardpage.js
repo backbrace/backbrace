@@ -95,19 +95,19 @@ export class CardPageComponent extends SectionComponent {
     /**
      * @description
      * Update the card page with a data source.
-     * @param {Object[]} data Array of data.
      * @returns {JQueryPromise} Returns a promise to update the card page.
      */
-    update(data) {
+    update() {
 
         // Only show the data for the first record.
         let r = null;
-        if (data && data.length > 0)
-            r = data[0];
+        if (this.data && this.data.length > 0)
+            r = this.data[0];
 
         // Update the fields.
         return promiseeach(Array.from(this.fields.values()), function(cont) {
-            return cont.update(r);
+            cont.data = r;
+            return cont.update();
         });
     }
 }

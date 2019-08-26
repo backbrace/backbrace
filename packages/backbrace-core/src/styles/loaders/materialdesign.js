@@ -7,6 +7,8 @@
 import 'npm/roboto-fontface/css/roboto/sass/roboto-fontface.scss';
 import 'npm/@mdi/font/scss/materialdesignicons.scss';
 import '../materialdesign/materialdesign.scss';
+import 'npm/jquery-ripple/jquery.ripple.js';
+import 'npm/jquery-ripple/jquery.ripple.scss';
 
 import $ from 'jquery';
 import { compile } from '../../jss';
@@ -19,7 +21,7 @@ import { set as setProgress } from '../../providers/progress';
  * @method load
  * @returns {void}
  */
-export default function load() {
+export function load() {
 
     setIcon({
         get: function(name, className) {
@@ -132,4 +134,16 @@ export default function load() {
     $('<style id="appoverrides">')
         .append(css)
         .appendTo($('head'));
+}
+
+/**
+ * Invoked after the app updates.
+ * @returns {void}
+ */
+export function afterUpdate() {
+    $('.clickable').each((i, ele) => {
+        var $ele = $(ele);
+        if (!$ele.attr('data-ripple'))
+            $ele.attr('data-ripple', '1').ripple();
+    });
 }

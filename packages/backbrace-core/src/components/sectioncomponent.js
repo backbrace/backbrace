@@ -44,21 +44,10 @@ export class SectionComponent extends Component {
 
         /**
          * @description
-         * Data source of the section.
-         * @type {any[]}
+         * Action click events.
+         * @type {Map<string, genericFunction>}
          */
-        this.data = null;
-
-        /**
-         * @description
-         * Section events.
-         * @type {viewerEvents}
-         */
-        this.events = {
-            beforeUpdate: null,
-            afterUpdate: null,
-            actionClick: new Map()
-        };
+        this.click = new Map();
     }
 
     /**
@@ -110,9 +99,9 @@ export class SectionComponent extends Component {
      */
     actionRunner(action) {
 
-        let func = this.events.actionClick.get(action.name);
+        let func = this.click.get(action.name);
         if (!func) {
-            func = this.viewer.events.actionClick.get(action.name);
+            func = this.viewer.click.get(action.name);
             if (!func)
                 return;
         }
