@@ -35,14 +35,14 @@ export let settings = {
         colors: {
             bgprimary: '#3498db',
             textprimary: '#FFF',
-            bgsecondary: '#34495e',
+            bgsecondary: '#3498db',
             textsecondary: '#FFF',
             bgsurface: '#FFF',
             textsurface: '#000',
             bgbody: '#f5f7fb',
             textbody: '#000',
-            bghover: 'whitesmoke',
-            texthover: '#000'
+            bghover: '#CCC',
+            texthover: '#333'
         }
     }
 };
