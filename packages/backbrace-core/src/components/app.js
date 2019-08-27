@@ -62,6 +62,13 @@ export class AppComponent extends Component {
          */
         this.currError = null;
 
+        /**
+         * @description
+         * Current viewer (routing mode).
+         * @type {ViewerComponent}
+         */
+        this.currViewer = null;
+
         this.activePage = 0;
 
         // Lets upgrade alerts...
@@ -114,6 +121,8 @@ export class AppComponent extends Component {
      * @returns {ViewerComponent} Returns the active viewer.
      */
     currentPage() {
+        if (!settings.windowMode)
+            return this.currViewer;
         if (this.activePage > 0 && this.pages.has(this.activePage))
             return this.pages.get(this.activePage);
         return null;
@@ -130,17 +139,23 @@ export class AppComponent extends Component {
 
         let pge = new ViewerComponent(name, options, params);
 
-        let curr = this.currentPage();
-        if (!settings.windowMode && curr)
-            this.closePage(curr.id);
-
         if (this.currError) {
             this.currError.unload();
             this.currError = null;
         }
 
+        if (!settings.windowMode && window.history && options.updateHistory)
+            window.history.pushState(null, name, options.updateHistory);
+
         promisequeue(
+
             () => {
+
+                if (this.currViewer) {
+                    this.currViewer.unload();
+                    this.currViewer = null;
+                    $(window).scrollTop(0);
+                }
 
                 if (this.currentPage())
                     this.currentPage().hide().hideLoad();
@@ -158,12 +173,15 @@ export class AppComponent extends Component {
             },
             () => {
 
-                if (!settings.windowMode && window.history && options.updateHistory)
-                    window.history.pushState(null, pge.title, options.updateHistory);
+                if (settings.windowMode) {
 
-                // Add the page to the loaded pages.
-                this.pages.set(pge.id, pge);
-                this.activePage = pge.id;
+                    // Add the page to the loaded pages.
+                    this.pages.set(pge.id, pge);
+                    this.activePage = pge.id;
+
+                } else {
+                    this.currViewer = pge;
+                }
 
                 return pge.update();
             },
@@ -172,6 +190,7 @@ export class AppComponent extends Component {
         ).error(() => {
             pge.unload();
             this.pages.delete(pge.id);
+            this.currViewer = null;
             if (this.activePage === pge.id)
                 this.activePage = 0;
             if (this.activePage)
