@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "description": "Development tools specialized for backbrace.",
   "repository": "ttps://github.com/backbrace/backbrace/tree/master/packages/backbrace-devkit",
-  "author": "Paul Fisher <paulfisher53@gmail.com>",
+  "author": "Paul Fisher <backbraceio@gmail.com>",
   "license": "MIT",
   "keywords": [
     "backbrace",
