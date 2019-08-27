@@ -279,6 +279,7 @@ pre {
   padding: 5px;
   border-radius: 3px;
   margin: 5px;
+  white-space: pre-wrap;
 }
 .callout pre {
   background: transparent;
@@ -333,10 +334,24 @@ figure {
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
+figure > img {
+  max-width: calc(100vw - 64px);
+}
+
 .file-header {
   text-transform: none !important;
   font-weight: 300 !important;
   font-size: 15px !important;
+}
+
+.start-button {
+  background: #fff;
+  color: #000;
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 11px 20px;
+  height: auto;
+  width: auto;
 }
 
 /*

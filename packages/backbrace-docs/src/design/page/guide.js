@@ -43,7 +43,7 @@ backbrace.controller('guide', (viewer) => {
             d = viewer.data[0];
 
             // Set the title.
-            viewer.setTitle(name === '' ? '' : d.title);
+            viewer.setTitle(name === 'index' ? '' : d.title);
 
         }
     };
