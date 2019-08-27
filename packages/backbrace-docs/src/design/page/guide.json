@@ -1,6 +1,7 @@
 {
     "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
     "name": "index",
+    "caption": " ",
     "data": "design/data/tutorials.json",
     "controller": "page/guide.js",
     "sections": [

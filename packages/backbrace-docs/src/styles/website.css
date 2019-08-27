@@ -279,6 +279,7 @@ pre {
   padding: 5px;
   border-radius: 3px;
   margin: 5px;
+  white-space: pre-wrap;
 }
 .callout pre {
   background: transparent;
@@ -331,6 +332,10 @@ figure {
   box-sizing: border-box;
   display: inline-block;
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+figure > img {
+  max-width: calc(100vw - 64px);
 }
 
 .file-header {
