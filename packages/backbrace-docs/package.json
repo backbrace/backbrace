@@ -1,6 +1,6 @@
 {
     "name": "@backbrace/docs",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "Backbrace documentation website.",
     "repository": "https://github.com/backbrace/backbrace/tree/master/packages/backbrace-docs",
     "author": "Paul Fisher <backbraceio@gmail.com>",
