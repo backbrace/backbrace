@@ -30,17 +30,3 @@ CodeSandbox creates a basic Backbrace app. We've created this particular app wit
 <figure class="z-depth-1">
     <img width="350" src="/images/guide/start/new-app.png" alt="Starter web app">
 </figure>
-
-<div class="callout is-helpful">
-<header class="file-header">src/scripts/app.js</header>
-
-<pre><code class="javascript">
-backbrace.settings({
-  windowMode: false,
-  style: {
-    css: "styles/app.css"
-  }
-});
-</code><pre>
-
-</div>

@@ -344,6 +344,16 @@ figure > img {
   font-size: 15px !important;
 }
 
+.start-button {
+  background: #fff;
+  color: #000;
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 11px 20px;
+  height: auto;
+  width: auto;
+}
+
 /*
 
 Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
