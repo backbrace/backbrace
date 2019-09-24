@@ -2,7 +2,13 @@
     "name": "@backbrace/docs",
     "version": "0.2.2",
     "description": "Backbrace documentation website.",
-    "repository": "https://github.com/backbrace/backbrace/tree/master/packages/backbrace-docs",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/backbrace/backbrace.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
     "author": "Paul Fisher <backbraceio@gmail.com>",
     "license": "MIT",
     "keywords": [
