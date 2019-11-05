@@ -17,6 +17,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
+      - name: Install Xvfb
+        run: |
+          sudo apt-get install xvfb
+          sudo systemctl start xvfb
       - name: Setup Chrome Driver
         run: |
           export DISPLAY=:99
