@@ -9,7 +9,7 @@ on:
     - master
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -28,3 +28,4 @@ jobs:
         grunt test
       env:
         CI: true
+        NODE_AUTH_TOKEN: ${{github.token}}
