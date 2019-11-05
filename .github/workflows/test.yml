@@ -19,7 +19,6 @@ jobs:
           node-version: 10.x
       - name: Setup Chrome Driver
         run: |
-          sudo systemctl start xvfb
           export DISPLAY=:99
           sudo apt-get update -qq && sudo apt-get install -y chromium-chromedriver
           export PATH=$PATH:/usr/lib/chromium-browser/
