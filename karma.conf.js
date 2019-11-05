@@ -10,12 +10,6 @@ module.exports = function(config) {
     autoWatch: true,
     logColors: true,
     browsers: ['Chrome'],
-    customLaunchers: {
-      ChromeTravisCI: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    },
     browserDisconnectTimeout: 10000,
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
@@ -51,9 +45,6 @@ module.exports = function(config) {
       stats: 'errors-only'
     }
   };
-
-  if (process.env.TRAVIS)
-    configuration.browsers = ['ChromeTravisCI'];
 
   config.set(configuration);
 
