@@ -17,22 +17,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: Install Xvfb
-        run: |
-          sudo apt-get install xvfb
-          sudo systemctl start xvfb
-      - name: Setup Chrome Driver
-        run: |
-          export DISPLAY=:99
-          sudo apt-get update -qq && sudo apt-get install -y chromium-chromedriver
-          export PATH=$PATH:/usr/lib/chromium-browser/
-          chromedriver -v
       - name: Checkout
         uses: actions/checkout@v1
       - name: Install and Test
         run: |
           rm .npmrc
           npm install
-          grunt test
+          xvfb-run --auto-servernum grunt test
         env:
           CI: true
