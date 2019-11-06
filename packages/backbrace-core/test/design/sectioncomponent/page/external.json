@@ -1,0 +1,10 @@
+{
+    "$schema": "../../../../../backbrace-devkit/schema/pagedesign.json",
+    "name": "external",
+    "sections": [
+        {
+            "name": "external",
+            "component": "component/external.js"
+        }
+    ]
+}

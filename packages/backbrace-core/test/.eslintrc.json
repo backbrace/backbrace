@@ -14,6 +14,7 @@
     "no-unused-vars": "off"
   },
   "globals": {
-    "window": false
+    "window": false,
+    "backbrace": false
   }
 }
