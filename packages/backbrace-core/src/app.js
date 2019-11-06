@@ -24,7 +24,8 @@ let app = null;
 
 let readyFunc = null,
     suppressNextError = false,
-    styleLoader = null;
+    styleLoader = null,
+    appInit = false;
 
 const appError = error('app');
 
@@ -190,7 +191,7 @@ function loadColors() {
  */
 function loadCSS() {
     if (settings.style.css !== '')
-        $(`<link rel="stylesheet" href="${settings.style.css}" >`)
+        $(`<link id="appcss" rel="stylesheet" href="${settings.style.css}" >`)
             .appendTo($('head'));
 }
 
@@ -227,54 +228,58 @@ function loadStyle() {
  */
 export function start() {
 
-    const window = getWindow();
+    if (!appInit) {
 
-    window.addEventListener('error', function(ev) {
-        errorHandler(ev.error || ev);
-    });
+        const window = getWindow();
 
-    $('<meta>').attr({
-        'name': 'Description',
-        'content': settings.app.description
-    }).appendTo(window.document.head);
+        window.addEventListener('error', function(ev) {
+            errorHandler(ev.error || ev);
+        });
 
-    $('<meta>').attr({
-        'http-equiv': 'X-UA-Compatible',
-        'content': 'IE=Edge'
-    }).appendTo(window.document.head);
+        $('<meta>').attr({
+            'name': 'Description',
+            'content': settings.app.description
+        }).appendTo(window.document.head);
 
-    $('<meta>').attr({
-        'name': 'viewport',
-        'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
-    }).appendTo(window.document.head);
+        $('<meta>').attr({
+            'http-equiv': 'X-UA-Compatible',
+            'content': 'IE=Edge'
+        }).appendTo(window.document.head);
 
-    $('<meta>').attr({
-        'name': 'apple-mobile-web-app-capable',
-        'content': 'yes'
-    }).appendTo(window.document.head);
+        $('<meta>').attr({
+            'name': 'viewport',
+            'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
+        }).appendTo(window.document.head);
 
-    $('<meta>').attr({
-        'name': 'mobile-web-app-capable',
-        'content': 'yes'
-    }).appendTo(window.document.head);
+        $('<meta>').attr({
+            'name': 'apple-mobile-web-app-capable',
+            'content': 'yes'
+        }).appendTo(window.document.head);
 
-    // Update title.
-    window.document.title = settings.app.title;
+        $('<meta>').attr({
+            'name': 'mobile-web-app-capable',
+            'content': 'yes'
+        }).appendTo(window.document.head);
 
-    // Check for HTML5.
-    if (!isHtml5())
-        throw appError('nohtml', 'This app requires a HTML5 browser. We recommend chrome: ' +
-            '<a href="https://www.google.com/chrome/" target="new">click here</a>');
+        // Update title.
+        window.document.title = settings.app.title;
 
-    // Start ticking.
-    window.setInterval(onTick, 10000);
+        // Check for HTML5.
+        if (!isHtml5())
+            throw appError('nohtml', 'This app requires a HTML5 browser. We recommend chrome: ' +
+                '<a href="https://www.google.com/chrome/" target="new">click here</a>');
 
-    // JQuery wasn't loaded :(
-    if ($ === null)
-        throw appError('nojquery', 'JQuery was not loaded correctly');
+        // Start ticking.
+        window.setInterval(onTick, 10000);
 
-    if ($.isFunction(window.document.getElementsByTagName('*')))
-        throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
+        // JQuery wasn't loaded :(
+        if ($ === null)
+            throw appError('nojquery', 'JQuery was not loaded correctly');
+
+        if ($.isFunction(window.document.getElementsByTagName('*')))
+            throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
+
+    }
 
     // Load the app component.
     import(
@@ -325,6 +330,22 @@ export function start() {
 }
 
 /**
+ * Unload the app.
+ * @returns {void}
+ */
+export function unload() {
+
+    if (app)
+        app.unload();
+
+    readyFunc = null;
+    suppressNextError = false;
+    styleLoader = null;
+
+    $('#appcolors,#appcss').remove();
+}
+
+/**
  * Load a page.
  * @param {string} name Name of the page to load.
  * @param {viewerOptions} [options] Page viewer options.
@@ -342,4 +363,12 @@ export function loadPage(name, options = {}, params = {}) {
  */
 export function closePage(id) {
     app.closePage(id);
+}
+
+/**
+ * Get the current page.
+ * @returns {ViewerComponent} Returns the current page.
+ */
+export function currentPage() {
+    return app.currentPage();
 }

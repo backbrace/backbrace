@@ -2,6 +2,7 @@
  * @description
  * Backbrace public api.
  * @module backbrace
+ * @borrows module:app.currentPage as currentPage
  * @borrows module:app.loadPage as loadPage
  * @borrows module:app.message as message
  * @borrows module:app.ready as ready
@@ -159,7 +160,8 @@ export {
     start,
     ready,
     loadPage,
-    message
+    message,
+    currentPage
 } from './app';
 
 export {

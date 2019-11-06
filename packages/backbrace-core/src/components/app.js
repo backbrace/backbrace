@@ -117,6 +117,26 @@ export class AppComponent extends Component {
     }
 
     /**
+     * Unload the app component.
+     * @returns {void}
+     */
+    unload() {
+
+        this.pages.forEach((page) => page.unload());
+        this.pages.clear();
+
+        if (this.windows)
+            this.windows.remove();
+
+        this.currError = null;
+        this.currViewer = null;
+        this.activePage = 0;
+
+        this.maincontainer.remove();
+        super.unload();
+    }
+
+    /**
      * Get the active viewer.
      * @returns {ViewerComponent} Returns the active viewer.
      */
