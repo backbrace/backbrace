@@ -211,24 +211,30 @@ export class ViewerComponent extends Component {
                 return promiseeach(this.page.sections, (section) => {
 
                     let comp = section.component;
-                    if (comp.indexOf('.js') === -1) {
-                        return promiseblock(
-                            () => {
+                    return promiseblock(
+                        () => {
+                            if (!comp.endsWith('.js')) {
+                                // Built-in component.
                                 return import(
                                     /* webpackChunkName: "[request]" */
                                     './sectioncomponents/' + comp + '.js');
-                            },
-                            ({ default: Control }) => {
-                                /**
-                                 * @ignore
-                                 * @type {SectionComponent}
-                                 */
-                                let cont = new Control(this, section);
-                                this.sections.set(section.name, cont);
-                                return cont.load(this.container);
+                            } else {
+                                // External component.
+                                return import(
+                                    /* webpackIgnore: true */
+                                    settings.dir.design + comp);
                             }
-                        );
-                    }
+                        },
+                        ({ default: Control }) => {
+                            /**
+                             * @ignore
+                             * @type {SectionComponent}
+                             */
+                            let cont = new Control(this, section);
+                            this.sections.set(section.name, cont);
+                            return cont.load(this.container);
+                        }
+                    );
 
                 });
             },

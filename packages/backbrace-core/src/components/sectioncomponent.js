@@ -9,6 +9,8 @@ import { load as loadModule } from '../module';
  * @extends {Component}
  * @description
  * Section component base class.
+ * @param {ViewerComponent} viewer Parent viewer.
+ * @param {pageSectionDesign} design Section design.
  */
 export class SectionComponent extends Component {
 

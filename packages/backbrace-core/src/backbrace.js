@@ -32,6 +32,7 @@
  * @borrows module:util.isMobileDevice as isMobileDevice
  * @borrows module:util.noop as noop
  * @borrows module:util.uid as uid
+ * @borrows SectionComponent as SectionComponent
  */
 
 import $ from 'jquery';
@@ -169,3 +170,7 @@ export {
 export {
     filter as sanitizeString
 } from './sanitize';
+
+export {
+    SectionComponent
+} from './components/sectioncomponent';
