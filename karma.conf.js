@@ -1,8 +1,6 @@
 'use strict';
 
-var path = require('path'),
-  webpack = require('webpack'),
-  globals = require('./lib/globals/global-vars');
+var webpackconfig = require('./webpack.config');
 
 module.exports = function(config) {
   var configuration = {
@@ -20,33 +18,22 @@ module.exports = function(config) {
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
     reporters: ['spec'],
+    basePath: 'packages/backbrace-core',
     files: [
-      'packages/backbrace-core/test/**/*.js'
+      { pattern: 'dist/**/*.js', watched: true, included: false, served: true, nocache: true },
+      { pattern: 'test/design/**/*.json', watched: true, included: false, served: true, nocache: true },
+      { pattern: 'test/design/**/*.js', watched: true, included: false, served: true, nocache: true },
+      'test/*.spec.js'
     ],
+    proxies: {
+      '/design/': '/base/test/design/',
+      '/dist/': '/base/dist/'
+    },
     preprocessors: {
-      'packages/backbrace-core/test/**/*.js': ['webpack']
+      'test/*.spec.js': ['webpack'],
+      'test/design/**/*.js': ['webpack']
     },
-    webpack: {
-      cache: true,
-      resolve: {
-        alias: {
-          'jquery': 'npm/jquery/dist/jquery.js',
-          'jquery-ui': 'npm/jquery-ui-dist/jquery-ui.js',
-          'moment': 'npm/moment/moment.js',
-          'sweetalert': 'npm/sweetalert/dist/sweetalert-dev.js',
-          'npm': path.join(__dirname, './node_modules'),
-          'modules': path.join(__dirname, './modules')
-        }
-      },
-      plugins: [
-        new webpack.DefinePlugin(globals.get()),
-        new webpack.ProvidePlugin({
-          $: 'jquery',
-          jQuery: 'jquery',
-          'window.jQuery': 'jquery'
-        })
-      ]
-    },
+    webpack: webpackconfig.get(true),
     webpackMiddleware: {
       stats: 'errors-only'
     }
