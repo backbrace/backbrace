@@ -154,6 +154,7 @@ footer p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 300px;
 }
 .main-title {
   color: #0984e3;
@@ -347,11 +348,11 @@ figure > img {
 .start-button {
   background: #fff;
   color: #000;
-  margin-top: 20px;
-  font-size: 20px;
-  padding: 11px 20px;
-  height: auto;
-  width: auto;
+  margin-top: 20px !important;
+  font-size: 20px !important;
+  padding: 11px 20px !important;
+  height: auto !important;
+  width: auto !important;
 }
 
 /*
