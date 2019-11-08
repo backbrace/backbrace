@@ -115,7 +115,7 @@ module.exports = function(grunt) {
         options: {
           destination: paths.docs + '/src/design/data',
           config: 'jsdoc.conf.json',
-          template: './node_modules/@backbrace/jsdoc-json',
+          template: './jsdoc/json',
           tutorials: paths.docs + '/content'
         }
       },
@@ -150,7 +150,7 @@ module.exports = function(grunt) {
         ],
         options: {
           destination: paths.devkit + '/tern/defs',
-          template: './node_modules/@backbrace/jsdoc-tern',
+          template: './jsdoc/tern',
           config: 'jsdoc.conf.json',
           package: 'package.json'
         }
@@ -161,7 +161,7 @@ module.exports = function(grunt) {
         ],
         options: {
           destination: paths.devkit + '/schema',
-          template: './scripts/schema',
+          template: './jsdoc/schema',
           config: 'jsdoc.conf.json'
         }
       }

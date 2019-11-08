@@ -1,7 +1,7 @@
 packages/backbrace-core/dist/**
 packages/backbrace-core/include/service-worker.js
 lib/**
-scripts/**
+jsdoc/**
 node_modules/**
 modules/**
 tmp/**

@@ -2,18 +2,18 @@
 
 ### Core Packages
 
-| Package | Version | Dependencies |
-|--------|-------|------------|
-[`@backbrace/core`](/packages/backbrace-core) | [![npm](https://img.shields.io/npm/v/@backbrace/core.svg?maxAge=3600)](https://www.npmjs.com/package/@backbrace/core) | [![Dependency Status](https://david-dm.org/backbrace/backbrace.svg?path=packages/backbrace-core)](https://david-dm.org/backbrace/backbrace?path=packages/backbrace-core) |
+| Package | Version |
+|--------|-------|
+[`@backbrace/core`](/packages/backbrace-core) | [![github](https://img.shields.io/npm/v/@backbrace/core.svg?maxAge=3600)](https://github.com/backbrace/backbrace/packages/25909) |
 
 ### Other
 
-| Package | Version | Dependencies |
-|--------|-------|------------|
-[`@backbrace/devkit`](/packages/backbrace-devkit) | [![npm](https://img.shields.io/npm/v/@backbrace/devkit.svg?maxAge=3600)](https://www.npmjs.com/package/@backbrace/devkit) | [![Dependency Status](https://david-dm.org/backbrace/backbrace.svg?path=packages/backbrace-devkit)](https://david-dm.org/backbrace/backbrace?path=packages/backbrace-devkit) |
+| Package | Version |
+|--------|-------|
+[`@backbrace/devkit`](/packages/backbrace-devkit) | [![github](https://img.shields.io/npm/v/@backbrace/devkit.svg?maxAge=3600)](https://github.com/backbrace/backbrace/packages/25941) |
 
 ### Apps
 
-| Package | Version | Dependencies |
-|--------|-------|------------|
-[`@backbrace/docs`](/packages/backbrace-docs) | [![npm](https://img.shields.io/npm/v/@backbrace/docs.svg?maxAge=3600)](https://www.npmjs.com/package/@backbrace/docs) | [![Dependency Status](https://david-dm.org/backbrace/backbrace.svg?path=packages/backbrace-docs)](https://david-dm.org/backbrace/backbrace?path=packages/backbrace-docs) |
+| Package | Version |
+|--------|-------|
+[`@backbrace/docs`](/packages/backbrace-docs) | [![github](https://img.shields.io/npm/v/@backbrace/docs.svg?maxAge=3600)](https://github.com/backbrace/backbrace/packages/25942) |
