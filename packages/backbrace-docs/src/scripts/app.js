@@ -59,11 +59,11 @@
         $('.navbar-brand').attr('route', '/');
 
         // Add top bar links.
-        $('<div class="header-link hide-small"><a route="guides">docs</a></div>')
+        $('<div class="header-link hide-small"><a route="guides">Docs</a></div>')
             .appendTo($('.navbar-inner'));
-        $('<div class="header-link hide-small"><a route="api">api</a></div>')
+        $('<div class="header-link hide-small"><a route="api">API</a></div>')
             .appendTo($('.navbar-inner'));
-        $('<div class="header-link hide-small"><a route="components">components</a></div>')
+        $('<div class="header-link hide-small"><a route="components">Components</a></div>')
             .appendTo($('.navbar-inner'));
 
     });

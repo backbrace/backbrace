@@ -3,7 +3,7 @@
 These docs help you learn and use the Backbrace framework. Guides include examples to accelerate your app projects.
 
 <div class="card-container">
-    <a class="docs-card col-md-4" route="guides/start">
+    <a class="docs-card z-depth-1 col-md-4" route="guides/start">
         <section>Learn</section>
         <p>Create your first Backbrace app project, no setup required.</p>
         <p class="card-footer">Get Started</p>

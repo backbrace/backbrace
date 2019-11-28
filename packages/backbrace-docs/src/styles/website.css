@@ -18,8 +18,8 @@ body {
 .navbar-inner a {
   font-size: 16px;
   font-weight: 300;
+  letter-spacing: 1px;
   color: #fff;
-  text-transform: uppercase;
   padding: 8px 16px;
 }
 .navbar-inner a:hover {
@@ -67,7 +67,6 @@ li {
 p {
   font-size: 1.1em;
   line-height: 1.4em;
-  letter-spacing: 0.3px;
 }
 
 p.desc {
@@ -144,9 +143,9 @@ footer p {
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  text-transform: uppercase;
   text-align: center;
   padding: 10px;
+  font-weight: 300;
 }
 .banner-img {
   display: flex;
@@ -158,7 +157,6 @@ footer p {
 }
 .main-title {
   color: #0984e3;
-  text-transform: uppercase;
   font-size: 1.5em;
 }
 .main-text {
@@ -168,7 +166,6 @@ footer p {
   margin: 0 40px 40px 0;
 }
 .footer-block h1 {
-  text-transform: uppercase;
   font-size: 1em;
 }
 .footer-block a {
@@ -249,9 +246,6 @@ footer .grid-fluid {
 .method-table {
   width: 100%;
   margin-top: 20px;
-  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12),
-    0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 table thead > tr > th {
   padding: 10px;
@@ -314,14 +308,11 @@ pre.source {
 
 .docs-card {
   height: 220px;
-  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12),
-    0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 .docs-card:hover {
-  -webkit-box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12),
-    0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.02), 0 0 20px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.02), 0 0 20px 4px rgba(0, 0, 0, 0.06);
 }
 
 figure {
@@ -340,7 +331,6 @@ figure > img {
 }
 
 .file-header {
-  text-transform: none !important;
   font-weight: 300 !important;
   font-size: 15px !important;
 }

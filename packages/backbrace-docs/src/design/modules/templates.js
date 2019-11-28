@@ -37,7 +37,7 @@ export const API = `<h1 class="api-heading">{{name}}</h1>
 /**
  * API Member Template
  */
-export const API_MEMBER = `<a id="{{name}}"></a><table class="method-table"><thead><tr><th><div>{{name}}
+export const API_MEMBER = `<a id="{{name}}"></a><table class="method-table z-depth-1"><thead><tr><th><div>{{name}}
 <a title="Link to this heading" class="heading-link" aria-hidden="true" href="{{browserPath}}#{{name}}
 "><i class="mdi mdi-link"></i></a>
 {{githubLinks}}
