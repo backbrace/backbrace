@@ -8,6 +8,7 @@
  * @borrows module:app.ready as ready
  * @borrows module:app.serviceWorker as serviceWorker
  * @borrows module:app.start as start
+ * @borrows module:app.unload as unload
  * @borrows module:globals~globals as globals
  * @borrows module:http.get as get
  * @borrows module:http.post as post
@@ -161,7 +162,8 @@ export {
     ready,
     loadPage,
     message,
-    currentPage
+    currentPage,
+    unload
 } from './app';
 
 export {
