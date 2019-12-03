@@ -9,7 +9,7 @@ module.exports = function(grunt) {
   //Load grunt modules.
   require('load-grunt-tasks')(grunt);
   grunt.loadTasks('lib/grunt');
-  grunt.loadNpmTasks('git-changelog');
+  grunt.loadNpmTasks('@backbrace/git-changelog');
 
   var webpackconfig = require('./webpack.config'),
     versionInfo = require('./lib/version-info/version-info.js'),
