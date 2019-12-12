@@ -1,6 +1,6 @@
 {
     "name": "backbrace",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "branchVersion": "^0.2.0",
     "branchPattern": "0.2.*",
     "author": "Paul Fisher <backbraceio@gmail.com>",

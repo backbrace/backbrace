@@ -1,3 +1,18 @@
+<a name="0.2.3"></a>
+# [0.2.3](https://github.com/backbrace/backbrace/compare/0.2.2...0.2.3) (2019-12-13)
+
+## Bug Fixes
+
+* **docs:** website style fixes ([39922918](https://github.com/backbrace/backbrace/commit/39922918a568bb4b9d5c55c2a14d521b8b22eec1))
+
+## Features
+
+* **core:** make app `unload` function public ([4674e439](https://github.com/backbrace/backbrace/commit/4674e4394bd9b6fc828cab3514d871cbe3d4c2ed))
+* **core:** update to newer material design look ([6c60b083](https://github.com/backbrace/backbrace/commit/6c60b083a6ed47eb6ea26b4e872cd810a7962786))
+* **core:** add `unload` function to `app` module ([d58288f4](https://github.com/backbrace/backbrace/commit/d58288f4748a918c127c65ed54a440ff1401d2f6))
+* **core:** external section components ([678de54e](https://github.com/backbrace/backbrace/commit/678de54ee3ff0bc0d081c7a00f6dd2c5355d372e))
+
+
 <a name="0.2.2"></a>
 # [0.2.2](https://github.com/backbrace/backbrace/compare/0.2.1...0.2.2) (2019-08-29)
 
