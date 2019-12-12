@@ -6,9 +6,6 @@
         "type": "git",
         "url": "https://github.com/backbrace/backbrace.git"
     },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
-    },
     "author": "Paul Fisher <backbraceio@gmail.com>",
     "license": "MIT",
     "keywords": [
