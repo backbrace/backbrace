@@ -101,7 +101,7 @@ exports.publish = function(data, opts, tutorials) {
 
     fs.readFile('./node_modules/@mdi/font/css/materialdesignicons.min.css', 'utf8', function(err, data) {
         if (err) throw err;
-        var reg = new RegExp(/\.mdi\-?([_a-zA-Z\-]+[\w\-])\:before*\s*\{/gm);
+        var reg = new RegExp(/\.mdi\-?([_a-zA-Z\-]+[\w\-])\:\:before*\s*\{/gm);
         var matches = data.match(reg);
         var icons = matches.map(function(m) {
             return m.replace(reg, '$1');
