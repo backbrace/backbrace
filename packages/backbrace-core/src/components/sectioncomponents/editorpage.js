@@ -23,7 +23,9 @@ let defs = [];
 function loadDef(file) {
     return promiseblock(
         () => get(`${settings.dir.tern}${file}.json`),
-        (def) => defs.push(def)
+        (def) => {
+            defs = defs.concat(def);
+        }
     );
 }
 
@@ -75,12 +77,7 @@ export class EditorPageComponent extends SectionComponent {
 
             () => {
                 if (this.type === 'javascript')
-                    return promiseblock(
-                        () => loadDef('browser'),
-                        () => loadDef('ecma5'),
-                        () => loadDef('jquery'),
-                        () => loadDef('backbrace')
-                    );
+                    return loadDef('backbrace');
             },
 
             () => {

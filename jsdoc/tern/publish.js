@@ -20,7 +20,8 @@ exports.publish = function(data, opts, tutorials) {
         }
     };
 
-    var library = {};
+    var library = {},
+        defs = [];
 
     function convertType(type) {
         if (type) {
@@ -132,6 +133,15 @@ exports.publish = function(data, opts, tutorials) {
 
     output[pkg.name] = library;
 
-    fs.writeFileSync(opts.destination + '/' + pkg.name + '.json', JSON.stringify(output, null, 2));
+    // Load other definitions.
+    ['browser', 'ecma5', 'jquery'].forEach(function(d) {
+        var data = fs.readFileSync('jsdoc/tern/defs/' + d + '.json');
+        var def = JSON.parse(data);
+        defs.push(def);
+    });
+
+    defs.push(output);
+
+    fs.writeFileSync(opts.destination + '/' + pkg.name + '.json', JSON.stringify(defs, null, 2));
 
 };
