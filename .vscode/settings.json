@@ -3,5 +3,8 @@
     "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
     "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
     "files.trimTrailingWhitespace": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "npm.packageManager": "yarn",
+    "grunt.autoDetect": "off",
+    "npm.autoDetect": "off"
 }
