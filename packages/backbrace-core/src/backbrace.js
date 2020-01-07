@@ -18,10 +18,6 @@
  * @borrows module:log.object as logObject
  * @borrows module:log.warning as logWarning
  * @borrows module:module.controller as controller
- * @borrows module:promises.promiseblock as promiseblock
- * @borrows module:promises.promiseinsert as promiseinsert
- * @borrows module:promises.promisequeue as promisequeue
- * @borrows module:promises.promiseeach as promiseeach
  * @borrows module:route.route as route
  * @borrows module:route.match as matchRoute
  * @borrows module:util.clipboard as clipboard
@@ -42,7 +38,12 @@ import { settings as appSettings } from './settings';
 import { isDefined } from './util';
 import * as windowprovider from './providers/window';
 import { error as err } from './error';
-import { RouteError } from './routeerror';
+import { errorHandler } from './app';
+
+// Leech onto the global error event.
+window().addEventListener('error', function(ev) {
+    errorHandler(ev.error || ev);
+});
 
 /**
  * Get/Set the application settings.
@@ -105,17 +106,6 @@ export function error(code, msg, ...args) {
     throw err('backbrace')(code, msg, args);
 }
 
-/**
- * Throw a route error.
- * @param {string} code Error code.
- * @param {string} msg Error message.
- * @param  {...any} [args] Arguments to merge into the message.
- * @returns {void}
- */
-export function routeError(code, msg, ...args) {
-    throw err('route', RouteError)(code, msg, args);
-}
-
 export {
     globals
 } from './globals';
@@ -140,13 +130,6 @@ export {
     debug as logDebug,
     object as logObject
 } from './log';
-
-export {
-    promiseblock,
-    promiseinsert,
-    promisequeue,
-    promiseeach
-} from './promises';
 
 export {
     controller

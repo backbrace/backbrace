@@ -31,12 +31,25 @@ export function uid() {
 }
 
 /**
- * Check for HTML5 compatability.
- * @returns {boolean} `True` if the current environment is HTML5 compatable.
+ * Check for browser compatability.
+ * @returns {boolean} `True` if the current environment is compatable.
  */
-export function isHtml5() {
+export function checkBrowser() {
+
   const window = getWindow();
-  return typeof window.document.addEventListener !== 'undefined';
+
+  // Check HTML5.
+  if (typeof window.document.addEventListener === 'undefined')
+    return false;
+
+  //Check Dynamic Imports.
+  try {
+    // eslint-disable-next-line no-new,no-new-func
+    new Function('import("")');
+  } catch (err) {
+    return false;
+  }
+  return true;
 }
 
 /**

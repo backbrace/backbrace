@@ -1,9 +1,8 @@
 import $ from 'jquery';
-import { promiseblock, promiseeach } from '../promises';
 import { load as loadModule } from '../module';
 import { error } from '../error';
 import { get } from '../http';
-import { page, table } from '../design';
+import { page } from '../design';
 import { settings } from '../settings';
 import { Component } from './component';
 import { get as getIcons } from '../providers/icons';
@@ -13,28 +12,17 @@ const viewerError = error('viewer');
 
 /**
  * Get data from a data source.
+ * @async
  * @param {string} data Data source.
- * @param {tableDesign} [table] Table design.
- * @returns {JQueryPromise<any[]>} Promise to return the data.
+ * @returns {Promise<any[]>} Returns the data.
  */
-function getData(data, table) {
+async function getData(data) {
     if (data) {
-        return promiseblock(
-            () => {
-                if (table) { // Load the data from a table.
-                    if (table.data.endsWith('.json')) {
-                        return get(table.data);
-                    }
-                } else { // Load from a JSON file.
-                    if (data.endsWith('.json')) {
-                        return get(data);
-                    }
-                }
-            },
-            (data) => {
-                return data.data || data;
-            }
-        );
+        // Load from a JSON file.
+        if (data.endsWith('.json')) {
+            let d = await get(data);
+            return d.data || d;
+        }
     }
 }
 
@@ -86,13 +74,6 @@ export class ViewerComponent extends Component {
 
         /**
          * @description
-         * Table design.
-         * @type {tableDesign}
-         */
-        this.table = null;
-
-        /**
-         * @description
          * Page sections.
          * @type {Map<string, SectionComponent>}
          */
@@ -141,190 +122,111 @@ export class ViewerComponent extends Component {
     }
 
     /**
+     * @async
      * @description
      * Load the viewer component.
      * @param {JQuery} container Container to load into.
-     * @returns {JQueryPromise} Promise to load the viewer component.
+     * @returns {Promise} Returns after loading the component.
      */
-    load(container) {
+    async load(container) {
 
         super.load(container);
 
         this.container.addClass('viewer row').hide();
         this.progress = $(getProgress()).appendTo(container);
 
-        return promiseblock(
+        // Get the page design.
+        let p = await page(this.name);
 
-            // Get the page design.
-            () => page(this.name),
+        // Page design not found.
+        if (p === null)
+            throw viewerError('nodesign', 'Cannot find page design \'{0}\'', this.name);
 
-            (page) => {
+        this.page = p;
 
-                // Page design not found.
-                if (page === null)
-                    throw viewerError('nodesign', 'Cannot find page design \'{0}\'', this.name);
+        // No close?
+        if (this.page.noclose && settings.windowMode)
+            $('#win' + this.id).find('i').remove();
 
-                this.page = page;
+        // Load the page sections.
+        for (let section of this.page.sections) {
 
-                // No close?
-                if (this.page.noclose && settings.windowMode)
-                    $('#win' + this.id).find('i').remove();
+            let comp = section.component,
+                Component = null;
 
-                // Get the page data.
-                if (this.page.data && !this.page.data.endsWith('.json'))
-                    return promiseblock(
-                        () => table(this.page.data),
-                        (table) => {
+            if (!comp.endsWith('.js')) {
+                // Import built-in control.
+                const { default: Control } = await import(
+                    /* webpackChunkName: "[request]" */
+                    `./sectioncomponents/${section.component}.js`);
+                Component = Control;
+            } else {
+                // Import external component.
+                const { default: Control } = await import(
+                    /* webpackIgnore: true */
+                    `${settings.dir.design}${comp}`);
+                Component = Control;
+            }
 
-                            // Table design not found.
-                            if (table === null)
-                                throw viewerError('nodesign', 'Cannot find table design \'{0}\'', this.page.data);
+            /** @type {SectionComponent} */
+            let cont = new Component(this, section);
+            this.sections.set(section.name, cont);
 
-                            this.table = table;
+            await cont.load(this.container);
+        }
 
-                            let getColumn = (name) => {
-                                let columns = $.grep(this.table.columns, function(column) {
-                                    return column.name === name;
-                                });
-                                return columns.length === 1 ? columns[0] : null;
-                            };
+        this.setTitle(this.options.title || this.page.caption);
 
-                            // Merge page and table fields.
-                            this.page.sections.forEach(section => {
-                                section.fields.forEach(field => {
-
-                                    let col = getColumn(field.name);
-                                    if (col) {
-                                        if (field.caption === field.name)
-                                            field.caption = col.caption;
-                                        field.type = col.type;
-                                    }
-                                });
-                            });
-                        }
-                    );
-            },
-
-            () => {
-
-                // Load the page sections.
-                return promiseeach(this.page.sections, (section) => {
-
-                    let comp = section.component;
-                    return promiseblock(
-                        () => {
-                            if (!comp.endsWith('.js')) {
-                                // Built-in component.
-                                return import(
-                                    /* webpackChunkName: "[request]" */
-                                    './sectioncomponents/' + comp + '.js');
-                            } else {
-                                // External component.
-                                return import(
-                                    /* webpackIgnore: true */
-                                    settings.dir.design + comp);
-                            }
-                        },
-                        ({ default: Control }) => {
-                            /**
-                             * @ignore
-                             * @type {SectionComponent}
-                             */
-                            let cont = new Control(this, section);
-                            this.sections.set(section.name, cont);
-                            return cont.load(this.container);
-                        }
-                    );
-
-                });
-            },
-
-            () => this.setTitle(this.options.title || this.page.caption),
-
-            // Get the page contoller (from file).
-            () => {
-                if (this.page.controller !== '')
-                    return promiseblock(
-                        () => loadModule(this.page.controller),
-                        (mod) => mod(this)
-                    );
-            },
-
-            // Get the table contoller (from file).
-            this.table ?
-                () => {
-                    if (this.table.controller !== '')
-                        return promiseblock(
-                            () => loadModule(this.table.controller),
-                            (mod) => mod(this)
-                        );
-                } : null,
-
-        );
+        // Get the page contoller (from file).
+        if (this.page.controller) {
+            const mod = await loadModule(this.page.controller);
+            await mod(this);
+        }
     }
 
     /**
+     * @async
      * @description
      * Update the viewer.
-     * @returns {JQueryPromise} Returns a promise to update the viewer.
+     * @returns {Promise} Returns after updating the viewer.
      */
-    update() {
+    async update() {
 
         if (!this.shouldUpdate())
             return;
 
         this.showLoad();
-        return promiseblock(
 
-            () => {
-                if (this.page.data)
-                    return promiseblock(
-                        () => getData(this.page.data, this.table),
-                        data => {
-                            this.data = data || [];
-                        }
-                    );
-            },
+        if (this.page.data) {
+            let data = await getData(this.page.data);
+            this.data = data || [];
+        }
 
-            () => this.beforeUpdate(),
+        await this.beforeUpdate();
 
-            () => {
-
-                // Update the sections.
-                return promiseeach(Array.from(this.sections.values()), (comp) => {
-                    return promiseblock(
-
-                        () => {
-                            if (comp.design.data)
-                                return getData(comp.design.data, null);
-                        },
-
-                        (data) => {
-                            comp.data = data || this.data;
-                            return comp.beforeUpdate();
-                        },
-
-                        () => comp.update(),
-
-                        () => comp.afterUpdate()
-                    );
-                });
-            },
-
-            () => this.afterUpdate(),
-
-            () => {
-
-                this.hideLoad();
-
-                // Hide the progress meter.
-                if (this.progress) {
-                    this.progress.remove();
-                    this.progress = null;
-                    this.show();
-                }
+        // Update the sections.
+        for (let comp of this.sections.values()) {
+            if (comp.design.data) {
+                let data = await getData(comp.design.data);
+                comp.data = data || this.data;
+            } else {
+                comp.data = this.data;
             }
-        );
+            await comp.beforeUpdate();
+            await comp.update();
+            await comp.afterUpdate();
+        }
+
+        await this.afterUpdate();
+
+        this.hideLoad();
+
+        // Hide the progress meter.
+        if (this.progress) {
+            this.progress.remove();
+            this.progress = null;
+            this.show();
+        }
     }
 
     /**
@@ -334,10 +236,10 @@ export class ViewerComponent extends Component {
      */
     show() {
 
+        this.container.show();
+
         // Show sections.
         Array.from(this.sections.values()).forEach((cont) => cont.show());
-
-        this.container.show();
 
         return this;
     }

@@ -1,4 +1,3 @@
-import { promiseblock, promiseeach } from '../../promises';
 import { SectionComponent } from '../sectioncomponent';
 
 /**
@@ -40,64 +39,57 @@ export class CardPageComponent extends SectionComponent {
     }
 
     /**
+     * @async
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {JQueryPromise} Promise to load the card.
+     * @returns {Promise} Promise to load the card.
      */
-    load(cont) {
+    async load(cont) {
 
         // Load the section component.
-        super.load(cont);
+        await super.load(cont);
 
         // Load the fields.
-        return this.loadFields(this.window, this.design.fields);
+        await this.loadFields(this.window, this.design.fields);
     }
 
     /**
+     * @async
      * @description
      * Load the fields for a section.
      * @param {WindowComponent} win Window to load the fields into.
      * @param {pageFieldDesign[]} fields Fields to load.
-     * @returns {JQueryPromise} Promise to return after we load the fields.
+     * @returns {Promise} Promise to return after we load the fields.
      */
-    loadFields(win, fields) {
+    async loadFields(win, fields) {
 
-        return promiseeach(fields, (field, i) => {
+        for (let field of fields) {
 
-            let comp = field.component;
+            let comp = field.component || 'textfield';
 
-            if (comp === '') {
-                comp = 'textfield';
-            }
             if (comp.indexOf('.js') === -1) {
 
-                return promiseblock(
+                const { default: Control } = await import(
+                    /* webpackChunkName: "[request]" */
+                    `../fieldcomponents/${comp}.js`);
 
-                    () => {
-                        return import(
-                            /* webpackChunkName: "[request]" */
-                            `../fieldcomponents/${comp}.js`);
-                    },
-                    ({ default: Control }) => {
+                /** @type {FieldComponent} */
+                let cont = new Control(this, field);
+                this.fields.set(field.name, cont);
 
-                        let cont = new Control(this, field);
-                        this.fields.set(field.name, cont);
-
-                        return cont.load(win.main);
-                    }
-
-                );
+                await cont.load(win.main);
             }
-        });
+        }
     }
 
     /**
+     * @async
      * @description
      * Update the card page with a data source.
-     * @returns {JQueryPromise} Returns a promise to update the card page.
+     * @returns {Promise} Returns a promise to update the card page.
      */
-    update() {
+    async update() {
 
         // Only show the data for the first record.
         let r = null;
@@ -105,10 +97,10 @@ export class CardPageComponent extends SectionComponent {
             r = this.data[0];
 
         // Update the fields.
-        return promiseeach(Array.from(this.fields.values()), function(cont) {
+        for (let cont of this.fields.values()) {
             cont.data = r;
-            return cont.update();
-        });
+            await cont.update();
+        }
     }
 }
 

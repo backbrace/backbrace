@@ -1,6 +1,5 @@
-'use strict';
 
-(function(window, $) {
+(async (window, $) => {
 
     // Setup the app.
     backbrace.settings({
@@ -69,6 +68,6 @@
     });
 
     // Start the app!
-    backbrace.start();
+    await backbrace.start();
 
 })(backbrace.window(), backbrace.jquery());

@@ -63,7 +63,7 @@ export class Component {
      * @description
      * Load the component into a  `container`.
      * @param {JQuery} container Container to load into.
-     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     * @returns {Component|Promise} Returns after loading the component.
      */
     load(container) {
         this.container = $('<div class="component" />').appendTo(container);
@@ -82,16 +82,17 @@ export class Component {
     /**
      * @description
      * Invokes before updating the component.
-     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     * @returns {Component|Promise} Returns before updating the component.
      */
     beforeUpdate() {
         return this;
     }
 
     /**
+     * @async
      * @description
      * Update the component with the data source.
-     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     * @returns {Component|Promise} Returns after updating the component.
      */
     update() {
         return this;
@@ -100,7 +101,7 @@ export class Component {
     /**
      * @description
      * Invokes after updating the component.
-     * @returns {Component|JQueryPromise} Returns itself for chaining.
+     * @returns {Component|Promise} Returns after updating the component.
      */
     afterUpdate() {
         return this;

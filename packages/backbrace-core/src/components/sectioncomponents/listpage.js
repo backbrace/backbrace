@@ -49,15 +49,16 @@ export class ListPageComponent extends SectionComponent {
     }
 
     /**
+     * @async
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {ListPageComponent} Returns itself for chaining.
+     * @returns {Promise} Returns itself for chaining.
      */
-    load(cont) {
+    async load(cont) {
 
         // Load the section component.
-        super.load(cont);
+        await super.load(cont);
 
         /**
          * @ignore
@@ -244,7 +245,7 @@ export class ListPageComponent extends SectionComponent {
     /**
      * @description
      * Bind the list page to a data source.
-     * @returns {SectionComponent} Returns a promise to update the list page.
+     * @returns {ListPageComponent} Returns a promise to update the list page.
      */
     update() {
 

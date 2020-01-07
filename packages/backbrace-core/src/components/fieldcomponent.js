@@ -49,7 +49,7 @@ export class FieldComponent extends Component {
     /**
      * @description
      * Update the field from the data source.
-     * @returns {FieldComponent|JQueryPromise} Returns itself for chaining.
+     * @returns {FieldComponent|Promise} Returns itself for chaining.
      */
     update() {
         let fieldData = this.data ? this.data[this.design.dataName || this.design.name] : null;

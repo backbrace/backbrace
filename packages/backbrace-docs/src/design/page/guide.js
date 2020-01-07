@@ -48,23 +48,23 @@ backbrace.controller('guide', (viewer) => {
         }
     };
 
-    viewer.afterUpdate = () => {
+    viewer.afterUpdate = async () => {
 
         highlight(viewer);
 
         let scomps = $('div.components');
-        if (scomps.length > 0)
-            return backbrace.get('design/data/components.json').then(json => {
-                scomps.each((i, scomp) => {
-                    json.filter((comp) => comp.type === $(scomp).attr('data-type'))
-                        .sort((a, b) => { // Sort the data.
-                            return a.name > b.name ? 1 : -1;
-                        })
-                        .forEach(comp => {
-                            $(mergeData(templates.COMPONENT, comp)).appendTo(scomp);
-                        });
-                });
+        if (scomps.length > 0) {
+            let json = await backbrace.get('design/data/components.json');
+            scomps.each((i, scomp) => {
+                json.filter((comp) => comp.type === $(scomp).attr('data-type'))
+                    .sort((a, b) => { // Sort the data.
+                        return a.name > b.name ? 1 : -1;
+                    })
+                    .forEach(comp => {
+                        $(mergeData(templates.COMPONENT, comp)).appendTo(scomp);
+                    });
             });
+        }
     };
 
 });

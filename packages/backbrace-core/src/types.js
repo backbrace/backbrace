@@ -16,13 +16,6 @@
  */
 
 /**
- * Promise queue error handler function.
- * @typedef {Function} promiseErrorHandler
- * @param {(string|Error)} msg Error message.
- * @returns {void}
- */
-
-/**
  * Action runner function.
  * @typedef {Function} actionRunner
  * @param {pageActionDesign} action Action design.
@@ -69,7 +62,7 @@
 
 /**
  * @callback actionRunnerOnClick
- * @returns {(void|JQueryPromise<any>)}
+ * @returns {(void|Promise<any>)}
  */
 
 /**
@@ -172,7 +165,7 @@
 /**
 * @callback dataCallback
 * @param {any[]} data Data array.
-* @returns {JQueryPromise<any[]>|any[]} Promises to return the data.
+* @returns {Promise<any[]>|any[]} Promises to return the data.
 */
 
 /**
@@ -303,30 +296,4 @@ export let pagedesign = {
   filters: '',
   noclose: false,
   sections: []
-};
-
-/**
- * @typedef tableColumnDesign
- * @property {string} name Name of the column.
- * @property {string} caption Caption of the column.
- * @property {string} type  Data type for the column.
- */
-export let tablecolumn = {
-  name: '',
-  caption: '',
-  type: 'Text'
-};
-
-/**
- * @typedef tableDesign
- * @property {string} name Name of the table.
- * @property {string} controller Table controller.
- * @property {string} data Table data (if from a file).
- * @property {tableColumnDesign[]} columns Table columns.
- */
-export let tabledesign = {
-  name: '',
-  controller: '',
-  data: '',
-  columns: []
 };

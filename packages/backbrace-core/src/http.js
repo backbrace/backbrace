@@ -9,42 +9,46 @@ import { error } from './error';
 
 /**
  * Send a HTTP get request.
+ * @async
+ * @template T
  * @param {string} url Absolute or relative URL to get.
  * @param {string} [dataType] Set the dataType header.
- * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`. If the `url` is not
+ * @returns {Promise<T>} Returns the data from the `url`. If the `url` is not
  * found, it will return `null`.
  */
-export function get(url, dataType) {
+export async function get(url, dataType) {
 
-    const d = $.Deferred();
+    return new Promise(resolve => {
 
-    $.get({
-        url: url,
-        cache: true,
-        dataType: dataType
-    }).then(function(data) {
-        d.resolve(data);
-    }).fail(function(xhr, status, err) {
-        d.resolve(null);
+        $.get({
+            url: url,
+            cache: true,
+            dataType: dataType
+        }).then(data => {
+            resolve(data);
+        }).fail(() => {
+            resolve(null);
+        });
+
     });
-
-    return d.promise();
 }
 
 /**
  * Send a HTTP post request.
+ * @async
+ * @template T
  * @param {string} url Absolute or relative URL to get.
- * @returns {JQueryPromise} This `JQueryPromise` will return the data from the `url`.
+ * @returns {Promise<T>} Returns the data from the `url`.
  */
-export function post(url) {
+export async function post(url) {
 
-    let d = $.Deferred();
+    return new Promise(resolve => {
 
-    $.post(url, function(data) {
-        d.resolve(data);
-    }).fail(function(xhr, status, err) {
-        throw error('http')('post', xhr.responseText || err);
+        $.post(url, (data) => {
+            resolve(data);
+        }).fail(function(xhr, status, err) {
+            throw error('http')('post', xhr.responseText || err);
+        });
+
     });
-
-    return d.promise();
 }

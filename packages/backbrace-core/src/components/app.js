@@ -8,7 +8,6 @@ import './actions';
 import './window';
 
 import { error } from '../error';
-import { promisequeue } from '../promises';
 import { settings } from '../settings';
 import * as sweetalert from '../sweetalert';
 import { isMobileDevice } from '../util';
@@ -54,13 +53,6 @@ export class AppComponent extends Component {
          * @type {JQuery}
          */
         this.windows = null;
-
-        /**
-         * @description
-         * Current error.
-         * @type {Component}
-         */
-        this.currError = null;
 
         /**
          * @description
@@ -150,72 +142,73 @@ export class AppComponent extends Component {
 
     /**
      * Load a page.
+     * @async
      * @param {string} name Name of the page to load.
      * @param {viewerOptions} [options] Page viewer options.
      * @param {Object} [params] Page params.
-     * @returns {void}
+     * @returns {Promise} Returns after loading the page.
      */
-    loadPage(name, options = {}, params = {}) {
+    async loadPage(name, options = {}, params = {}) {
 
         let pge = new ViewerComponent(name, options, params);
 
-        if (this.currError) {
-            this.currError.unload();
-            this.currError = null;
-        }
+        try {
 
-        if (!settings.windowMode && window.history && options.updateHistory)
-            window.history.pushState(null, name, options.updateHistory);
+            if (this.currError) {
+                this.currError.unload();
+                this.currError = null;
+            }
 
-        promisequeue(
+            if (!settings.windowMode && window.history && options.updateHistory)
+                window.history.pushState(null, name, options.updateHistory);
 
-            () => {
+            if (this.currViewer) {
+                this.currViewer.unload();
+                this.currViewer = null;
+                $(window).scrollTop(0);
+            }
 
-                if (this.currViewer) {
-                    this.currViewer.unload();
-                    this.currViewer = null;
-                    $(window).scrollTop(0);
-                }
+            if (this.currentPage())
+                this.currentPage().hide().hideLoad();
 
-                if (this.currentPage())
-                    this.currentPage().hide().hideLoad();
+            // Add a window shorcut.
+            if (settings.windowMode) {
+                $('.main-windows-btn').removeClass('active');
+                this.addWindowToToolbar(pge).addClass('active');
+            }
 
-                // Add a window shorcut.
-                if (settings.windowMode) {
-                    $('.main-windows-btn').removeClass('active');
-                    this.addWindowToToolbar(pge).addClass('active');
-                }
+            $('.placeholder-content').hide();
 
-                $('.placeholder-content').hide();
+            // Load the page component.
+            await pge.load(this.maincontainer);
 
-                // Load the page component.
-                return pge.load(this.maincontainer);
-            },
-            () => {
+            if (settings.windowMode) {
 
-                if (settings.windowMode) {
+                // Add the page to the loaded pages.
+                this.pages.set(pge.id, pge);
+                this.activePage = pge.id;
 
-                    // Add the page to the loaded pages.
-                    this.pages.set(pge.id, pge);
-                    this.activePage = pge.id;
+            } else {
+                this.currViewer = pge;
+            }
 
-                } else {
-                    this.currViewer = pge;
-                }
+            await pge.update();
 
-                return pge.update();
-            },
-            () => this.afterUpdate()
+            await this.afterUpdate();
 
-        ).error(() => {
-            pge.unload();
-            this.pages.delete(pge.id);
+        } catch (e) {
+            if (pge) {
+                pge.unload();
+                this.pages.delete(pge.id);
+            }
             this.currViewer = null;
             if (this.activePage === pge.id)
                 this.activePage = 0;
             if (this.activePage)
                 this.showPage(this.activePage);
-        });
+            throw e;
+        }
+
     }
 
     /**
@@ -249,38 +242,35 @@ export class AppComponent extends Component {
      */
     closePage(id) {
 
-        promisequeue(() => {
 
-            // Unload the page.
-            if (!this.pages.has(id))
-                throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+        // Unload the page.
+        if (!this.pages.has(id))
+            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
 
-            const pge = this.pages.get(id);
-            if (settings.windowMode && pge.page.noclose)
-                return;
-            pge.unload();
+        const pge = this.pages.get(id);
+        if (settings.windowMode && pge.page.noclose)
+            return;
+        pge.unload();
 
-            // Remove the page from the loaded pages.
-            this.pages.delete(id);
+        // Remove the page from the loaded pages.
+        this.pages.delete(id);
 
-            // Remove shortcut.
-            if (settings.windowMode) {
-                $('#win' + id).remove();
-                $(window).scrollTop(0);
+        // Remove shortcut.
+        if (settings.windowMode) {
+            $('#win' + id).remove();
+            $(window).scrollTop(0);
+        }
+
+        if (this.activePage === id) {
+
+            this.activePage = 0;
+
+            // Open next page.
+            if (this.pages.size > 0) {
+                const nextpge = Array.from(this.pages.values())[this.pages.size - 1];
+                this.showPage(nextpge.id);
             }
-
-            if (this.activePage === id) {
-
-                this.activePage = 0;
-
-                // Open next page.
-                if (this.pages.size > 0) {
-                    const nextpge = Array.from(this.pages.values())[this.pages.size - 1];
-                    this.showPage(nextpge.id);
-                }
-            }
-
-        });
+        }
     }
 
     /**
@@ -290,26 +280,23 @@ export class AppComponent extends Component {
      */
     showPage(id) {
 
-        promisequeue(() => {
+        // Hide the currently active page.
+        if (this.currentPage())
+            this.currentPage().hide();
 
-            // Hide the currently active page.
-            if (this.currentPage())
-                this.currentPage().hide();
+        if (settings.windowMode)
+            $('.main-windows-btn').removeClass('active');
 
-            if (settings.windowMode)
-                $('.main-windows-btn').removeClass('active');
+        // Show the page.
+        if (!this.pages.has(id))
+            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
 
-            // Show the page.
-            if (!this.pages.has(id))
-                throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+        const pge = this.pages.get(id);
+        pge.show();
+        this.activePage = pge.id;
 
-            const pge = this.pages.get(id);
-            pge.show();
-            this.activePage = pge.id;
-
-            if (settings.windowMode)
-                $('#win' + id).addClass('active');
-        });
+        if (settings.windowMode)
+            $('#win' + id).addClass('active');
     }
 
 }

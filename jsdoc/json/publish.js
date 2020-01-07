@@ -113,6 +113,7 @@ exports.publish = function(data, opts, tutorials) {
                 params: convertParams(doc.params),
                 returns: convertReturns(doc.returns),
                 desc: doc.description,
+                async: doc.async,
                 examples: doc.examples,
                 scope: doc.scope,
                 ignore: doc.ignore,

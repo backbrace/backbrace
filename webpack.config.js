@@ -66,29 +66,21 @@ exports.get = function(devmode) {
             }
           }]
         },
-        (!devmode ?
-          {
-            test: /\.js$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [['@babel/preset-env', {
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env',
+                {
                   'targets': {
-                    'browsers': [
-                      'last 2 versions',
-                      'ie >= 9'
-                    ]
-                  },
-                  'useBuiltIns': 'usage'
-                }]],
-                plugins: [
-                  '@babel/plugin-transform-runtime',
-                  '@babel/plugin-syntax-dynamic-import'
-                ]
-              }
+                    'esmodules': true
+                  }
+                }]]
             }
-          } : {})
+          }
+        }
       ]
     },
     optimization: {

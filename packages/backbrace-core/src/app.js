@@ -7,17 +7,14 @@
 import './providers/icons';
 
 import $ from 'jquery';
-import { reset, promisequeue } from './promises';
 import { error } from './error';
 import { compile } from './jss';
 import { error as logError } from './log';
 import { settings } from './settings';
 import { match as matchRoute, processLinks } from './route';
-import { isDefined, isHtml5 } from './util';
+import { isDefined, checkBrowser } from './util';
 import { get as getAlert } from './providers/alert';
 import { get as getWindow } from './providers/window';
-import { RouteError } from './routeerror';
-import { RouteErrorComponent } from './components/routeerror';
 
 /** @type {AppComponent} */
 let app = null;
@@ -109,31 +106,21 @@ export function confirm(msg, callbackFn, title, yescaption, nocaption) {
 
 /**
  * Display an error and kill the current execution.
- * @param {Error|RouteError} err Error to display.
+ * @param {Error} err Error to display.
  * @returns {void}
  */
 export function errorHandler(err) {
 
     const alert = getAlert();
 
+    // Hide the placeholder.
+    $('.placeholder-content').remove();
+
     logError(err);
 
     // Run error handling.
     if (!suppressNextError) {
-
-        // Clear the last error.
-        if (app.currError) {
-            app.currError.unload();
-            app.currError = null;
-        }
-
-        reset();
-
-        if (err instanceof RouteError) {
-            app.currError = new RouteErrorComponent(err).load($('body'));
-        } else {
-            alert.error(err.message);
-        }
+        alert.error(err.message);
     }
 
     suppressNextError = false;
@@ -185,147 +172,121 @@ function loadColors() {
 }
 
 /**
- * Load external CSS.
+ * Load the app style with a loader script. After the style is loaded, the app colors will be loaded.
  * @ignore
- * @returns {void}
+ * @async
+ * @returns {Promise} Returns after loading the style.
  */
-function loadCSS() {
-    if (settings.style.css !== '')
+async function loadStyle() {
+
+    if (settings.style.loader) {
+
+        const loader = await import(
+            /* webpackChunkName: "style-[request]" */
+            './styles/loaders/' + settings.style.loader);
+
+        styleLoader = loader;
+        loader.load();
+    }
+
+    loadColors();
+
+    if (settings.style.css)
         $(`<link id="appcss" rel="stylesheet" href="${settings.style.css}" >`)
             .appendTo($('head'));
 }
 
 /**
- * Load the app style with a loader script. After the style is loaded, the app colors will be loaded.
- * @ignore
- * @returns {JQueryPromise} Promises to return after loading the style.
- */
-function loadStyle() {
-
-    if (settings.style.loader !== '') {
-        let def = $.Deferred();
-        import(
-            /* webpackChunkName: "style-[request]" */
-            './styles/loaders/' + settings.style.loader).then((loader) => {
-                styleLoader = loader;
-                loader.load();
-                loadColors();
-                loadCSS();
-                def.resolve();
-            }).catch((err) => {
-                errorHandler(err);
-            });
-        return def.promise();
-    } else {
-        loadColors();
-        loadCSS();
-    }
-}
-
-/**
  * Start the app.
- * @returns {void}
+ * @async
+ * @returns {Promise} Returns after the app is started.
  */
-export function start() {
+export async function start() {
 
-    if (!appInit) {
+    try {
 
-        const window = getWindow();
+        if (!appInit) {
 
-        window.addEventListener('error', function(ev) {
-            errorHandler(ev.error || ev);
-        });
+            const window = getWindow();
 
-        $('<meta>').attr({
-            'name': 'Description',
-            'content': settings.app.description
-        }).appendTo(window.document.head);
+            $('<meta>').attr({
+                'name': 'Description',
+                'content': settings.app.description
+            }).appendTo(window.document.head);
 
-        $('<meta>').attr({
-            'http-equiv': 'X-UA-Compatible',
-            'content': 'IE=Edge'
-        }).appendTo(window.document.head);
+            $('<meta>').attr({
+                'http-equiv': 'X-UA-Compatible',
+                'content': 'IE=Edge'
+            }).appendTo(window.document.head);
 
-        $('<meta>').attr({
-            'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
-        }).appendTo(window.document.head);
+            $('<meta>').attr({
+                'name': 'viewport',
+                'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
+            }).appendTo(window.document.head);
 
-        $('<meta>').attr({
-            'name': 'apple-mobile-web-app-capable',
-            'content': 'yes'
-        }).appendTo(window.document.head);
+            $('<meta>').attr({
+                'name': 'apple-mobile-web-app-capable',
+                'content': 'yes'
+            }).appendTo(window.document.head);
 
-        $('<meta>').attr({
-            'name': 'mobile-web-app-capable',
-            'content': 'yes'
-        }).appendTo(window.document.head);
+            $('<meta>').attr({
+                'name': 'mobile-web-app-capable',
+                'content': 'yes'
+            }).appendTo(window.document.head);
 
-        // Update title.
-        window.document.title = settings.app.title;
+            // Update title.
+            window.document.title = settings.app.title;
 
-        // Check for HTML5.
-        if (!isHtml5())
-            throw appError('nohtml', 'This app requires a HTML5 browser. We recommend chrome: ' +
-                '<a href="https://www.google.com/chrome/" target="new">click here</a>');
+            // Check the browser.
+            if (!checkBrowser())
+                throw appError('badbrowser', `Your browser is not supported by this app. Please update or use a different browser.
+                <p><small>We recommend chrome: <a href="https://www.google.com/chrome/" target="new">click here</a></p></small>`);
 
-        // Start ticking.
-        window.setInterval(onTick, 10000);
+            // Start ticking.
+            window.setInterval(onTick, 10000);
 
-        // JQuery wasn't loaded :(
-        if ($ === null)
-            throw appError('nojquery', 'JQuery was not loaded correctly');
+            if ($.isFunction(window.document.getElementsByTagName('*')))
+                throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
 
-        if ($.isFunction(window.document.getElementsByTagName('*')))
-            throw appError('badbrowser', 'JQuery 3 is not supported in your browser');
+        }
 
-    }
+        // Import the app component.
+        const { default: AppComponent } = await import(
+            /* webpackChunkName: "app" */
+            './components/app');
 
-    // Load the app component.
-    import(
-        /* webpackChunkName: "app" */
-        './components/app').then(({ default: AppComponent }) => {
+        await loadStyle();
 
-            promisequeue(
+        // Load the app component.
+        app = new AppComponent();
+        app.load($('body'));
 
-                () => loadStyle(),
+        app.afterUpdate = () => {
+            processLinks();
+            if (styleLoader && styleLoader.afterUpdate)
+                styleLoader.afterUpdate();
+        };
 
-                () => {
+        if (readyFunc)
+            await readyFunc();
 
-                    app = new AppComponent();
-                    app.load($('body'));
+        if (!settings.windowMode) {
 
-                    app.afterUpdate = () => {
-                        processLinks();
-                        if (styleLoader && styleLoader.afterUpdate)
-                            styleLoader.afterUpdate();
-                    };
-
-                    if (!settings.windowMode) {
-
-                        window.onpopstate = function(event) {
-                            var r = matchRoute(window.location.pathname);
-                            if (r) {
-                                app.loadPage(r.page, {}, r.params);
-                            }
-                        };
-
-                        let route = matchRoute(window.location.pathname);
-                        if (route)
-                            app.loadPage(route.page, {}, route.params);
-                    }
-
-                    if (readyFunc)
-                        return readyFunc();
+            window.onpopstate = async () => {
+                var r = matchRoute(window.location.pathname);
+                if (r) {
+                    await loadPage(r.page, {}, r.params);
                 }
-            ).error(function() {
-                // Hide the palceholder.
-                $('.placeholder-content').hide();
-            });
+            };
 
-        }).catch((err) => {
-            errorHandler(err);
-        });
+            let route = matchRoute(window.location.pathname);
+            if (route)
+                await loadPage(route.page, {}, route.params);
+        }
+
+    } catch (err) {
+        errorHandler(err);
+    }
 
 }
 
@@ -347,13 +308,18 @@ export function unload() {
 
 /**
  * Load a page.
+ * @async
  * @param {string} name Name of the page to load.
  * @param {viewerOptions} [options] Page viewer options.
  * @param {Object} [params] Page params.
- * @returns {void}
+ * @returns {Promise} Returns after loading the page.
  */
-export function loadPage(name, options = {}, params = {}) {
-    app.loadPage(name, options, params);
+export async function loadPage(name, options = {}, params = {}) {
+    try {
+        await app.loadPage(name, options, params);
+    } catch (err) {
+        errorHandler(err);
+    }
 }
 
 /**

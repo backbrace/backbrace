@@ -4,7 +4,6 @@
  * @private
  */
 
-import $ from 'jquery';
 import { error } from './error';
 import { settings } from './settings';
 import { isDefined } from './util';
@@ -50,31 +49,33 @@ export function exists(name) {
 
 /**
  * Load a module from a file.
+ * @async
  * @param {string} name File name. We will attempt to load the file from the design dir.
- * @returns {JQueryPromise<*>} Promise to return after we load the module.
+ * @returns {Promise} Promise to return after we load the module.
  */
-export function load(name) {
+export async function load(name) {
 
-    const d = $.Deferred(),
-        window = getWindow();
+    return new Promise(resolve => {
 
-    // Check if we are loading a js file and the module doesn't exist.
-    if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
+        const window = getWindow();
 
-        let script = window.document.createElement('script');
-        script.type = 'module';
-        script.src = settings.dir.design + name;
-        script.onerror = function() {
-            throw moduleError('noexists', 'Cannot find module \'{0}\'', name);
-        };
-        script.onload = function() {
-            d.resolve(get(name));
-        };
-        window.document.head.appendChild(script);
+        // Check if we are loading a js file and the module doesn't exist.
+        if (name.toLowerCase().indexOf('.js') !== -1 && !exists(name)) {
 
-    } else {
-        window.setTimeout(() => d.resolve(get(name)), 10);
-    }
+            let script = window.document.createElement('script');
+            script.type = 'module';
+            script.src = settings.dir.design + name;
+            script.onerror = function() {
+                throw moduleError('noexists', 'Cannot find module \'{0}\'', name);
+            };
+            script.onload = function() {
+                resolve(get(name));
+            };
+            window.document.head.appendChild(script);
 
-    return d.promise();
+        } else {
+            window.setTimeout(() => resolve(get(name)), 10);
+        }
+
+    });
 }

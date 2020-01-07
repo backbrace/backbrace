@@ -20,20 +20,21 @@ export class TemplatePageComponent extends SectionComponent {
     }
 
     /**
+     * @async
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {SectionComponent|JQueryPromise} Promises to load the component.
+     * @returns {Promise} Promises to load the component.
      */
-    load(cont) {
+    async load(cont) {
 
         this.template = this.design.options.template;
 
         if (this.design.options.useWindowComponent) {
-            return super.load(cont);
+            await super.load(cont);
         } else {
             this.container = $('<div style="width:100%" />').appendTo(cont);
-            return this.attachController();
+            await this.attachController();
         }
     }
 

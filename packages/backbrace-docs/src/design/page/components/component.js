@@ -8,7 +8,7 @@
 
 import { highlight } from '../../modules/util.js';
 
-backbrace.controller('component', (viewer) => {
+backbrace.controller('component', async (viewer) => {
 
     let page = viewer.page,
         apilink = `<div class="alert is-important">
@@ -19,28 +19,22 @@ backbrace.controller('component', (viewer) => {
 
     viewer.afterUpdate = () => highlight(viewer);
 
-    return backbrace.promiseblock(
+    // Get the design on the page.
+    const json = await backbrace.get(`design/page/components/${page.name}.json`);
 
-        // Get the design on the page.
-        () => backbrace.get(`design/page/components/${page.name}.json`),
+    page.sections.forEach((s, i) => {
 
-        (json) => {
+        // Handle title section.
+        if (s.name === 'Title')
+            viewer.sections.get(s.name).template = `<a route="components">Components</a> > <a route="components/${page.name}">${page.name}</a>
+                <h4>${page.caption}</h4>
+                ${apilink}
+                ${s.options.template}`;
 
-            page.sections.forEach((s, i) => {
-
-                // Handle title section.
-                if (s.name === 'Title')
-                    viewer.sections.get(s.name).template = `<a route="components">Components</a> > <a route="components/${page.name}">${page.name}</a>
-                        <h4>${page.caption}</h4>
-                        ${apilink}
-                        ${s.options.template}`;
-
-                // Add section source.
-                if (s.name.indexOf('Source') !== -1 && i > 0) {
-                    viewer.sections.get(s.name).template = `<pre style="width: 100%;height: auto;">
-                        <code class="json">${JSON.stringify(json.sections[i - 1], null, 2)}</code></pre>`;
-                }
-            });
+        // Add section source.
+        if (s.name.indexOf('Source') !== -1 && i > 0) {
+            viewer.sections.get(s.name).template = `<pre style="width: 100%;height: auto;">
+                <code class="json">${JSON.stringify(json.sections[i - 1], null, 2)}</code></pre>`;
         }
-    );
+    });
 });

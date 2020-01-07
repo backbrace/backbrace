@@ -95,10 +95,10 @@ export function processLinks() {
         var a = $(val);
         if (a.attr('processed') === 'true')
             return;
-        a.css('cursor', 'pointer').on('click', () => {
+        a.css('cursor', 'pointer').on('click', async () => {
             var r = match(a.attr('route'));
             if (r)
-                loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
+                await loadPage(r.page, { updateHistory: a.attr('route') }, r.params);
         }).attr('processed', 'true');
     });
 }

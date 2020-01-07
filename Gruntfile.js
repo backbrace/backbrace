@@ -127,7 +127,6 @@ module.exports = function(grunt) {
           paths.core + '/src/globals.js',
           paths.core + '/src/routeerror.js',
           paths.core + '/src/app.js',
-          paths.core + '/src/promises.js',
           paths.core + '/src/module.js',
           paths.core + '/src/log.js',
           paths.core + '/src/util.js',

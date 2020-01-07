@@ -1,7 +1,6 @@
 import { Component } from './component';
 import { ActionsComponent } from './actions';
 import { WindowComponent } from './window';
-import { promiseblock, promisequeue } from '../promises';
 import { load as loadModule } from '../module';
 
 /**
@@ -53,12 +52,13 @@ export class SectionComponent extends Component {
     }
 
     /**
+     * @async
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {SectionComponent|JQueryPromise} Returns itself for chaining.
+     * @returns {Promise} Returns itself for chaining.
      */
-    load(cont) {
+    async load(cont) {
 
         // Create the window.
         this.window = new WindowComponent({
@@ -78,28 +78,29 @@ export class SectionComponent extends Component {
             this.actionRunner(action);
         }));
 
-        return this.attachController();
+        await this.attachController();
     }
 
     /**
      * Attach the section controller
-     * @returns {JQueryPromise} Promises to attach the controller.
+     * @async
+     * @returns {Promise} Promises to attach the controller.
      */
-    attachController() {
-        if (this.design.controller)
-            return promiseblock(
-                () => loadModule(this.design.controller),
-                (mod) => mod(this.viewer, this)
-            );
+    async attachController() {
+        if (this.design.controller) {
+            const mod = await loadModule(this.design.controller);
+            mod(this.viewer, this);
+        }
     }
 
     /**
+     * @async
      * @description
      * Run a page action.
      * @param {pageActionDesign} action Action design.
-     * @returns {void}
+     * @returns {Promise} Returns after running the action.
      */
-    actionRunner(action) {
+    async actionRunner(action) {
 
         let func = this.click.get(action.name);
         if (!func) {
@@ -110,16 +111,10 @@ export class SectionComponent extends Component {
 
         this.viewer.showLoad();
 
-        promisequeue(() => {
-            return promiseblock(
-                func ? function() {
-                    return func();
-                } : null,
-                () => {
-                    this.viewer.hideLoad();
-                }
-            );
-        });
+        if (func)
+            await func();
+
+        this.viewer.hideLoad();
     }
 
     /**
