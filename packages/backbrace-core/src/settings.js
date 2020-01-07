@@ -22,7 +22,7 @@ export let settings = {
     },
     dir: {
         design: '/design/',
-        tern: '/json/'
+        typings: '/typings/'
     },
     style: {
         loader: 'materialdesign',

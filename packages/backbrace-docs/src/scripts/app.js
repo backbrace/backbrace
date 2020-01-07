@@ -32,7 +32,7 @@
         backbrace.publicPath('./backbrace/');
         backbrace.settings({
             dir: {
-                tern: './backbrace/json/'
+                typings: './backbrace/typings/'
             }
         });
     }

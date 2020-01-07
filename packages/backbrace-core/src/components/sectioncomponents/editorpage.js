@@ -1,33 +1,11 @@
-import * as ace from '../../../../../node_modules/brace/index.js';
-import * as tern from '../../../../../node_modules/tern/lib/tern.js';
-import 'modules/ace/ext-tern';
-import 'npm/brace/theme/monokai';
-import 'npm/brace/mode/javascript';
-import 'npm/brace/mode/json';
-import { promiseblock } from '../../promises';
+import * as monaco from '../../../../../node_modules/monaco-editor/esm/vs/editor/editor.api';
 import { get } from '../../http';
 import { SectionComponent } from '../sectioncomponent';
-import { settings } from '../../settings';
 import { error } from '../../error';
+import * as $ from 'jquery';
+import { settings } from '../../settings';
 
 const editorError = error('editorpage');
-
-let defs = [];
-
-/**
- * Load a tern definition file.
- * @private
- * @param {string} file File to load.
- * @returns {JQueryPromise} Promises to return after loading the definition file.
- */
-function loadDef(file) {
-    return promiseblock(
-        () => get(`${settings.dir.tern}${file}.json`),
-        (def) => {
-            defs = defs.concat(def);
-        }
-    );
-}
 
 /**
  * @class EditorPageComponent
@@ -43,81 +21,85 @@ export class EditorPageComponent extends SectionComponent {
      * @param {pageSectionDesign} design Section design.
      */
     constructor(viewer, design) {
+
         super(viewer, design);
 
         /**
-         * @description
-         * Ace editor control.
-         * @type {ace.Editor}
+         * Editor control.
+         * @type {monaco.editor.IStandaloneCodeEditor}
          */
         this.editor = null;
 
         /**
          * @description
-         * Ace mode.
+         * Editor mode.
          * @type {string}
          */
-        this.type = (design.options.type || 'javascript');
+        this.type = design.options.type || 'javascript';
     }
 
     /**
+     * @async
      * @description
      * Load the component.
      * @param {JQuery} cont Container to load into.
-     * @returns {JQueryPromise} Promise to load the card.
+     * @returns {Promise} Promise to load the card.
      */
-    load(cont) {
+    async load(cont) {
 
         // Load the section component.
         super.load(cont);
 
         this.window.main.append(`<div id="editor${this.id}" class="editor">`);
 
-        return promiseblock(
+        // Add typings (javascript mode).
+        if (this.type === 'javascript') {
 
-            () => {
-                if (this.type === 'javascript')
-                    return loadDef('backbrace');
-            },
+            // Add jquery types.
+            const jqtypes = await get(`${settings.dir.typings}JQuery.d.ts`);
+            monaco.languages.typescript.javascriptDefaults.addExtraLib(jqtypes, 'ts:filename/jquery.d.ts');
 
-            () => {
+            // Add backbrace types.
+            const types = await get(`${settings.dir.typings}types.d.ts`);
+            monaco.languages.typescript.javascriptDefaults.addExtraLib(types, 'ts:filename/types.d.ts');
+        }
 
-                this.editor = ace.edit(`editor${this.id}`);
-                this.editor.setTheme('ace/theme/monokai');
-                this.editor.session.setMode(`ace/mode/${this.type}`);
-                ace.acequire('ace/ext/tern');
-                this.editor.setShowPrintMargin(false);
-                this.editor.setOptions({
-                    enableTern: {
-                        tern: tern,
-                        defs: defs,
-                        useWorker: false
-                    },
-                    enableBasicAutocompletion: true,
-                    enableSnippets: false,
-                    enableLiveAutocompletion: true
-                });
-            }
+        // Load the editor.
+        this.editor = monaco.editor.create(
+            $(`#editor${this.id}`)[0],
+            {
+                language: this.type,
+                theme: 'vs-dark'
+            });
 
-        );
+        return this;
     }
 
     /**
+     * Show the component.
+     * @returns {EditorPageComponent} Returns itself for chaining.
+     */
+    show() {
+        super.show();
+        this.editor.layout();
+        return this;
+    }
+
+    /**
+     * @async
      * @description
      * Update the component.
-     * @returns {JQueryPromise} Promises to load the editor.
+     * @returns {Promise} Promises to load the editor.
      */
-    update() {
+    async update() {
+
         if (!this.design.options.file)
             return;
-        return promiseblock(
-            () => get(this.design.options.file, 'text'),
-            (file) => {
-                if (!file)
-                    throw editorError('nofile', 'File not found: {0}', this.design.options.file);
-                this.editor.setValue(file, -1);
-            }
-        );
+
+        const file = await get(this.design.options.file, 'text');
+        if (!file)
+            throw editorError('nofile', 'File not found: {0}', this.design.options.file);
+        this.editor.setValue(file);
     }
 }
 

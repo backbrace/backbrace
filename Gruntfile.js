@@ -30,7 +30,6 @@ module.exports = function(grunt) {
         paths.schema + '/schema/icons.json',
         paths.schema + '/schema/pagedesign.json',
         paths.schema + '/schema/tabledesign.json',
-        paths.schema + '/tern/defs/backbrace.json',
         paths.schema + '/typings',
         paths.docs + '/dist'
       ],
@@ -142,19 +141,6 @@ module.exports = function(grunt) {
           config: paths.devkit + '/jsdoc.conf.json'
         }
       },
-      tern: {
-        src: [
-          paths.core + '/src/*.js',
-          paths.core + '/src/*/*.js',
-          paths.core + '/src/*/*/*.js'
-        ],
-        options: {
-          destination: paths.devkit + '/tern/defs',
-          template: './jsdoc/tern',
-          config: 'jsdoc.conf.json',
-          package: 'package.json'
-        }
-      },
       schema: {
         src: [
           paths.core + '/src/types.js'
@@ -244,7 +230,6 @@ module.exports = function(grunt) {
   grunt.registerTask('generate', 'Generate docs and devkit', [
     'docs',
     'typings',
-    'jsdoc:tern',
     'jsdoc:schema'
   ]);
   grunt.registerTask('build', [

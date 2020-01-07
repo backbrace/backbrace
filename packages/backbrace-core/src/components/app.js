@@ -92,7 +92,7 @@ export class AppComponent extends Component {
      */
     load(container) {
 
-        let main = $('<div class="main"></div>').appendTo(container);
+        let main = $('<div class="bb-main"></div>').appendTo(container);
 
         $('body').addClass([isMobileDevice() ? 'mobile-app' : 'desktop-app']);
 

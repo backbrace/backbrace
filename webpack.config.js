@@ -6,7 +6,8 @@ var path = require('path'),
   versionInfo = require('./lib/version-info/version-info.js'),
   MiniCssExtractPlugin = require('mini-css-extract-plugin'),
   CopyPlugin = require('copy-webpack-plugin'),
-  replace = require('buffer-replace');
+  replace = require('buffer-replace'),
+  MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 exports.get = function(devmode) {
   return {
@@ -125,6 +126,9 @@ exports.get = function(devmode) {
         jQuery: 'jquery',
         'window.jQuery': 'jquery'
       }),
+      new MonacoWebpackPlugin({
+        languages: ['typescript', 'javascript', 'css']
+      }),
       new CopyPlugin([
         {
           from: './packages/backbrace-core/include/*', flatten: true, transform: function(content, path) {
@@ -132,7 +136,10 @@ exports.get = function(devmode) {
           }
         },
         {
-          from: './packages/backbrace-devkit/tern/defs/*', to: 'json', flatten: true
+          from: './packages/backbrace-devkit/typings/*', to: 'typings', flatten: true
+        },
+        {
+          from: './node_modules/@types/jquery/*', to: 'typings', flatten: true
         }
       ])
     ]

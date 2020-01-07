@@ -106,7 +106,7 @@
  * Directory configuration.
  * @typedef dirConfig
  * @property {string} [design] Designs root directory. Defaults to `/design/`.
- * @property {string} [tern] Tern data root directory. Defaults to `/json/`.
+ * @property {string} [typings] Typings data root directory. Defaults to `/typings/`.
  */
 
 /**

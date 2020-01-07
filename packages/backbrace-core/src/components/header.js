@@ -115,7 +115,7 @@ export class HeaderComponent extends Component {
         if (this.options.attachMenu) {
 
             // Add a menu.
-            this.menu = $('<div class="menu">'
+            this.menu = $('<div class="bb-menu">'
                 + '<div class="menu-brand">'
                 + (settings.style.images.menuLogo !== '' ?
                     '<img class="menu-logo show-on-large" src="' + settings.style.images.menuLogo + '" />' :
