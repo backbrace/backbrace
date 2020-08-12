@@ -1,15 +1,11 @@
-import '../../../../dist/backbrace.min.js';
+import { Section } from '../../../../dist/Backbrace.js';
 
-export default class External extends backbrace.SectionComponent {
+export default class External extends Section {
 
-    load(container) {
-
-        super.load(container);
-
-        // Load foo into the container.
-        this.container.append('foo');
-
-        return this;
+    render() {
+        return this.html`<b>foo</b>`;
     }
 
 }
+
+Section.define('test-external', External);

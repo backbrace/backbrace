@@ -8,20 +8,19 @@
  * Iterate through an object.
  * @ignore
  * @param {Object} obj Object to iterate through.
- * @param {function(*,key,object):void} iterator Iterator function to call.
- * @param {*} [context] Context to run the iterator function.
+ * @param {function(*,string,Object):void} iterator Iterator function to call.
  * @returns {void}
  */
-function forEach(obj, iterator, context) {
+function forEach(obj, iterator) {
     if (obj)
         for (let key in obj)
             if (Object.prototype.hasOwnProperty.call(obj, key))
-                iterator.call(context, obj[key], key, obj);
+                iterator.call(this, obj[key], key, obj);
 }
 
 /**
  * Compile a JSS object into a CSS string.
- * @param {*} obj JSS object to compile.
+ * @param {Object} obj JSS object to compile.
  * @returns {string} CSS string
  */
 export function compile(obj) {

@@ -1,4 +1,4 @@
-@import "npm/bootstrap/scss/bootstrap-grid.scss";
+@import "../../../../node_modules/bootstrap/scss/bootstrap-grid.scss";
 
 .unselectable {
   -webkit-touch-callout: none;
@@ -39,6 +39,15 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-spacing: 0px;
+}
+
+.bb-button {
+  display: inline-block;
+  font-size: 14px;
+  padding: 11px 8px;
+  height: 36px;
+  cursor: pointer;
+  border-radius: 3px;
 }
 
 @media only screen and (max-width: 640px) {

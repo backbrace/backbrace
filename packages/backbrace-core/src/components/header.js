@@ -1,171 +1,77 @@
-import $ from 'jquery';
-import { settings } from '../settings';
-import { get as getIcons } from '../providers/icons';
+import $ from 'cash-dom';
+
+import { animate } from '../animation';
 import { Component } from './component';
 
+import { get as getStyle } from '../providers/style';
+import { get as getWindow } from '../providers/window';
+
 /**
- * @class HeaderComponent
- * @extends {Component}
+ * @class Header
+ * @augments Component
  * @description
  * Header component.
  */
-export class HeaderComponent extends Component {
+export class Header extends Component {
 
     /**
-     * @constructs HeaderComponent
-     * @param {headerOptions} [options] Header options.
+     * Component attributes.
+     * @static
+     * @returns {Map<string,string>} Returns attributes.
      */
-    constructor({ menuIcon = 'menu', attachMenu = true, className = '' } = {}) {
+    static attributes() {
+        return new Map([
+            ['logotext', 'string'],
+            ['logo', 'string'],
+            ['menuicon', 'string']
+        ]);
+    }
+
+    /**
+     * @constructs Header
+     */
+    constructor() {
 
         super();
 
         /**
          * @description
-         * Options for the header component.
-         * @type {headerOptions}
+         * App logo text.
+         * @type {string}
          */
-        this.options = { menuIcon, attachMenu, className };
+        this.logotext = '';
 
         /**
          * @description
-         * Nav bar container.
-         * @type {JQuery}
+         * App logo.
+         * @type {string}
          */
-        this.navbar = null;
-
-        /**
-         * @description
-         * Main menu container.
-         * @type {JQuery}
-         */
-        this.menu = null;
+        this.logo = '';
 
         /**
          * @description
          * Menu icon.
-         * @type {JQuery}
-         */
-        this.menuIcon = null;
-
-        /**
-         * @description
-         * Title bar container.
-         * @type {JQuery}
-         */
-        this.titleBar = null;
-
-        /**
-         * @description
-         * Profile image.
-         * @type {JQuery}
-         */
-        this.profileImage = null;
-
-        /**
-         * @description
-         * If `true` the main menu is visible.
-         * @type {boolean}
-         */
-        this.menuExtended = false;
-
-        /**
-         * @description
-         * Current title.
          * @type {string}
          */
-        this.title = '';
-    }
+        this.menuicon = 'menu';
 
-    /**
-     * @description
-     * Unload the component.
-     * @returns {void}
-     */
-    unload() {
-        // Unload the DOM.
-        this.menuIcon.remove();
-        this.menuIcon = null;
-        super.unload();
-    }
-
-    /**
-     * @description
-     * Load the component.
-     * @param {JQuery} container Container to load into.
-     * @returns {HeaderComponent} Returns itself for chaining.
-     */
-    load(container) {
-
-        const icons = getIcons();
-
-        this.container = $(`<header class="header ${this.options.className}"></header>`).appendTo(container);
-
-        this.navbar = $('<nav class="navbar fixed"><div class="navbar-inner">'
-            + '</div></nav>').appendTo(this.container);
-
-        // Setup the menu icon.
-        this.menuIcon = $('<div class="menu-icon clickable"></div>')
-            .appendTo(this.navbar.children())
-            .html(icons.get(this.options.menuIcon));
-
-        // Setup title bar.
-        this.titleBar = $('<div class="navbar-brand unselectable cuttext">'
-            + this.title + '</div>').appendTo(this.navbar.children());
-
-        if (this.options.attachMenu) {
-
-            // Add a menu.
-            this.menu = $('<div class="bb-menu">'
-                + '<div class="menu-brand">'
-                + (settings.style.images.menuLogo !== '' ?
-                    '<img class="menu-logo show-on-large" src="' + settings.style.images.menuLogo + '" />' :
-                    '')
-                + '</div>'
-                + '<ul id="mnuMain" /></div>').appendTo(this.container);
-
-            // Add profile image.
-            this.profileImage = $('<img class="shape-circle profile-img" />')
-                .appendTo($('.navbar-inner'));
-
-            $(window.document).on('click', (event) => {
-                if (!$(event.target).closest('.menu-icon').length) {
-                    this.hideMenu();
-                }
-            });
-        }
-        return this;
-    }
-
-    /**
-     * @description
-     * Load the main menu.
-     * @returns {HeaderComponent} Returns itself for chaining.
-     */
-    loadMenu() {
-        return this;
-    }
-
-    /**
-     * @description
-     * Load the profile image.
-     * @param {string} url Profile image url.
-     * @returns {HeaderComponent} Returns itself for chaining.
-     */
-    loadProfileImage(url) {
-        this.profileImage.show().attr('src', url);
-        return this;
+        /**
+         * @description
+         * Menu element.
+         * @type {import('cash-dom').Cash}
+         */
+        this.menu = null;
     }
 
     /**
      * @description
      * Show the main menu.
-     * @returns {HeaderComponent} Returns itself for chaining.
+     * @returns {Header} Returns itself for chaining.
      */
     showMenu() {
-        this.menu.show().animate({
+        this.menu.show();
+        animate(this.menu[0], {
             left: '0px'
-        }, null, () => {
-            this.menuExtended = true;
         });
         return this;
     }
@@ -173,28 +79,55 @@ export class HeaderComponent extends Component {
     /**
      * @description
      * Hide the main menu.
-     * @returns {HeaderComponent} Returns itself for chaining.
+     * @returns {Header} Returns itself for chaining.
      */
     hideMenu() {
-        this.menu.animate({
+        animate(this.menu[0], {
             left: '-300px'
-        }, null, () => {
-            this.menu.hide();
-            this.menuExtended = false;
-        });
+        }).then(() => this.menu.hide());
         return this;
     }
 
     /**
-     * @description
-     * Set the title.
-     * @param {string} title New title.
-     * @returns {HeaderComponent} Returns itself for chaining.
+     * @override
      */
-    setTitle(title) {
-        this.title = title;
-        if (this.titleBar)
-            this.titleBar.html(title);
-        return this;
+    firstUpdated() {
+
+        const window = getWindow();
+
+        this.menu = $(this).find('.bb-menu');
+
+        $(window.document).on('click', (event) => {
+            if (!$(event.target).closest('.bb-menu-btn').length) {
+                this.hideMenu();
+            }
+        });
+    }
+
+    /**
+     * @override
+     */
+    render() {
+        return this.html`
+            <div class="bb-menu">
+                <ul></ul>
+            </div>
+            <header>
+                <nav class="bg-primary text-primary fixed">
+                    <div class="bb-nav-inner">
+                        <div class="bb-menu-btn clickable" @click=${this.showMenu}>
+                            ${getStyle().icon(this.menuicon)}
+                        </div>
+                        <div class="bb-brand unselectable cuttext" bb-route="/">
+                            ${this.logo ?
+                this.html`<img class="bb-logo" src=${this.logo} alt=${this.logotext} />` :
+                this.html`<div class="bb-logo">${this.logotext}</div>`}
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        `;
     }
 }
+
+Component.define('bb-header', Header);

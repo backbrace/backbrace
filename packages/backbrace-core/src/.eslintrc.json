@@ -10,11 +10,13 @@
     "allowImportExportEverywhere": true
   },
   "globals": {
-    "window": false,
-    "require": false
+    "require": false,
+    "HTMLElement": false,
+    "CustomEvent": false,
+    "__webpack_public_path__": false
   },
   "rules": {
-    "require-jsdoc": [
+    "jsdoc/require-jsdoc": [
       "error",
       {
         "require": {
@@ -26,6 +28,35 @@
         }
       }
     ],
-    "valid-jsdoc": "error"
-  }
+    "jsdoc/valid-types": [
+      "error",
+      {
+        "preferType": {
+          "Boolean": "boolean",
+          "Number": "number",
+          "object": "Object",
+          "String": "string",
+          "function": "Function"
+        },
+        "requireReturnDescription": false
+      }
+    ],
+    "jsdoc/require-returns": [
+      "error",
+      {
+        "forceReturnsWithAsync": true
+      }
+    ],
+    "lit/attribute-value-entities": "error",
+    "lit/binding-positions": "error",
+    "lit/no-duplicate-template-bindings": "error",
+    "lit/no-invalid-html": "error",
+    "lit/no-legacy-template-syntax": "error",
+    "lit/no-property-change-update": "error",
+    "lit/no-useless-template-literals": "error"
+  },
+  "plugins": [
+    "jsdoc",
+    "lit"
+  ]
 }

@@ -1,12 +1,13 @@
+import { get as getWindow } from './providers/window';
+
 /**
+ * @description
  * Utility functions.
  * @module util
  * @private
  */
 
-import $ from 'jquery';
-import { get as getWindow } from './providers/window';
-
+/** @ignore */
 let id = (new Date()).getTime();
 const toString = Object.prototype.toString;
 
@@ -24,7 +25,7 @@ export function noop() {
  * Generate a unique id.
  * @returns {number} Returns a unique id.
  * @example
- * var id = backbrace.uid();
+ * var id = Backbrace.uid();
  */
 export function uid() {
   return id++;
@@ -101,7 +102,7 @@ export function isDate(val) {
  * @param {...*} args Arguments to merge into the string.
  * @returns {string} Formatted string.
  * @example
- * var str = backbrace.formatString('This is a {0} {1}.','test','message');
+ * var str = Backbrace.formatString('This is a {0} {1}.','test','message');
  * // str = 'This is a test message'
  */
 export function formatString(str, ...args) {
@@ -122,58 +123,58 @@ export function width() {
 }
 
 /**
- * Find the input editor.
- * @param {JQuery} elem Element to search.
- * @returns {JQuery} Returns the editor if found.
- */
-export function findInput(elem) {
-
-  for (let i = 0; i < elem.children().length; i++) {
-    if (elem.children()[i].nodeName === 'INPUT'
-      || elem.children()[i].nodeName === 'TEXTAREA') {
-      if (elem.children()[i].className !== 'noinput')
-        return $(elem.children()[i]);
-    }
-    let v = findInput($(elem.children()[i]));
-    if (v !== null)
-      return v;
-  }
-
-  return null;
-}
-
-/**
- * Highlight the syntax of a pre code element.
- * @param {HTMLElement} elem Element to highlight.
- * @param {string} [lang="javascript"] Language to use.
- * @returns {void}
- */
-export function highlightSyntax(elem, lang) {
-  import('highlight.js').then(hljs => {
-    lang = lang || 'javascript';
-    if (lang === 'javascript')
-      // @ts-ignore
-      hljs.registerLanguage('javascript', require('../../../node_modules/highlight.js/lib/languages/javascript.js'));
-    else if (lang === 'json')
-      hljs.registerLanguage('json', require('../../../node_modules/highlight.js/lib/languages/json.js'));
-    hljs.highlightBlock(elem);
-  });
-}
-
-/**
  * Add clipboard event to an element.
  * @param {HTMLElement} trigger Element to trigger the clipboard event.
  * @param {string} text Text to copy.
- * @returns {ClipboardJS} Returns a clipboard js object.
+ * @param {import('./types').clipboardSuccess} success Function to run on success.
+ * @returns {void}
  */
-export function clipboard(trigger, text) {
+export function clipboard(trigger, text, success) {
 
-  let Clipboard = require('clipboard'),
-    clipboard = new Clipboard(trigger, {
-      text: function() {
-        return text;
+  let Clipboard = require('clipboard');
+
+  new Clipboard(trigger, {
+    text: function() {
+      return text;
+    }
+  }).on('success', success);
+}
+
+/**
+ * Make a function chainable.
+ * @param {Function} fn Function to chain.
+ * @returns {any}
+ */
+export function makeChainable(fn) {
+  let p = Promise.resolve(true);
+  return (...args) => {
+    p = p.then(() => fn(...args));
+    return p;
+  };
+}
+
+/**
+ * Make a function chainable.
+ * @param {Function} generator Function to make single.
+ * @returns {any}
+ */
+export function makeSingle(generator) {
+  let globalNonce;
+  return async function(...args) {
+    const localNonce = globalNonce = new Object();
+    const iter = generator(...args);
+    let resumeValue;
+    for (; ;) {
+      const n = iter.next(resumeValue);
+      if (n.done) {
+        return n.value;  // final return value of passed generator
       }
-    });
-
-  return clipboard;
+      // whatever the generator yielded, _now_ run await on it
+      resumeValue = await n.value;
+      if (localNonce !== globalNonce) {
+        return;  // a new call was made
+      }
+      // next loop, we give resumeValue back to the generator
+    }
+  };
 }

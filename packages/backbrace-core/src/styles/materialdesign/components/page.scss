@@ -1,0 +1,12 @@
+// Page component.
+
+bb-page .bb-container {
+    margin-top: 20px;
+}
+
+.mobile-app bb-page {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: unset;
+    overflow-y: unset;
+}

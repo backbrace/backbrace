@@ -1,17 +1,17 @@
-/**
- * Logging module. Provides functions to log events.
- * @module log
- * @private
- */
-
 import { settings } from './settings';
 import { formatString, noop } from './util';
 
 import { get as getWindow } from './providers/window';
 
 /**
+ * Logging module. Provides functions to log events.
+ * @module log
+ * @private
+ */
+
+/**
  * Write to the console.
- * @param {*} msg Message to write.
+ * @param {string|Error} msg Message to write.
  * @param {string} type Type of message.
  * @returns {void}
  */
@@ -78,7 +78,7 @@ export function debug(msg) {
 
 /**
  * Log an object.
- * @param {*} obj Object to log.
+ * @param {Object} obj Object to log.
  * @returns {void}
  */
 export function object(obj) {

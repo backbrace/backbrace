@@ -1,21 +1,28 @@
+import jsyaml from 'js-yaml';
+
+import { settings } from './settings';
+import * as types from './types';
+
+import { get as getWindow } from './providers/window';
+
 /**
  * Design module. Get object designs from JSON files.
  * @module design
  * @private
  */
 
-import { get } from './http';
-import { settings } from './settings';
-import * as types from './types';
-
+/**
+ * Default types.
+ * @ignore
+ */
 const defaults = {
-    /** @type {pageDesign} */
+    /** @type {import('./types').pageDesign} */
     page: types.pagedesign,
-    /** @type {pageFieldDesign} */
+    /** @type {import('./types').pageFieldDesign} */
     pagefield: types.pagefield,
-    /** @type {pageActionDesign} */
+    /** @type {import('./types').pageActionDesign} */
     pageaction: types.pageaction,
-    /** @type {pageSectionDesign} */
+    /** @type {import('./types').pageSectionDesign} */
     pagesection: types.pagesection
 };
 
@@ -23,19 +30,30 @@ const defaults = {
  * Get page object design.
  * @async
  * @param {string} name Name of the page to get.
- * @returns {Promise<pageDesign>} Promise to get the page design.
+ * @returns {Promise<import('./types').pageDesign>}
  */
 export async function page(name) {
 
-    // Get the page from a JSON file.
-    /** @type {pageDesign} */
-    const json = await get(settings.dir.design + name + '.json');
+    const window = getWindow();
 
-    if (!json)
+    // Get the page from a JSON file.
+    let d = await window.fetch(settings.dir.design + name);
+
+    if (!d.ok)
         return null;
 
-    // Merge the json with default values.
-    json.caption = json.caption || json.name;
+    /**
+     * @ignore
+     * @type {import('./types').pageDesign}
+     */
+    let json = null;
+
+    // Convert yaml to an object.
+    if (name.endsWith('.yaml') || name.endsWith('.yml')) {
+        json = jsyaml.load(await d.text());
+    } else {
+        json = await d.json();
+    }
 
     // Extend the page.
     const pge = Object.assign({}, defaults.page, json);
@@ -44,7 +62,8 @@ export async function page(name) {
     pge.sections = [];
     (json.sections || []).forEach((section) => {
 
-        section.text = section.text || section.name;
+        section.caption = section.caption || section.name;
+
         pge.sections.push(Object.assign({}, defaults.pagesection, section));
 
         // Extend the page section fields.

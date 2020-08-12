@@ -1,28 +1,6 @@
 // App component.
 
-.bb-main {
+bb-app .bb-main {
   margin-top: 50px;
   padding-top: 5px;
-}
-
-.main-windows {
-  width: 100%;
-  display: inline-block;
-  padding-left: 3px;
-  border-bottom: 1px solid #ecf0f1;
-}
-
-.main-windows-btn {
-  font-size: 14px;
-  font-weight: 500;
-  width: auto;
-  display: inline-block;
-  cursor: pointer;
-  height: 48px;
-  padding: 16px 14px;
-}
-
-.main-windows-btn i {
-  margin-left: 5px;
-  font-size: 16px;
 }

@@ -4,6 +4,7 @@
  * @private
  */
 
+// eslint-disable-next-line no-undef
 let instance = window;
 
 /**

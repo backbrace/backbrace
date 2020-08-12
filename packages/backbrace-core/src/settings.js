@@ -1,3 +1,5 @@
+import { globals } from './globals';
+
 /**
  * App settings.
  * @module settings
@@ -6,19 +8,18 @@
 
 /**
  * App settings object.
- * @type {settingsConfig}
+ * @type {import('./types').settingsConfig}
  */
 export let settings = {
 
-    debug: false,
-    minify: true,
-    guiAllowed: true,
+    debug: globals.DEVMODE,
     windowMode: true,
     app: {
         name: 'Backbrace App',
         version: '1.0.0',
         title: 'New Backbrace App',
-        description: 'Web App powered by Backbrace'
+        description: 'Web App powered by Backbrace',
+        footer: null
     },
     dir: {
         design: '/design/',
@@ -29,8 +30,7 @@ export let settings = {
         css: '',
         images: {
             logo: '',
-            menuLogo: '',
-            blocker: ''
+            menuLogo: ''
         },
         colors: {
             bgprimary: '#3498db',
@@ -44,5 +44,6 @@ export let settings = {
             bghover: '#CCC',
             texthover: '#333'
         }
-    }
+    },
+    routes: []
 };

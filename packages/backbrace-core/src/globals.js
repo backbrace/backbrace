@@ -6,7 +6,7 @@
 
 // @ts-nocheck
 
-/* global CDNSERVER, DEVMODE, FULLVERSION */
+/* global DEVMODE, FULLVERSION */
 
 /**
  * Global variables.
@@ -14,7 +14,6 @@
  * @type {globalVariables}
  */
 export const globals = {
-    CDNSERVER: CDNSERVER,
     DEVMODE: DEVMODE,
     FULLVERSION: FULLVERSION
 };

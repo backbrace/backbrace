@@ -1,22 +1,26 @@
+import { settings } from './settings';
+import { ComponentError } from './errors/component';
+
 /**
  * Error module.
  * @module error
  * @private
  */
 
-import { formatString } from './util';
-import { settings } from './settings';
-
 /**
  * Create a rich error object.
  * @param {string} scope Name of the scope for the error (ie. app).
- * @param {*} [ErrorClass] Error constructor for the base error.
- * @returns {errorInstance} Returns the error instance.
+ * @param {import('./components/component').Component} [comp] Component which caused the error.
+ * @param {import('./types').errorClass} [ErrorClass] Error constructor for the base error.
+ * @returns {import('./types').errorInstance} Returns the error instance.
  */
-export function error(scope, ErrorClass) {
-    ErrorClass = ErrorClass || Error;
-    return function(code, message, ...args) {
-        let errMessage = (settings.debug ? '[' + (scope ? scope + ':' : '') + code + '] ' : '') + formatString(message, ...args);
-        return new ErrorClass(errMessage);
+export function error(scope, comp, ErrorClass) {
+    ErrorClass = ErrorClass || ComponentError;
+    return function(code, message) {
+        let errMessage = `${settings.debug ? `[${scope ? scope + ':' : ''}${code}] ` : ''}${message}`;
+        let err = new ErrorClass(errMessage);
+        if (err instanceof ComponentError)
+            err.component = comp;
+        return err;
     };
 }

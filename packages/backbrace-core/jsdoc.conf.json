@@ -1,0 +1,26 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/jsdoc-plugin-typescript"
+    ],
+    "templates": {
+        "outputSourceFiles": true,
+        "outputSourcePath": false,
+        "linenums": true
+    },
+    "markdown": {
+        "hardwrap": false
+    },
+    "opts": {
+        "encoding": "utf8",
+        "recurse": true,
+        "private": false,
+        "lenient": true
+    },
+    "typescript": {
+        "moduleRoot": "packages/backbrace-core/src"
+    }
+}

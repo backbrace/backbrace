@@ -16,6 +16,6 @@
   },
   "globals": {
     "window": false,
-    "backbrace": false
+    "Backbrace": false
   }
 }

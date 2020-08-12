@@ -1,89 +1,37 @@
-/**
- * @typedef {(number|string)} key
- */
+/* eslint-disable no-unused-vars */
+import { ComponentError } from './errors/component';
+import { RouteError } from './errors/route';
 
 /**
- * Alias for `Function`. Use this where you have repeatable function params.
- * @typedef {Function} genericFunction
- * @param {...*} [args] Function arguments.
- */
-
-/**
- * Error handler function.
- * @typedef {Function} errorHandler
- * @param {(string|Error)} msg Error message.
- * @param {...*} [args] Function arguments.
- */
-
-/**
- * Action runner function.
- * @typedef {Function} actionRunner
- * @param {pageActionDesign} action Action design.
+ * Custom event listener.
+ * @callback customEventListener
+ * @param {CustomEvent} evt Custom event.
  * @returns {void}
  */
 
 /**
- * @typedef {Function} errorInstance
+ * @typedef {typeof Error|typeof ComponentError|typeof RouteError} errorClass
+ */
+
+/**
+ * @callback errorInstance
  * @param {string} code Error code.
  * @param {string} message Error message.
- * @param {...*} args Message arguments.
- * @returns {Error} Returns new error object.
+ * @returns {Error|ComponentError|RouteError} Returns new error object.
  */
 
 /**
- * @callback alertInstanceMessage
- * @param {string} msg Message to display.
- * @param {function()} [callbackFn] Callback function to execute after the alert is dismissed.
- * @param {string} [title] Title of the alert.
+ * @typedef {Event} clipboardEvent
+ * @property {string} action Action name.
+ * @property {string} text Clipboard text.
+ * @property {Element} trigger Element that triggered the event.
+ * @property {Function} clearSelection Clear the clipboard.
+ */
+
+/**
+ * @callback clipboardSuccess
+ * @param {clipboardEvent} evt Clipboard event.
  * @returns {void}
- */
-
-/**
- * @callback alertInstanceConfirmCallback
- * @param {boolean} ret `true` if the user clicked the `OK` button.
- * @returns {void}
- */
-
-/**
- * @callback alertInstanceConfirm
- * @param {string} msg Message to display.
- * @param {alertInstanceConfirmCallback} callbackFn Callback function to execute after the alert is dismissed.
- * @param {string} [title] Title of the alert.
- * @param {string} [yescaption] Caption of the "yes" button.
- * @param {string} [nocaption] Caption of the "no" button.
- * @returns {void}
- */
-
-/**
- * @callback alertInstanceError
- * @param {string} msg Message to display.
- * @returns {void}
- */
-
-/**
- * @callback actionRunnerOnClick
- * @returns {(void|Promise<any>)}
- */
-
-/**
- * Alert instance.
- * @typedef alertInstance
- * @property {alertInstanceMessage} message Show a message box.
- * @property {alertInstanceConfirm} confirm Show a confirmation box.
- * @property {alertInstanceError} error Show an error message box.
- */
-
-/**
- * @callback iconsInstanceGet
- * @param {string} name Name of the icon.
- * @param {string} [className] Classes to add to the icon.
- * @returns {string} Icon html string.
- */
-
-/**
- * Icons instance.
- * @typedef iconsInstance
- * @property {iconsInstanceGet} [get] Get an icon by name.
  */
 
 /**
@@ -93,6 +41,7 @@
  * @property {string} [version] App version. Defaults to `0.1.0`.
  * @property {string} [title] App tite (displays in browser window). Defaults to `New Backbrace App`.
  * @property {string} [description] App description. Defaults to `Web App powered by Backbrace`.
+ * @property {pageSectionDesign} [footer] Footer section design.
  */
 
 /**
@@ -107,7 +56,6 @@
  * @typedef imagesConfig
  * @property {string} [logo] URL for the logo image (displayed in the header).
  * @property {string} [menuLogo] URL for the menu logo image (displayed at the top of the main menu).
- * @property {string} [blocker] URL for the blocker image (displayed while the loader is shown).
  */
 
 /**
@@ -138,60 +86,35 @@
  * Application settings.
  * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
- * @property {boolean} [minify] Load minified packages. Defaults to `true`.
- * @property {boolean} [guiAllowed] GUI allowed flag.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
  * @property {appConfig} [app] App config.
  * @property {dirConfig} [dir] Directory config.
  * @property {styleConfig} [style] Style config.
+ * @property {routeConfig[]} [routes] App routes.
  */
 
 /**
  * Global variables.
  * @typedef globalVariables
- * @property {string} CDNSERVER CDN server URL.
  * @property {boolean} DEVMODE If `true` then we are running in a development environment.
  * @property {string} FULLVERSION Returns the full version number.
- */
-
-/**
-* Callback function for creating a controller.
-* @callback controllerCallback
-* @param {ViewerComponent} viewer Viewer component.
-* @param {SectionComponent} [section] Section component (section controllers only).
-* @returns {void}
-*/
-
-/**
-* @callback dataCallback
-* @param {any[]} data Data array.
-* @returns {Promise<any[]>|any[]} Promises to return the data.
-*/
-
-/**
- * @typedef headerOptions
- * @property {string} [menuIcon] Menu icon.
- * @property {boolean} [attachMenu] Attach a menu to the header.
- * @property {string} [className] Header class.
- */
-
-/**
- * @typedef viewerOptions
- * @property {string} [title] Page title.
- * @property {boolean} [hasParent] If `true` sets the page as a child page.
- * @property {string} [updateHistory] Add a url path to the browser history.
- */
-
-/**
- * @typedef windowOptions
- * @property {string} [icon] Window icon.
- * @property {string} [className] Window class style.
  */
 
 /**
  * @typedef routeConfig
  * @property {string} path Path to match.
  * @property {string} page Page to load.
+ * @property {Object} [params] Page parameters.
+ */
+
+/**
+ * @typedef componentState
+ * @property {Object[]} [data] State data.
+ * @property {boolean} [hasError] `True` if the component has an error.
+ * @property {boolean} [hasFocus] `True` if the component has focus.
+ * @property {Error} [error] Error object.
+ * @property {boolean} [isLoading] `True` if the component is currently loading data.
+ * @property {boolean} [isLoaded] `True` if the component has loaded it's data.
  */
 
 /**
@@ -199,23 +122,21 @@
  * @property {string} name Name of the field.
  * @property {string} caption Caption of the field.
  * @property {string} type  Data type for the field.
- * @property {string} dataName  Name of the field in the data source.
+ * @property {string} bind Data property to bind to.
  * @property {string} component Custom component to use for the field.
- * @property {string} width Width of the field. Defaults to `100px`.
  * @property {boolean} hidden Don't display the field on the page.
  * @property {boolean} editable Readonly field.
- * @property {string} className Classes to add to the field.
+ * @property {Object} attributes Field component attributes.
  */
 export let pagefield = {
   name: '',
   caption: '',
-  dataName: '',
   type: 'Text',
+  bind: '',
   component: '',
-  width: '100px',
   editable: true,
   hidden: false,
-  className: 'col-sm-12 col-md-6'
+  attributes: {}
 };
 
 /**
@@ -235,65 +156,45 @@ export let pageaction = {
 };
 
 /**
- * @typedef sectionOptions
- * @property {string} type Type of section.
- * @property {string} template Templatepage component option. Template HTML.
- * @property {boolean} useWindowComponent Templatepage component option. Use a window component.
- * @property {string} file Editorpage component option. File to load into the editor.
- */
-export let sectionoptions = {
-  type: '',
-  template: '',
-  useWindowComponent: false,
-  file: ''
-};
-
-/**
  * @typedef pageSectionDesign
  * @property {string} name Name of the section.
- * @property {string} text Caption of the section.
- * @property {string} pageName Display a subpage in this section.
- * @property {string} icon Section icon.
- * @property {string} className Classes to add to the section.
- * @property {string} component Component for the section (defaults to `cardpage`).
- * @property {sectionOptions} options Section component options.
- * @property {string} controller Section controller.
- * @property {string} data Data source for the section (if empty, uses the pages data source).
- * @property {pageFieldDesign[]} fields Page section fields.
- * @property {pageActionDesign[]} actions Page actions.
+ * @property {string} [caption] Caption of the section.
+ * @property {string} [icon] Section icon.
+ * @property {string} [className] Classes to add to the section.
+ * @property {string} [component] Component for the section (defaults to `cardpage`).
+ * @property {Object} [attributes] Section component attributes.
+ * @property {string} [data] Data source (ie. JSON file).
+ * @property {string} [query] Data query.
+ * @property {string} [bind] Data property to bind to.
+ * @property {pageFieldDesign[]} [fields] Page section fields.
+ * @property {pageActionDesign[]} [actions] Page actions.
  */
 export let pagesection = {
   name: '',
-  text: '',
-  pageName: '',
+  caption: '',
   icon: '',
   className: '',
-  component: 'cardpage',
-  options: sectionoptions,
-  controller: '',
+  component: 'card',
+  attributes: {},
   data: '',
+  query: '',
+  bind: '',
   fields: [],
   actions: []
 };
 
 /**
  * @typedef pageDesign
- * @property {string} name Name of the page.
  * @property {string} caption Caption of the page.
- * @property {string} controller Page controller.
- * @property {string} data Data source for the page.
+ * @property {string} data Data source (ie. JSON file).
  * @property {string} icon Icon to use for the page.
- * @property {string} filters Filters for the page.
  * @property {boolean} noclose Don't allow the page to be closed (in windowed mode).
  * @property {pageSectionDesign[]} sections Page sections.
  */
 export let pagedesign = {
-  name: '',
   caption: '',
-  controller: '',
   data: '',
   icon: '',
-  filters: '',
   noclose: false,
   sections: []
 };

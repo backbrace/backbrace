@@ -1,29 +1,19 @@
 // Resets and dependencies.
 @import "./resets.scss";
 @import "./typography.scss";
-@import "./progress.scss";
-@import "./card.scss";
 @import "./alert.scss";
-@import "./callout.scss";
 @import "./notify.scss";
 
 // Components.
-@import "./components/header.scss";
 @import "./components/app.scss";
-@import "./components/window.scss";
-@import "./components/viewer.scss";
-@import "./components/actions.scss";
-@import "./components/field.scss";
-@import "./components/routeerror.scss";
-
-// Section components.
-@import "./components/listpage.scss";
+@import "./components/apptoolbar.scss";
+@import "./components/container.scss";
+@import "./components/header.scss";
+@import "./components/page.scss";
+@import "./components/textbox.scss";
 
 // External override.
-@import "./ext/jquery.scss";
-@import "./ext/jqgrid.scss";
 @import "./ext/swal.scss";
-@import "./ext/ace.scss";
 
 [class*="col-"] {
   margin: 1em 0;

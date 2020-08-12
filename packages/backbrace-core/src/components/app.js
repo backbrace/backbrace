@@ -1,140 +1,97 @@
-import $ from 'jquery';
-import 'npm/reset-css/reset.css';
+import 'reset-css/reset.css';
 import '../styles/base.scss';
 
-import './fieldcomponent';
-import './sectioncomponent';
-import './actions';
-import './window';
+import $ from 'cash-dom';
 
-import { error } from '../error';
-import { settings } from '../settings';
-import * as sweetalert from '../sweetalert';
-import { isMobileDevice } from '../util';
-import { set as setAlert } from '../providers/alert';
-import { get as getIcons } from '../providers/icons';
+import './apptoolbar';
+import './error';
+import './header';
+
+import { AppErrorHandler } from '../apperrorhandler';
 import { Component } from './component';
-import { HeaderComponent } from './header';
-import { ViewerComponent } from './viewer';
+import { init as initRouter } from '../route';
+import { settings } from '../settings';
+import { isMobileDevice } from '../util';
+import { Page } from './page';
 
-const appError = error('appcomponent');
+import { get as getErrorHandler, set as setErrorHandler } from '../providers/error';
+import { get as getStyle } from '../providers/style';
+import { get as getWindow } from '../providers/window';
 
 /**
- * @class AppComponent
- * @extends {Component}
+ * @class App
+ * @augments Component
  * @description
  * App component.
  */
-export class AppComponent extends Component {
+export class App extends Component {
 
     /**
-     * @constructs AppComponent
+     * Component attributes.
+     * @static
+     * @returns {Map<string,string>} Returns attributes.
+     */
+    static attributes() {
+        return new Map([
+            ['windowmode', 'boolean']
+        ]);
+    }
+
+    /**
+     * @constructs App
      */
     constructor() {
 
         super();
 
         /**
-         * @ignore
-         * @type {JQuery}
+         * @description
+         * Attribute. Set to true to enable window mode.
+         * @type {boolean}
          */
-        this.maincontainer = null;
+        this.windowmode = false;
 
         /**
          * @ignore
          * @description
          * App pages that are currently loaded.
-         * @type {Map<number,ViewerComponent>}
+         * @type {Map<number,Page>}
          */
         this.pages = new Map();
 
         /**
          * @ignore
-         * @type {JQuery}
+         * @type {import('cash-dom').Cash}
          */
-        this.windows = null;
+        this.main = null;
 
         /**
          * @description
-         * Current viewer (routing mode).
-         * @type {ViewerComponent}
+         * App toolbar component (windowed mode only).
+         * @type {import('./apptoolbar').AppToolbar}
          */
-        this.currViewer = null;
+        this.toolbar = null;
 
+        /**
+         * @description
+         * Header component.
+         * @type {import('./header').Header}
+         */
+        this.header = null;
+
+        /**
+         * @description
+         * UID of the active page.
+         * @type {number}
+         */
         this.activePage = 0;
-
-        // Lets upgrade alerts...
-        setAlert({
-            message: sweetalert.show,
-            confirm: function(msg, callback, title, yescaption, nocaption) {
-                sweetalert.show(msg, function() {
-                    callback(true);
-                });
-            },
-            error: function(msg) {
-                sweetalert.show(msg, null, 'Application Error');
-            }
-        });
     }
 
     /**
-     * Load the app into a container.
-     * @param {JQuery} container JQuery element to load the app into.
-     * @returns {AppComponent} Returns itself for chaining.
-     */
-    load(container) {
-
-        let main = $('<div class="bb-main"></div>').appendTo(container);
-
-        $('body').addClass([isMobileDevice() ? 'mobile-app' : 'desktop-app']);
-
-        // Add window toolbar.
-        if (settings.windowMode)
-            this.windows = $('<div class="main-windows"></div>').appendTo(main);
-
-        // Load components.
-        let header = new HeaderComponent();
-        header.setTitle(settings.style.images.logo !== '' ?
-            '<img class="navbar-logo" alt="' + settings.app.name + '" src="' +
-            settings.style.images.logo + '" />' :
-            settings.app.name);
-        header.load(main);
-        header.menuIcon.click(function() {
-            header.showMenu();
-        });
-
-        this.maincontainer = $('<div class="container"></div>').appendTo(main);
-
-        return this;
-    }
-
-    /**
-     * Unload the app component.
-     * @returns {void}
-     */
-    unload() {
-
-        this.pages.forEach((page) => page.unload());
-        this.pages.clear();
-
-        if (this.windows)
-            this.windows.remove();
-
-        this.currError = null;
-        this.currViewer = null;
-        this.activePage = 0;
-
-        this.maincontainer.remove();
-        super.unload();
-    }
-
-    /**
-     * Get the active viewer.
-     * @returns {ViewerComponent} Returns the active viewer.
+     * Get the active page.
+     * @returns {Page}
      */
     currentPage() {
-        if (!settings.windowMode)
-            return this.currViewer;
         if (this.activePage > 0 && this.pages.has(this.activePage))
             return this.pages.get(this.activePage);
         return null;
@@ -144,95 +101,57 @@ export class AppComponent extends Component {
      * Load a page.
      * @async
      * @param {string} name Name of the page to load.
-     * @param {viewerOptions} [options] Page viewer options.
      * @param {Object} [params] Page params.
-     * @returns {Promise} Returns after loading the page.
+     * @returns {Promise<void>}
      */
-    async loadPage(name, options = {}, params = {}) {
+    async loadPage(name, params = {}) {
 
-        let pge = new ViewerComponent(name, options, params);
+        const window = getWindow(),
+            style = getStyle();
+
+        let pge = new Page();
 
         try {
 
-            if (this.currError) {
-                this.currError.unload();
-                this.currError = null;
+            if (!this.windowmode) {
+                // Routing mode can only have 1 loaded page...
+                if (this.currentPage())
+                    this.currentPage().remove();
+                pge.uid = 1;
             }
 
-            if (!settings.windowMode && window.history && options.updateHistory)
-                window.history.pushState(null, name, options.updateHistory);
+            pge.params = params;
+            pge.setAttribute('name', name);
+            this.main.append(pge);
 
-            if (this.currViewer) {
-                this.currViewer.unload();
-                this.currViewer = null;
-                $(window).scrollTop(0);
-            }
+            // Add the page to the loaded pages.
+            this.pages.set(pge.uid, pge);
+            this.activePage = pge.uid;
 
-            if (this.currentPage())
-                this.currentPage().hide().hideLoad();
-
-            // Add a window shorcut.
-            if (settings.windowMode) {
-                $('.main-windows-btn').removeClass('active');
-                this.addWindowToToolbar(pge).addClass('active');
-            }
-
-            $('.placeholder-content').hide();
+            // Caption change event.
+            pge.on('captionchange', (e) => {
+                if (this.windowmode) {
+                    let btn = this.toolbar.buttons.get(pge.uid);
+                    if (btn)
+                        btn.find('span').html(`${style.icon(e.detail.icon)} ${e.detail.caption}`);
+                } else {
+                    window.document.title = `${settings.app.title}${e.detail.caption ? ' - ' + e.detail.caption : ''}`;
+                }
+            });
 
             // Load the page component.
-            await pge.load(this.maincontainer);
+            await pge.load();
 
-            if (settings.windowMode) {
+            // Add a window shorcut.
+            if (this.windowmode)
+                this.toolbar.addButton(pge);
 
-                // Add the page to the loaded pages.
-                this.pages.set(pge.id, pge);
-                this.activePage = pge.id;
-
-            } else {
-                this.currViewer = pge;
-            }
-
-            await pge.update();
-
-            await this.afterUpdate();
+            $(window)[0].scrollTop = 0;
 
         } catch (e) {
-            if (pge) {
-                pge.unload();
-                this.pages.delete(pge.id);
-            }
-            this.currViewer = null;
-            if (this.activePage === pge.id)
-                this.activePage = 0;
-            if (this.activePage)
-                this.showPage(this.activePage);
-            throw e;
+            getErrorHandler().handleError(e);
         }
 
-    }
-
-    /**
-     * Add a window to the windows toolbar.
-     * @param {ViewerComponent} viewer Page viewer.
-     * @returns {JQuery} Returns the shortcut button.
-     */
-    addWindowToToolbar(viewer) {
-        const icons = getIcons(),
-            closeBtn = $(icons.get('%close%'))
-                .click((ev) => {
-                    this.closePage(viewer.id);
-                    ev.preventDefault();
-                    return false;
-                });
-        return $('<div id="win' + viewer.id + '" class="main-windows-btn unselectable"></div>')
-            .hide()
-            .appendTo(this.windows)
-            .append('<span />')
-            .append(closeBtn)
-            .click(() => {
-                this.showPage(viewer.id);
-            })
-            .fadeIn(300);
     }
 
     /**
@@ -242,23 +161,21 @@ export class AppComponent extends Component {
      */
     closePage(id) {
 
+        const window = getWindow();
 
-        // Unload the page.
         if (!this.pages.has(id))
-            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+            return;
 
         const pge = this.pages.get(id);
-        if (settings.windowMode && pge.page.noclose)
-            return;
-        pge.unload();
+        pge.remove();
 
         // Remove the page from the loaded pages.
         this.pages.delete(id);
 
         // Remove shortcut.
-        if (settings.windowMode) {
-            $('#win' + id).remove();
-            $(window).scrollTop(0);
+        if (this.windowmode) {
+            this.toolbar.removeButton(id);
+            $(window)[0].scrollTop = 0;
         }
 
         if (this.activePage === id) {
@@ -268,7 +185,7 @@ export class AppComponent extends Component {
             // Open next page.
             if (this.pages.size > 0) {
                 const nextpge = Array.from(this.pages.values())[this.pages.size - 1];
-                this.showPage(nextpge.id);
+                this.showPage(nextpge.uid);
             }
         }
     }
@@ -284,21 +201,54 @@ export class AppComponent extends Component {
         if (this.currentPage())
             this.currentPage().hide();
 
-        if (settings.windowMode)
-            $('.main-windows-btn').removeClass('active');
+        if (this.windowmode)
+            this.toolbar.deselectButtons();
 
         // Show the page.
         if (!this.pages.has(id))
-            throw appError('nopage', 'Cannot find page by id \'{0}\'', id);
+            throw this.error('nopage', `Cannot find page by id '${id}'`);
 
         const pge = this.pages.get(id);
         pge.show();
-        this.activePage = pge.id;
+        this.activePage = pge.uid;
 
-        if (settings.windowMode)
-            $('#win' + id).addClass('active');
+        if (this.windowmode)
+            this.toolbar.selectButton(id);
+    }
+
+    /**
+     * @override
+     */
+    firstUpdated() {
+
+        // Get our sub components.
+        this.main = $(this).find('.bb-main');
+        this.toolbar = this.querySelector('bb-apptoolbar');
+        this.header = this.querySelector('bb-appheader');
+
+        // Set providers.
+        setErrorHandler(new AppErrorHandler());
+
+        // Add mobile/desktop class.
+        this.classList.add(isMobileDevice() ? 'mobile-app' : 'desktop-app');
+
+        if (!this.windowmode)
+            initRouter();
+    }
+
+    /**
+     * @override
+     */
+    render() {
+        return this.html`
+            <bb-header logo="${settings.style.images.logo}" logotext="${settings.app.name}"></bb-header>
+            <bb-apptoolbar style="${this.windowmode ? '' : 'display:none'}"></bb-apptoolbar>
+            <div class="bb-main container"></div>
+        `;
     }
 
 }
 
-export default AppComponent;
+export default App;
+
+Component.define('bb-app', App);
