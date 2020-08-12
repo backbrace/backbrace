@@ -1,4 +1,7 @@
 {
+    "plugins": [
+        "node_modules/jsdoc-plugin-typescript"
+    ],
     "tags": {
         "allowUnknownTags": true
     },
@@ -12,5 +15,8 @@
         "recurse": true,
         "private": false,
         "lenient": true
+    },
+    "typescript": {
+        "moduleRoot": "packages/backbrace-core/src"
     }
 }
