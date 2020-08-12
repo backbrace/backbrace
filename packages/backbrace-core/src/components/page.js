@@ -225,7 +225,9 @@ export class Page extends Component {
         return this.html`
             ${this.state.isLoading && !this.state.hasError ? this.progress : null}
             ${this.state.hasError ? this.html`<bb-error message=${this.state.error.message}></bb-error>` : ''}
-            <div class="bb-sections row" style=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx></div>
+            <div class="container" style=${this.styleMap({ visibility: this.state.isLoading ? 'hidden' : '' })}>
+                <div class="bb-sections row"></div>
+            </div>
         `;
     }
 
