@@ -1,5 +1,5 @@
 {
-    "$schema": "../../../../../backbrace-devkit/schema/pagedesign.json",
+    "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
     "name": "external",
     "sections": [
         {

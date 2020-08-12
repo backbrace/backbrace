@@ -165,7 +165,7 @@ export class Page extends Component {
                 sectionData = await fetch(sectionDesign.data, sectionDesign.query);
 
             // Check for errors.
-            if (sectionData.errors && sectionData.errors.length && sectionData.errors.length > 0 && sectionData.errors[0].message)
+            if (sectionData && sectionData.errors && sectionData.errors.length && sectionData.errors.length > 0 && sectionData.errors[0].message)
                 throw this.error('fetch', `Fetch failed for section ${sectionDesign.name}. Error: ${sectionData.errors[0].message}`);
 
             // Bind data.
@@ -225,7 +225,7 @@ export class Page extends Component {
         return this.html`
             ${this.state.isLoading && !this.state.hasError ? this.progress : null}
             ${this.state.hasError ? this.html`<bb-error message=${this.state.error.message}></bb-error>` : ''}
-            <div class="bb-sections row" style=${this.styleMap({ visibility: this.state.isLoading ? 'hidden' : '' })}></div>
+            <div class="bb-sections row" style=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx></div>
         `;
     }
 
