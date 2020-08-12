@@ -6,5 +6,10 @@
     "editor.formatOnSave": true,
     "npm.packageManager": "yarn",
     "grunt.autoDetect": "off",
-    "npm.autoDetect": "off"
+    "npm.autoDetect": "off",
+    "yaml.schemas": {
+        "packages/backbrace-devkit/schema/pagedesign.json": "packages/backbrace-docs/src/design/page/*.yml"
+    },
+    "yaml.format.singleQuote": true,
+    "typescript.tsdk": "./node_modules/typescript/lib"
 }

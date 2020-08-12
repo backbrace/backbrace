@@ -11,7 +11,9 @@ exports.publish = function(data, opts, tutorials) {
 
     var docs = data().get();
 
-    var reftypes = ['sectionOptions'];
+    var reftypes = [
+        'sectionOptions', 'appConfig', 'dirConfig', 'styleConfig', 'pageSectionDesign',
+        'imagesConfig', 'colorsConfig', 'routeConfig', 'queryDesign', 'storeMapping'];
 
     function getType(docs_, name_) {
         for (var d in docs_) {
@@ -37,6 +39,8 @@ exports.publish = function(data, opts, tutorials) {
                 "description": convertDescription(prop.description),
                 "type": prop.type.names.join('|')
             }, t = null;
+
+            if (p.type === 'Object') p.type = 'object';
 
             if (prop.name === 'icon') {
 
@@ -86,18 +90,18 @@ exports.publish = function(data, opts, tutorials) {
     generate(pageschema, pageschema, 'pageDesign')
     fs.writeFileSync(opts.destination + '/pagedesign.json', JSON.stringify(pageschema, null, 2));
 
-    var tableschema = {
+    var settingsschema = {
         "$schema": "http://json-schema.org/draft-04/schema#",
-        "id": "https://schema.backbrace.io/tabledesign.json",
-        "title": "Table design.",
+        "id": "https://schema.backbrace.io/settings.json",
+        "title": "Application Settings.",
         "type": "object",
         "properties": {
         },
         "definitions": {
         }
     }
-    generate(tableschema, tableschema, 'tableDesign')
-    fs.writeFileSync(opts.destination + '/tabledesign.json', JSON.stringify(tableschema, null, 2));
+    generate(settingsschema, settingsschema, 'settingsConfig')
+    fs.writeFileSync(opts.destination + '/settings.json', JSON.stringify(settingsschema, null, 2));
 
     fs.readFile('./node_modules/@mdi/font/css/materialdesignicons.min.css', 'utf8', function(err, data) {
         if (err) throw err;

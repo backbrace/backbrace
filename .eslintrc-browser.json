@@ -4,8 +4,5 @@
         "node": false,
         "browser": false
     },
-    "extends": "./.eslintrc-base.json",
-    "globals": {
-        "window": false
-    }
+    "extends": "./.eslintrc-base.json"
 }

@@ -159,18 +159,6 @@
             }
         ],
         "camelcase": "error",
-        "valid-jsdoc": [
-            "error",
-            {
-                "preferType": {
-                    "Boolean": "boolean",
-                    "Number": "number",
-                    "object": "Object",
-                    "String": "string",
-                    "function": "Function"
-                }
-            }
-        ],
         "semi-spacing": "error",
         "semi": "error",
         "space-before-blocks": [

@@ -3,9 +3,5 @@
   "env": {
     "node": true
   },
-  "extends": "./.eslintrc-base.json",
-  "globals": {
-    "window": false,
-    "backbrace": false
-  }
+  "extends": "./.eslintrc-base.json"
 }

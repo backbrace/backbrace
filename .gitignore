@@ -3,13 +3,14 @@
 node_modules/
 npm-debug.log
 .DS_Store
+.tscache
 /dist/
 /packages/backbrace-core/dist/
 /packages/backbrace-docs/dist/
 /packages/backbrace-devkit/typings/types.d.ts
 /packages/backbrace-devkit/schema/icons.json
 /packages/backbrace-devkit/schema/pagedesign.json
-/packages/backbrace-devkit/schema/tabledesign.json
-/packages/backbrace-docs/src/design/data/members.json
+/packages/backbrace-devkit/schema/settings.json
+/packages/backbrace-docs/src/design/data/footer.json
 /packages/backbrace-docs/src/design/data/modules.json
 /packages/backbrace-docs/src/design/data/tutorials.json

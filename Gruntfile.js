@@ -2,68 +2,34 @@
 
 var path = require('path'),
   merge = require('webpack-merge'),
-  moment = require('moment');
+  clean = require('./tools/grunt-tasks/grunt-clean'),
+  eslint = require('./tools/grunt-tasks/grunt-eslint'),
+  karmaConfig = require('./tools/grunt-tasks/grunt-karma'),
+  ts = require('./tools/grunt-tasks/grunt-ts');
 
 module.exports = function(grunt) {
 
   //Load grunt modules.
   require('load-grunt-tasks')(grunt);
-  grunt.loadTasks('lib/grunt');
-  grunt.loadNpmTasks('@backbrace/git-changelog');
+  grunt.loadTasks('tools/karma');
 
-  var webpackconfig = require('./webpack.config'),
-    versionInfo = require('./lib/version-info/version-info.js'),
-    paths = {
-      core: 'packages/backbrace-core',
-      devkit: 'packages/backbrace-devkit',
-      docs: 'packages/backbrace-docs'
-    };
+  var webpackconfig = require('./webpack.base'),
+    versionInfo = require('./tools/utils/package-info'),
+    paths = require('./tools/utils/packages');
 
   //Project configuration.
   grunt.initConfig({
 
-    //Clean directories.
-    clean: {
-      dist: [
-        'dist',
-        paths.core + '/dist',
-        paths.schema + '/schema/icons.json',
-        paths.schema + '/schema/pagedesign.json',
-        paths.schema + '/schema/tabledesign.json',
-        paths.schema + '/typings',
-        paths.docs + '/dist'
-      ],
-      tmp: ['tmp']
-    },
-
-    //Lint javascript.
-    eslint: {
-      all: {
-        src: [
-          paths.core + '/src/**/*.js',
-          paths.core + '/test/**/*.js'
-        ]
-      }
-    },
-
-    //Karma tests.
-    tests: {
-      core: 'karma.conf.js'
-    },
-
-    //Auto Karma tests.
-    autotest: {
-      core: 'karma.conf.js'
-    },
+    clean: clean,
+    eslint: eslint,
+    karma: karmaConfig.karma,
+    'karma-auto': karmaConfig.auto,
+    ts: ts,
 
     webpack: {
       prod: merge({
         output: {
-          path: path.join(__dirname, paths.core + '/dist'),
-          library: 'backbrace',
-          libraryTarget: 'window',
-          filename: '[name].min.js',
-          chunkFilename: '[name].min.js'
+          path: path.join(__dirname, paths.core + '/dist')
         }
       }, webpackconfig.get())
     },
@@ -72,15 +38,14 @@ module.exports = function(grunt) {
       localdocs: {
         webpack: merge({
           output: {
-            library: 'backbrace',
-            filename: '[name].js'
+            path: path.join(__dirname, paths.docs + '/src/node_modules/@backbrace/core/dist'),
+            publicPath: 'node_modules/@backbrace/core/dist/'
           }
         }, webpackconfig.get(true)),
         contentBase: [
           paths.docs + '/src'
         ],
         port: 8000,
-        compress: true,
         historyApiFallback: true,
         watchContentBase: false,
         writeToDisk: true,
@@ -113,7 +78,7 @@ module.exports = function(grunt) {
         ],
         options: {
           destination: paths.docs + '/src/design/data',
-          config: 'jsdoc.conf.json',
+          config: paths.core + '/jsdoc.conf.json',
           template: './jsdoc/json',
           tutorials: paths.docs + '/content'
         }
@@ -123,20 +88,19 @@ module.exports = function(grunt) {
           paths.core + '/src/types.js',
           paths.core + '/src/components/*.js',
           paths.core + '/src/components/*/*.js',
+          paths.core + '/src/errors/*.js',
+          paths.core + '/src/providers/*.js',
           paths.core + '/src/backbrace.js',
           paths.core + '/src/globals.js',
-          paths.core + '/src/routeerror.js',
           paths.core + '/src/app.js',
-          paths.core + '/src/module.js',
           paths.core + '/src/log.js',
           paths.core + '/src/util.js',
-          paths.core + '/src/http.js',
           paths.core + '/src/route.js'
         ],
         options: {
           private: true,
           destination: paths.devkit + '/typings',
-          template: 'node_modules/@backbrace/dts-generator/dist',
+          template: './jsdoc/dts',
           config: paths.devkit + '/jsdoc.conf.json'
         }
       },
@@ -147,7 +111,7 @@ module.exports = function(grunt) {
         options: {
           destination: paths.devkit + '/schema',
           template: './jsdoc/schema',
-          config: 'jsdoc.conf.json'
+          config: paths.core + '/jsdoc.conf.json'
         }
       }
     },
@@ -161,51 +125,32 @@ module.exports = function(grunt) {
             "* Project: " + versionInfo.currentPackage.repository.url + "\n" +
             "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: @backbrace/dts-generator\n" +
-            "*/\n\n",
+            "*/\n\n" +
+            "import { Cash } from './cash';\n" +
+            "\n",
           input: paths.devkit + '/typings/types.d.ts',
           output: paths.devkit + '/typings/types.d.ts'
         }]
       }
     },
 
-    git_changelog: {
-      dist: {
-        options: {
-          app_name: versionInfo.currentPackage.name,
-          template: './lib/grunt/changelog-template.md',
-          file: './tmp/CHANGELOG.md',
-          version_name: versionInfo.currentVersion.full,
-          intro: moment().format('YYYY-MM-DD'),
-          logo: versionInfo.previousVersions.slice(-2).shift(),
-          tag: versionInfo.previousVersions.slice(-2).shift(),
-          "sections": [
-            {
-              "title": "Bug Fixes",
-              "grep": "^fix"
-            },
-            {
-              "title": "Features",
-              "grep": "^feat"
-            },
-            {
-              "title": "Breaking changes",
-              "grep": "BREAKING"
-            }
-          ]
-        }
-      }
-    },
-
     copy: {
-      docs: {
+      dev: {
         files: [
-          {
-            expand: true, cwd: paths.docs + '/src', src: ['**'], dest: paths.docs + '/dist', rename: function(dest, src) {
-              return dest + '/' + src.replace('production.html', 'index.html');
-            }
-          },
-          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/backbrace' },
-          { src: paths.core + '/dist/service-worker.js', dest: paths.docs + '/dist/service-worker.js' }
+          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/src/node_modules/@backbrace/core/dist' },
+          { expand: true, cwd: './node_modules/prismjs', src: ['**'], dest: paths.docs + '/src/node_modules/prismjs' }
+        ]
+      },
+      dist: {
+        files: [
+          { expand: true, cwd: paths.docs + '/src', src: ['**'], dest: paths.docs + '/dist' },
+          { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/node_modules/@backbrace/core/dist' },
+          { expand: true, cwd: './node_modules/prismjs', src: ['**'], dest: paths.docs + '/dist/node_modules/prismjs' }
+        ]
+      },
+      typings: {
+        files: [
+          { expand: true, cwd: paths.devkit + '/typings', src: ['**'], dest: paths.docs + '/src/node_modules/@backbrace/core/dist/typings' }
         ]
       }
     }
@@ -214,14 +159,18 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-webpack');
 
-  grunt.registerTask('changelog', ['git_changelog:dist']);
   grunt.registerTask('test', 'Run the unit tests with Karma', [
     'eslint',
     'package',
-    'test:core'
+    'ts',
+    'karma:core'
   ]);
-  grunt.registerTask('test:core', 'Run the unit tests with Karma', ['tests:core']);
-  grunt.registerTask('docs', ['jsdoc:dist']);
+  grunt.registerTask('autotest', [
+    'karma-auto:core'
+  ]);
+  grunt.registerTask('docs', [
+    'jsdoc:dist'
+  ]);
   grunt.registerTask('typings', [
     'jsdoc:typings',
     'file_append:typings'
@@ -229,19 +178,22 @@ module.exports = function(grunt) {
   grunt.registerTask('generate', 'Generate docs and devkit', [
     'docs',
     'typings',
-    'jsdoc:schema'
+    'jsdoc:schema',
+    'copy:typings',
   ]);
   grunt.registerTask('build', [
     'webpack:prod'
   ]);
   grunt.registerTask('localdocs', [
+    'copy:dev',
     'webpack-dev-server:localdocs'
   ]);
   grunt.registerTask('package', [
     'clean',
     'generate',
     'build',
-    'copy:docs'
+    'copy:dev',
+    'copy:dist'
   ]);
   grunt.registerTask('default', ['package']);
 

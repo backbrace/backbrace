@@ -1,6 +1,6 @@
 'use strict';
 
-var webpackconfig = require('./webpack.config');
+var webpackconfig = require('./webpack.base');
 
 module.exports = function(config) {
   var configuration = {
@@ -20,9 +20,8 @@ module.exports = function(config) {
     reporters: ['spec'],
     basePath: 'packages/backbrace-core',
     files: [
-      { pattern: 'dist/**/*.js', watched: true, included: false, served: true, nocache: true },
-      { pattern: 'test/design/**/*.json', watched: true, included: false, served: true, nocache: true },
-      { pattern: 'test/design/**/*.js', watched: true, included: false, served: true, nocache: true },
+      { pattern: 'dist/**', watched: true, included: false, served: true, nocache: true },
+      { pattern: 'test/design/**', watched: true, included: false, served: true, nocache: true },
       'test/*.spec.js'
     ],
     proxies: {

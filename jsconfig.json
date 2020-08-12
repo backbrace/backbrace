@@ -3,11 +3,13 @@
         "checkJs": true,
         "target": "es6",
         "module": "esNext",
+        "moduleResolution": "node",
         "allowSyntheticDefaultImports": true
     },
     "include": [
         "packages/backbrace-devkit",
-        "packages/backbrace-core",
+        "packages/backbrace-core/src",
+        "packages/backbrace-core/test",
         "packages/backbrace-docs/src"
     ],
     "exclude": [
@@ -15,6 +17,6 @@
         "modules",
         "lib",
         "packages/backbrace-core/dist",
-        "packages/backbrace-core/src/types.js"
+        "packages/backbrace-devkit/typings/types.d.ts"
     ]
 }

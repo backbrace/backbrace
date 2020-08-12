@@ -72,7 +72,7 @@ exports.publish = function(data, opts, tutorials) {
                     name: doc.name,
                     desc: doc.description,
                     access: doc.access,
-                    extends: doc.augments ? doc.augments.join(",") : undefined,
+                    extends: doc.augments ? doc.augments[0] : undefined,
                     file: doc.meta ? doc.meta.path.replace(process.cwd(), '') + '/' + doc.meta.filename : '',
                     lineno: doc.meta ? doc.meta.lineno : 0
                 });
@@ -104,7 +104,7 @@ exports.publish = function(data, opts, tutorials) {
                     });
                 }
             }
-        } else if (doc.memberof && (doc.kind === 'member' || doc.kind === 'function')) {
+        } else if (doc.memberof && (doc.kind === 'member' || doc.kind === 'function') && !doc.ignore) {
             addMember({
                 kind: doc.kind,
                 type: doc.type ? doc.type.names.join('|') : undefined,
@@ -124,8 +124,31 @@ exports.publish = function(data, opts, tutorials) {
         }
     }
 
-    fs.writeFileSync(opts.destination + '/modules.json', JSON.stringify(modules, null, 2));
-    fs.writeFileSync(opts.destination + '/members.json', JSON.stringify(members, null, 2));
-    fs.writeFileSync(opts.destination + '/tutorials.json', JSON.stringify(tutes, null, 2));
+    // Attach members to modules.
+    modules.forEach(function(m) {
+        m.members = members.filter((val) => {
+            let isMember = val.memberof === m.name && (val.kind === 'function' || val.kind === 'callback'),
+                isProperty = val.memberof === m.name && (val.kind === 'property' || val.kind === 'member'),
+                isConstruct = val.memberof === m.name && val.kind === 'constructor';
+            return (isMember || isProperty || isConstruct) && !val.ignore;
+        }).map((val) => {
+            val.sort = 1;
+            if (val.kind === 'property' || val.kind === 'member')
+                val.sort = 2;
+            if (val.kind === 'function' || val.kind === 'callback')
+                val.sort = 3;
+            return val;
+        }).sort((a, b) => {
+            if (a.sort === b.sort)
+                return a.name > b.name ? 1 : -1;
+            return a.sort > b.sort ? 1 : -1;
+        });
+    });
+
+    fs.writeFileSync(opts.destination + '/modules.json', JSON.stringify({ modules: modules }, null, 2));
+    fs.writeFileSync(opts.destination + '/tutorials.json', JSON.stringify({ tutorials: tutes }, null, 2));
+    fs.writeFileSync(opts.destination + '/footer.json', JSON.stringify(tutes.filter(function(t) {
+        return t.name === 'footer';
+    }), null, 2));
 
 };

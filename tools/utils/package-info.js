@@ -1,24 +1,26 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var shell = require('shelljs');
-var semver = require('semver');
-var _ = require('lodash');
+var fs = require('fs'),
+  path = require('path'),
+  shell = require('shelljs'),
+  semver = require('semver'),
+  _ = require('lodash');
 
 var currentPackage, previousVersions;
 
-var getPackage = function() {
-
+function getPackage() {
   //Find package.json.
-  var packageFolder = path.resolve('.');
+  var packageFolder = path.resolve('.'),
+    parent = '';
   while (!fs.existsSync(path.join(packageFolder, 'package.json'))) {
-    var parent = path.dirname(packageFolder);
-    if (parent === packageFolder) { break; }
+    parent = path.dirname(packageFolder);
+    if (parent === packageFolder) {
+      break;
+    }
     packageFolder = parent;
   }
   return JSON.parse(fs.readFileSync(path.join(packageFolder, 'package.json'), 'UTF-8'));
-};
+}
 
 function checkBranchPattern(version, branchPattern) {
   // check that the version starts with the branch pattern minus its asterisk
@@ -26,13 +28,13 @@ function checkBranchPattern(version, branchPattern) {
   return version.slice(0, branchPattern.length - 1) === branchPattern.replace('*', '');
 }
 
-var getTaggedVersion = function() {
-  var gitTagResult = shell.exec('git describe --exact-match', { silent: true });
-
+function getTaggedVersion() {
+  var gitTagResult = shell.exec('git describe --exact-match', { silent: true }),
+    tag = '',
+    version = '';
   if (gitTagResult.code === 0) {
-    var tag = gitTagResult.stdout.trim();
-    var version = semver.parse(tag);
-
+    tag = gitTagResult.stdout.trim();
+    version = semver.parse(tag);
     if (version && checkBranchPattern(version.version, currentPackage.branchPattern)) {
       version.full = version.version;
       version.branch = 'v' + currentPackage.branchPattern.replace('*', 'x');
@@ -41,11 +43,11 @@ var getTaggedVersion = function() {
   }
 
   return null;
-};
+}
 
-var getPreviousVersions = function() {
-  var query = 'git tag';
-  var tagResults = shell.exec(query, { silent: true });
+function getPreviousVersions() {
+  var query = 'git tag',
+    tagResults = shell.exec(query, { silent: true });
   if (tagResults.code === 0) {
     return _(tagResults.stdout.match(/[0-9].*[0-9]$/mg))
       .map(function(tag) {
@@ -58,14 +60,14 @@ var getPreviousVersions = function() {
   } else {
     return [];
   }
-};
+}
 
 function getBuild() {
   var hash = shell.exec('git rev-parse --short HEAD', { silent: true }).stdout.replace('\n', '');
   return 'sha.' + hash;
 }
 
-var getSnapshotVersion = function() {
+function getSnapshotVersion() {
   var version = _(previousVersions)
     .filter(function(tag) {
       return semver.satisfies(tag, currentPackage.branchVersion);
@@ -102,7 +104,7 @@ var getSnapshotVersion = function() {
   version.branch = 'master';
 
   return version;
-};
+}
 
 exports.currentPackage = currentPackage = getPackage();
 exports.previousVersions = previousVersions = getPreviousVersions();

@@ -10,9 +10,10 @@
             "request": "launch",
             "url": "http://localhost:8000",
             "sourceMaps": true,
+            "timeout": 30000,
             "webRoot": "${workspaceRoot}",
             "sourceMapPathOverrides": {
-                "webpack://backbrace/./packages/backbrace-core/src/*": "${webRoot}/packages/backbrace-core/src/*"
+                "webpack://LIB/./packages/backbrace-core/src/*": "${webRoot}/packages/backbrace-core/src/*"
             }
         }
     ]

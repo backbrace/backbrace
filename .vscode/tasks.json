@@ -31,13 +31,6 @@
             "problemMatcher": []
         },
         {
-            "label": "Changelog",
-            "detail": "Generate the changelog.",
-            "type": "npm",
-            "script": "grunt changelog",
-            "problemMatcher": []
-        },
-        {
             "label": "Typings",
             "detail": "Generate the typings.",
             "type": "npm",
