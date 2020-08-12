@@ -1,6 +1,9 @@
 {
   "root": true,
-  "extends": "../../../.eslintrc-browser.json",
+  "extends": [
+    "../../../.eslintrc-browser.json",
+    "plugin:lit/recommended"
+  ],
   "env": {
     "es6": true
   },
@@ -11,22 +14,33 @@
   },
   "globals": {
     "window": false,
-    "backbrace": false,
-    "require": false
+    "Backbrace": false,
+    "Prism": false
   },
   "rules": {
-    "require-jsdoc": [
+    "jsdoc/valid-types": [
       "error",
       {
-        "require": {
-          "FunctionDeclaration": true,
-          "MethodDefinition": true,
-          "ClassDeclaration": true,
-          "ArrowFunctionExpression": false,
-          "FunctionExpression": false
-        }
+        "preferType": {
+          "Boolean": "boolean",
+          "Number": "number",
+          "object": "Object",
+          "String": "string",
+          "function": "Function"
+        },
+        "requireReturnDescription": false
       }
     ],
-    "valid-jsdoc": "error"
-  }
+    "lit/attribute-value-entities": "error",
+    "lit/binding-positions": "error",
+    "lit/no-duplicate-template-bindings": "error",
+    "lit/no-invalid-html": "error",
+    "lit/no-legacy-template-syntax": "error",
+    "lit/no-property-change-update": "error",
+    "lit/no-useless-template-literals": "error"
+  },
+  "plugins": [
+    "jsdoc",
+    "lit"
+  ]
 }

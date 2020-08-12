@@ -1,23 +1,36 @@
-# Introduction to the Backbrace docs
+### Installation
 
-These docs help you learn and use the Backbrace framework. Guides include examples to accelerate your app projects.
+**Backbrace** is a Javascript library for building web apps using JSON. You can start building web apps without any knowledge of
+Javascript, although it is recommended.
 
-<div class="card-container">
-    <a class="docs-card z-depth-1 col-md-4" route="guides/start">
-        <section>Learn</section>
-        <p>Create your first Backbrace app project, no setup required.</p>
-        <p class="card-footer">Get Started</p>
-    </a>
-</div>
+#### NPM (recommended)
 
-#### Assumptions
+We recommend utilizing NPM or Yarn to install **Backbrace**. It will allow you to untilize special tooling, which will help when developing wep apps.
 
-These docs assume that you are already familiar with HTML, CSS, JavaScript. The code samples are written using Javascript and JSON.
+If you're using NPM:
 
-#### Feedback
+```shell
+npm i @backbrace/core
+```
 
-[Report issues or submit suggestions for future docs.](https://github.com/backbrace/backbrace/issues/new/choose)
+Or if you're using Yarn:
 
-Contribute to the docs by creating [pull requests](https://github.com/backbrace/backbrace/pulls) on the Backbrace Github repository.
+```shell
+yarn add @backbrace/core
+```
 
-Please read the [Contribution Guide](https://github.com/backbrace/backbrace/blob/master/CONTRIBUTING.md) before submitting a pull request.
+After that, you can import **Backbrace** into a script module:
+
+```html
+<body>
+
+    <script type="module">
+
+        import { start } from '../node_modules/@backbrace/core/dist/Backbrace.js';
+
+        start();
+
+    </script>
+
+</body>
+```

@@ -1,11 +1,7 @@
 {
     "guides": {
-        "title": "Introduction to the Backbrace docs",
-        "children": {
-            "start": {
-                "title": "Getting Started with Backbrace"
-            }
-        }
+        "title": "Getting Started",
+        "children": {}
     },
     "components": {
         "title": "Components"

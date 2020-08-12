@@ -1,0 +1,62 @@
+{
+    "$schema": "../../../backbrace-devkit/schema/settings.json",
+    "windowMode": false,
+    "app": {
+        "title": "Backbrace",
+        "footer": {
+            "name": "footer",
+            "component": "template",
+            "data": "data/footer.json",
+            "attributes": {
+                "template": "<footer>{{{data.0.html}}}</footer>"
+            }
+        }
+    },
+    "style": {
+        "css": "/styles/website.css",
+        "images": {
+            "logo": "/images/logo-landscape.png"
+        },
+        "colors": {
+            "bgprimary": "#2d3436",
+            "bgbody": "#FFF",
+            "textbody": "rgba(0, 0, 0, 0.87)"
+        }
+    },
+    "routes": [
+        {
+            "path": "/",
+            "page": "page/guide.json",
+            "params": {
+                "name": "index"
+            }
+        },
+        {
+            "path": "api",
+            "page": "page/apihome.json"
+        },
+        {
+            "path": "api/:module",
+            "page": "page/api.json"
+        },
+        {
+            "path": "components",
+            "page": "page/components/components.json",
+            "params": {
+                "name": "components"
+            }
+        },
+        {
+            "path": "components/:name",
+            "page": "page/components/:name.json"
+        },
+        {
+            "path": ":name",
+            "page": "page/guide.json"
+        },
+        {
+            "path": ":parent/:name",
+            "page": "page/guide.json"
+        }
+    ]
+}

@@ -1,35 +1,28 @@
 body {
   overflow-y: auto !important;
 }
-.navbar-inner {
-  height: 64px;
+bb-app .bb-main {
+  margin-top: 64px;
 }
-.navbar {
+bb-header nav {
   -webkit-box-shadow: 0px 0px;
   box-shadow: 0px 0px;
 }
-.navbar-brand {
-  float: left;
-  margin: 12px 80px 0 20px;
+bb-header .bb-nav-inner {
+  height: 64px;
 }
-.navbar-logo {
-  max-height: 40px;
-}
-.navbar-inner a {
+bb-header .bb-nav-inner a {
   font-size: 16px;
   font-weight: 300;
   letter-spacing: 1px;
   color: #fff;
   padding: 8px 16px;
 }
-.navbar-inner a:hover {
+bb-header .bb-nav-inner a:hover {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
-.mobile-app .navbar-logo {
-  margin-top: 7px;
-}
-.menu-icon {
+bb-header .bb-menu-btn {
   cursor: pointer;
   float: left;
   width: 64px;
@@ -40,22 +33,17 @@ body {
   text-align: center;
   padding: 12px;
 }
-.bb-main {
-  margin-top: 64px;
+bb-header .bb-brand {
+  float: left;
+  margin: 12px 80px 0 20px;
 }
-.viewer {
-  margin-top: 20px;
+bb-header .bb-logo {
+  max-height: 40px;
 }
 a {
   color: #3498db;
+  cursor: pointer;
 }
-.mobile-app .viewer {
-  padding-left: 10px;
-  padding-right: 10px;
-  height: unset;
-  overflow-y: unset;
-}
-
 ul {
   list-style-type: disc;
 }
@@ -83,8 +71,25 @@ h4 {
   margin-top: 20px;
 }
 h5 {
-  margin: 0;
-  font-size: 1.1em;
+  font-size: 1.3em;
+  margin-top: 20px;
+}
+docs-api {
+  width: 100%;
+  margin-top: 20px;
+}
+docs-guide {
+  width: 100%;
+}
+docs-components {
+  width: 100%;
+}
+docs-component-title {
+  margin-top: 20px;
+  width: 100%;
+}
+bb-template[name="footer"] {
+  width: 100vw;
 }
 footer {
   position: absolute;
@@ -92,7 +97,7 @@ footer {
   flex: 1;
   padding: 48px;
   z-index: 0;
-  background-color: #3498db;
+  background-color: #95afc0;
   color: #fafafa;
   font-weight: 300;
   margin: 100px 0 24px 0;
@@ -128,16 +133,14 @@ footer p {
   box-sizing: border-box;
   padding: 48px 48px 32px;
   overflow: hidden;
-  -webkit-transform: skewY(5deg);
-  transform: skewY(5deg);
   -webkit-transform-origin: 100%;
   transform-origin: 100%;
-  background-color: #34495e;
+  background-color: #2d3436;
   color: #fff;
 }
 .banner-text {
   color: #fff;
-  font-size: 1.8em;
+  font-size: 2em;
   display: flex;
   position: relative;
   align-items: center;
@@ -146,6 +149,7 @@ footer p {
   text-align: center;
   padding: 10px;
   font-weight: 300;
+  min-height: 200px;
 }
 .banner-img {
   display: flex;
@@ -197,13 +201,10 @@ footer .grid-fluid {
   color: #333;
 }
 .suggest-link {
-  color: #3498db;
-  font-size: 20px;
   float: right;
   margin-right: 5px;
 }
 .suggest-link:hover {
-  color: #666;
   background: whitesmoke;
 }
 .components {
@@ -276,21 +277,20 @@ pre {
   margin: 5px;
   white-space: pre-wrap;
 }
-.callout pre {
-  background: transparent;
-}
 pre.source {
   margin-top: 10px;
-  background-color: #f6f8fa;
+  background-color: #34495e;
   border-radius: 3px;
   font-size: 100%;
-  line-height: 1.45;
+  line-height: unset;
   overflow: auto;
-  padding: 16px;
+  padding: 10px;
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace;
 }
 .source.overview {
   font-size: 85%;
+  background: #f6f8fa;
+  line-height: 1.45;
 }
 .source.example {
   font-size: 95%;
@@ -304,6 +304,7 @@ pre.source {
   float: right;
   font-size: 20px;
   cursor: pointer;
+  filter: invert(100%);
 }
 
 .docs-card {
@@ -338,6 +339,7 @@ figure > img {
 .start-button {
   background: #fff;
   color: #000;
+  font-weight: 400;
   margin-top: 20px !important;
   font-size: 20px !important;
   padding: 11px 20px !important;
@@ -345,92 +347,8 @@ figure > img {
   width: auto !important;
 }
 
-/*
-
-Google Code style (c) Aahan Krish <geekpanth3r@gmail.com>
-
-*/
-
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: transparent;
-  color: black;
-}
-
-.hljs-comment,
-.hljs-quote {
-  color: #800;
-}
-
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-section,
-.hljs-title,
-.hljs-name {
-  color: #008;
-}
-
-.hljs-variable,
-.hljs-template-variable {
-  color: #660;
-}
-
-.hljs-string,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-regexp {
-  color: #080;
-}
-
-.hljs-literal,
-.hljs-symbol,
-.hljs-bullet,
-.hljs-meta,
-.hljs-number,
-.hljs-link {
-  color: #066;
-}
-
-.hljs-title,
-.hljs-doctag,
-.hljs-type,
-.hljs-attr,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-params {
-  color: #606;
-}
-
-.hljs-attribute,
-.hljs-subst {
-  color: #000;
-}
-
-.hljs-formula {
-  background-color: #eee;
-  font-style: italic;
-}
-
-.hljs-selector-id,
-.hljs-selector-class {
-  color: #9b703f;
-}
-
-.hljs-addition {
-  background-color: #baeeba;
-}
-
-.hljs-deletion {
-  background-color: #ffc8bd;
-}
-
-.hljs-doctag,
-.hljs-strong {
-  font-weight: bold;
-}
-
-.hljs-emphasis {
-  font-style: italic;
+hr {
+  margin: 50px 0 30px;
+  border: none;
+  border-bottom: 1px solid #ececec;
 }

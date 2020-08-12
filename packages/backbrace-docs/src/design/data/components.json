@@ -1,14 +1,10 @@
-[
-    {
-        "name": "textfield",
-        "caption": "Textfield",
-        "type": "field",
-        "initals": "f"
-    },
-    {
-        "name": "editorpage",
-        "caption": "Editorpage",
-        "type": "section",
-        "initals": "s"
-    }
-]
+{
+    "components": [
+        {
+            "name": "textbox",
+            "caption": "Textbox",
+            "type": "field",
+            "initals": "f"
+        }
+    ]
+}

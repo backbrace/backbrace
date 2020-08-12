@@ -1,22 +1,20 @@
-<footer>
-    <div class="grid-fluid">
-        <div class="footer-block">
-            <h1>Resources</h1>
-            <a route="/api">API</a><br>
-            <a route="/components">Components</a><br>
-        </div>
-        <div class="footer-block">
-            <h1>Help</h1>
-            <a href="https://github.com/backbrace/backbrace/issues/new/choose">Report an Issue</a>
-        </div>
-        <div class="footer-block">
-            <h1>Community</h1>
-            <a href="https://github.com/backbrace/backbrace">GitHub</a>
-        </div>
+<div class="grid-fluid">
+    <div class="footer-block">
+        <h1>Resources</h1>
+        <a bb-route="/api">API</a><br>
+        <a bb-route="/components">Components</a><br>
     </div>
-    <p>
-        Copyright © 2019 Paul Fisher.
-        Code licensed under an <a style="color:white;" route="mitlicense"><u>MIT-style License</u></a>.
-    </p>
-    <p> Version {{globals.FULLVERSION}}. </p>
-</footer>
+    <div class="footer-block">
+        <h1>Help</h1>
+        <a href="https://github.com/backbrace/backbrace/issues/new/choose">Report an Issue</a>
+    </div>
+    <div class="footer-block">
+        <h1>Community</h1>
+        <a href="https://github.com/backbrace/backbrace">GitHub</a>
+    </div>
+</div>
+<p>
+    Copyright © 2019 Paul Fisher.
+    Code licensed under an <a style="color:white;" bb-route="mitlicense"><u>MIT-style License</u></a>.
+</p>
+<p> Version {{globals.FULLVERSION}}. </p>

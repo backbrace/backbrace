@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+  "name": "API List",
+  "caption": "API",
+  "sections": [
+    {
+      "name": "main",
+      "component": "components/guide.js",
+      "data": "data/tutorials.json",
+      "bind": "tutorials"
+    },
+    {
+      "name": "components",
+      "component": "components/componentshome.js",
+      "data": "data/components.json",
+      "bind": "components"
+    }
+  ]
+}

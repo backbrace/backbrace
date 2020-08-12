@@ -1,0 +1,48 @@
+{
+    "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "textfeld",
+    "caption": "Textbox Component",
+    "data": "data/sample.json",
+    "sections": [
+        {
+            "name": "Textbox",
+            "caption": "Textbox Component",
+            "component": "components/ComponentTitle.js",
+            "attributes": {
+                "api": "Textbox",
+                "description": "<p>Text boxes allow users to enter text into a UI. They typically appear in forms and dialogs.</p>"
+            }
+        },
+        {
+            "name": "Basic Options",
+            "attributes": {
+                "cols": "col-md-6"
+            },
+            "fields": [
+                {
+                    "name": "Default"
+                },
+                {
+                    "name": "Error Text",
+                    "bind": "field1"
+                },
+                {
+                    "name": "Helper Text",
+                    "attributes": {
+                        "helperText": "Helper message"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Source 1",
+            "caption": "Design",
+            "component": "components/sectionsource.js",
+            "data": "page/components/textbox.json",
+            "bind": "sections.1",
+            "attributes": {
+                "cols": "col-md-6"
+            }
+        }
+    ]
+}

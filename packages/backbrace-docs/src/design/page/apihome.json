@@ -1,18 +1,13 @@
 {
-    "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
-    "name": "API List",
-    "data": "design/data/modules.json",
-    "controller": "page/apihome.js",
-    "sections": [
-        {
-            "name": "main",
-            "component": "templatepage"
-        },
-        {
-            "name": "footer",
-            "component": "templatepage",
-            "data": "design/data/tutorials.json",
-            "controller": "page/footer.js"
-        }
-    ]
+  "$schema": "../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+  "name": "API List",
+  "caption": "API",
+  "sections": [
+    {
+      "name": "main",
+      "component": "components/apihome.js",
+      "data": "data/modules.json",
+      "bind": "modules"
+    }
+  ]
 }
