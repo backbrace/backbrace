@@ -1,8 +1,13 @@
 import {
     dom as $,
     ready,
-    start
+    start,
+    globals,
+    publicPath
 } from '../node_modules/@backbrace/core/dist/Backbrace.js';
+
+if (!globals.DEVMODE)
+    publicPath('../node_modules/@backbrace/core/dist/');
 
 ready(async () => {
 

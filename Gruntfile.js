@@ -145,6 +145,7 @@ module.exports = function(grunt) {
         files: [
           { expand: true, cwd: paths.docs + '/src', src: ['**'], dest: paths.docs + '/dist' },
           { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/node_modules/@backbrace/core/dist' },
+          { src: paths.core + '/dist/service-worker.js', dest: paths.docs + '/dist/service-worker.js' },
           { expand: true, cwd: './node_modules/prismjs', src: ['**'], dest: paths.docs + '/dist/node_modules/prismjs' }
         ]
       },
