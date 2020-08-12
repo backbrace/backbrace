@@ -1,6 +1,6 @@
 {
   "name": "@backbrace/devkit",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Development tools specialized for backbrace.",
   "repository": {
     "type": "git",

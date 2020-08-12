@@ -1,3 +1,35 @@
+<a name="0.2.4"></a>
+## 0.2.4 (2020-08-12)
+
+### Added
+
+- ✨ Update devkit package [[60617ad](https://github.com/backbrace/backbrace/commit/60617ad3434a6bb89b2d53c45f97080f81f5d94b)]
+- ✨ Update core package [[a06c5c5](https://github.com/backbrace/backbrace/commit/a06c5c57f0503df054974a6d26b38208921e27b7)]
+
+### Changed
+
+- 🍱 New branding [[98e65af](https://github.com/backbrace/backbrace/commit/98e65af5f0ae68ff399191f935d922e7692deb60)]
+
+### Fixed
+
+- 🐛 Fix app short name [[d1e6541](https://github.com/backbrace/backbrace/commit/d1e654145e43495a5c4072077928cd05592980de)]
+- 🐛 Fix mobile mode layout issue [[bdfc283](https://github.com/backbrace/backbrace/commit/bdfc2836d9f1930b46be02d152638c092d6c72b7)]
+- 🐛 Fix error when using &#x60;dist&#x60; version [[73dd63f](https://github.com/backbrace/backbrace/commit/73dd63fd5d46b3316b03adeec6adebd5b58f6eb0)]
+- 🐛 Fix error when section doesn&#x27;t have a data source [[168d4f2](https://github.com/backbrace/backbrace/commit/168d4f28e99bfdc44dca16ffd850c6257b3c1794)]
+
+### Miscellaneous
+
+- 📝 Update copyright year [[c555905](https://github.com/backbrace/backbrace/commit/c555905becaa799398772f586eeadaf334717ed0)]
+- 📝 Update docs package [[027cc4b](https://github.com/backbrace/backbrace/commit/027cc4b2e6f9893ed5a723eea6ba5dfafa13d4e7)]
+- 🔨 Update build scripts [[6390095](https://github.com/backbrace/backbrace/commit/6390095762b8a6ccd712cf330ba837a0671c4cbc)]
+-  feat(core): remove promise queues [#37](https://github.com/backbrace/backbrace/issues/37) [[52b173c](https://github.com/backbrace/backbrace/commit/52b173c7ccd5b5a7d80ecae06810f19391b529d6)]
+-  feat(core): use monaco editor [#36](https://github.com/backbrace/backbrace/issues/36) [[7689b80](https://github.com/backbrace/backbrace/commit/7689b80b49d0914fa6514cc98dd4ab16578d5f9b)]
+-  build: update to webpack-dev-server@3.10.1 [[3e6b1fd](https://github.com/backbrace/backbrace/commit/3e6b1fd0fac08ec26cc8d3f39893670eda1811e8)]
+-  build(vscode): rework the tasks in vscode to match grunt tasks [[7a6f774](https://github.com/backbrace/backbrace/commit/7a6f774eaf2113a30b40645083cf0478a3c08e6a)]
+-  fix(core): loading tern definition files in &#x60;EditorPage&#x60; [#34](https://github.com/backbrace/backbrace/issues/34) [[ab4d285](https://github.com/backbrace/backbrace/commit/ab4d2857739e4764de239c2b85ec9496f2a0504e)]
+-  build(grunt): icons schema not generating [#33](https://github.com/backbrace/backbrace/issues/33) [[a82d9a3](https://github.com/backbrace/backbrace/commit/a82d9a3fbf4792fb689d254988dbff309b3e23f9)]
+
+
 <a name="0.2.3"></a>
 # [0.2.3](https://github.com/backbrace/backbrace/compare/0.2.2...0.2.3) (2019-12-13)
 
