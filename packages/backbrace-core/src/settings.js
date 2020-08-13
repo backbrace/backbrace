@@ -13,7 +13,7 @@ import { globals } from './globals';
 export let settings = {
 
     debug: globals.DEVMODE,
-    windowMode: true,
+    windowMode: false,
     app: {
         name: 'Backbrace App',
         version: '1.0.0',
@@ -41,7 +41,7 @@ export let settings = {
             textsurface: '#000',
             bgbody: '#f5f7fb',
             textbody: '#000',
-            bghover: '#CCC',
+            bghover: '#ecf0f1',
             texthover: '#333'
         }
     },

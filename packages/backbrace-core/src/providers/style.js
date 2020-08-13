@@ -63,6 +63,9 @@ export class StyleHandler {
 
     /**
      * Get an icon.
+     * System icons to handle:
+     * - close
+     * - menu
      * @param {string} name Name of the icon.
      * @returns {HTMLElement}
      */

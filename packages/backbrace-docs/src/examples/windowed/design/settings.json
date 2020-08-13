@@ -1,0 +1,20 @@
+{
+    "$schema": "../../../../../backbrace-devkit/schema/settings.json",
+    "windowMode": true,
+    "app": {
+        "title": "Windowed Mode"
+    },
+    "dir": {
+        "design": "./design/"
+    },
+    "style": {
+        "images": {
+            "logo": "/images/logo-landscape.png"
+        },
+        "colors": {
+            "bgprimary": "#2d3436",
+            "bgbody": "#FFF",
+            "textbody": "rgba(0, 0, 0, 0.87)"
+        }
+    }
+}

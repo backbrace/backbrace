@@ -83,7 +83,7 @@ export async function confirm(msg, title, yescaption, nocaption) {
 
 /**
  * Execute a function after the app is loaded.
- * @param {Function} func Function to execute.
+ * @param {import('./types').readyFunction} func Function to execute.
  * @returns {void}
  */
 export function ready(func) {
@@ -195,7 +195,7 @@ export async function start() {
         }
 
         // Load the routes.
-        if (settings.routes)
+        if (settings.routes && !settings.windowMode)
             route(...settings.routes);
 
         // Register the service worker.
@@ -235,7 +235,7 @@ export async function start() {
     $('body').append(app);
 
     if (readyFunc) {
-        await readyFunc();
+        await readyFunc(app);
         processLinks(app);
     }
 

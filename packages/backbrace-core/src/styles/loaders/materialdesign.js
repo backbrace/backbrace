@@ -36,6 +36,11 @@ export default class MaterialDesignStyle extends StyleHandler {
                 background: `${colors.bghover}`,
                 color: `${colors.texthover}`
             },
+            'bb-apptoolbar .bb-button.active': {
+                'border-bottom': `2px solid ${colors.bgprimary}`,
+                background: `${colors.bghover}`,
+                color: `${colors.bgprimary}`
+            },
             '.text-box:focus': {
                 'border-color': `${colors.bgprimary}`,
                 'border-width': '2px'

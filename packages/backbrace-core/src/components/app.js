@@ -106,8 +106,7 @@ export class App extends Component {
      */
     async loadPage(name, params = {}) {
 
-        const window = getWindow(),
-            style = getStyle();
+        const window = getWindow();
 
         let pge = new Page();
 
@@ -118,6 +117,11 @@ export class App extends Component {
                 if (this.currentPage())
                     this.currentPage().remove();
                 pge.uid = 1;
+            } else {
+                this.toolbar.deselectButtons();
+                if (this.currentPage()) {
+                    this.currentPage().hide();
+                }
             }
 
             pge.params = params;
@@ -130,11 +134,7 @@ export class App extends Component {
 
             // Caption change event.
             pge.on('captionchange', (e) => {
-                if (this.windowmode) {
-                    let btn = this.toolbar.buttons.get(pge.uid);
-                    if (btn)
-                        btn.find('span').html(`${style.icon(e.detail.icon)} ${e.detail.caption}`);
-                } else {
+                if (!this.windowmode) {
                     window.document.title = `${settings.app.title}${e.detail.caption ? ' - ' + e.detail.caption : ''}`;
                 }
             });

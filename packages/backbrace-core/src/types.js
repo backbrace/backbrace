@@ -35,6 +35,12 @@ import { RouteError } from './errors/route';
  */
 
 /**
+* @callback readyFunction
+* @param {import('./components/app').App} app App component.
+* @returns {void}
+*/
+
+/**
  * App configuration.
  * @typedef appConfig
  * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Backbrace App`.
@@ -86,7 +92,7 @@ import { RouteError } from './errors/route';
  * Application settings.
  * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
- * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
+ * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `false`.
  * @property {appConfig} [app] App config.
  * @property {dirConfig} [dir] Directory config.
  * @property {styleConfig} [style] Style config.
