@@ -1,23 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { ComponentError } from './errors/component';
-import { RouteError } from './errors/route';
-
-/**
- * Custom event listener.
- * @callback customEventListener
- * @param {CustomEvent} evt Custom event.
- * @returns {void}
- */
-
-/**
- * @typedef {typeof Error|typeof ComponentError|typeof RouteError} errorClass
- */
+import { AppError } from './errors/app';
 
 /**
  * @callback errorInstance
  * @param {string} code Error code.
  * @param {string} message Error message.
- * @returns {Error|ComponentError|RouteError} Returns new error object.
+ * @returns {AppError} Returns a new error object.
  */
 
 /**
@@ -32,6 +20,61 @@ import { RouteError } from './errors/route';
  * @callback clipboardSuccess
  * @param {clipboardEvent} evt Clipboard event.
  * @returns {void}
+ */
+
+/**
+* @callback readyFunction
+* @param {import('./components/app').App} app App component.
+* @returns {void}
+*/
+
+/**
+* Data options.
+* @typedef dataOptions
+* @property {string} [source] Data source.
+* @property {string} [args] Data source arguments.
+* @property {string[]} [fields] Fields to retrieve.
+* @property {string} [bind] Data property to bind to.
+*/
+
+/**
+* Data config.
+* @typedef dataConfig
+* @property {string} [provider] Set the data provider. Defaults to `json`.
+* @property {string} [url] Set the provider URL.
+* @property {dataOptions} [user] Set the source for user info.
+*/
+
+/**
+* Data info.
+* @typedef dataInfo
+* @property {number} [count] Data record count.
+* @property {string} [error] Data error.
+* @property {Object} [data] Data.
+*/
+
+/**
+ * Auth state.
+ * @typedef authState
+ * @property {string} [token] Auth token. Used in all requests as a bearer token.
+ * @property {string} [userID] ID of the authenticated user.
+ */
+
+/**
+ * User state.
+ * @typedef userState
+ * @property {string} [email] Email address.
+ * @property {string} [name] Full name of the user.
+ * @property {string} [initials] User initials.
+ * @property {string} [image] User profile image.
+ */
+
+/**
+ * Global application state.
+ * @typedef appState
+ * @property {boolean} [isAuthenticated] `True` if the user is authenticated.
+ * @property {authState} [auth] Auth state.
+ * @property {userState} [user] User state.
  */
 
 /**
@@ -71,26 +114,51 @@ import { RouteError } from './errors/route';
  * @property {string} [textbody] Background text color.
  * @property {string} [bghover] Hover background color.
  * @property {string} [texthover] Hover text color.
+ * @property {string} [bgheader] Override the primary color on the header.
+ * @property {string} [textheader] Override the primary text color on the header.
+ * @property {string} [bgprogress] Progress bar background color.
+ * @property {string} [fgprogress] Progress bar foreground color.
  */
 
 /**
  * App style configuration.
  * @typedef styleConfig
  * @property {string} [loader] Style loader. Defaults to `materialdesign`.
- * @property {string} [css] CSS URL to load.
  * @property {imagesConfig} [images] Images style.
  * @property {colorsConfig} [colors] Colors style.
+ */
+
+/**
+ * App head configuration.
+ * @typedef headConfig
+ * @property {Object[]} [meta] Each item in the array maps to a newly-created `meta` element, where object properties map to attributes.
+ * @property {Object[]} [link] Each item in the array maps to a newly-created `link` element, where object properties map to attributes.
+ * @property {Object[]} [script] Each item in the array maps to a newly-created `script` element, where object properties map to attributes.
+ */
+
+/**
+ * App auth configuration.
+ * @typedef authConfig
+ * @property {string} [login] Set the path to the login page.
+ * @property {string} [logout] Set the path to the logout page.
+ * @property {string} [profile] Set the path to the profile page.
+ * @property {string} [refreshTokenURL] URL to refresh the auth token.
  */
 
 /**
  * Application settings.
  * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
- * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `true`.
+ * @property {string} [serviceWorker] Service worker file name.
+ * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `false`.
+ * @property {string} [base] Base path.
  * @property {appConfig} [app] App config.
  * @property {dirConfig} [dir] Directory config.
  * @property {styleConfig} [style] Style config.
  * @property {routeConfig[]} [routes] App routes.
+ * @property {headConfig} [head] Head config.
+ * @property {authConfig} [auth] App auth config.
+ * @property {dataConfig} [data] Data config.
  */
 
 /**
@@ -105,6 +173,7 @@ import { RouteError } from './errors/route';
  * @property {string} path Path to match.
  * @property {string} page Page to load.
  * @property {Object} [params] Page parameters.
+ * @property {boolean} [private] Set to `true` if the route requires the user to be authenticated.
  */
 
 /**
@@ -144,15 +213,15 @@ export let pagefield = {
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
- * @property {string} iconColor Icon color. Defaults to header color.
- * @property {string} className Classes to add to the button.
+ * @property {string} style Button style (outlined or text).
+ * @property {string} type Button type.
  */
 export let pageaction = {
   name: '',
   text: '',
   icon: '',
-  iconColor: '',
-  className: ''
+  style: '',
+  type: ''
 };
 
 /**
@@ -163,9 +232,7 @@ export let pageaction = {
  * @property {string} [className] Classes to add to the section.
  * @property {string} [component] Component for the section (defaults to `cardpage`).
  * @property {Object} [attributes] Section component attributes.
- * @property {string} [data] Data source (ie. JSON file).
- * @property {string} [query] Data query.
- * @property {string} [bind] Data property to bind to.
+ * @property {dataOptions} [data] Data source.
  * @property {pageFieldDesign[]} [fields] Page section fields.
  * @property {pageActionDesign[]} [actions] Page actions.
  */
@@ -176,9 +243,7 @@ export let pagesection = {
   className: '',
   component: 'card',
   attributes: {},
-  data: '',
-  query: '',
-  bind: '',
+  data: {},
   fields: [],
   actions: []
 };
@@ -186,15 +251,17 @@ export let pagesection = {
 /**
  * @typedef pageDesign
  * @property {string} caption Caption of the page.
- * @property {string} data Data source (ie. JSON file).
+ * @property {dataOptions} data Data source.
  * @property {string} icon Icon to use for the page.
+ * @property {string} service Page service path.
  * @property {boolean} noclose Don't allow the page to be closed (in windowed mode).
  * @property {pageSectionDesign[]} sections Page sections.
  */
 export let pagedesign = {
   caption: '',
-  data: '',
+  data: {},
   icon: '',
+  service: '',
   noclose: false,
   sections: []
 };

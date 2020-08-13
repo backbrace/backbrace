@@ -1,0 +1,18 @@
+bb-image-lookup {
+    .bb-image-lookup-container {
+        background-color: var(--bg-hover);
+        cursor: pointer;
+    }
+    .bb-image-lookup-icon {
+        background: #666;
+        opacity: 0.6;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        height: 30px;
+        text-align: center;
+        color: #fff;
+        font-size: 20px;
+        line-height: 30px;
+    }
+}

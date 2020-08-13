@@ -1,5 +1,3 @@
-import jsyaml from 'js-yaml';
-
 import { settings } from './settings';
 import * as types from './types';
 
@@ -46,14 +44,7 @@ export async function page(name) {
      * @ignore
      * @type {import('./types').pageDesign}
      */
-    let json = null;
-
-    // Convert yaml to an object.
-    if (name.endsWith('.yaml') || name.endsWith('.yml')) {
-        json = jsyaml.load(await d.text());
-    } else {
-        json = await d.json();
-    }
+    let json = await d.json();
 
     // Extend the page.
     const pge = Object.assign({}, defaults.page, json);

@@ -23,6 +23,9 @@ exports.get = function(devmode) {
       filename: '[name].js',
       chunkFilename: '[name].js'
     },
+    node: {
+      fs: 'empty'
+    },
     module: {
       rules: [
         {
@@ -60,22 +63,22 @@ exports.get = function(devmode) {
             }
           }]
         },
-        !devmode ?
-          {
-            test: /\.js$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-              loader: 'babel-loader',
-              options: {
-                presets: [['@babel/preset-env',
-                  {
-                    'targets': {
-                      'esmodules': true
-                    }
-                  }]]
-              }
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env',
+                {
+                  'targets': {
+                    'esmodules': true
+                  }
+                }]],
+              plugins: ['@babel/plugin-transform-runtime']
             }
-          } : {}
+          }
+        }
       ]
     },
     optimization: {
@@ -122,9 +125,6 @@ exports.get = function(devmode) {
         },
         {
           from: './node_modules/cash-dom/dist/cash.d.ts', to: 'typings', flatten: true
-        },
-        {
-          from: './node_modules/@mdi/svg/svg/*', to: 'mdi', flatten: true
         }
       ])
     ]

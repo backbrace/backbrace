@@ -4,11 +4,11 @@ import { app } from './app';
 import { error } from './error';
 import { makeSingle } from './util';
 
-import { RouteError } from './errors/route';
-
 import { get as getWindow } from './providers/window';
+import { settings } from './settings';
+import { appState } from './state';
 
-const routeError = error('route', null, RouteError);
+const routeError = error('route');
 
 /**
  * Routing module.
@@ -25,7 +25,7 @@ let routes = [];
 /**
  * Load a page.
  * @ignore
- * @param {*} r Route.
+ * @param {import('./types').routeConfig} r Route.
  * @returns {Generator} Returns after loading the page.
  */
 function* loadPage(r) {
@@ -42,6 +42,15 @@ export function route(...args) {
 }
 
 /**
+ * Get the window path name.
+ * @returns {string}
+ */
+function pathName() {
+    const window = getWindow();
+    return window.location.pathname.replace(settings.base, '');
+}
+
+/**
  * Intialize the router.
  * @async
  * @returns {Promise<void>}
@@ -52,13 +61,25 @@ export async function init() {
         loadPageSingle = makeSingle(loadPage);
 
     window.onpopstate = async () => {
-        var r = match(window.location.pathname);
+        var r = match(pathName());
         if (r) {
-            loadPageSingle(r, window.location.pathname);
+            loadPageSingle(r, pathName());
         }
     };
 
-    let route = match(window.location.pathname);
+    let route = match(pathName());
+    if (route)
+        await app.loadPage(route.page, route.params);
+}
+
+/**
+ * Navigate to a path name.
+ * @async
+ * @param {string} path Path name to navigate to.
+ * @returns {Promise<void>}
+ */
+export async function navigate(path) {
+    let route = match(path);
     if (route)
         await app.loadPage(route.page, route.params);
 }
@@ -66,9 +87,10 @@ export async function init() {
 /**
  * Match a route.
  * @param {string} path Path to match.
- * @returns {*} Returns the matched route.
+ * @param {Object} [pathparams] Default path params.
+ * @returns {import('./types').routeConfig} Returns the matched route.
  */
-export function match(path) {
+export function match(path, pathparams) {
 
     if (!path)
         return;
@@ -81,43 +103,45 @@ export function match(path) {
 
     routes.forEach((route) => {
         if (route.path && !ret) {
-            if (route.path === '**') {
-                ret = {
-                    page: route.page,
-                    params: null
-                };
-            } else {
-                let p2 = route.path.split('/'),
-                    res = true,
-                    params = Object.assign({}, route.params, {}),
-                    page = route.page;
-                if (parr.length !== p2.length)
-                    return;
-                parr.forEach(function(p1, index) {
-                    if (index > p2.length - 1) {
-                        res = false;
-                    } else if (p1 !== p2[index] &&
-                        p2[index] !== '*' &&
-                        p2[index].indexOf(':') === -1) {
-                        res = false;
-                    }
-                    if (res && p2[index].indexOf(':') === 0) {
-                        params[p2[index].substr(1)] = p1;
-                        page = page.replace(p2[index], p1);
-                    }
-                });
-                if (res)
+
+            let p2 = route.path.split('/'),
+                res = true,
+                params = Object.assign({}, route.params || pathparams, {}),
+                page = route.page;
+            if (parr.length !== p2.length)
+                return;
+            parr.forEach(function(p1, index) {
+                if (index > p2.length - 1) {
+                    res = false;
+                } else if (p1 !== p2[index] &&
+                    p2[index] !== '*' &&
+                    p2[index].indexOf(':') === -1) {
+                    res = false;
+                }
+                if (res && p2[index].indexOf(':') === 0) {
+                    params[p2[index].substr(1)] = p1;
+                    page = page.replace(p2[index], p1);
+                }
+            });
+            if (res) {
+                if (route.private && !appState.isAuthenticated) {
+                    if (settings.auth.login)
+                        ret = match(settings.auth.login, {
+                            callbackPath: path
+                        });
+                } else {
                     ret = {
                         page: page,
                         params: params
                     };
+                }
             }
         }
     });
 
     // No routes were matched...
     if (!ret)
-        throw routeError('404', 'We can\'t seem to find the page you\'re looking for.');
+        throw routeError('404', `We can't seem to find the page you're looking for. Path: ${path}`);
 
     return ret;
 }
@@ -136,7 +160,7 @@ export function processLinks(comp) {
         if (r) {
             loadPageSingle(r, path);
             if (window.history)
-                window.history.pushState(null, r.page, path);
+                window.history.pushState(null, r.page, path === '/' ? settings.base || path : path);
         }
     };
 
@@ -144,6 +168,14 @@ export function processLinks(comp) {
         var a = $(val);
         if (a.attr('bb-route-processed') === 'true')
             return;
-        a.css('cursor', 'pointer').on('click', () => onclick(a.attr('bb-route'))).attr('bb-route-processed', 'true');
+        if (a.attr('bb-route') === '') {
+            a.attr('bb-route-processed', 'true');
+            return;
+        }
+        a.css('cursor', 'pointer').on('click', e => {
+            onclick(a.attr('bb-route'));
+            e.cancelBubble = true;
+            return false;
+        }).attr('bb-route-processed', 'true');
     });
 }

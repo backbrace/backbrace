@@ -5,8 +5,8 @@ bb-apptoolbar {
   display: inline-block;
   padding-left: 3px;
   border-bottom: 1px solid #ecf0f1;
-  margin-top: 50px;
-  .bb-btn {
+  margin-top: 64px;
+  .bb-button {
     font-size: 14px;
     font-weight: 500;
     width: auto;
@@ -14,9 +14,21 @@ bb-apptoolbar {
     cursor: pointer;
     height: 48px;
     padding: 16px 14px;
+    background: var(--bg-surface);
+    color: var(--text-surface);
   }
-  .bb-btn i {
+  .bb-button i {
     margin-left: 5px;
-    font-size: 16px;
+    width: 16px;
+    float: right;
+  }
+  .bb-button:hover {
+    background: var(--bg-hover);
+    color: var(--text-hover);
+  }
+  .bb-button.active {
+    border-bottom: 2px solid var(--bg-primary);
+    background: var(--bg-hover);
+    color: var(--bg-primary);
   }
 }

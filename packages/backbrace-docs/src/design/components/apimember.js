@@ -8,25 +8,14 @@ export default class ApiMember extends Component {
         this.member = null;
     }
 
-    /**
-     * Component attributes.
-     * @static
-     * @returns {Map<string,string>} Returns attributes.
-     */
-    static attributes() {
-        return new Map([
-            ['member', 'Object']
-        ]);
-    }
-
     addGithubLinks(file, lineno) {
         const md = style();
         return this.html`
         <a aria-hidden="true" href="${config.githubUrl}/tree/master${file}#L${lineno}">
-            ${$(md.icon('code-tags')).addClass('suggest-link').attr({ 'title': 'View source', 'width': '20px' })}
+            ${$(md.icon('code')).addClass('suggest-link').attr({ 'title': 'View source', 'width': '20px' })}
         </a>
         <a aria-hidden="true" href="${config.githubUrl}/edit/master${file}?message=docs(core)%3A%20describe%20your%20change...#L${lineno}">
-            ${$(md.icon('pencil')).addClass('suggest-link').attr({ 'title': 'Suggest a change', 'width': '20px' })}
+            ${$(md.icon('create')).addClass('suggest-link').attr({ 'title': 'Suggest a change', 'width': '20px' })}
         </a>`;
     }
 
@@ -39,12 +28,6 @@ export default class ApiMember extends Component {
                 window.setTimeout(() => window.scroll(0, t.position().top - 80), 100);
             }
         }
-
-        // Highlight code samples.
-        $(this).find('pre code').each((i, ele) => {
-            // @ts-ignore
-            Prism.highlightElement(ele);
-        });
     }
 
     render() {
@@ -85,7 +68,7 @@ export default class ApiMember extends Component {
                     <tr>
                         <td class="desc">
                             <h5>Parameters</h5>
-                            <table style="width:100%">{{paramRows}}</table>
+                            <table style="width:100%">${this.unsafeHTML(val.paramRows)}</table>
                         </td>
                     </tr>` : ''}
                     ${val.kind === 'function' || val.kind === 'callback' ? this.html`

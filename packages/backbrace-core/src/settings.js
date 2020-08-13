@@ -13,7 +13,9 @@ import { globals } from './globals';
 export let settings = {
 
     debug: globals.DEVMODE,
-    windowMode: true,
+    serviceWorker: '',
+    windowMode: false,
+    base: '',
     app: {
         name: 'Backbrace App',
         version: '1.0.0',
@@ -27,7 +29,6 @@ export let settings = {
     },
     style: {
         loader: 'materialdesign',
-        css: '',
         images: {
             logo: '',
             menuLogo: ''
@@ -41,9 +42,34 @@ export let settings = {
             textsurface: '#000',
             bgbody: '#f5f7fb',
             textbody: '#000',
-            bghover: '#CCC',
-            texthover: '#333'
+            bghover: '#d8d8d8',
+            texthover: '#000',
+            bgheader: '',
+            textheader: '',
+            bgprogress: '#a7caed',
+            fgprogress: '#3498db'
         }
     },
-    routes: []
+    routes: [],
+    head: {
+        meta: [
+            { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=Edge' },
+            { 'name': 'viewport', 'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui' },
+            { 'name': 'apple-mobile-web-app-capable', 'content': 'yes' },
+            { 'name': 'mobile-web-app-capable', 'content': 'yes' }
+        ],
+        link: [],
+        script: []
+    },
+    auth: {
+        login: '',
+        logout: '',
+        profile: '',
+        refreshTokenURL: ''
+    },
+    data: {
+        provider: 'json',
+        url: '',
+        user: {}
+    }
 };

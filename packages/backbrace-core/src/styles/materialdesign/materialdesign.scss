@@ -1,16 +1,22 @@
 // Resets and dependencies.
 @import "./resets.scss";
+@import "./icons.scss";
 @import "./typography.scss";
 @import "./alert.scss";
 @import "./notify.scss";
 
 // Components.
+@import "./components/button.scss";
 @import "./components/app.scss";
 @import "./components/apptoolbar.scss";
 @import "./components/container.scss";
 @import "./components/header.scss";
 @import "./components/page.scss";
 @import "./components/textbox.scss";
+@import "./components/template.scss";
+@import "./components/datatable.scss";
+@import "./components/login.scss";
+@import "./components/imagelookup.scss";
 
 // External override.
 @import "./ext/swal.scss";

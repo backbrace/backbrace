@@ -5,6 +5,7 @@ import ripplet from 'ripplet.js';
 import Swal from 'sweetalert2';
 
 import { compile } from '../../jss';
+import { MaterialDesignLinear } from '../components/mdlinear';
 import { MaterialDesignSpinner } from '../components/mdspinner';
 import { settings } from '../../settings';
 
@@ -27,22 +28,6 @@ export default class MaterialDesignStyle extends StyleHandler {
         // Load the style overrides.
         const colors = settings.style.colors;
         let css = compile({
-            // Add Colors.
-            'body': {
-                background: `${colors.bgbody}`,
-                color: `${colors.textbody}`
-            },
-            '.bb-button:hover': {
-                background: `${colors.bghover}`,
-                color: `${colors.texthover}`
-            },
-            '.text-box:focus': {
-                'border-color': `${colors.bgprimary}`,
-                'border-width': '2px'
-            },
-            'bb-textbox .bb-field-focus': {
-                'color': `${colors.bgprimary}`
-            },
             '.sweet-alert button': {
                 'background-color': `${colors.bgsecondary} !important`,
                 color: `${colors.textsecondary} !important`
@@ -58,7 +43,9 @@ export default class MaterialDesignStyle extends StyleHandler {
     /**
      * @override
      */
-    progress() {
+    progress(action) {
+        if (action === 'save')
+            return new MaterialDesignLinear();
         return new MaterialDesignSpinner();
     }
 
@@ -85,23 +72,11 @@ export default class MaterialDesignStyle extends StyleHandler {
 
         const window = getWindow();
 
-        let svg = window.document.createElement('img');
+        let i = window.document.createElement('i');
+        i.classList.add('material-icons');
+        i.innerText = name;
 
-        if (!name)
-            return svg;
-
-        // Set defaults.
-        name = name || 'alert';
-
-        // Remove mdi-.
-        if (name.indexOf('mdi-') === 0)
-            name = name.substr(4);
-
-        // @ts-ignore
-        // eslint-disable-next-line camelcase
-        svg.setAttribute('src', `${__webpack_public_path__}mdi/${name}.svg`);
-
-        return svg;
+        return i;
     }
 
 }

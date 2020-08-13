@@ -86,6 +86,7 @@ module.exports = function(grunt) {
       typings: {
         src: [
           paths.core + '/src/types.js',
+          paths.core + '/src/services/*.js',
           paths.core + '/src/components/*.js',
           paths.core + '/src/components/*/*.js',
           paths.core + '/src/errors/*.js',
@@ -95,7 +96,9 @@ module.exports = function(grunt) {
           paths.core + '/src/app.js',
           paths.core + '/src/log.js',
           paths.core + '/src/util.js',
-          paths.core + '/src/route.js'
+          paths.core + '/src/route.js',
+          paths.core + '/src/data.js',
+          paths.core + '/src/state.js'
         ],
         options: {
           private: true,
@@ -126,7 +129,7 @@ module.exports = function(grunt) {
             "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: @backbrace/dts-generator\n" +
             "*/\n\n" +
-            "import { Cash } from './cash';\n" +
+            "import { Cash, Selector } from './cash';\n" +
             "\n",
           input: paths.devkit + '/typings/types.d.ts',
           output: paths.devkit + '/typings/types.d.ts'

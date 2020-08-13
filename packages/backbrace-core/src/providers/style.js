@@ -17,9 +17,10 @@ export class StyleHandler {
 
     /**
      * Create a progress meter element.
+     * @param {string} action Action performed.
      * @returns {HTMLElement}
      */
-    progress() {
+    progress(action) {
         return null;
     }
 
@@ -38,10 +39,10 @@ export class StyleHandler {
     /**
      * Show a confirmation message.
      * @async
-     * @param {*} msg Message to display.
-     * @param {*} title Title of the alert.
-     * @param {*} yescaption Caption of the 'Yes' option.
-     * @param {*} nocaption Caption of the 'No' option.
+     * @param {string} msg Message to display.
+     * @param {string} title Title of the alert.
+     * @param {string} yescaption Caption of the 'Yes' option.
+     * @param {string} nocaption Caption of the 'No' option.
      * @returns {Promise<boolean>} Returns `true` if the user clicked the yes option.
      */
     async confirm(msg, title, yescaption, nocaption) {
@@ -63,6 +64,9 @@ export class StyleHandler {
 
     /**
      * Get an icon.
+     * System icons to handle:
+     * - close
+     * - menu
      * @param {string} name Name of the icon.
      * @returns {HTMLElement}
      */

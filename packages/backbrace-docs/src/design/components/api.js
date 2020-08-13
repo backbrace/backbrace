@@ -49,17 +49,17 @@ export default class Api extends Section {
         const md = style();
         return this.html`
         <a aria-hidden="true" href="${config.githubUrl}/tree/master${file}#L${lineno}">
-            ${$(md.icon('code-tags')).addClass('suggest-link').attr({ 'title': 'View source', 'width': '20px' })}
+            ${$(md.icon('code')).addClass('suggest-link').attr({ 'title': 'View source', 'width': '20px' })}
         </a>
         <a aria-hidden="true" href="${config.githubUrl}/edit/master${file}?message=docs(core)%3A%20describe%20your%20change...#L${lineno}">
-            ${$(md.icon('pencil')).addClass('suggest-link').attr({ 'title': 'Suggest a change', 'width': '20px' })}
+            ${$(md.icon('create')).addClass('suggest-link').attr({ 'title': 'Suggest a change', 'width': '20px' })}
         </a>`;
     }
 
     render() {
 
         if (this.state.hasError)
-            return this.html`<bb-error message=${this.state.error.message}></bb-error>`;
+            return this.html`<bb-error .err=${this.state.error}></bb-error>`;
 
         // Generate links.
         let links = this.state.data.map((val) => val.name);
@@ -87,6 +87,16 @@ export default class Api extends Section {
             // Default values.
             val.params = val.params || [];
             val.returns = val.returns || { type: 'void', desc: '' };
+            val.paramRows = '';
+
+            val.params.forEach((p) => {
+                if (p.name === 'args')
+                    p.name = '...' + p.name;
+                val.paramRows += '<tr><td style="width:20%;font-weight:700;padding:16px 16px 0 0"><code>' + p.name + '</code></td>' +
+                    '<td><code>' + convertLink(p.type, links) + '</code></td>' +
+                    '<td style="padding-left: 20px;font-size:12px;">' +
+                    (p.desc ? '<p>' + (p.optional ? 'Optional. ' : '') + p.desc.substr(3) : '') + '</td></tr>';
+            });
 
             // Copy values.
             let member = {
@@ -94,6 +104,7 @@ export default class Api extends Section {
                 kind: val.kind,
                 signature: null,
                 desc: val.desc,
+                paramRows: val.paramRows,
                 returns: val.returns,
                 returnsType: convertLink(val.returns.type, links),
                 returnsDesc: val.returns.desc,
@@ -113,10 +124,10 @@ export default class Api extends Section {
             // Add the template.
             if (val.kind === 'property' || val.kind === 'member') {
                 member.signature = prepend + val.name + ' : ' + convertLink(val.type, links);
-                properties.push(this.html`<docs-apimember member=${JSON.stringify(member)}></docs-apimember>`);
+                properties.push(this.html`<docs-apimember .member=${member}></docs-apimember>`);
             } else if (val.kind === 'function' || val.kind === 'callback') {
                 member.signature = prepend + val.name + '(' + convertParams(val.params, links) + ') : ' + convertLink(val.returns.type, links);
-                methods.push(this.html`<docs-apimember member=${JSON.stringify(member)}></docs-apimember>`);
+                methods.push(this.html`<docs-apimember .member=${member}></docs-apimember>`);
             }
 
         });

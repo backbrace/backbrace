@@ -1,4 +1,5 @@
 import { Component } from './component';
+import { observable, makeObservable } from 'mobx';
 
 /**
  * @class Field
@@ -16,7 +17,8 @@ export class Field extends Component {
     static attributes() {
         return new Map([
             ['cols', 'string'],
-            ['helperText', 'string']
+            ['helpertext', 'string'],
+            ['caption', 'string']
         ]);
     }
 
@@ -46,14 +48,26 @@ export class Field extends Component {
          * Field value.
          * @type {string}
          */
-        this.value = '';
+        this._value = '';
 
         /**
          * @description
          * Helper text.
          * @type {string}
          */
-        this.helperText = '';
+        this.helpertext = '';
+
+        /**
+         * @description
+         * Field caption.
+         * @type {string}
+         */
+        this.caption = '';
+
+        makeObservable(this, {
+            caption: observable,
+            helpertext: observable
+        });
 
     }
 
@@ -66,6 +80,52 @@ export class Field extends Component {
             Object.entries(this.design.attributes).forEach(([name, value]) => this.setAttribute(name, value));
     }
 
+    /**
+     * Bind the field to the data.
+     * @async
+     * @returns {Promise<void>}
+     */
+    async bind() {
+
+        if (this.state.hasError)
+            return;
+
+        if (this.state.data.length > 0 && this.design.bind) {
+            let bindData = this.state.data[0];
+            let val = bindData[this.design.bind];
+            if (typeof val === 'undefined') {
+                this.state.error = this.error('bind', `Cannot bind property ${this.design.bind}`);
+                this.state.hasError = true;
+            } else {
+                this._value = val;
+            }
+        }
+
+    }
+
+    /**
+     * Getter on `this.value`.
+     * @ignore
+     * @returns {string}
+     */
+    get value() {
+        return this._value;
+    }
+
+    /**
+     * Setter on `this.value`
+     * @ignore
+     * @returns {void}
+     */
+    set value(newValue) {
+        if (this.state.data.length > 0 && this.design.bind) {
+            let bindData = this.state.data[0];
+            bindData[this.design.bind] = newValue;
+        }
+        this._value = newValue;
+        this.update();
+    }
+
     /** @override */
     render() {
 
@@ -73,19 +133,5 @@ export class Field extends Component {
         if (this.cols)
             this.cols.split(' ').forEach((c) => this.classList.add(c));
 
-        if (this.state.hasError)
-            return;
-
-        if (this.state.data.length > 0 && this.design.bind) {
-            let bindData = this.state.data[0];
-            this.design.bind.split('.').forEach((bprop) => {
-                if (typeof bindData[bprop] === 'undefined') {
-                    throw this.error('bind', `Data binding failed for ${this.design.bind} on property ${bprop}`);
-                }
-                bindData = bindData[bprop];
-            });
-            const val = bindData;
-            this.value = val;
-        }
     }
 }

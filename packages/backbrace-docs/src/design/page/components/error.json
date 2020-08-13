@@ -1,0 +1,60 @@
+{
+    "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "error",
+    "caption": "ErrorMessage Component",
+    "service": "service/docs.js",
+    "sections": [
+        {
+            "name": "ErrorMessage",
+            "caption": "Error Message Component",
+            "component": "components/componenttitle.js",
+            "attributes": {
+                "api": "ErrorMessage",
+                "description": "<p>The error message component is used to display rich error messages.</p>"
+            }
+        },
+        {
+            "name": "Definition",
+            "component": "template",
+            "attributes": {
+                "template": [
+                    "<h4>Definition and Usage</h4>",
+                    "<p>The error message component is used via the <code>&lt;bb-error&gt;</code> tag. It is automatically loaded on startup.</p>",
+                    "<p>An <code>Error</code> object can be passed to the component using the <code>err</code> property.</p>",
+                    "<p>Example:</p>",
+                    "<pre class=\"prettyprint source lang-js\"><code>",
+                    "return this.html`&lt;bb-error .err=${new Error('Test error')}&gt;&lt;/bb-error&gt;`;",
+                    "</pre></code>"
+                ]
+            }
+        },
+        {
+            "name": "Basic Error Message",
+            "component": "components/containererror.js",
+            "attributes": {
+                "cols": "col-md-12"
+            }
+        },
+        {
+            "name": "Definition2",
+            "component": "template",
+            "attributes": {
+                "template": [
+                    "<br><p>To show the stack trace, use the <code>showstack</code> attribute. Note: This is turned on by default if the app is set to <code>debugMode: true</code></p>",
+                    "<p>Example:</p>",
+                    "<pre class=\"prettyprint source lang-js\"><code>",
+                    "return this.html`&lt;bb-error .err=${new Error('Test error')} showstack&gt;&lt;/bb-error&gt;`;",
+                    "</pre></code>"
+                ]
+            }
+        },
+        {
+            "name": "Error Message with Stack Trace",
+            "component": "components/containererror.js",
+            "attributes": {
+                "cols": "col-md-12",
+                "showstack": "true"
+            }
+        }
+    ]
+}

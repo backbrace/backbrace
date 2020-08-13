@@ -1,18 +1,19 @@
-import { ComponentError } from './component';
-
 /**
  * @class AppError
- * @augments ComponentError
+ * @augments Error
  * @description
- * Application error class.
+ * Application error class. Used as a base for all errors.
  */
-export class AppError extends ComponentError {
+export class AppError extends Error {
 
     /**
      * @constructs AppError
      */
     constructor(...args) {
+
         super(...args);
+
         Error.captureStackTrace(this, AppError);
     }
+
 }

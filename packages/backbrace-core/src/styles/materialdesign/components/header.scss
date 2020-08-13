@@ -8,6 +8,8 @@ bb-header {
     top: 0px;
     left: 0px;
     right: 0px;
+    color: var(--text-header, var(--text-primary));
+    background: var(--bg-header, var(--bg-primary));
     z-index: 3000;
     -webkit-box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
       0px 1px 3px 0px rgba(0, 0, 0, 0.12);
@@ -15,22 +17,19 @@ bb-header {
       0px 1px 3px 0px rgba(0, 0, 0, 0.12);
   }
   .bb-nav-inner {
-    height: 50px;
+    height: 64px;
     padding-left: 0px;
     padding-right: 0px;
   }
   .bb-menu-btn {
     cursor: pointer;
     float: left;
-    width: 50px;
-    height: 50px;
-    filter: invert(100%);
-    max-height: 50px;
+    width: 64px;
+    height: 64px;
+    max-height: 64px;
     text-align: center;
-    padding: 8px;
-  }
-  .bb-menu-btn img {
-    width: 35px;
+    font-size: 30px;
+    line-height: 64px;
   }
   .bb-menu {
     display: none;
@@ -41,26 +40,103 @@ bb-header {
     height: 100vh;
     background: #fff;
     z-index: 30001;
+    padding-left: 16px;
     -webkit-box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
       0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
       0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    h6 {
+      margin: 20px 0 5px;
+      font-size: 1.125rem;
+      font-weight: 500;
+    }
+    span {
+      color: #555454;
+    }
+  }
+  .bb-profile-menu {
+    max-height: calc(100vh - 62px - 100px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 354px;
+    border-radius: 8px;
+    margin-left: 12px;
+    display: block;
+    outline: none;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    z-index: 3001;
+    line-height: normal;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #000;
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    outline: none;
+    overflow: hidden;
+    position: absolute;
+    right: 8px;
+    top: 62px;
+    opacity: 0;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+  .bb-profile-section {
+    margin: 20px 33px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    min-height: 150px;
+    h6 {
+      margin: 10px 0 4px 0;
+    }
+    span {
+      color: rgb(85, 84, 84);
+    }
+    bb-button {
+      display: block;
+      margin: 13px auto;
+    }
+  }
+  .bb-logout-section {
+    margin: 20px 33px;
+    text-align: center;
+    bb-button {
+      display: block;
+      margin: 13px auto;
+    }
   }
   .bb-brand {
     float: left;
     font-size: 1.2em;
     font-weight: normal;
-    line-height: 32px;
-    margin: 8px 80px 0 8px;
+    line-height: 64px;
+    max-height: 64px;
   }
   .bb-logo {
-    max-height: 35px;
+    max-height: 40px;
+    margin-top: 12px;
   }
-}
-.mobile-app {
-  bb-header {
-    .bb-logo {
-      margin-top: 7px;
-    }
+  .bb-profile {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #f5f5f5;
+    top: 12px;
+    right: 10px;
+    line-height: 40px;
+    text-align: center;
+    color: #000;
+    cursor: pointer;
+  }
+  .bb-profile-large {
+    width: 88px;
+    height: 88px;
+    line-height: 88px;
+    position: inherit;
+    margin: auto;
   }
 }

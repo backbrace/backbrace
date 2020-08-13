@@ -1,4 +1,7 @@
 import { Section } from './section';
+import { Button } from './button';
+import $ from 'cash-dom';
+import { get as style } from '../providers/style';
 
 /**
  * @class Container
@@ -9,17 +12,6 @@ import { Section } from './section';
 export class Container extends Section {
 
     /**
-     * Component attributes.
-     * @static
-     * @returns {Map<string,string>} Returns attributes.
-     */
-    static attributes() {
-        return new Map([
-            ['cols', 'string']
-        ]);
-    }
-
-    /**
      * @constructs Container
      */
     constructor() {
@@ -28,36 +20,62 @@ export class Container extends Section {
 
         /**
          * @description
-         * Column layout. Defaults to `col-sm-12`.
+         * Attribute. Column layout. Defaults to `col-12`.
          * @type {string}
          */
-        this.cols = 'col-sm-12';
+        this.cols = 'col-12';
+
+        /**
+         * @description
+         * Actions.
+         * @type {Map<string,Button>}
+         */
+        this.actions = new Map();
+    }
+
+    /**
+     * @override
+     */
+    async load() {
+
+        for (let action of this.design.actions) {
+            let button = new Button();
+            button.caption = action.text;
+            button.icon = action.icon;
+            button.classList.add('clickable');
+            if (action.style)
+                button.classList.add('bb-button-' + action.style);
+            if (action.type === 'save') {
+                button.addEventListener('click', () => {
+                    this.save();
+                });
+            }
+            this.actions.set(action.name, button);
+        }
+
     }
 
     /**
      * Render the container content.
-     * @returns {*} Returns the HTML template.
+     * @returns {unknown} Returns the HTML template.
      */
     renderContent() {
+        return '';
     }
 
     /**
      * @override
      */
     render() {
-
-        // Apply class.
-        if (this.cols)
-            this.cols.split(' ').forEach((c) => this.classList.add(c));
-
         return this.html`
-            <div class="bb-container">
+            <div class="bb-container" style=${this.styleMap({
+            paddingBottom: this.design.actions.length > 0 ? '86px' : ''
+        })}>
+                ${this.state.isLoading && !this.state.hasError ? $(style().progress('save')) : null}
                 <div class="bb-title-bar unselectable"></div>
                 <h6 class="bb-title unselectable cuttext">${this.design.caption}</h6>
-                <div class="row no-margin"></div>
-                <div class="row">
-                    ${this.state.hasError ? this.html`<bb-error message=${this.state.error.message}></bb-error>` : this.renderContent()}
-                </div>
+                ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : this.renderContent()}
+                ${this.design.actions.length > 0 ? this.html`<div class="bb-toolbar-bottom">${this.actions.values()}</div>` : ''}
             </div>
         `;
     }

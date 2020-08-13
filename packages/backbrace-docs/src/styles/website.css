@@ -1,7 +1,7 @@
 body {
   overflow-y: auto !important;
 }
-bb-app .bb-main {
+bb-app main {
   margin-top: 64px;
 }
 bb-header nav {
@@ -22,34 +22,17 @@ bb-header .bb-nav-inner a:hover {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
-bb-header .bb-menu-btn {
-  cursor: pointer;
-  float: left;
-  width: 64px;
-  height: 64px;
-  font-size: 35px;
-  max-height: 64px;
-  box-sizing: border-box;
-  text-align: center;
-  padding: 12px;
-}
-bb-header .bb-brand {
-  float: left;
-  margin: 12px 80px 0 20px;
-}
-bb-header .bb-logo {
-  max-height: 40px;
-}
 a {
   color: #3498db;
   cursor: pointer;
 }
 ul {
   list-style-type: disc;
-}
-
-li {
-  padding-bottom: 8px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
 }
 
 p {
@@ -109,13 +92,13 @@ footer p {
   text-align: center;
   margin: 10px 0 5px;
 }
-.header-link {
+bb-header .header-link {
   width: auto;
   display: inline-block;
   padding: 10px;
   font-size: 20px;
   font-weight: 300;
-  line-height: 40px;
+  line-height: 44px;
   box-sizing: border-box;
 }
 .banner {
@@ -203,6 +186,7 @@ footer .grid-fluid {
 .suggest-link {
   float: right;
   margin-right: 5px;
+  font-size: 24px;
 }
 .suggest-link:hover {
   background: whitesmoke;
@@ -230,7 +214,8 @@ footer .grid-fluid {
   color: #fff;
 }
 
-.api-type.module {
+.api-type.module,
+.comp-type.base {
   background: #9b59b6;
 }
 .api-type.typedef,
@@ -248,7 +233,7 @@ footer .grid-fluid {
   width: 100%;
   margin-top: 20px;
 }
-table thead > tr > th {
+table.method-table thead > tr > th {
   padding: 10px;
   background: #f6f8fa;
   border-bottom: 1px solid #dbdbdb;
@@ -304,36 +289,6 @@ pre.source {
   float: right;
   font-size: 20px;
   cursor: pointer;
-  filter: invert(100%);
-}
-
-.docs-card {
-  height: 220px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-}
-.docs-card:hover {
-  -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.02), 0 0 20px 4px rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.02), 0 0 20px 4px rgba(0, 0, 0, 0.06);
-}
-
-figure {
-  margin: 16px 0;
-  border-radius: 1px;
-  background: #fff;
-  border: 1px solid #dbdbdb;
-  padding: 32px;
-  box-sizing: border-box;
-  display: inline-block;
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-}
-
-figure > img {
-  max-width: calc(100vw - 64px);
-}
-
-.file-header {
-  font-weight: 300 !important;
-  font-size: 15px !important;
 }
 
 .start-button {

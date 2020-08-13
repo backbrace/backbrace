@@ -1,0 +1,52 @@
+{
+    "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "login",
+    "caption": "Login Component",
+    "service": "service/docs.js",
+    "sections": [
+        {
+            "name": "Login",
+            "caption": "Login Component",
+            "component": "components/componenttitle.js",
+            "attributes": {
+                "api": "Login",
+                "description": "<p></p>"
+            }
+        },
+        {
+            "name": "Basic Login",
+            "component": "login",
+            "attributes": {
+                "cols": "col-md-6"
+            },
+            "fields": [
+                {
+                    "name": "Username/Email",
+                    "bind": "username",
+                    "attributes": {
+                        "cols": "col-12"
+                    }
+                },
+                {
+                    "name": "Password",
+                    "bind": "password",
+                    "attributes": {
+                        "cols": "col-12"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Source 1",
+            "caption": "Design",
+            "component": "components/sectionsource.js",
+            "data": {
+                "source": "page/components/login.json",
+                "bind": "sections.1"
+            },
+            "attributes": {
+                "cols": "col-md-6"
+            }
+        }
+    ]
+}

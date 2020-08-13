@@ -5,7 +5,6 @@ module.exports = {
     dist: [
         'dist',
         packages.core + '/dist',
-        packages.schema + '/schema/icons.json',
         packages.schema + '/schema/pagedesign.json',
         packages.schema + '/schema/tabledesign.json',
         packages.schema + '/typings',

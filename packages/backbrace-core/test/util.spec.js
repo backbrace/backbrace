@@ -1,5 +1,5 @@
 import * as util from '../src/util';
-import { get as getWindow, set as setWindow } from '../src/providers/window';
+import { set as setWindow } from '../src/providers/window';
 
 describe('util', function() {
 
@@ -46,25 +46,6 @@ describe('util', function() {
             // Reset the window.
             setWindow(window);
 
-        });
-    });
-
-    describe('isError', function() {
-        it('should not assume objects are errors', function() {
-            let fakeError = { message: 'A fake error', stack: 'no stack here' };
-            expect(util.isError(fakeError)).toBe(false);
-        });
-
-        it('should detect simple error instances', function() {
-            expect(util.isError(new Error())).toBe(true);
-        });
-    });
-
-    describe('isDefined', function() {
-        it('should detect undefined variables', function() {
-            let obj = { id: 1 };
-            expect(util.isDefined(obj.id)).toBe(true);
-            expect(util.isDefined(obj.name)).toBe(false);
         });
     });
 

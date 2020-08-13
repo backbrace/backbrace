@@ -1,0 +1,61 @@
+bb-button {
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    font-size: 0.875rem;
+    line-height: 2.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 0 16px 0 16px;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 64px;
+    border: none;
+    outline: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    overflow: visible;
+    vertical-align: middle;
+    height: 36px;
+    border-radius: 4px;
+    will-change: transform, opacity;
+    width: fit-content;
+    cursor: pointer;
+    i.material-icons {
+        margin-left: -4px;
+        margin-right: 8px;
+        font-size: 18px;
+    }
+}
+
+bb-button:hover {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+bb-button.bb-button-outlined {
+    background: var(--bg-surface);
+    color: var(--text-surface);
+    border: 1px solid var(--bg-primary);
+}
+
+bb-button.bb-button-outlined:hover {
+    background: var(--bg-hover);
+    color: var(--text-hover);
+}
+
+bb-button.bb-button-text {
+    background: var(--bg-surface);
+    color: var(--text-surface);
+    border: none;
+}
+
+bb-button.bb-button-text:hover {
+    background: var(--bg-hover);
+    color: var(--text-hover);
+}

@@ -361,8 +361,12 @@ class Emitter {
                 }
             }
         }
+        if (t.startsWith('AsyncIterable.<')) {
+            t = t.replace('AsyncIterable.<', 'AsyncIterable<');
+            return t;
+        }
         if (t.startsWith('Map.<')) {
-            t = t.replace('Map.<', 'Map<');
+            t = t.replace(/Map\.\</g, 'Map<');
             return t;
         }
         if (t.startsWith('JQueryPromise.<')) {

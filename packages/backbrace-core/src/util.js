@@ -9,7 +9,6 @@ import { get as getWindow } from './providers/window';
 
 /** @ignore */
 let id = (new Date()).getTime();
-const toString = Object.prototype.toString;
 
 /**
  * A function that performs no operations.
@@ -64,42 +63,9 @@ export function isMobileDevice() {
 }
 
 /**
- * Determines if a reference is an `Error`.
- * @param {*} val Reference to check.
- * @returns {boolean} `True` if val is an `Error`.
- */
-export function isError(val) {
-  const type = toString.call(val);
-  switch (type) {
-    case '[object Error]': return true;
-    case '[object Exception]': return true;
-    case '[object DOMException]': return true;
-    default: return type instanceof Error;
-  }
-}
-
-/**
- * Determines if a reference is defined.
- * @param {*} val Reference to check.
- * @returns {boolean} `True` if val is defined.
- */
-export function isDefined(val) {
-  return typeof val !== 'undefined';
-}
-
-/**
- * Determines if a reference is a date.
- * @param {*} val Reference to check.
- * @returns {boolean} Returns `true` if val is a date.
- */
-export function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
  * Format a string. Merge fields are specified by the argument number wrapped in {}.
  * @param {string} str String to format.
- * @param {...*} args Arguments to merge into the string.
+ * @param {...unknown} args Arguments to merge into the string.
  * @returns {string} Formatted string.
  * @example
  * var str = Backbrace.formatString('This is a {0} {1}.','test','message');
@@ -108,7 +74,7 @@ export function isDate(val) {
 export function formatString(str, ...args) {
   return str.replace(/{(\d+)}/g, function(match, number) {
     return typeof args[+number] !== 'undefined'
-      ? args[+number] : '';
+      ? args[+number].toString() : '';
   });
 }
 
@@ -143,7 +109,7 @@ export function clipboard(trigger, text, success) {
 /**
  * Make a function chainable.
  * @param {Function} fn Function to chain.
- * @returns {any}
+ * @returns {Function}
  */
 export function makeChainable(fn) {
   let p = Promise.resolve(true);
@@ -156,7 +122,7 @@ export function makeChainable(fn) {
 /**
  * Make a function chainable.
  * @param {Function} generator Function to make single.
- * @returns {any}
+ * @returns {Function}
  */
 export function makeSingle(generator) {
   let globalNonce;

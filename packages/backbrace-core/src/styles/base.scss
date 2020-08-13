@@ -39,15 +39,8 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-spacing: 0px;
-}
-
-.bb-button {
-  display: inline-block;
-  font-size: 14px;
-  padding: 11px 8px;
-  height: 36px;
-  cursor: pointer;
-  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
 }
 
 @media only screen and (max-width: 640px) {

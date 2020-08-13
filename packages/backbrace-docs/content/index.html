@@ -7,9 +7,8 @@
     <div class="banner-text">
         JSON powered web apps.
         <a bb-route="guides">
-            <div class="bb-button start-button z-depth-1 clickable">
-                Get Started
-            </div>
+            <bb-button caption="Get Started" class="start-button z-depth-1 clickable">
+            </bb-button>
         </a>
     </div>
 
@@ -25,7 +24,7 @@
         {
             "name": "footer",
             "component": "template",
-            "data": "data/footer.json",
+            "source": "data/footer.json",
             "attributes": {
                 "template": "<footer>{{{data.0.html}}}</footer>"
             }
@@ -36,10 +35,10 @@
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="">
-                <h1 class="main-title">Design with JSON/YAML</h1>
+                <h1 class="main-title">Design with JSON</h1>
                 <p class="main-text">
                     Backbrace is a component based framework which wires
-                    an app together with JSON/YAML based design files.
+                    an app together with JSON based design files.
                 </p>
                 <p class="main-text">
                     Develop single page progressive web apps with ease.

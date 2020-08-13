@@ -1,4 +1,6 @@
 import { Component } from './component';
+import { makeObservable, observable } from 'mobx';
+import { get as getData } from '../providers/data';
 
 /**
  * @class Section
@@ -7,6 +9,17 @@ import { Component } from './component';
  * Section component base class.
  */
 export class Section extends Component {
+
+    /**
+     * Component attributes.
+     * @static
+     * @returns {Map<string,string>} Returns attributes.
+     */
+    static attributes() {
+        return new Map([
+            ['cols', 'string']
+        ]);
+    }
 
     /**
      * @constructs Section
@@ -28,6 +41,17 @@ export class Section extends Component {
          * @type {Object}
          */
         this.params = {};
+
+        /**
+         * @description
+         * Attribute. Column layout.
+         * @type {string}
+         */
+        this.cols = '';
+
+        makeObservable(this, {
+            design: observable
+        });
     }
 
     /**
@@ -36,7 +60,17 @@ export class Section extends Component {
      */
     setAttributes() {
         if (this.design)
-            Object.entries(this.design.attributes).forEach(([name, value]) => this.setAttribute(name, value));
+            Object.entries(this.design.attributes).forEach(([name, value]) => {
+                if (value.join)
+                    value = value.join('');
+                this.setAttribute(name, value);
+            });
+    }
+
+    /** @overrides */
+    firstUpdated() {
+        if (this.cols)
+            this.cols.split(' ').forEach((c) => this.classList.add(c));
     }
 
     /**
@@ -45,6 +79,24 @@ export class Section extends Component {
      * @returns {Promise<void>}
      */
     async load() {
+    }
+
+    /**
+     * Save the section data.
+     * @async
+     * @returns {Promise<void>}
+     */
+    async save() {
+
+        this.state.isLoading = true;
+
+        let ret = await getData().update(this.design.data, this.params, null, this.design, this.state.data);
+
+        this.state.isLoading = false;
+
+        if (ret.error)
+            throw this.error('save', ret.error);
+
     }
 
     /**

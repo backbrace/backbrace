@@ -1,11 +1,12 @@
 import $ from 'cash-dom';
 
 import { Component } from './component';
-import { fetch } from '../data';
 import { page } from '../design';
 import { settings } from '../settings';
 
 import { get as style } from '../providers/style';
+import { get as getWindow } from '../providers/window';
+import { get as getData } from '../providers/data';
 
 /**
  * @class Page
@@ -70,10 +71,17 @@ export class Page extends Component {
 
         /**
          * @description
+         * Page service.
+         * @type {import('../services/page').PageService}
+         */
+        this.service = null;
+
+        /**
+         * @description
          * Progress meter.
          * @type {import('cash-dom').Cash}
          */
-        this.progress = $(style().progress());
+        this.progress = $(style().progress('load'));
 
         /**
          * @description
@@ -91,6 +99,27 @@ export class Page extends Component {
         // Get our sub components.
         this.sectionContainer = $(this).find('.bb-sections');
 
+    }
+
+    /**
+     * Get a page service by name.
+     * @param {string} name Name or path of the service.
+     * @returns {Promise<import('../services/page').PageService>} Returns the service.
+     */
+    async getPageService(name) {
+
+        let Service = null;
+
+        if (!name)
+            return null;
+
+        // Import external service.
+        const { default: PageService } = await import(
+            /* webpackIgnore: true */
+            `${settings.dir.design}${name}`);
+        Service = PageService;
+
+        return new Service(this);
     }
 
     /**
@@ -138,6 +167,15 @@ export class Page extends Component {
 
         this.design = p;
 
+        // Create page service.
+        if (this.design.service) {
+            this.service = await this.getPageService(this.design.service);
+            if (this.service) {
+                // Load the service.
+                await this.service.load();
+            }
+        }
+
         // Set the caption of the page.
         this.setCaption(this.design.caption);
 
@@ -147,8 +185,11 @@ export class Page extends Component {
 
         // Get the page data.
         let pageData = null;
-        if (this.design.data)
-            pageData = await fetch(this.design.data, '');
+        if (this.design.data?.source)
+            pageData = await getData().find(this.design.data, this.params, this.design);
+
+        if (pageData?.error)
+            throw this.error('pagefetch', pageData.error);
 
         // Load the page sections.
         for (let sectionDesign of this.design.sections) {
@@ -161,20 +202,20 @@ export class Page extends Component {
 
             // Get the section data.
             let sectionData = pageData;
-            if (sectionDesign.data)
-                sectionData = await fetch(sectionDesign.data, sectionDesign.query);
+            if (sectionDesign.data?.source)
+                sectionData = await getData().find(sectionDesign.data, this.params, this.design, sectionDesign);
 
             // Check for errors.
-            if (sectionData && sectionData.errors && sectionData.errors.length && sectionData.errors.length > 0 && sectionData.errors[0].message)
-                throw this.error('fetch', `Fetch failed for section ${sectionDesign.name}. Error: ${sectionData.errors[0].message}`);
+            if (sectionData?.error)
+                throw this.error('sectionfetch', sectionData.error);
 
             // Bind data.
-            let bindData = sectionData,
+            let bindData = sectionData?.data,
                 ret = [];
-            if (sectionDesign.bind)
-                sectionDesign.bind.split('.').forEach((bprop) => {
+            if (sectionDesign.data?.bind)
+                sectionDesign.data.bind.split('.').forEach((bprop) => {
                     if (bindData === null || typeof bindData[bprop] === 'undefined')
-                        throw this.error('bind', `Data binding failed section ${sectionDesign.name} for ${sectionDesign.bind} on property ${bprop}`);
+                        throw this.error('bind', `Data binding failed section ${sectionDesign.name} for ${sectionDesign.data.bind} on property ${bprop}`);
                     bindData = bindData[bprop];
                 });
             if (bindData) {
@@ -200,6 +241,8 @@ export class Page extends Component {
         this.state.isLoading = false;
 
         style().pageUpdated(this);
+
+        await this.service?.pageLoad();
     }
 
     /**
@@ -210,12 +253,13 @@ export class Page extends Component {
      */
     setCaption(caption) {
 
+        const window = getWindow();
+
         this.caption = caption;
 
-        this.fire('captionchange', {
-            caption: caption,
-            icon: this.design.icon
-        });
+        if (!settings.windowMode) {
+            window.document.title = `${settings.app.title}${caption ? ' - ' + caption : ''}`;
+        }
     }
 
     /**
@@ -224,7 +268,7 @@ export class Page extends Component {
     render() {
         return this.html`
             ${this.state.isLoading && !this.state.hasError ? this.progress : null}
-            ${this.state.hasError ? this.html`<bb-error message=${this.state.error.message}></bb-error>` : ''}
+            ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : ''}
             <div class="container" style=${this.styleMap({ visibility: this.state.isLoading ? 'hidden' : '' })}>
                 <div class="bb-sections row"></div>
             </div>

@@ -2,13 +2,15 @@
   "$schema": "../../../../../packages/backbrace-devkit/schema/pagedesign.json",
   "name": "guide",
   "caption": "",
+  "service": "service/docs.js",
   "sections": [
     {
       "name": "main",
       "component": "components/guide.js",
-      "data": "data/tutorials.json",
-      "bind": "tutorials",
-      "query": "guide"
+      "data": {
+        "source": "data/tutorials.json",
+        "bind": "tutorials"
+      }
     }
   ]
 }

@@ -11,7 +11,7 @@
 /**
  * Global variables.
  * @name globals
- * @type {globalVariables}
+ * @type {import('./types').globalVariables}
  */
 export const globals = {
     DEVMODE: DEVMODE,

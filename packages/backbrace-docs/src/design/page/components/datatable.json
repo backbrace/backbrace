@@ -1,0 +1,54 @@
+{
+    "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "datatable",
+    "caption": "Data Table Component",
+    "service": "service/docs.js",
+    "sections": [
+        {
+            "name": "DataTable",
+            "caption": "Data Table Component",
+            "component": "components/componenttitle.js",
+            "attributes": {
+                "api": "DataTable",
+                "description": "<p>Data tables display sets of data across rows and columns.</p>"
+            }
+        },
+        {
+            "name": "Basic Table",
+            "component": "datatable",
+            "data": {
+                "source": "data/samplelist.json"
+            },
+            "attributes": {
+                "cols": "col-md-6",
+                "height": "400px"
+            },
+            "fields": [
+                {
+                    "name": "First Name",
+                    "bind": "first"
+                },
+                {
+                    "name": "Last Name",
+                    "bind": "last"
+                },
+                {
+                    "name": "Email",
+                    "bind": "email"
+                }
+            ]
+        },
+        {
+            "name": "Source 1",
+            "caption": "Design",
+            "component": "components/sectionsource.js",
+            "data": {
+                "source": "page/components/datatable.json",
+                "bind": "sections.1"
+            },
+            "attributes": {
+                "cols": "col-md-6"
+            }
+        }
+    ]
+}

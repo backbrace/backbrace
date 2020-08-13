@@ -13,6 +13,7 @@
     "require": false,
     "HTMLElement": false,
     "CustomEvent": false,
+    "FileReader": false,
     "__webpack_public_path__": false
   },
   "rules": {

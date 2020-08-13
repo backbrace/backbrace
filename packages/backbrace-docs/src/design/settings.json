@@ -1,19 +1,21 @@
 {
     "$schema": "../../../backbrace-devkit/schema/settings.json",
     "windowMode": false,
+    "serviceWorker": "/service-worker.js",
     "app": {
         "title": "Backbrace",
         "footer": {
             "name": "footer",
             "component": "template",
-            "data": "data/footer.json",
+            "data": {
+                "source": "data/footer.json"
+            },
             "attributes": {
                 "template": "<footer>{{{data.0.html}}}</footer>"
             }
         }
     },
     "style": {
-        "css": "/styles/website.css",
         "images": {
             "logo": "/images/logo-landscape.png"
         },
@@ -22,6 +24,46 @@
             "bgbody": "#FFF",
             "textbody": "rgba(0, 0, 0, 0.87)"
         }
+    },
+    "head": {
+        "meta": [
+            {
+                "name": "theme-color",
+                "content": "#2c3e50"
+            }
+        ],
+        "link": [
+            {
+                "rel": "icon",
+                "href": "./images/45x45-icon.png",
+                "type": "image/x-icon"
+            },
+            {
+                "rel": "shortcut icon",
+                "href": "./images/45x45-icon.png",
+                "type": "image/x-icon"
+            },
+            {
+                "rel": "stylesheet",
+                "href": "/styles/website.css"
+            },
+            {
+                "rel": "stylesheet",
+                "href": "./node_modules/prismjs/themes/prism-tomorrow.css"
+            }
+        ],
+        "script": [
+            {
+                "charset": "utf-8",
+                "src": "./node_modules/prismjs/prism.js",
+                "async": "false"
+            },
+            {
+                "charset": "utf-8",
+                "src": "./node_modules/prismjs/components/prism-json.js",
+                "async": "false"
+            }
+        ]
     },
     "routes": [
         {

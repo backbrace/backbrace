@@ -1,0 +1,52 @@
+{
+    "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "card",
+    "caption": "Card Component",
+    "service": "service/docs.js",
+    "sections": [
+        {
+            "name": "Card",
+            "caption": "Card Component",
+            "component": "components/componenttitle.js",
+            "attributes": {
+                "api": "Card",
+                "description": "<p></p>"
+            }
+        },
+        {
+            "name": "Card with Actions",
+            "attributes": {
+                "cols": "col-md-6"
+            },
+            "fields": [
+                {
+                    "name": "First Name"
+                },
+                {
+                    "name": "Last Name"
+                }
+            ],
+            "actions": [
+                {
+                    "name": "Save"
+                },
+                {
+                    "name": "Cancel",
+                    "style": "text"
+                }
+            ]
+        },
+        {
+            "name": "Source 1",
+            "caption": "Design",
+            "component": "components/sectionsource.js",
+            "data": {
+                "source": "page/components/card.json",
+                "bind": "sections.1"
+            },
+            "attributes": {
+                "cols": "col-md-6"
+            }
+        }
+    ]
+}

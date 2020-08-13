@@ -2,6 +2,8 @@ import { render as renderLit, TemplateResult, defaultTemplateProcessor } from 'l
 import { styleMap } from 'lit-html/directives/style-map';
 import { classMap } from 'lit-html/directives/class-map';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { asyncAppend } from 'lit-html/directives/async-append.js';
+import { asyncReplace } from 'lit-html/directives/async-replace.js';
 import { observable, autorun, runInAction } from 'mobx';
 
 import { processLinks } from '../route';
@@ -10,6 +12,7 @@ import { uid } from '../util';
 import { get as getErrorHandler } from '../providers/error';
 import { get as getWindow } from '../providers/window';
 import { error } from '../error';
+import { ComponentError } from '../errors/component';
 
 /**
  * @ignore
@@ -61,7 +64,7 @@ export class Component extends HTMLElement {
          * Interprets a template literal as a HTML template.
          * @param {TemplateStringsArray} strings Template string.
          * @param {...any} values Template values.
-         * @returns {*} Returns the HTML template.
+         * @returns {unknown} Returns the HTML template.
          */
         this.html = (strings, ...values) =>
             new TemplateResult(strings, values, 'html', defaultTemplateProcessor);
@@ -77,7 +80,7 @@ export class Component extends HTMLElement {
          * @ignore
          * @description
          * Stores the changed properties since the last update.
-         * @type {Map<string,any>}
+         * @type {Map<string,string>}
          */
         this.changedProperties = new Map();
 
@@ -95,12 +98,16 @@ export class Component extends HTMLElement {
          */
         this.oldDisplay = this.style.display;
 
+        const err = error(this.tagName.toLowerCase(), this, ComponentError);
+
         /**
          * @description
          * Component error.
-         * @type {import('../types').errorInstance}
+         * @param {string} code Error code.
+         * @param {string} message Error message.
+         * @returns {import('../errors/app').AppError} Returns a new error object.
          */
-        this.error = error('bb-component', this);
+        this.error = (code, message) => err(code, message);
 
         /**
          * @description
@@ -122,15 +129,15 @@ export class Component extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        autorun(() => {
+        const autoUpdate = () => {
             if (!this.connected) {
                 this.connected = true;
                 this.update();
             } else {
                 this.update();
             }
-        });
-
+        };
+        autorun(autoUpdate);
     }
 
     /**
@@ -209,35 +216,11 @@ export class Component extends HTMLElement {
     }
 
     /**
-     * Fire an event.
-     * @param {string} name Event name.
-     * @param {Object} detail Event detail data.
-     * @returns {void}
-     */
-    fire(name, detail) {
-        // Dispatch a caption change event.
-        let ev = new CustomEvent(name, {
-            detail: detail
-        });
-        this.dispatchEvent(ev);
-    }
-
-    /**
-     * Subscribe to an event.
-     * @param {string} name Event name.
-     * @param {import('../types').customEventListener} handler Event handler function.
-     * @returns {void}
-     */
-    on(name, handler) {
-        this.addEventListener(name, handler);
-    }
-
-    /**
      * Attribute changed event (internal use only).
      * @ignore
      * @param {string} name Attribute name.
-     * @param {any} oldValue Old value.
-     * @param {any} newValue New value.
+     * @param {string} oldValue Old value.
+     * @param {string} newValue New value.
      * @returns {void}
      */
     attributeChangedCallback(name, oldValue, newValue) {
@@ -256,7 +239,7 @@ export class Component extends HTMLElement {
 
     /**
      * Impliment `render` to define a template for the component.
-     * @returns {*} Returns the HTML template.
+     * @returns {unknown} Returns the HTML template.
      */
     render() {
         return this.html`
@@ -339,17 +322,35 @@ export class Component extends HTMLElement {
 
     /**
      * Renders the result as HTML instead of text.
-     * @param {*} value Value to render as HTML
-     * @returns {*}
+     * @param {unknown} value Value to render as HTML
+     * @returns {Function}
      */
     unsafeHTML(value) {
         return unsafeHTML(value);
     }
 
     /**
+     * Renders the result of an aysnc function.
+     * @param {AsyncIterable<any>} value Value to render as HTML
+     * @returns {Function}
+     */
+    asyncAppend(value) {
+        return asyncAppend(value);
+    }
+
+    /**
+     * Renders the result of an aysnc function.
+     * @param {AsyncIterable<any>} value Value to render as HTML
+     * @returns {Function}
+     */
+    asyncReplace(value) {
+        return asyncReplace(value);
+    }
+
+    /**
      * Apply css properties to an element.
-     * @param {*} style Style object to apply.
-     * @returns {*}
+     * @param {Object} style Style object to apply.
+     * @returns {Function}
      */
     styleMap(style) {
         return styleMap(style);
@@ -357,8 +358,8 @@ export class Component extends HTMLElement {
 
     /**
      * Apply classes to an element.
-     * @param {*} classes Classes to apply.
-     * @returns {*}
+     * @param {Object} classes Classes to apply.
+     * @returns {Function}
      */
     classMap(classes) {
         return classMap(classes);
@@ -366,8 +367,8 @@ export class Component extends HTMLElement {
 
     /**
      * Run an action which will update the state.
-     * @param {*} fn Function to run.
-     * @returns {*}
+     * @param {function():unknown} fn Function to run.
+     * @returns {unknown}
      */
     action(fn) {
         return runInAction(fn);

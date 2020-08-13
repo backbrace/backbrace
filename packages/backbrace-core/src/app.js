@@ -5,12 +5,13 @@ import { error } from './error';
 import { compile } from './jss';
 import { route, processLinks } from './route';
 import { settings } from './settings';
-import { isDefined, checkBrowser } from './util';
+import { checkBrowser } from './util';
 
 import './components/preloader';
 
 import { get as getStyle, set as setStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
+import { set as setData } from './providers/data';
 
 /**
  * App module.
@@ -38,7 +39,7 @@ let serviceWorkerRegistration = null;
  * @returns {void|ServiceWorkerRegistration} If `val` is `undefined`, returns the current service worker registration.
  */
 export function serviceWorker(val) {
-    if (isDefined(val)) {
+    if (typeof val !== 'undefined') {
         serviceWorkerRegistration = val;
     } else {
         return serviceWorkerRegistration;
@@ -83,7 +84,7 @@ export async function confirm(msg, title, yescaption, nocaption) {
 
 /**
  * Execute a function after the app is loaded.
- * @param {Function} func Function to execute.
+ * @param {import('./types').readyFunction} func Function to execute.
  * @returns {void}
  */
 export function ready(func) {
@@ -97,8 +98,29 @@ export function ready(func) {
  */
 function loadColors() {
 
-    let jss = {},
-        selectors = ['', ':hover', ':active', ':focus'];
+    const colors = settings.style.colors;
+
+    let jss = {
+        ':root': {
+            '--bg-primary': colors.bgprimary,
+            '--text-primary': colors.textprimary,
+            '--bg-secondary': colors.bgsecondary,
+            '--text-secondary': colors.textsecondary,
+            '--bg-surface': colors.bgsurface,
+            '--text-surface': colors.textsurface,
+            '--bg-body': colors.bgbody,
+            '--text-body': colors.textbody,
+            '--bg-hover': colors.bghover,
+            '--text-hover': colors.texthover
+        }
+    }, selectors = ['', ':hover', ':active', ':focus'];
+
+    if (colors.bgheader)
+        jss[':root'] = {
+            ...jss[':root'],
+            '--bg-header': colors.bgheader,
+            '--text-header': colors.textheader
+        };
 
     // Loop through the colors and add classes.
     for (let classname in settings.style.colors) {
@@ -133,22 +155,46 @@ function loadColors() {
  */
 async function loadStyle() {
 
+    loadColors();
+
     if (settings.style.loader) {
 
         const { default: StyleHandler } = await import(
             /* webpackChunkName: "style-[request]" */
             './styles/loaders/' + settings.style.loader);
 
+        /**
+         * @ignore
+         * @type {import('./providers/style').StyleHandler}
+         */
         const style = new StyleHandler();
         setStyle(style);
         style.load();
     }
+}
 
-    loadColors();
+/**
+ * Load the data provider.
+ * @ignore
+ * @async
+ * @returns {Promise<void>}
+ */
+async function loadDataProvider() {
 
-    if (settings.style.css)
-        $(`<link id="appcss" rel="stylesheet" href="${settings.style.css}" >`)
-            .appendTo($('head'));
+    if (settings.data.provider) {
+
+        const { default: DataHandler } = await import(
+            /* webpackChunkName: "data-[request]" */
+            './data/' + settings.data.provider);
+
+        /**
+         * @ignore
+         * @type {import('./providers/data').DataHandler}
+         */
+        const data = new DataHandler();
+        data.config = settings.data;
+        setData(data);
+    }
 }
 
 /**
@@ -158,52 +204,36 @@ async function loadStyle() {
  */
 export async function start() {
 
+    const window = getWindow();
+
     if (!appInit) {
-
-        const window = getWindow();
-
-        $('<meta>').attr({
-            'name': 'Description',
-            'content': settings.app.description
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'http-equiv': 'X-UA-Compatible',
-            'content': 'IE=Edge'
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'name': 'apple-mobile-web-app-capable',
-            'content': 'yes'
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'name': 'mobile-web-app-capable',
-            'content': 'yes'
-        }).appendTo(window.document.head);
 
         // Load the settings.
         let s = await window.fetch('./design/settings.json');
-        if (s.ok) {
+        const contentType = s.headers.get('content-type');
+        if (s.ok && contentType && contentType.indexOf('application/json') !== -1) {
             let merged = deepmerge(settings, await s.json());
             Object.assign(settings, merged);
         }
 
+        // Add meta tags.
+        settings.head.meta.forEach(m => {
+            /**
+             * @ignore
+             * @type {Record<string,string>}
+             */
+            const attr = m;
+            $('<meta>').attr(attr).appendTo(window.document.head);
+        });
+
         // Load the routes.
-        if (settings.routes)
+        if (settings.routes && !settings.windowMode)
             route(...settings.routes);
 
         // Register the service worker.
-        if ('serviceWorker' in window.navigator)
-            window.navigator.serviceWorker.register('/service-worker.js' + (settings.debug ? '?debug=true' : ''))
-                .then(function(reg) {
-                    serviceWorker(reg);
-                });
+        if (settings.serviceWorker && 'serviceWorker' in window.navigator)
+            window.navigator.serviceWorker.register(settings.serviceWorker + (settings.debug ? '?debug=true' : ''))
+                .then(reg => serviceWorker(reg));
 
         // Update title.
         window.document.title = settings.app.title;
@@ -223,7 +253,27 @@ export async function start() {
         /* webpackChunkName: "app" */
         './components/app');
 
+    // Load providers.
     await loadStyle();
+    await loadDataProvider();
+
+    // Add link tags.
+    settings.head.link.forEach(l => {
+        /**
+         * @ignore
+         * @type {Record<string,string>}
+         */
+        const attr = l;
+        $('<link>').attr(attr).appendTo(window.document.head);
+    });
+
+    // Add script tags.
+    settings.head.script.forEach(s => {
+        let script = window.document.createElement('script');
+        script.src = s.src;
+        script.async = s.async === 'true';
+        window.document.body.append(script);
+    });
 
     // Load the app component.
     app = new AppComponent();
@@ -235,7 +285,7 @@ export async function start() {
     $('body').append(app);
 
     if (readyFunc) {
-        await readyFunc();
+        await readyFunc(app);
         processLinks(app);
     }
 
@@ -251,5 +301,5 @@ export function unload() {
 
     readyFunc = null;
 
-    $('#appcolors,#appcss,bb-app').remove();
+    $('#appcolors,bb-app').remove();
 }

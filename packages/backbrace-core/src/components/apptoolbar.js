@@ -39,25 +39,24 @@ export class AppToolbar extends Component {
         this.deselectButtons();
 
         const style = getStyle(),
-            closeBtn = $(style.icon('%close%'))
+            closeBtn = $(style.icon('close'))
                 .on('click', (ev) => {
                     app.closePage(page.uid);
                     ev.preventDefault();
                     return false;
                 });
 
-        let btn = $('<div class="bb-btn unselectable"></div>')
+        let btn = $('<div class="bb-button unselectable"></div>')
             .css('opacity', 0)
             .appendTo(this)
-            .append('<span />')
+            .append(`<span>${page.design.caption || page.name}</span>`)
             .append(closeBtn)
             .on('click', () => {
                 app.showPage(page.uid);
             });
 
-        fadeIn(btn[0], 300).then(() => btn.addClass('active'));
-
         this.buttons.set(page.uid, btn);
+        fadeIn(btn[0], 300).then(() => this.selectButton(page.uid));
         return btn;
     }
 
@@ -88,6 +87,7 @@ export class AppToolbar extends Component {
      * @returns {void}
      */
     selectButton(uid) {
+        this.deselectButtons();
         let btn = this.buttons.get(uid);
         if (btn)
             btn.addClass('active');

@@ -3,7 +3,6 @@ import deepmerge from 'deepmerge';
 
 import { error as err } from './error';
 import { settings as appSettings } from './settings';
-import { isDefined } from './util';
 
 import { get as getErrorHandler } from './providers/error';
 import * as windowprovider from './providers/window';
@@ -19,6 +18,7 @@ import { get as getStyleHandler, set as setStyleHandler } from './providers/styl
  * @borrows module:app.serviceWorker as serviceWorker
  * @borrows module:app.start as start
  * @borrows module:app.unload as unload
+ * @borrows module:data.fetch as fetch
  * @borrows module:globals~globals as globals
  * @borrows module:log.debug as logDebug
  * @borrows module:log.info as logInfo
@@ -27,11 +27,11 @@ import { get as getStyleHandler, set as setStyleHandler } from './providers/styl
  * @borrows module:log.warning as logWarning
  * @borrows module:route.route as route
  * @borrows module:route.match as matchRoute
+ * @borrows module:state.appState as appState
+ * @borrows module:state.store as store
  * @borrows module:util.clipboard as clipboard
  * @borrows module:util.formatString as formatString
  * @borrows module:util.highlightSyntax as highlightSyntax
- * @borrows module:util.isDefined as isDefined
- * @borrows module:util.isError as isError
  * @borrows module:util.isMobileDevice as isMobileDevice
  * @borrows module:util.noop as noop
  * @borrows module:util.uid as uid
@@ -62,7 +62,7 @@ window().addEventListener('unhandledrejection', function(ev) {
  * var name = Backbrace.settings().app.name;
  */
 export function settings(newsettings) {
-    if (isDefined(newsettings)) {
+    if (typeof newsettings !== 'undefined') {
         let merged = deepmerge(appSettings, newsettings);
         Object.assign(appSettings, merged);
     }
@@ -86,7 +86,7 @@ export function publicPath(path) {
  * @returns {Window} Returns the window instance.
  */
 export function window(val) {
-    if (isDefined(val))
+    if (typeof val !== 'undefined')
         windowprovider.set(val);
     return windowprovider.get();
 }
@@ -97,19 +97,18 @@ export function window(val) {
  * @returns {import('./providers/style').StyleHandler} Returns the style handler.
  */
 export function style(val) {
-    if (isDefined(val))
+    if (typeof val !== 'undefined')
         setStyleHandler(val);
     return getStyleHandler();
 }
 
 /**
  * Access the DOM.
- * @param {*} selector DOM selector.
- * @param {*} [context] Selector context.
+ * @param {import('cash-dom').Selector} selector DOM selector.
  * @returns {import('cash-dom').Cash}
  */
-export function dom(selector, context) {
-    return $(selector, context);
+export function dom(selector) {
+    return $(selector);
 }
 
 /**
@@ -129,8 +128,6 @@ export {
 export {
     clipboard,
     formatString,
-    isDefined,
-    isError,
     isMobileDevice,
     noop,
     uid
@@ -158,8 +155,13 @@ export {
 } from './app';
 
 export {
-    store
-} from './store';
+    store,
+    appState
+} from './state';
+
+export {
+    fetch
+} from './data';
 
 export {
     Component
@@ -176,3 +178,7 @@ export {
 export {
     Container as Container
 } from './components/container';
+
+export {
+    PageService as PageService
+} from './services/page';

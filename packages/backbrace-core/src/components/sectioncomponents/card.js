@@ -27,6 +27,8 @@ export class Card extends Container {
     /** @override */
     async load() {
 
+        await super.load();
+
         // Load the fields.
         for (let fieldDesign of this.design.fields) {
 
@@ -34,8 +36,11 @@ export class Card extends Container {
 
             // Setup the component.
             field.design = fieldDesign;
+            field.caption = fieldDesign.caption;
             if (this.state.data.length > 0)
                 field.state.data = [this.state.data[0]];
+
+            await field.bind();
 
             // Set the component attributes.
             field.setAttributes();
@@ -84,7 +89,16 @@ export class Card extends Container {
 
     /** @override */
     renderContent() {
-        return this.html`${Array.from(this.fields.values())}`;
+
+        // Set the loading state.
+        for (let f of this.fields.values()) f.state.isLoading = this.state.isLoading;
+
+        return this.html`
+            <div class="row no-margin"></div>
+            <div class="row">
+                ${Array.from(this.fields.values())}
+            </div>
+        `;
     }
 
 }
