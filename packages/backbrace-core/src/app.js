@@ -250,5 +250,5 @@ export function unload() {
 
     readyFunc = null;
 
-    $('#appcolors,#appcss,bb-app').remove();
+    $('#appcolors,bb-app').remove();
 }

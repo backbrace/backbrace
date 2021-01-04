@@ -122,9 +122,6 @@ exports.get = function(devmode) {
         },
         {
           from: './node_modules/cash-dom/dist/cash.d.ts', to: 'typings', flatten: true
-        },
-        {
-          from: './node_modules/@mdi/svg/svg/*', to: 'mdi', flatten: true
         }
       ])
     ]

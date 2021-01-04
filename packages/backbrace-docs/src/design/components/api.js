@@ -49,10 +49,10 @@ export default class Api extends Section {
         const md = style();
         return this.html`
         <a aria-hidden="true" href="${config.githubUrl}/tree/master${file}#L${lineno}">
-            ${$(md.icon('code-tags')).addClass('suggest-link').attr({ 'title': 'View source', 'width': '20px' })}
+            ${$(md.icon('code')).addClass('suggest-link').attr({ 'title': 'View source', 'width': '20px' })}
         </a>
         <a aria-hidden="true" href="${config.githubUrl}/edit/master${file}?message=docs(core)%3A%20describe%20your%20change...#L${lineno}">
-            ${$(md.icon('pencil')).addClass('suggest-link').attr({ 'title': 'Suggest a change', 'width': '20px' })}
+            ${$(md.icon('create')).addClass('suggest-link').attr({ 'title': 'Suggest a change', 'width': '20px' })}
         </a>`;
     }
 

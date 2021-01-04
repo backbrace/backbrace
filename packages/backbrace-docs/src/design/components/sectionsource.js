@@ -8,7 +8,7 @@ export default class SectionSource extends Container {
         $(this).find('pre code').each((i, ele) => {
 
             // Add the copy button.
-            let btn = $('<img src="../../node_modules/@backbrace/core/dist/mdi/content-copy.svg" class="copy-source clickable" title="Click to copy source"></img>').prependTo($(ele).parent());
+            let btn = $('<i class="material-icons copy-source clickable" title="Click to copy source">content_copy</i>').prependTo($(ele).parent());
             clipboard(btn[0], ele.innerHTML, () => {
                 let notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
                 window.setTimeout(() => notify.remove(), 2000);

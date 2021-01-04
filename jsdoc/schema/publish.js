@@ -103,33 +103,4 @@ exports.publish = function(data, opts, tutorials) {
     generate(settingsschema, settingsschema, 'settingsConfig')
     fs.writeFileSync(opts.destination + '/settings.json', JSON.stringify(settingsschema, null, 2));
 
-    fs.readFile('./node_modules/@mdi/font/css/materialdesignicons.min.css', 'utf8', function(err, data) {
-        if (err) throw err;
-        var reg = new RegExp(/\.mdi\-?([_a-zA-Z\-]+[\w\-])\:\:before*\s*\{/gm);
-        var matches = data.match(reg);
-        var icons = matches.map(function(m) {
-            return m.replace(reg, '$1');
-        }).filter(function(i) {
-            var blacklist = [
-                "blank",
-                "dark",
-                "inactive",
-                "light",
-                "inactive",
-                "spin",
-                "flip-h",
-                "flip-v"
-            ];
-            return blacklist.indexOf(i) === -1;
-        });
-        var iconschema = {
-            "$schema": "http://json-schema.org/draft-04/schema#",
-            "id": "https://schema.backbrace.io/icons.json",
-            "title": "Material design icons.",
-            "type": "string",
-            "enum": icons
-        };
-        fs.writeFileSync(opts.destination + '/icons.json', JSON.stringify(iconschema, null, 2));
-    });
-
 };

@@ -90,23 +90,11 @@ export default class MaterialDesignStyle extends StyleHandler {
 
         const window = getWindow();
 
-        let svg = window.document.createElement('img');
+        let i = window.document.createElement('i');
+        i.classList.add('material-icons');
+        i.innerText = name;
 
-        if (!name)
-            return svg;
-
-        // Set defaults.
-        name = name || 'alert';
-
-        // Remove mdi-.
-        if (name.indexOf('mdi-') === 0)
-            name = name.substr(4);
-
-        // @ts-ignore
-        // eslint-disable-next-line camelcase
-        svg.setAttribute('src', `${__webpack_public_path__}mdi/${name}.svg`);
-
-        return svg;
+        return i;
     }
 
 }

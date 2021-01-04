@@ -15,7 +15,7 @@ export default class Guide extends Section {
         $(this).find('pre code').each((i, ele) => {
 
             // Add the copy button.
-            let btn = $('<img src="../../node_modules/@backbrace/core/dist/mdi/content-copy.svg" class="copy-source clickable" title="Click to copy source"></img>').prependTo($(ele).parent());
+            let btn = $('<i class="material-icons copy-source clickable" title="Click to copy source">content_copy</i>').prependTo($(ele).parent());
             clipboard(btn[0], ele.innerHTML, () => {
                 let notify = $('<div class="notify show">Code copied!</div>').appendTo('body');
                 window.setTimeout(() => notify.remove(), 2000);
@@ -49,7 +49,7 @@ export default class Guide extends Section {
                 ${ tutorial.type === 2 ?
                 this.html`<a title="Suggest a change" class="suggest-link" aria-hidden="true"
                         href="${config.githubUrl + config.docsPath}/content/${tutorial.parent ? tutorial.parent + '/' : ''}${tutorial.name}.md?message=docs(core)%3A%20describe%20your%20change...">
-                            <i class="mdi mdi-pencil"></i>
+                            <i class="material-icons">create</i>
                         </a>` :
                 ''}
                 ${$(tutorial.html)}
