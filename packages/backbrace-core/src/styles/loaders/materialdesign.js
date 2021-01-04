@@ -41,10 +41,6 @@ export default class MaterialDesignStyle extends StyleHandler {
                 background: `${colors.bghover}`,
                 color: `${colors.bgprimary}`
             },
-            '.text-box:focus': {
-                'border-color': `${colors.bgprimary}`,
-                'border-width': '2px'
-            },
             'bb-textbox .bb-field-focus': {
                 'color': `${colors.bgprimary}`
             },

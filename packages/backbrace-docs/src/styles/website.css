@@ -46,10 +46,11 @@ a {
 }
 ul {
   list-style-type: disc;
-}
-
-li {
-  padding-bottom: 8px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
 }
 
 p {
@@ -109,7 +110,7 @@ footer p {
   text-align: center;
   margin: 10px 0 5px;
 }
-.header-link {
+bb-header .header-link {
   width: auto;
   display: inline-block;
   padding: 10px;
@@ -203,6 +204,7 @@ footer .grid-fluid {
 .suggest-link {
   float: right;
   margin-right: 5px;
+  font-size: 24px;
 }
 .suggest-link:hover {
   background: whitesmoke;
@@ -304,36 +306,6 @@ pre.source {
   float: right;
   font-size: 20px;
   cursor: pointer;
-  filter: invert(100%);
-}
-
-.docs-card {
-  height: 220px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-}
-.docs-card:hover {
-  -webkit-box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.02), 0 0 20px 4px rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.02), 0 0 20px 4px rgba(0, 0, 0, 0.06);
-}
-
-figure {
-  margin: 16px 0;
-  border-radius: 1px;
-  background: #fff;
-  border: 1px solid #dbdbdb;
-  padding: 32px;
-  box-sizing: border-box;
-  display: inline-block;
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-}
-
-figure > img {
-  max-width: calc(100vw - 64px);
-}
-
-.file-header {
-  font-weight: 300 !important;
-  font-size: 15px !important;
 }
 
 .start-button {
