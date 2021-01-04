@@ -88,7 +88,13 @@ export class ErrorMessage extends ShadowComponent {
         let stack = await fromError(this.err, {
             sourceCache: this.cache
         });
-        stack = stack.filter((sf) => sf.functionName !== 'generateError');
+
+        // Remove `generateError` frames.
+        if (stack.length > 2 && stack[0].functionName === 'generateError')
+            stack.splice(0, 2);
+
+        // Remove mobx frames.
+        stack = stack.filter(s => s.fileName.indexOf('node_modules/mobx') === -1);
 
         let html = stack.map((s) => {
             return this.html`<div style="margin: 30px 0 0 0;padding:0px;">
