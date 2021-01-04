@@ -158,7 +158,7 @@ async function loadStyle() {
  */
 export async function start() {
 
-        const window = getWindow();
+    const window = getWindow();
 
     if (!appInit) {
 
@@ -184,11 +184,9 @@ export async function start() {
             route(...settings.routes);
 
         // Register the service worker.
-        if ('serviceWorker' in window.navigator)
-            window.navigator.serviceWorker.register('/service-worker.js' + (settings.debug ? '?debug=true' : ''))
-                .then(function(reg) {
-                    serviceWorker(reg);
-                });
+        if (settings.serviceWorker && 'serviceWorker' in window.navigator)
+            window.navigator.serviceWorker.register(settings.serviceWorker + (settings.debug ? '?debug=true' : ''))
+                .then(reg => serviceWorker(reg));
 
         // Update title.
         window.document.title = settings.app.title;

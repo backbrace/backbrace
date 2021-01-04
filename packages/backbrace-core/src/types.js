@@ -94,6 +94,7 @@ import { AppError } from './errors/app';
  * Application settings.
  * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
+ * @property {string} [serviceWorker] Service worker file name. Defaults to `/service-worker.js`.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `false`.
  * @property {appConfig} [app] App config.
  * @property {dirConfig} [dir] Directory config.
