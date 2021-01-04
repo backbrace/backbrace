@@ -2,6 +2,8 @@ import { render as renderLit, TemplateResult, defaultTemplateProcessor } from 'l
 import { styleMap } from 'lit-html/directives/style-map';
 import { classMap } from 'lit-html/directives/class-map';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html';
+import { asyncAppend } from 'lit-html/directives/async-append.js';
+import { asyncReplace } from 'lit-html/directives/async-replace.js';
 import { observable, autorun, runInAction } from 'mobx';
 
 import { processLinks } from '../route';
@@ -349,6 +351,24 @@ export class Component extends HTMLElement {
      */
     unsafeHTML(value) {
         return unsafeHTML(value);
+    }
+
+    /**
+     * Renders the result of an aysnc function.
+     * @param {AsyncIterable<any>} value Value to render as HTML
+     * @returns {Function}
+     */
+    asyncAppend(value) {
+        return asyncAppend(value);
+    }
+
+    /**
+     * Renders the result of an aysnc function.
+     * @param {AsyncIterable<any>} value Value to render as HTML
+     * @returns {Function}
+     */
+    asyncReplace(value) {
+        return asyncReplace(value);
     }
 
     /**
