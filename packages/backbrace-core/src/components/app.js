@@ -7,15 +7,12 @@ import './apptoolbar';
 import './error';
 import './header';
 
-import { AppErrorHandler } from '../apperrorhandler';
 import { Component } from './component';
 import { init as initRouter } from '../route';
 import { settings } from '../settings';
 import { isMobileDevice } from '../util';
 import { Page } from './page';
 
-import { get as getErrorHandler, set as setErrorHandler } from '../providers/error';
-import { get as getStyle } from '../providers/style';
 import { get as getWindow } from '../providers/window';
 
 /**
@@ -110,47 +107,41 @@ export class App extends Component {
 
         let pge = new Page();
 
-        try {
-
-            if (!this.windowmode) {
-                // Routing mode can only have 1 loaded page...
-                if (this.currentPage())
-                    this.currentPage().remove();
-                pge.uid = 1;
-            } else {
-                this.toolbar.deselectButtons();
-                if (this.currentPage()) {
-                    this.currentPage().hide();
-                }
+        if (!this.windowmode) {
+            // Routing mode can only have 1 loaded page...
+            if (this.currentPage())
+                this.currentPage().remove();
+            pge.uid = 1;
+        } else {
+            this.toolbar.deselectButtons();
+            if (this.currentPage()) {
+                this.currentPage().hide();
             }
-
-            pge.params = params;
-            pge.setAttribute('name', name);
-            this.main.append(pge);
-
-            // Add the page to the loaded pages.
-            this.pages.set(pge.uid, pge);
-            this.activePage = pge.uid;
-
-            // Caption change event.
-            pge.on('captionchange', (e) => {
-                if (!this.windowmode) {
-                    window.document.title = `${settings.app.title}${e.detail.caption ? ' - ' + e.detail.caption : ''}`;
-                }
-            });
-
-            // Load the page component.
-            await pge.load();
-
-            // Add a window shorcut.
-            if (this.windowmode)
-                this.toolbar.addButton(pge);
-
-            $(window)[0].scrollTop = 0;
-
-        } catch (e) {
-            getErrorHandler().handleError(e);
         }
+
+        pge.params = params;
+        pge.setAttribute('name', name);
+        this.main.append(pge);
+
+        // Add the page to the loaded pages.
+        this.pages.set(pge.uid, pge);
+        this.activePage = pge.uid;
+
+        // Caption change event.
+        pge.on('captionchange', (e) => {
+            if (!this.windowmode) {
+                window.document.title = `${settings.app.title}${e.detail.caption ? ' - ' + e.detail.caption : ''}`;
+            }
+        });
+
+        // Load the page component.
+        await pge.load();
+
+        // Add a window shorcut.
+        if (this.windowmode)
+            this.toolbar.addButton(pge);
+
+        $(window)[0].scrollTop = 0;
 
     }
 
@@ -226,9 +217,6 @@ export class App extends Component {
         this.toolbar = this.querySelector('bb-apptoolbar');
         this.header = this.querySelector('bb-appheader');
 
-        // Set providers.
-        setErrorHandler(new AppErrorHandler());
-
         // Add mobile/desktop class.
         this.classList.add(isMobileDevice() ? 'mobile-app' : 'desktop-app');
 
@@ -240,6 +228,8 @@ export class App extends Component {
      * @override
      */
     render() {
+        if (this.state.hasError)
+            return this.html`<bb-error .err=${this.state.error}></bb-error>`;
         return this.html`
             <bb-header logo="${settings.style.images.logo}" logotext="${settings.app.name}"></bb-header>
             <bb-apptoolbar style="${this.windowmode ? '' : 'display:none'}"></bb-apptoolbar>

@@ -4,11 +4,9 @@ import { app } from './app';
 import { error } from './error';
 import { makeSingle } from './util';
 
-import { RouteError } from './errors/route';
-
 import { get as getWindow } from './providers/window';
 
-const routeError = error('route', null, RouteError);
+const routeError = error('route');
 
 /**
  * Routing module.

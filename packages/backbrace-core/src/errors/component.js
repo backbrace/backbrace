@@ -1,10 +1,12 @@
+import { AppError } from './app';
+
 /**
  * @class ComponentError
- * @augments Error
+ * @augments AppError
  * @description
- * Component error class.
+ * Component error class. Used as the base error for all components.
  */
-export class ComponentError extends Error {
+export class ComponentError extends AppError {
 
     /**
      * @constructs ComponentError
@@ -20,6 +22,6 @@ export class ComponentError extends Error {
          */
         this.component = null;
 
-        Error.captureStackTrace(this, ComponentError);
+        AppError.captureStackTrace(this, ComponentError);
     }
 }

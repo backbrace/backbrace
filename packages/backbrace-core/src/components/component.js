@@ -10,6 +10,7 @@ import { uid } from '../util';
 import { get as getErrorHandler } from '../providers/error';
 import { get as getWindow } from '../providers/window';
 import { error } from '../error';
+import { ComponentError } from '../errors/component';
 
 /**
  * @ignore
@@ -95,12 +96,16 @@ export class Component extends HTMLElement {
          */
         this.oldDisplay = this.style.display;
 
+        const err = error(this.tagName.toLowerCase(), this, ComponentError);
+
         /**
          * @description
          * Component error.
-         * @type {import('../types').errorInstance}
+         * @param {string} code Error code.
+         * @param {string} message Error message.
+         * @returns {import('../errors/app').AppError} Returns a new error object.
          */
-        this.error = error('bb-component', this);
+        this.error = (code, message) => err(code, message);
 
         /**
          * @description
@@ -122,15 +127,15 @@ export class Component extends HTMLElement {
      * @returns {void}
      */
     connectedCallback() {
-        autorun(() => {
+        const autoUpdate = () => {
             if (!this.connected) {
                 this.connected = true;
                 this.update();
             } else {
                 this.update();
             }
-        });
-
+        };
+        autorun(autoUpdate);
     }
 
     /**

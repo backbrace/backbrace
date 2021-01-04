@@ -1,3 +1,4 @@
+import $ from 'cash-dom';
 import { error as logError } from '../log';
 import { get as getWindow } from './window';
 import { ComponentError } from '../errors/component';
@@ -21,12 +22,6 @@ export class ErrorHandler {
         // Log the error.
         logError(err);
 
-        if (window.document.body) {
-            window.document.body.innerHTML = `<div style="padding: 30px;overflow-wrap: break-word;
-            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,Segoe UI Emoji, Segoe UI Symbol;">
-            <h1 style="font-size: 120%;font-weight:bold;margin:8px 0 8px 0;">Oops, we had an issue.</h1>${err.message}</div>`;
-        }
-
         // Set the error state.
         if (err instanceof ComponentError) {
             if (err.component) {
@@ -34,6 +29,11 @@ export class ErrorHandler {
                 err.component.state.hasError = true;
                 err.component.update();
             }
+        } else if (window.document.body) {
+            window.document.body.innerHTML = `<bb-error></bb-error>`;
+            let e = $(window.document.body).find('bb-error')[0];
+            e.err = err;
+            e.update();
         }
     }
 

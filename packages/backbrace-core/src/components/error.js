@@ -1,4 +1,7 @@
 import { ShadowComponent } from './shadowcomponent';
+import { fromError } from 'stacktrace-js';
+import { get as getWindow } from '../providers/window';
+import { settings } from '../settings';
 
 /**
  * @class ErrorMessage
@@ -9,17 +12,6 @@ import { ShadowComponent } from './shadowcomponent';
 export class ErrorMessage extends ShadowComponent {
 
     /**
-     * Component attributes.
-     * @static
-     * @returns {Map<string,string>} Returns attributes.
-     */
-    static attributes() {
-        return new Map([
-            ['message', 'string']
-        ]);
-    }
-
-    /**
      * @constructs ErrorMessage
      */
     constructor() {
@@ -28,18 +20,92 @@ export class ErrorMessage extends ShadowComponent {
 
         /**
          * @description
-         * Error mesage.
-         * @type {string}
+         * System Error object.
+         * @type {Error}
          */
-        this.message = '';
+        this.err = null;
+
+        /**
+         * @description
+         * Source file cache.
+         * @type {Object}
+         */
+        this.cache = {};
 
         this.update();
+    }
+
+    /**
+     * Get a source line.
+     * @param {string[]} lines Source lines.
+     * @param {number} i Index of line to retrive (1 based).
+     * @param {boolean} [sel] If `true` this line is selected.
+     * @returns {string}
+     */
+    getLine(lines, i, sel) {
+        let line = lines[i - 1];
+        if (typeof line === 'undefined')
+            return '';
+        if (sel)
+            return `>${i}| ${line}\r\n`;
+        return `${i} | ${line}\r\n`;
+    }
+
+    /**
+     * Get the source lines.
+     * @param {string} path Path to the source file.
+     * @param {number} line Line number to set as current.
+     * @returns {AsyncGenerator}
+     */
+    async * getSource(path, line) {
+        let file = this.cache[path];
+        if (typeof file === 'undefined')
+            return '';
+        if (file instanceof Promise) {
+            let f = await getWindow().fetch(path);
+            if (f.ok) {
+                file = await f.text();
+                this.cache[path] = file;
+            }
+        }
+        if (typeof file === 'string') {
+            let lines = file.split('\n');
+            yield this.getLine(lines, line - 5) +
+                this.getLine(lines, line - 4) +
+                this.getLine(lines, line - 3) +
+                this.getLine(lines, line - 2) +
+                this.getLine(lines, line - 1) +
+                this.getLine(lines, line, true);
+        }
+    }
+
+    /**
+     * Render the error stack.
+     * @returns {AsyncGenerator}
+     */
+    async * getStack() {
+
+        let stack = await fromError(this.err, {
+            sourceCache: this.cache
+        });
+        stack = stack.filter((sf) => sf.functionName !== 'generateError');
+
+        let html = stack.map((s) => {
+            return this.html`<div style="margin: 30px 0 0 0;padding:0px;">
+                <h4>${s.functionName}</h4>
+                <small>${s.fileName}:${s.lineNumber}</small><br>
+                <code><pre>${this.asyncReplace(this.getSource(s.fileName, s.lineNumber))}</pre></code>
+                </div>`;
+        });
+        yield html;
     }
 
     /**
      * @override
      */
     render() {
+        if (!this.err)
+            return '';
         return this.html`
             <style>
                 div{
@@ -52,10 +118,19 @@ export class ErrorMessage extends ShadowComponent {
                     font-weight:bold;
                     margin:8px 0 8px 0;
                 }
+                h4{
+                    margin: 2px;
+                }
+                pre{
+                    padding: 10px;
+                    background: #fcece8;
+                    width: 100%;
+                }
             </style>
             <div>
                 <h1>Oops, we had an issue.</h1>
-                ${this.message}
+                ${this.err.message}
+                ${settings.debug ? this.asyncReplace(this.getStack()) : ''}
             </div>
         `;
     }

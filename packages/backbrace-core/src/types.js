@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ComponentError } from './errors/component';
-import { RouteError } from './errors/route';
+import { AppError } from './errors/app';
 
 /**
  * Custom event listener.
@@ -10,14 +9,10 @@ import { RouteError } from './errors/route';
  */
 
 /**
- * @typedef {typeof Error|typeof ComponentError|typeof RouteError} errorClass
- */
-
-/**
  * @callback errorInstance
  * @param {string} code Error code.
  * @param {string} message Error message.
- * @returns {Error|ComponentError|RouteError} Returns new error object.
+ * @returns {AppError} Returns a new error object.
  */
 
 /**

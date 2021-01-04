@@ -59,7 +59,7 @@ export default class Api extends Section {
     render() {
 
         if (this.state.hasError)
-            return this.html`<bb-error message=${this.state.error.message}></bb-error>`;
+            return this.html`<bb-error .err=${this.state.error}></bb-error>`;
 
         // Generate links.
         let links = this.state.data.map((val) => val.name);

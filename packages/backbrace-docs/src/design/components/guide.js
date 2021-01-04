@@ -30,7 +30,7 @@ export default class Guide extends Section {
     render() {
 
         if (this.state.hasError)
-            return this.html`<bb-error message=${this.state.error.message}></bb-error>`;
+            return this.html`<bb-error .err=${this.state.error}></bb-error>`;
 
         this.state.data = this.state.data.filter((d) => d.name === this.params['name']);
 

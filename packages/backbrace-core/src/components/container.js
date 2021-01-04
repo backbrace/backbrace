@@ -57,7 +57,7 @@ export class Container extends Section {
                 <h6 class="bb-title unselectable cuttext">${this.design.caption}</h6>
                 <div class="row no-margin"></div>
                 <div class="row">
-                    ${this.state.hasError ? this.html`<bb-error message=${this.state.error.message}></bb-error>` : this.renderContent()}
+                    ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : this.renderContent()}
                 </div>
             </div>
         `;
