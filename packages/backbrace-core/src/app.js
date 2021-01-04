@@ -5,7 +5,7 @@ import { error } from './error';
 import { compile } from './jss';
 import { route, processLinks } from './route';
 import { settings } from './settings';
-import { isDefined, checkBrowser } from './util';
+import { checkBrowser } from './util';
 
 import './components/preloader';
 
@@ -38,7 +38,7 @@ let serviceWorkerRegistration = null;
  * @returns {void|ServiceWorkerRegistration} If `val` is `undefined`, returns the current service worker registration.
  */
 export function serviceWorker(val) {
-    if (isDefined(val)) {
+    if (typeof val !== 'undefined') {
         serviceWorkerRegistration = val;
     } else {
         return serviceWorkerRegistration;

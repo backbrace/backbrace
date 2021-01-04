@@ -3,7 +3,6 @@ import deepmerge from 'deepmerge';
 
 import { error as err } from './error';
 import { settings as appSettings } from './settings';
-import { isDefined } from './util';
 
 import { get as getErrorHandler } from './providers/error';
 import * as windowprovider from './providers/window';
@@ -27,11 +26,10 @@ import { get as getStyleHandler, set as setStyleHandler } from './providers/styl
  * @borrows module:log.warning as logWarning
  * @borrows module:route.route as route
  * @borrows module:route.match as matchRoute
+ * @borrows module:store.store as store
  * @borrows module:util.clipboard as clipboard
  * @borrows module:util.formatString as formatString
  * @borrows module:util.highlightSyntax as highlightSyntax
- * @borrows module:util.isDefined as isDefined
- * @borrows module:util.isError as isError
  * @borrows module:util.isMobileDevice as isMobileDevice
  * @borrows module:util.noop as noop
  * @borrows module:util.uid as uid
@@ -62,7 +60,7 @@ window().addEventListener('unhandledrejection', function(ev) {
  * var name = Backbrace.settings().app.name;
  */
 export function settings(newsettings) {
-    if (isDefined(newsettings)) {
+    if (typeof newsettings !== 'undefined') {
         let merged = deepmerge(appSettings, newsettings);
         Object.assign(appSettings, merged);
     }
@@ -86,7 +84,7 @@ export function publicPath(path) {
  * @returns {Window} Returns the window instance.
  */
 export function window(val) {
-    if (isDefined(val))
+    if (typeof val !== 'undefined')
         windowprovider.set(val);
     return windowprovider.get();
 }
@@ -97,7 +95,7 @@ export function window(val) {
  * @returns {import('./providers/style').StyleHandler} Returns the style handler.
  */
 export function style(val) {
-    if (isDefined(val))
+    if (typeof val !== 'undefined')
         setStyleHandler(val);
     return getStyleHandler();
 }
@@ -128,8 +126,6 @@ export {
 export {
     clipboard,
     formatString,
-    isDefined,
-    isError,
     isMobileDevice,
     noop,
     uid

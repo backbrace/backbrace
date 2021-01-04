@@ -9,7 +9,6 @@ import { get as getWindow } from './providers/window';
 
 /** @ignore */
 let id = (new Date()).getTime();
-const toString = Object.prototype.toString;
 
 /**
  * A function that performs no operations.
@@ -61,39 +60,6 @@ export function isMobileDevice() {
   const window = getWindow();
   return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i
     .test(window.navigator.userAgent.toLowerCase());
-}
-
-/**
- * Determines if a reference is an `Error`.
- * @param {*} val Reference to check.
- * @returns {boolean} `True` if val is an `Error`.
- */
-export function isError(val) {
-  const type = toString.call(val);
-  switch (type) {
-    case '[object Error]': return true;
-    case '[object Exception]': return true;
-    case '[object DOMException]': return true;
-    default: return type instanceof Error;
-  }
-}
-
-/**
- * Determines if a reference is defined.
- * @param {*} val Reference to check.
- * @returns {boolean} `True` if val is defined.
- */
-export function isDefined(val) {
-  return typeof val !== 'undefined';
-}
-
-/**
- * Determines if a reference is a date.
- * @param {*} val Reference to check.
- * @returns {boolean} Returns `true` if val is a date.
- */
-export function isDate(val) {
-  return toString.call(val) === '[object Date]';
 }
 
 /**

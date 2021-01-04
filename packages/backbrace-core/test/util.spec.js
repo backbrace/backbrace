@@ -49,25 +49,6 @@ describe('util', function() {
         });
     });
 
-    describe('isError', function() {
-        it('should not assume objects are errors', function() {
-            let fakeError = { message: 'A fake error', stack: 'no stack here' };
-            expect(util.isError(fakeError)).toBe(false);
-        });
-
-        it('should detect simple error instances', function() {
-            expect(util.isError(new Error())).toBe(true);
-        });
-    });
-
-    describe('isDefined', function() {
-        it('should detect undefined variables', function() {
-            let obj = { id: 1 };
-            expect(util.isDefined(obj.id)).toBe(true);
-            expect(util.isDefined(obj.name)).toBe(false);
-        });
-    });
-
     describe('format string', function() {
         it('should merge arguments', function() {
             expect(util.formatString('abc{0}', '123')).toBe('abc123');
