@@ -6,6 +6,7 @@ import { page } from '../design';
 import { settings } from '../settings';
 
 import { get as style } from '../providers/style';
+import { get as getWindow } from '../providers/window';
 
 /**
  * @class Page
@@ -210,12 +211,13 @@ export class Page extends Component {
      */
     setCaption(caption) {
 
+        const window = getWindow();
+
         this.caption = caption;
 
-        this.fire('captionchange', {
-            caption: caption,
-            icon: this.design.icon
-        });
+        if (!settings.windowMode) {
+            window.document.title = `${settings.app.title}${caption ? ' - ' + caption : ''}`;
+        }
     }
 
     /**

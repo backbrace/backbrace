@@ -130,13 +130,6 @@ export class App extends Component {
         this.pages.set(pge.uid, pge);
         this.activePage = pge.uid;
 
-        // Caption change event.
-        pge.on('captionchange', (e) => {
-            if (!this.windowmode) {
-                window.document.title = `${settings.app.title}${e.detail.caption ? ' - ' + e.detail.caption : ''}`;
-            }
-        });
-
         // Load the page component.
         await pge.load();
 

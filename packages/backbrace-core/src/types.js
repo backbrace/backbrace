@@ -2,13 +2,6 @@
 import { AppError } from './errors/app';
 
 /**
- * Custom event listener.
- * @callback customEventListener
- * @param {CustomEvent} evt Custom event.
- * @returns {void}
- */
-
-/**
  * @callback errorInstance
  * @param {string} code Error code.
  * @param {string} message Error message.

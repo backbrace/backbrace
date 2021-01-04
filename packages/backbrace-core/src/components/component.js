@@ -216,30 +216,6 @@ export class Component extends HTMLElement {
     }
 
     /**
-     * Fire an event.
-     * @param {string} name Event name.
-     * @param {Object} detail Event detail data.
-     * @returns {void}
-     */
-    fire(name, detail) {
-        // Dispatch a caption change event.
-        let ev = new CustomEvent(name, {
-            detail: detail
-        });
-        this.dispatchEvent(ev);
-    }
-
-    /**
-     * Subscribe to an event.
-     * @param {string} name Event name.
-     * @param {import('../types').customEventListener} handler Event handler function.
-     * @returns {void}
-     */
-    on(name, handler) {
-        this.addEventListener(name, handler);
-    }
-
-    /**
      * Attribute changed event (internal use only).
      * @ignore
      * @param {string} name Attribute name.
