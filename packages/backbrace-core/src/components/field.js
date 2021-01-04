@@ -16,7 +16,8 @@ export class Field extends Component {
     static attributes() {
         return new Map([
             ['cols', 'string'],
-            ['helperText', 'string']
+            ['helpertext', 'string'],
+            ['caption', 'string']
         ]);
     }
 
@@ -53,7 +54,14 @@ export class Field extends Component {
          * Helper text.
          * @type {string}
          */
-        this.helperText = '';
+        this.helpertext = '';
+
+        /**
+         * @description
+         * Field caption.
+         * @type {string}
+         */
+        this.caption = '';
 
     }
 

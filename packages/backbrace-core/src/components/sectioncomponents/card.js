@@ -34,6 +34,7 @@ export class Card extends Container {
 
             // Setup the component.
             field.design = fieldDesign;
+            field.caption = fieldDesign.caption;
             if (this.state.data.length > 0)
                 field.state.data = [this.state.data[0]];
 
