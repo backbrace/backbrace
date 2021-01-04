@@ -87,6 +87,16 @@ export default class Api extends Section {
             // Default values.
             val.params = val.params || [];
             val.returns = val.returns || { type: 'void', desc: '' };
+            val.paramRows = '';
+
+            val.params.forEach((p) => {
+                if (p.name === 'args')
+                    p.name = '...' + p.name;
+                val.paramRows += '<tr><td style="width:20%;font-weight:700;padding:16px 16px 0 0"><code>' + p.name + '</code></td>' +
+                    '<td><code>' + convertLink(p.type, links) + '</code></td>' +
+                    '<td style="padding-left: 20px;font-size:12px;">' +
+                    (p.desc ? '<p>' + (p.optional ? 'Optional. ' : '') + p.desc.substr(3) : '') + '</td></tr>';
+            });
 
             // Copy values.
             let member = {
@@ -94,6 +104,7 @@ export default class Api extends Section {
                 kind: val.kind,
                 signature: null,
                 desc: val.desc,
+                paramRows: val.paramRows,
                 returns: val.returns,
                 returnsType: convertLink(val.returns.type, links),
                 returnsDesc: val.returns.desc,
@@ -113,10 +124,10 @@ export default class Api extends Section {
             // Add the template.
             if (val.kind === 'property' || val.kind === 'member') {
                 member.signature = prepend + val.name + ' : ' + convertLink(val.type, links);
-                properties.push(this.html`<docs-apimember member=${JSON.stringify(member)}></docs-apimember>`);
+                properties.push(this.html`<docs-apimember .member=${member}></docs-apimember>`);
             } else if (val.kind === 'function' || val.kind === 'callback') {
                 member.signature = prepend + val.name + '(' + convertParams(val.params, links) + ') : ' + convertLink(val.returns.type, links);
-                methods.push(this.html`<docs-apimember member=${JSON.stringify(member)}></docs-apimember>`);
+                methods.push(this.html`<docs-apimember .member=${member}></docs-apimember>`);
             }
 
         });

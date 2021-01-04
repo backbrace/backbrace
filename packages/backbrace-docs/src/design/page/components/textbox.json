@@ -29,7 +29,7 @@
                 {
                     "name": "Helper Text",
                     "attributes": {
-                        "helperText": "Helper message"
+                        "helpertext": "Helper message"
                     }
                 }
             ]

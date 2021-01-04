@@ -74,7 +74,7 @@ export default class ApiMember extends Component {
                     <tr>
                         <td class="desc">
                             <h5>Parameters</h5>
-                            <table style="width:100%">{{paramRows}}</table>
+                            <table style="width:100%">${this.unsafeHTML(val.paramRows)}</table>
                         </td>
                     </tr>` : ''}
                     ${val.kind === 'function' || val.kind === 'callback' ? this.html`

@@ -5,6 +5,18 @@
             "caption": "Textbox",
             "type": "field",
             "initals": "f"
+        },
+        {
+            "name": "template",
+            "caption": "Template",
+            "type": "section",
+            "initals": "s"
+        },
+        {
+            "name": "card",
+            "caption": "Card",
+            "type": "section",
+            "initals": "s"
         }
     ]
 }
