@@ -99,7 +99,7 @@ export function isDate(val) {
 /**
  * Format a string. Merge fields are specified by the argument number wrapped in {}.
  * @param {string} str String to format.
- * @param {...*} args Arguments to merge into the string.
+ * @param {...unknown} args Arguments to merge into the string.
  * @returns {string} Formatted string.
  * @example
  * var str = Backbrace.formatString('This is a {0} {1}.','test','message');
@@ -108,7 +108,7 @@ export function isDate(val) {
 export function formatString(str, ...args) {
   return str.replace(/{(\d+)}/g, function(match, number) {
     return typeof args[+number] !== 'undefined'
-      ? args[+number] : '';
+      ? args[+number].toString() : '';
   });
 }
 
@@ -143,7 +143,7 @@ export function clipboard(trigger, text, success) {
 /**
  * Make a function chainable.
  * @param {Function} fn Function to chain.
- * @returns {any}
+ * @returns {Function}
  */
 export function makeChainable(fn) {
   let p = Promise.resolve(true);
@@ -156,7 +156,7 @@ export function makeChainable(fn) {
 /**
  * Make a function chainable.
  * @param {Function} generator Function to make single.
- * @returns {any}
+ * @returns {Function}
  */
 export function makeSingle(generator) {
   let globalNonce;

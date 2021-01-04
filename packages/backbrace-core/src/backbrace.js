@@ -104,12 +104,11 @@ export function style(val) {
 
 /**
  * Access the DOM.
- * @param {*} selector DOM selector.
- * @param {*} [context] Selector context.
+ * @param {import('cash-dom').Selector} selector DOM selector.
  * @returns {import('cash-dom').Cash}
  */
-export function dom(selector, context) {
-    return $(selector, context);
+export function dom(selector) {
+    return $(selector);
 }
 
 /**

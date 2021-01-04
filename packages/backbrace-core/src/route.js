@@ -25,7 +25,7 @@ let routes = [];
 /**
  * Load a page.
  * @ignore
- * @param {*} r Route.
+ * @param {import('./types').routeConfig} r Route.
  * @returns {Generator} Returns after loading the page.
  */
 function* loadPage(r) {
@@ -66,7 +66,7 @@ export async function init() {
 /**
  * Match a route.
  * @param {string} path Path to match.
- * @returns {*} Returns the matched route.
+ * @returns {import('./types').routeConfig} Returns the matched route.
  */
 export function match(path) {
 

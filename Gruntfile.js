@@ -126,7 +126,7 @@ module.exports = function(grunt) {
             "* License: " + versionInfo.currentPackage.license + "\n" +
             "* Definitions by: @backbrace/dts-generator\n" +
             "*/\n\n" +
-            "import { Cash } from './cash';\n" +
+            "import { Cash, Selector } from './cash';\n" +
             "\n",
           input: paths.devkit + '/typings/types.d.ts',
           output: paths.devkit + '/typings/types.d.ts'

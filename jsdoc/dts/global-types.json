@@ -70,7 +70,8 @@
         "WebAssembly.LinkError",
         "WebAssembly.RuntimeError",
         "Class",
-        "CustomElementConstructor"
+        "CustomElementConstructor",
+        "unknown"
     ],
     "webApi": [
         "ANGLE_instanced_arrays",
@@ -1633,9 +1634,13 @@
         "Window.XSLTProcessor"
     ],
     "backbrace": [
+        "AsyncIterable",
+        "AsyncGenerator",
         "Cash",
         "CashStatic",
+        "Selector",
         "TemplateStringsArray",
-        "TemplateResult"
+        "TemplateResult",
+        "T"
     ]
 }

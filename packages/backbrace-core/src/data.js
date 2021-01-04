@@ -32,7 +32,7 @@ export function setBearer(token) {
  * Get data from a data source.
  * @param {string} url Data url.
  * @param {string} url Data query.
- * @returns {Promise<*>}
+ * @returns {Promise<any>}
  */
 export async function fetch(url, query) {
 

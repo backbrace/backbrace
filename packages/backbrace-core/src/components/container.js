@@ -36,9 +36,10 @@ export class Container extends Section {
 
     /**
      * Render the container content.
-     * @returns {*} Returns the HTML template.
+     * @returns {unknown} Returns the HTML template.
      */
     renderContent() {
+        return '';
     }
 
     /**

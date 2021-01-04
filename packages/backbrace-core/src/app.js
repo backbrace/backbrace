@@ -139,6 +139,10 @@ async function loadStyle() {
             /* webpackChunkName: "style-[request]" */
             './styles/loaders/' + settings.style.loader);
 
+        /**
+         * @ignore
+         * @type {import('./providers/style').StyleHandler}
+         */
         const style = new StyleHandler();
         setStyle(style);
         style.load();
