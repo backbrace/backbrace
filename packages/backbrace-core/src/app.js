@@ -145,10 +145,6 @@ async function loadStyle() {
     }
 
     loadColors();
-
-    if (settings.style.css)
-        $(`<link id="appcss" rel="stylesheet" href="${settings.style.css}" >`)
-            .appendTo($('head'));
 }
 
 /**
@@ -158,34 +154,9 @@ async function loadStyle() {
  */
 export async function start() {
 
-    if (!appInit) {
-
         const window = getWindow();
 
-        $('<meta>').attr({
-            'name': 'Description',
-            'content': settings.app.description
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'http-equiv': 'X-UA-Compatible',
-            'content': 'IE=Edge'
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'name': 'viewport',
-            'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui'
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'name': 'apple-mobile-web-app-capable',
-            'content': 'yes'
-        }).appendTo(window.document.head);
-
-        $('<meta>').attr({
-            'name': 'mobile-web-app-capable',
-            'content': 'yes'
-        }).appendTo(window.document.head);
+    if (!appInit) {
 
         // Load the settings.
         let s = await window.fetch('./design/settings.json');
@@ -193,6 +164,16 @@ export async function start() {
             let merged = deepmerge(settings, await s.json());
             Object.assign(settings, merged);
         }
+
+        // Add meta tags.
+        settings.head.meta.forEach(m => {
+            /**
+             * @ignore
+             * @type {Record<string,string>}
+             */
+            const attr = m;
+            $('<meta>').attr(attr).appendTo(window.document.head);
+        });
 
         // Load the routes.
         if (settings.routes && !settings.windowMode)
@@ -224,6 +205,24 @@ export async function start() {
         './components/app');
 
     await loadStyle();
+
+    // Add link tags.
+    settings.head.link.forEach(l => {
+        /**
+         * @ignore
+         * @type {Record<string,string>}
+         */
+        const attr = l;
+        $('<link>').attr(attr).appendTo(window.document.head);
+    });
+
+    // Add script tags.
+    settings.head.script.forEach(s => {
+        let script = window.document.createElement('script');
+        script.src = s.src;
+        script.async = s.async === 'true';
+        window.document.body.append(script);
+    });
 
     // Load the app component.
     app = new AppComponent();

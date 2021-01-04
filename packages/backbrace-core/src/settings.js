@@ -27,7 +27,6 @@ export let settings = {
     },
     style: {
         loader: 'materialdesign',
-        css: '',
         images: {
             logo: '',
             menuLogo: ''
@@ -45,5 +44,15 @@ export let settings = {
             texthover: '#333'
         }
     },
-    routes: []
+    routes: [],
+    head: {
+        meta: [
+            { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=Edge' },
+            { 'name': 'viewport', 'content': 'width=device-width, initial-scale=1, maximum-scale=2, minimal-ui' },
+            { 'name': 'apple-mobile-web-app-capable', 'content': 'yes' },
+            { 'name': 'mobile-web-app-capable', 'content': 'yes' }
+        ],
+        link: [],
+        script: []
+    }
 };

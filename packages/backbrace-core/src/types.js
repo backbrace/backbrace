@@ -83,9 +83,16 @@ import { RouteError } from './errors/route';
  * App style configuration.
  * @typedef styleConfig
  * @property {string} [loader] Style loader. Defaults to `materialdesign`.
- * @property {string} [css] CSS URL to load.
  * @property {imagesConfig} [images] Images style.
  * @property {colorsConfig} [colors] Colors style.
+ */
+
+/**
+ * App head configuration.
+ * @typedef headConfig
+ * @property {Object[]} [meta] Each item in the array maps to a newly-created `meta` element, where object properties map to attributes.
+ * @property {Object[]} [link] Each item in the array maps to a newly-created `link` element, where object properties map to attributes.
+ * @property {Object[]} [script] Each item in the array maps to a newly-created `script` element, where object properties map to attributes.
  */
 
 /**
@@ -97,6 +104,7 @@ import { RouteError } from './errors/route';
  * @property {dirConfig} [dir] Directory config.
  * @property {styleConfig} [style] Style config.
  * @property {routeConfig[]} [routes] App routes.
+ * @property {headConfig} [head] Head config.
  */
 
 /**

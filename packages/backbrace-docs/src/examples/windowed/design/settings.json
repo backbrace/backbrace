@@ -16,5 +16,25 @@
             "bgbody": "#FFF",
             "textbody": "rgba(0, 0, 0, 0.87)"
         }
+    },
+    "head": {
+        "meta": [
+            {
+                "name": "theme-color",
+                "content": "#2c3e50"
+            }
+        ],
+        "link": [
+            {
+                "rel": "icon",
+                "href": "./images/45x45-icon.png",
+                "type": "image/x-icon"
+            },
+            {
+                "rel": "shortcut icon",
+                "href": "./images/45x45-icon.png",
+                "type": "image/x-icon"
+            }
+        ]
     }
 }
