@@ -2,6 +2,7 @@ import 'reset-css/reset.css';
 import '../styles/base.scss';
 
 import $ from 'cash-dom';
+import { configure } from 'mobx';
 
 import './apptoolbar';
 import './error';
@@ -82,6 +83,8 @@ export class App extends Component {
          * @type {number}
          */
         this.activePage = 0;
+
+        configure({ enforceActions: 'never' });
     }
 
     /**
