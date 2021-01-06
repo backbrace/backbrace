@@ -85,7 +85,16 @@ export class Card extends Container {
 
     /** @override */
     renderContent() {
-        return this.html`${Array.from(this.fields.values())}`;
+
+        // Set the loading state.
+        for (let f of this.fields.values()) f.state.isLoading = this.state.isLoading;
+
+        return this.html`
+            <div class="row no-margin"></div>
+            <div class="row">
+                ${Array.from(this.fields.values())}
+            </div>
+        `;
     }
 
 }

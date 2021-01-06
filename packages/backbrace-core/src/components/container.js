@@ -28,10 +28,10 @@ export class Container extends Section {
 
         /**
          * @description
-         * Column layout. Defaults to `col-sm-12`.
+         * Attribute. Column layout. Defaults to `col-12`.
          * @type {string}
          */
-        this.cols = 'col-sm-12';
+        this.cols = 'col-12';
     }
 
     /**
@@ -46,19 +46,14 @@ export class Container extends Section {
      * @override
      */
     render() {
-
-        // Apply class.
         if (this.cols)
             this.cols.split(' ').forEach((c) => this.classList.add(c));
-
         return this.html`
-            <div class="bb-container">
+            <div class="bb-container bg-surface">
                 <div class="bb-title-bar unselectable"></div>
                 <h6 class="bb-title unselectable cuttext">${this.design.caption}</h6>
-                <div class="row no-margin"></div>
-                <div class="row">
-                    ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : this.renderContent()}
-                </div>
+                ${this.renderContent()}
+                ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : ''}
             </div>
         `;
     }
