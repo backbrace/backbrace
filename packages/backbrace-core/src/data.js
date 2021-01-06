@@ -32,9 +32,10 @@ export function setBearer(token) {
  * Get data from a data source.
  * @param {string} url Data url.
  * @param {string} url Data query.
+ * @param {Object} [variables] Optional variables to pass to the query.
  * @returns {Promise<any>}
  */
-export async function fetch(url, query) {
+export async function fetch(url, query, variables) {
 
     const window = getWindow();
 
@@ -51,6 +52,8 @@ export async function fetch(url, query) {
         let body = {};
         if (query)
             body.query = query;
+        if (variables)
+            body.variables = variables;
 
         let headers = {
             'Content-Type': 'application/json',
