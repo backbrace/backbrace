@@ -1,6 +1,7 @@
 {
     "$schema": "../../../backbrace-devkit/schema/settings.json",
     "windowMode": false,
+    "serviceWorker": "/service-worker.js",
     "app": {
         "title": "Backbrace",
         "footer": {

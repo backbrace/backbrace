@@ -13,7 +13,7 @@ import { globals } from './globals';
 export let settings = {
 
     debug: globals.DEVMODE,
-    serviceWorker: '/service-worker.js',
+    serviceWorker: '',
     windowMode: false,
     app: {
         name: 'Backbrace App',
