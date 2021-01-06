@@ -142,6 +142,14 @@ export function processLinks(comp) {
         var a = $(val);
         if (a.attr('bb-route-processed') === 'true')
             return;
-        a.css('cursor', 'pointer').on('click', () => onclick(a.attr('bb-route'))).attr('bb-route-processed', 'true');
+        if (a.attr('bb-route') === '') {
+            a.attr('bb-route-processed', 'true');
+            return;
+        }
+        a.css('cursor', 'pointer').on('click', e => {
+            onclick(a.attr('bb-route'));
+            e.cancelBubble = true;
+            return false;
+        }).attr('bb-route-processed', 'true');
     });
 }
