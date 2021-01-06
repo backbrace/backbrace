@@ -32,10 +32,6 @@ export default class MaterialDesignStyle extends StyleHandler {
                 background: `${colors.bgbody}`,
                 color: `${colors.textbody}`
             },
-            '.bb-button:hover': {
-                background: `${colors.bghover}`,
-                color: `${colors.texthover}`
-            },
             'bb-apptoolbar .bb-button.active': {
                 'border-bottom': `2px solid ${colors.bgprimary}`,
                 background: `${colors.bghover}`,
