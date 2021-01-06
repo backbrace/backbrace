@@ -7,14 +7,14 @@
             "initals": "f"
         },
         {
-            "name": "template",
-            "caption": "Template",
+            "name": "datatable",
+            "caption": "Data Table",
             "type": "section",
             "initals": "s"
         },
         {
-            "name": "card",
-            "caption": "Card",
+            "name": "login",
+            "caption": "Login",
             "type": "section",
             "initals": "s"
         }
