@@ -30,7 +30,7 @@ export class Textbox extends Field {
 
         return this.html`
             <div class=${this.classMap({ 'bb-field': true, 'bb-field-error': this.state.hasError })}>
-                <input type="text" value=${this.value} @focus=${setFocus} @blur=${setBlur} @change=${onChange} />
+                <input type="text" value=${this.value} @focus=${setFocus} @blur=${setBlur} @change=${onChange} ?readonly=${this.state.isLoading} />
                 <label class=${this.classMap({ 'bb-field-filled': this.value || this.state.hasFocus, 'bb-field-focus': this.state.hasFocus })}>
                     ${this.caption}
                 </label>
