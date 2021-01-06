@@ -164,7 +164,8 @@ export async function start() {
 
         // Load the settings.
         let s = await window.fetch('./design/settings.json');
-        if (s.ok) {
+        const contentType = s.headers.get('content-type');
+        if (s.ok && contentType && contentType.indexOf('application/json') !== -1) {
             let merged = deepmerge(settings, await s.json());
             Object.assign(settings, merged);
         }
