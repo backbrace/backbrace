@@ -1,4 +1,3 @@
-import $ from 'cash-dom';
 import { error as logError } from '../log';
 import { get as getWindow } from './window';
 import { ComponentError } from '../errors/component';
@@ -30,10 +29,23 @@ export class ErrorHandler {
                 err.component.update();
             }
         } else if (window.document.body) {
-            window.document.body.innerHTML = `<bb-error></bb-error>`;
-            let e = $(window.document.body).find('bb-error')[0];
-            e.err = err;
-            e.update();
+            window.document.body.innerHTML = `
+            <style>
+                div{
+                    padding: 30px;
+                    overflow-wrap: break-word;
+                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,Segoe UI Emoji, Segoe UI Symbol;
+                }
+                h1{
+                    font-size: 120%;
+                    font-weight:bold;
+                    margin:8px 0 8px 0;
+                }
+            </style>
+            <div>
+                <h1>Oops, we had an issue.</h1>
+                ${err.message || err}
+            </div>`;
         }
     }
 
