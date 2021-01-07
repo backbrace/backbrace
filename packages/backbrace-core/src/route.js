@@ -5,6 +5,8 @@ import { error } from './error';
 import { makeSingle } from './util';
 
 import { get as getWindow } from './providers/window';
+import { isAuthorized } from './data';
+import { settings } from './settings';
 
 const routeError = error('route');
 
@@ -62,11 +64,24 @@ export async function init() {
 }
 
 /**
+ * Navigate to a path name.
+ * @async
+ * @param {string} path Path name to navigate to.
+ * @returns {Promise<void>}
+ */
+export async function navigate(path) {
+    let route = match(path);
+    if (route)
+        await app.loadPage(route.page, route.params);
+}
+
+/**
  * Match a route.
  * @param {string} path Path to match.
+ * @param {Object} [pathparams] Default path params.
  * @returns {import('./types').routeConfig} Returns the matched route.
  */
-export function match(path) {
+export function match(path, pathparams) {
 
     if (!path)
         return;
@@ -79,36 +94,38 @@ export function match(path) {
 
     routes.forEach((route) => {
         if (route.path && !ret) {
-            if (route.path === '**') {
-                ret = {
-                    page: route.page,
-                    params: null
-                };
-            } else {
-                let p2 = route.path.split('/'),
-                    res = true,
-                    params = Object.assign({}, route.params, {}),
-                    page = route.page;
-                if (parr.length !== p2.length)
-                    return;
-                parr.forEach(function(p1, index) {
-                    if (index > p2.length - 1) {
-                        res = false;
-                    } else if (p1 !== p2[index] &&
-                        p2[index] !== '*' &&
-                        p2[index].indexOf(':') === -1) {
-                        res = false;
-                    }
-                    if (res && p2[index].indexOf(':') === 0) {
-                        params[p2[index].substr(1)] = p1;
-                        page = page.replace(p2[index], p1);
-                    }
-                });
-                if (res)
+
+            let p2 = route.path.split('/'),
+                res = true,
+                params = Object.assign({}, route.params || pathparams, {}),
+                page = route.page;
+            if (parr.length !== p2.length)
+                return;
+            parr.forEach(function(p1, index) {
+                if (index > p2.length - 1) {
+                    res = false;
+                } else if (p1 !== p2[index] &&
+                    p2[index] !== '*' &&
+                    p2[index].indexOf(':') === -1) {
+                    res = false;
+                }
+                if (res && p2[index].indexOf(':') === 0) {
+                    params[p2[index].substr(1)] = p1;
+                    page = page.replace(p2[index], p1);
+                }
+            });
+            if (res) {
+                if (route.private && !isAuthorized()) {
+                    if (settings.loginPath)
+                        ret = match(settings.loginPath, {
+                            callbackPath: path
+                        });
+                } else {
                     ret = {
                         page: page,
                         params: params
                     };
+                }
             }
         }
     });

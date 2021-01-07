@@ -13,6 +13,7 @@ import { globals } from './globals';
 export let settings = {
 
     debug: globals.DEVMODE,
+    loginPath: '',
     serviceWorker: '',
     windowMode: false,
     app: {

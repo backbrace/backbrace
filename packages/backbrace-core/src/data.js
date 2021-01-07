@@ -27,6 +27,14 @@ export function setBearer(token) {
 }
 
 /**
+ * Returns `true` if the user is authorized.
+ * @returns {boolean}
+ */
+export function isAuthorized() {
+    return bearer !== null;
+}
+
+/**
  * @async
  * @description
  * Get data from a data source.

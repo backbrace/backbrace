@@ -87,6 +87,7 @@ import { AppError } from './errors/app';
  * Application settings.
  * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
+ * @property {string} [loginPath] Set the path to the login page.
  * @property {string} [serviceWorker] Service worker file name.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `false`.
  * @property {appConfig} [app] App config.
@@ -108,6 +109,7 @@ import { AppError } from './errors/app';
  * @property {string} path Path to match.
  * @property {string} page Page to load.
  * @property {Object} [params] Page parameters.
+ * @property {boolean} [private] Set to `true` if the route requires the user to be authenticated.
  */
 
 /**
