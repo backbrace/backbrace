@@ -1,5 +1,5 @@
+import { DateTime } from 'luxon';
 import { settings } from './settings';
-
 import { get as getWindow } from './providers/window';
 
 /**
@@ -81,4 +81,28 @@ export async function fetch(url, query, variables) {
     }
 
     return null;
+}
+
+/**
+ * Check if a string is in ISO Date format.
+ * @param {string} str String to check.
+ * @returns {boolean}
+ */
+function isIsoDate(str) {
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test(str)) return false;
+    let d = new Date(str);
+    return d.toISOString() === str;
+}
+
+/**
+ * Format a data value to a string.
+ * @param {unknown} val Value to format.
+ * @returns {string}
+ */
+export function format(val) {
+    if (val instanceof Date)
+        return DateTime.fromJSDate(val).toLocaleString(DateTime.DATE_SHORT);
+    if (typeof val === 'string' && isIsoDate(val))
+        return DateTime.fromISO(val).toLocaleString(DateTime.DATE_SHORT);
+    return val.toString();
 }

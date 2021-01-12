@@ -1,4 +1,5 @@
 import { Container } from '../container';
+import { format } from '../../data';
 
 /**
  * @class DataTable
@@ -55,6 +56,8 @@ export class DataTable extends Container {
         return route;
     }
 
+
+
     /** @override */
     renderContent() {
         return this.html`
@@ -68,7 +71,7 @@ export class DataTable extends Container {
                     <tbody>
                         ${this.state.data.map(d => this.html`
                             <tr class="table-row" bb-route=${this.mergeRoute(d)}>
-                                ${this.design.fields.map(f => this.html`<td class="data-cell">${this.unsafeHTML(d[f.bind || f.name])}</td>`)}
+                                ${this.design.fields.map(f => this.html`<td class="data-cell">${this.unsafeHTML(format(d[f.bind || f.name]))}</td>`)}
                             </tr>
                         `)}
                     </tbody>
