@@ -47,6 +47,10 @@ export default class MaterialDesignStyle extends StyleHandler {
             '.sweet-alert button:hover': {
                 'background-color': `${colors.bgsecondary} !important`,
                 color: `${colors.textsecondary} !important`
+            },
+            '.bb-button:hover': {
+                'background-color': `${colors.bgsecondary} !important`,
+                color: `${colors.textsecondary} !important`
             }
         });
         $(`<style id="appoverrides">${css}</style>`).appendTo('head');

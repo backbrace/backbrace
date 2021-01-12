@@ -41,6 +41,7 @@ import { AppError } from './errors/app';
  * @property {string} [email] Email address.
  * @property {string} [name] Full name of the user.
  * @property {string} [initials] User initials.
+ * @property {string} [image] User profile image.
  */
 
 /**
