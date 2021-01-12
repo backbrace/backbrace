@@ -84,10 +84,17 @@ import { AppError } from './errors/app';
  */
 
 /**
+ * App auth configuration.
+ * @typedef authConfig
+ * @property {string} [login] Set the path to the login page.
+ * @property {string} [logout] Set the path to the logout page.
+ * @property {string} [refreshTokenURL] URL to refresh the auth token.
+ */
+
+/**
  * Application settings.
  * @typedef settingsConfig
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
- * @property {string} [loginPath] Set the path to the login page.
  * @property {string} [serviceWorker] Service worker file name.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `false`.
  * @property {appConfig} [app] App config.
@@ -95,6 +102,7 @@ import { AppError } from './errors/app';
  * @property {styleConfig} [style] Style config.
  * @property {routeConfig[]} [routes] App routes.
  * @property {headConfig} [head] Head config.
+ * @property {authConfig} [auth] App auth config.
  */
 
 /**

@@ -13,7 +13,6 @@ import { globals } from './globals';
 export let settings = {
 
     debug: globals.DEVMODE,
-    loginPath: '',
     serviceWorker: '',
     windowMode: false,
     app: {
@@ -56,5 +55,10 @@ export let settings = {
         ],
         link: [],
         script: []
+    },
+    auth: {
+        login: '',
+        logout: '',
+        refreshTokenURL: ''
     }
 };

@@ -227,7 +227,8 @@ export class App extends Component {
         if (this.state.hasError)
             return this.html`<bb-error .err=${this.state.error}></bb-error>`;
         return this.html`
-            <bb-header logo="${settings.style.images.logo}" logotext="${settings.app.name}"></bb-header>
+            <bb-header logo="${settings.style.images.logo}" logotext="${settings.app.name}"
+                style=${this.styleMap({ display: settings.auth.login ? 'none' : '' })}></bb-header>
             <bb-apptoolbar style="${this.windowmode ? '' : 'display:none'}"></bb-apptoolbar>
             <div class="bb-main container"></div>
         `;

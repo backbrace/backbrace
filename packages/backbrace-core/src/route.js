@@ -5,7 +5,7 @@ import { error } from './error';
 import { makeSingle } from './util';
 
 import { get as getWindow } from './providers/window';
-import { isAuthorized } from './data';
+import { auth } from './data';
 import { settings } from './settings';
 
 const routeError = error('route');
@@ -115,9 +115,9 @@ export function match(path, pathparams) {
                 }
             });
             if (res) {
-                if (route.private && !isAuthorized()) {
-                    if (settings.loginPath)
-                        ret = match(settings.loginPath, {
+                if (route.private && !auth.token) {
+                    if (settings.auth.login)
+                        ret = match(settings.auth.login, {
                             callbackPath: path
                         });
                 } else {
