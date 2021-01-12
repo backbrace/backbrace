@@ -1,0 +1,53 @@
+{
+    "$schema": "../../../../../backbrace-devkit/schema/settings.json",
+    "app": {
+        "title": "Authentication Example"
+    },
+    "dir": {
+        "design": "./design/"
+    },
+    "style": {
+        "images": {
+            "logo": "/images/logo-landscape.png"
+        },
+        "colors": {
+            "bgprimary": "#2d3436",
+            "bgbody": "#FFF",
+            "textbody": "rgba(0, 0, 0, 0.87)"
+        }
+    },
+    "head": {
+        "meta": [
+            {
+                "name": "theme-color",
+                "content": "#2c3e50"
+            }
+        ],
+        "link": [
+            {
+                "rel": "icon",
+                "href": "/images/45x45-icon.png",
+                "type": "image/x-icon"
+            },
+            {
+                "rel": "shortcut icon",
+                "href": "/images/45x45-icon.png",
+                "type": "image/x-icon"
+            }
+        ]
+    },
+    "auth": {
+        "login": "examples/auth/login"
+    },
+    "routes": [
+        {
+            "path": "examples/auth/",
+            "page": "page/home.json",
+            "private": true
+        },
+        {
+            "path": "examples/auth/login",
+            "page": "page/login.json"
+        }
+    ]
+}
