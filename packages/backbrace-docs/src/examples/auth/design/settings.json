@@ -38,17 +38,22 @@
         ]
     },
     "auth": {
-        "login": "examples/auth/login"
+        "login": "login",
+        "logout": "logout"
     },
     "routes": [
         {
-            "path": "examples/auth/",
+            "path": "/",
             "page": "page/home.json",
             "private": true
         },
         {
-            "path": "examples/auth/login",
+            "path": "login",
             "page": "page/login.json"
+        },
+        {
+            "path": "logout",
+            "page": "page/logout.json"
         }
     ]
 }

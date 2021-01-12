@@ -1,0 +1,14 @@
+{
+    "$schema": "../../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "logout",
+    "caption": "Logged Out",
+    "sections": [
+        {
+            "name": "title",
+            "component": "template",
+            "attributes": {
+                "template": "<div class=\"alert is-important\">You are now logged out. Please click <a href=\"./\">here</a> to return to the login screen.</div>"
+            }
+        }
+    ]
+}

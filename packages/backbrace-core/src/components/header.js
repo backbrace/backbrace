@@ -6,6 +6,8 @@ import { Component } from './component';
 import { get as getStyle } from '../providers/style';
 import { get as getWindow } from '../providers/window';
 import { makeObservable, observable } from 'mobx';
+import { settings } from '../settings';
+import { auth } from '../data';
 
 /**
  * @class Header
@@ -151,6 +153,16 @@ export class Header extends Component {
     }
 
     /**
+     * Logout of the app.
+     * @returns {void}
+     */
+    logout() {
+        this.hide();
+        auth.token = '';
+        auth.userID = '';
+    }
+
+    /**
      * @override
      */
     render() {
@@ -170,8 +182,11 @@ export class Header extends Component {
                     </div>
                     <h6>${this.userInfo?.name}</h6>
                     <span>${this.userInfo?.email}</span>
-                    <button class="bb-button bg-primary text-primary">Manage your Account</button>
+                    <button class="bb-button">Manage your Account</button>
                 </div>
+                ${settings.auth.logout ? this.html`<div class="bb-logout-section">
+                    <button class="bb-button" @click=${this.logout} bb-route="${settings.auth.logout}">Sign Out</button>
+                </div>` : ''}
             </div>
             <header>
                 <nav class="bg-primary text-primary fixed">
