@@ -7,7 +7,9 @@ import {
 publicPath('../../../node_modules/@backbrace/core/dist/');
 
 ready(async (app) => {
-    app.loadPage('page/home.json');
+    await app.loadPage('page/home.json');
+    await app.loadPage('page/page1.json');
+    await app.loadPage('page/page2.json');
 });
 
 // Start the app!
