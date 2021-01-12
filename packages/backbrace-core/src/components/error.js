@@ -93,8 +93,11 @@ export class ErrorMessage extends ShadowComponent {
         if (stack.length > 2 && stack[0].functionName === 'generateError')
             stack.splice(0, 2);
 
-        // Remove mobx frames.
-        stack = stack.filter(s => s.fileName.indexOf('node_modules/mobx') === -1);
+        // Filter our frames.
+        stack = stack.filter(s => {
+            return s.fileName.indexOf('node_modules/mobx') === -1 &&
+                s.fileName.indexOf('@backbrace/core/') === -1;
+        });
 
         let html = stack.map((s) => {
             return this.html`<div style="margin: 30px 0 0 0;padding:0px;">
@@ -131,6 +134,7 @@ export class ErrorMessage extends ShadowComponent {
                     padding: 10px;
                     background: #fcece8;
                     width: 100%;
+                    overflow-x: auto;
                 }
             </style>
             <div>
