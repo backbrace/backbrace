@@ -9,12 +9,37 @@ import { Field } from '../field';
 export class Textbox extends Field {
 
     /**
+     * Component attributes.
+     * @static
+     * @returns {Map<string,string>} Returns attributes.
+     */
+    static attributes() {
+        return new Map([
+            ['type', 'string'],
+            ['autocomplete', 'string']
+        ]);
+    }
+
+    /**
      * @constructs Textbox
      */
     constructor() {
 
         super();
 
+        /**
+         * @description
+         * Attribute. Type of textbox.
+         * @type {string}
+         */
+        this.type = 'text';
+
+        /**
+         * @description
+         * Attribute. Auto complete attribute.
+         * @type {string}
+         */
+        this.autocomplete = '';
     }
 
     /** @override */
@@ -30,7 +55,8 @@ export class Textbox extends Field {
 
         return this.html`
             <div class=${this.classMap({ 'bb-field': true, 'bb-field-error': this.state.hasError })}>
-                <input type="text" value=${this.value} @focus=${setFocus} @blur=${setBlur} @change=${onChange} ?readonly=${this.state.isLoading} />
+                <input name=${this.design.name} type=${this.type} value=${this.value}
+                    @focus=${setFocus} @blur=${setBlur} @change=${onChange} ?readonly=${this.state.isLoading} autocomplete=${this.autocomplete} />
                 <label class=${this.classMap({ 'bb-field-filled': this.value || this.state.hasFocus, 'bb-field-focus': this.state.hasFocus })}>
                     ${this.caption}
                 </label>
