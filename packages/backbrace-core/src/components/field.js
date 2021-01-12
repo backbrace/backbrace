@@ -1,4 +1,5 @@
 import { Component } from './component';
+import { observable, makeObservable } from 'mobx';
 
 /**
  * @class Field
@@ -62,6 +63,12 @@ export class Field extends Component {
          * @type {string}
          */
         this.caption = '';
+
+        makeObservable(this, {
+            value: observable,
+            caption: observable,
+            helpertext: observable
+        });
 
     }
 
