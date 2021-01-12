@@ -9,6 +9,17 @@ import { Component } from './component';
 export class Section extends Component {
 
     /**
+     * Component attributes.
+     * @static
+     * @returns {Map<string,string>} Returns attributes.
+     */
+    static attributes() {
+        return new Map([
+            ['cols', 'string']
+        ]);
+    }
+
+    /**
      * @constructs Section
      */
     constructor() {
@@ -28,6 +39,13 @@ export class Section extends Component {
          * @type {Object}
          */
         this.params = {};
+
+        /**
+         * @description
+         * Attribute. Column layout.
+         * @type {string}
+         */
+        this.cols = '';
     }
 
     /**
@@ -37,6 +55,12 @@ export class Section extends Component {
     setAttributes() {
         if (this.design)
             Object.entries(this.design.attributes).forEach(([name, value]) => this.setAttribute(name, value));
+    }
+
+    /** @overrides */
+    firstUpdated() {
+        if (this.cols)
+            this.cols.split(' ').forEach((c) => this.classList.add(c));
     }
 
     /**

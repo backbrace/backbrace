@@ -9,17 +9,6 @@ import { Section } from './section';
 export class Container extends Section {
 
     /**
-     * Component attributes.
-     * @static
-     * @returns {Map<string,string>} Returns attributes.
-     */
-    static attributes() {
-        return new Map([
-            ['cols', 'string']
-        ]);
-    }
-
-    /**
      * @constructs Container
      */
     constructor() {
@@ -46,14 +35,11 @@ export class Container extends Section {
      * @override
      */
     render() {
-        if (this.cols)
-            this.cols.split(' ').forEach((c) => this.classList.add(c));
         return this.html`
             <div class="bb-container bg-surface">
                 <div class="bb-title-bar unselectable"></div>
                 <h6 class="bb-title unselectable cuttext">${this.design.caption}</h6>
-                ${this.renderContent()}
-                ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : ''}
+                ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : this.renderContent()}
             </div>
         `;
     }
