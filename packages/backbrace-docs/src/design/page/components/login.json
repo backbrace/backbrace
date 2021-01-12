@@ -16,8 +16,7 @@
             "name": "Basic Login",
             "component": "login",
             "attributes": {
-                "cols": "col-md-6",
-                "height": "400px"
+                "cols": "col-md-6"
             },
             "fields": [
                 {

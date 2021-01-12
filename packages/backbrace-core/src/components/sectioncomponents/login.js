@@ -1,6 +1,11 @@
+import $ from 'cash-dom';
 import { Card } from './card';
-import { fetch, setBearer } from '../../data';
+import { fetch, bind, auth } from '../../data';
 import { navigate } from '../../route';
+import { get as getWindow } from '../../providers/window';
+import { Header } from '../header';
+import { makeObservable, observable } from 'mobx';
+import { settings } from '../../settings';
 
 /**
  * @class Login
@@ -19,8 +24,10 @@ export class Login extends Card {
         return new Map([
             ['path', 'string'],
             ['data', 'string'],
-            ['query', 'string'],
-            ['bind', 'string']
+            ['loginquery', 'string'],
+            ['loginbind', 'string'],
+            ['userquery', 'string'],
+            ['userbind', 'string']
         ]);
     }
 
@@ -47,19 +54,93 @@ export class Login extends Card {
 
         /**
          * @description
-         * Attribute. Query to run.
+         * Attribute. Query to run when logging in.
          * @type {string}
          */
-        this.query = '';
+        this.loginquery = '';
 
         /**
          * @description
-         * Attribute. Binding path to the login token.
+         * Attribute. Binding path to the login object.
          * @type {string}
          */
-        this.bind = '';
+        this.loginbind = '';
 
+        /**
+         * @description
+         * Attribute. Query to run when getting the `userInfo`.
+         * @type {string}
+         */
+        this.userquery = '';
+
+        /**
+         * @description
+         * Attribute. Binding path to the `userInfo` object.
+         * @type {string}
+         */
+        this.userbind = '';
+
+        /**
+         * @description
+         * Login error message.
+         * @type {string}
+         */
         this.errorMessage = '';
+
+        /**
+         * @description
+         * App header.
+         * @type {import('../header').Header}
+         */
+        this.header = null;
+
+        makeObservable(this, {
+            errorMessage: observable
+        });
+    }
+
+    /** @override */
+    firstUpdated() {
+
+        super.firstUpdated();
+
+        // Save a reference to the app header.
+        const ele = $('bb-header');
+        if (ele.length > 0 && ele[0] instanceof Header)
+            this.header = ele[0];
+    }
+
+    /**
+     * Executes after login is successful.
+     * @async
+     * @returns {Promise<void>}
+     */
+    async onLogin() {
+
+        const path = this.path || this.params.callbackPath;
+
+        // Get the user info.
+        if (this.userquery && this.userbind) {
+
+            let data = await fetch(this.data, this.userquery);
+
+            if (data) {
+
+                // Check for errors.
+                if (data.errors && data.errors.length && data.errors.length > 0 && data.errors[0].message)
+                    throw this.error('onlogin', data.errors[0].message);
+
+                // Bind the result.
+                let bindData = bind(this.userbind, data);
+                this.header.userInfo = bindData;
+            }
+        }
+
+        this.header.show();
+
+        // Navigate to the callback path.
+        if (path)
+            await navigate(path);
     }
 
     /**
@@ -69,32 +150,29 @@ export class Login extends Card {
      */
     async login() {
 
-        const path = this.path || this.params.callbackPath;
-
         // Clear the last error.
-        this.state.hasError = false;
         this.errorMessage = '';
 
-        try {
-
-            // Generate variables.
-            let variables = {},
-                fieldError = false;
-            for (let f of this.fields.values()) {
-                f.helpertext = '';
-                if (!f.value) {
-                    f.helpertext = `Please enter your ${f.caption}`;
-                    fieldError = true;
-                }
-                variables[f.design.bind || f.design.name] = f.value;
+        // Generate variables.
+        let variables = {},
+            fieldError = false;
+        for (let f of this.fields.values()) {
+            f.helpertext = '';
+            if (!f.value) {
+                f.helpertext = `Please enter your ${f.caption}`;
+                fieldError = true;
             }
+            variables[f.design.bind || f.design.name] = f.value;
+        }
 
-            if (fieldError)
-                return;
+        if (fieldError)
+            return;
 
-            this.state.isLoading = true;
+        this.state.isLoading = true;
 
-            let data = await fetch(this.data, this.query, variables);
+        if (this.data) {
+
+            let data = await fetch(this.data, this.loginquery, variables);
 
             if (data) {
 
@@ -102,35 +180,22 @@ export class Login extends Card {
                 if (data.errors && data.errors.length && data.errors.length > 0 && data.errors[0].message) {
                     this.errorMessage = data.errors[0].message;
                     this.state.isLoading = false;
-                    this.update();
                     return;
                 }
 
-
                 // Bind the result.
-                let bindData = data;
-                this.bind.split('.').forEach((bprop) => {
-                    if (bindData === null || typeof bindData[bprop] === 'undefined')
-                        throw this.error('bind', `Data binding failed for ${this.bind} on property ${bprop}`);
-                    bindData = bindData[bprop];
-                });
+                let bindData = bind(this.loginbind, data);
 
-                // Set the bearer token.
-                setBearer(bindData);
+                // Save the auth.
+                auth.token = bindData['token'];
+                auth.userID = bindData['userID'];
 
                 this.state.isLoading = false;
 
-                // Navigate to the callback path.
-                if (path)
-                    await navigate(path);
+                await this.onLogin();
 
-            } else {
-                throw new Error('Invalid request');
             }
 
-        } catch (e) {
-            this.state.isLoading = false;
-            throw this.error('login', `${e}`);
         }
 
     }
@@ -138,9 +203,21 @@ export class Login extends Card {
     /** @override */
     async load() {
 
-        // Checks.
-        if (!this.data || !this.query || !this.bind)
-            throw this.error('attributes', 'Please add all required attributes (data,query,bind)');
+        // Auto login.
+        if (settings.auth.refreshTokenURL) {
+            let res = await getWindow().fetch(settings.auth.refreshTokenURL);
+            if (res.ok) {
+
+                let data = await res.json();
+
+                // Save the auth.
+                auth.token = data['token'];
+                auth.userID = data['userID'];
+
+                await this.onLogin();
+                return;
+            }
+        }
 
         await super.load();
 
@@ -156,7 +233,6 @@ export class Login extends Card {
 
     /** @override */
     renderContent() {
-
         return this.html`
             ${super.renderContent()}
             ${this.errorMessage ? this.html`<span class="bb-login-error">${this.errorMessage}</span>` : ''}
