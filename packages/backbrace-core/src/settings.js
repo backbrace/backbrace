@@ -15,6 +15,7 @@ export let settings = {
     debug: globals.DEVMODE,
     serviceWorker: '',
     windowMode: false,
+    base: '',
     app: {
         name: 'Backbrace App',
         version: '1.0.0',

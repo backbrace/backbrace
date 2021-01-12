@@ -1,5 +1,6 @@
 {
     "$schema": "../../../../../backbrace-devkit/schema/settings.json",
+    "base": "examples/auth/",
     "app": {
         "title": "Authentication Example"
     },

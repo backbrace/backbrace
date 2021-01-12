@@ -113,6 +113,7 @@ import { AppError } from './errors/app';
  * @property {boolean} [debug] Set the app to debug mode. Defaults to `false`.
  * @property {string} [serviceWorker] Service worker file name.
  * @property {boolean} [windowMode] Allow the use of multiple windows. Defaults to `false`.
+ * @property {string} [base] Base path.
  * @property {appConfig} [app] App config.
  * @property {dirConfig} [dir] Directory config.
  * @property {styleConfig} [style] Style config.

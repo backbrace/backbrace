@@ -42,6 +42,15 @@ export function route(...args) {
 }
 
 /**
+ * Get the window path name.
+ * @returns {string}
+ */
+function pathName() {
+    const window = getWindow();
+    return window.location.pathname.replace(settings.base, '');
+}
+
+/**
  * Intialize the router.
  * @async
  * @returns {Promise<void>}
@@ -49,16 +58,17 @@ export function route(...args) {
 export async function init() {
 
     const window = getWindow(),
+        path = pathName(),
         loadPageSingle = makeSingle(loadPage);
 
     window.onpopstate = async () => {
-        var r = match(window.location.pathname);
+        var r = match(path);
         if (r) {
-            loadPageSingle(r, window.location.pathname);
+            loadPageSingle(r, path);
         }
     };
 
-    let route = match(window.location.pathname);
+    let route = match(path);
     if (route)
         await app.loadPage(route.page, route.params);
 }
