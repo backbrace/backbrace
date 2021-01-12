@@ -132,7 +132,7 @@ export function match(path, pathparams) {
 
     // No routes were matched...
     if (!ret)
-        throw routeError('404', 'We can\'t seem to find the page you\'re looking for.');
+        throw routeError('404', `We can't seem to find the page you're looking for. Path: ${path}`);
 
     return ret;
 }
