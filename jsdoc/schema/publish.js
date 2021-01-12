@@ -13,7 +13,7 @@ exports.publish = function(data, opts, tutorials) {
 
     var reftypes = [
         'sectionOptions', 'appConfig', 'dirConfig', 'styleConfig', 'pageSectionDesign',
-        'imagesConfig', 'colorsConfig', 'routeConfig', 'queryDesign', 'storeMapping', 'headConfig'];
+        'imagesConfig', 'colorsConfig', 'routeConfig', 'queryDesign', 'storeMapping', 'headConfig', 'authConfig'];
 
     function getType(docs_, name_) {
         for (var d in docs_) {

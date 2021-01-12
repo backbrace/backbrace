@@ -22,24 +22,6 @@ bb-header .bb-nav-inner a:hover {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
-bb-header .bb-menu-btn {
-  cursor: pointer;
-  float: left;
-  width: 64px;
-  height: 64px;
-  font-size: 35px;
-  max-height: 64px;
-  box-sizing: border-box;
-  text-align: center;
-  padding: 12px;
-}
-bb-header .bb-brand {
-  float: left;
-  margin: 12px 80px 0 20px;
-}
-bb-header .bb-logo {
-  max-height: 40px;
-}
 a {
   color: #3498db;
   cursor: pointer;
@@ -116,7 +98,7 @@ bb-header .header-link {
   padding: 10px;
   font-size: 20px;
   font-weight: 300;
-  line-height: 40px;
+  line-height: 44px;
   box-sizing: border-box;
 }
 .banner {

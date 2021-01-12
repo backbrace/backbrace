@@ -10,28 +10,28 @@ import { get as getWindow } from './providers/window';
  */
 
 /**
- * @ignore
- * @description
- * Bearer token.
- * @type {string}
+ * Auth object.
+ * @type {import('./types').authInfo}
  */
-let bearer = null;
+export let auth = {
+    token: '',
+    userID: ''
+};
 
 /**
- * Set the bearer token.
- * @param {string} token Bearer token.
- * @returns {void}
+ * Bind a datasource to a path.
+ * @param {string} path Path to bind.
+ * @param {unknown} data Data source.
+ * @returns {unknown}
  */
-export function setBearer(token) {
-    bearer = token;
-}
-
-/**
- * Returns `true` if the user is authorized.
- * @returns {boolean}
- */
-export function isAuthorized() {
-    return bearer !== null;
+export function bind(path, data) {
+    let bindData = data;
+    path.split('.').forEach((bprop) => {
+        if (bindData === null || typeof bindData[bprop] === 'undefined')
+            throw new Error(`Data binding failed for ${path} on property ${bprop}`);
+        bindData = bindData[bprop];
+    });
+    return bindData;
 }
 
 /**
@@ -67,8 +67,8 @@ export async function fetch(url, query, variables) {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         };
-        if (bearer)
-            headers.Authorization = 'Bearer ' + bearer;
+        if (auth.token)
+            headers.Authorization = 'Bearer ' + auth.token;
 
         let res = await window.fetch(url, {
             method: 'POST',

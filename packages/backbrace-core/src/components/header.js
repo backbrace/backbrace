@@ -5,6 +5,7 @@ import { Component } from './component';
 
 import { get as getStyle } from '../providers/style';
 import { get as getWindow } from '../providers/window';
+import { makeObservable, observable } from 'mobx';
 
 /**
  * @class Header
@@ -61,6 +62,17 @@ export class Header extends Component {
          * @type {import('cash-dom').Cash}
          */
         this.menu = null;
+
+        /**
+         * @description
+         * User information.
+         * @type {import('../types').userInfo}
+         */
+        this.userInfo = null;
+
+        makeObservable(this, {
+            userInfo: observable
+        });
     }
 
     /**
@@ -123,6 +135,12 @@ export class Header extends Component {
                 this.html`<img class="bb-logo" src=${this.logo} alt=${this.logotext} />` :
                 this.html`<div class="bb-logo">${this.logotext}</div>`}
                         </div>
+                        <a title=${`Account: ${this.userInfo?.name}
+(${this.userInfo?.email})`} role="button">
+                            <div class="bb-profile shape-circle" style=${this.styleMap({ display: (!this.userInfo ? 'none' : '') })}>
+                                    ${this.userInfo?.initials}
+                            </div>
+                        </a>
                     </div>
                 </nav>
             </header>

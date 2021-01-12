@@ -29,6 +29,21 @@ import { AppError } from './errors/app';
 */
 
 /**
+ * Auth info object.
+ * @typedef authInfo
+ * @property {string} [token] Auth token. Used in all requests as a bearer token.
+ * @property {string} [userID] ID of the authenticated user.
+ */
+
+/**
+ * User info object.
+ * @typedef userInfo
+ * @property {string} [email] Email address.
+ * @property {string} [name] Full name of the user.
+ * @property {string} [initials] User initials.
+ */
+
+/**
  * App configuration.
  * @typedef appConfig
  * @property {string} [name] App name (displays in header if there is no logo image). Defaults to `Backbrace App`.
