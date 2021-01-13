@@ -51,7 +51,8 @@ bb-textbox {
     margin: 0 0 8px 0;
   }
   input:focus {
-    background-color: gainsboro;
+    background-color: var(--bg-hover);
+    color: var(--bg-primary);
   }
   small {
     font-size: 0.8em;

@@ -36,7 +36,7 @@ export class Container extends Section {
      */
     render() {
         return this.html`
-            <div class="bb-container bg-surface">
+            <div class="bb-container">
                 <div class="bb-title-bar unselectable"></div>
                 <h6 class="bb-title unselectable cuttext">${this.design.caption}</h6>
                 ${this.state.hasError ? this.html`<bb-error .err=${this.state.error}></bb-error>` : this.renderContent()}

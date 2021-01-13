@@ -189,7 +189,7 @@ export class Header extends Component {
                 </div>` : ''}
             </div>
             <header>
-                <nav class="bg-primary text-primary fixed">
+                <nav class="fixed">
                     <div class="bb-nav-inner">
                         <div class="bb-menu-btn clickable" @click=${this.showMenu}>
                             ${getStyle().icon(this.menuicon)}

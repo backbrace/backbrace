@@ -97,8 +97,29 @@ export function ready(func) {
  */
 function loadColors() {
 
-    let jss = {},
-        selectors = ['', ':hover', ':active', ':focus'];
+    const colors = settings.style.colors;
+
+    let jss = {
+        ':root': {
+            '--bg-primary': colors.bgprimary,
+            '--text-primary': colors.textprimary,
+            '--bg-secondary': colors.bgsecondary,
+            '--text-secondary': colors.textsecondary,
+            '--bg-surface': colors.bgsurface,
+            '--text-surface': colors.textsurface,
+            '--bg-body': colors.bgbody,
+            '--text-body': colors.textbody,
+            '--bg-hover': colors.bghover,
+            '--text-hover': colors.texthover
+        }
+    }, selectors = ['', ':hover', ':active', ':focus'];
+
+    if (colors.bgheader)
+        jss[':root'] = {
+            ...jss[':root'],
+            '--bg-header': colors.bgheader,
+            '--text-header': colors.textheader
+        };
 
     // Loop through the colors and add classes.
     for (let classname in settings.style.colors) {
@@ -133,6 +154,8 @@ function loadColors() {
  */
 async function loadStyle() {
 
+    loadColors();
+
     if (settings.style.loader) {
 
         const { default: StyleHandler } = await import(
@@ -147,8 +170,6 @@ async function loadStyle() {
         setStyle(style);
         style.load();
     }
-
-    loadColors();
 }
 
 /**

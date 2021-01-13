@@ -14,10 +14,21 @@ bb-apptoolbar {
     cursor: pointer;
     height: 48px;
     padding: 16px 14px;
+    background: var(--bg-surface);
+    color: var(--text-surface);
   }
   .bb-button i {
     margin-left: 5px;
     width: 16px;
     float: right;
+  }
+  .bb-button:hover {
+    background: var(--bg-hover);
+    color: var(--text-hover);
+  }
+  .bb-button.active {
+    border-bottom: 2px solid var(--bg-primary);
+    background: var(--bg-hover);
+    color: var(--bg-primary);
   }
 }

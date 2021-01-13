@@ -43,7 +43,9 @@ export let settings = {
             bgbody: '#f5f7fb',
             textbody: '#000',
             bghover: '#ecf0f1',
-            texthover: '#333'
+            texthover: '#000',
+            bgheader: '',
+            textheader: ''
         }
     },
     routes: [],

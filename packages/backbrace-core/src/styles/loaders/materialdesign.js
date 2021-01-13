@@ -27,28 +27,11 @@ export default class MaterialDesignStyle extends StyleHandler {
         // Load the style overrides.
         const colors = settings.style.colors;
         let css = compile({
-            // Add Colors.
-            'body': {
-                background: `${colors.bgbody}`,
-                color: `${colors.textbody}`
-            },
-            'bb-apptoolbar .bb-button.active': {
-                'border-bottom': `2px solid ${colors.bgprimary}`,
-                background: `${colors.bghover}`,
-                color: `${colors.bgprimary}`
-            },
-            'bb-textbox .bb-field-focus': {
-                'color': `${colors.bgprimary}`
-            },
             '.sweet-alert button': {
                 'background-color': `${colors.bgsecondary} !important`,
                 color: `${colors.textsecondary} !important`
             },
             '.sweet-alert button:hover': {
-                'background-color': `${colors.bgsecondary} !important`,
-                color: `${colors.textsecondary} !important`
-            },
-            '.bb-button:hover': {
                 'background-color': `${colors.bgsecondary} !important`,
                 color: `${colors.textsecondary} !important`
             }

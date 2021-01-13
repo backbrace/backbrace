@@ -81,6 +81,8 @@ import { AppError } from './errors/app';
  * @property {string} [textbody] Background text color.
  * @property {string} [bghover] Hover background color.
  * @property {string} [texthover] Hover text color.
+ * @property {string} [bgheader] Override the primary color on the header.
+ * @property {string} [textheader] Override the primary text color on the header.
  */
 
 /**

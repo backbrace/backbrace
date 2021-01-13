@@ -41,34 +41,6 @@
   border-spacing: 0px;
 }
 
-.bb-button {
-  font-size: 0.875rem;
-  line-height: 2.25rem;
-  font-weight: 500;
-  text-decoration: none;
-  padding: 0 16px 0 16px;
-  display: inline-flex;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  min-width: 64px;
-  border: none;
-  outline: none;
-  line-height: inherit;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-appearance: none;
-  overflow: visible;
-  vertical-align: middle;
-  height: 36px;
-  border-radius: 4px;
-  will-change: transform, opacity;
-  cursor: pointer;
-}
-
 @media only screen and (max-width: 640px) {
   .hide-small {
     display: none !important;
