@@ -71,7 +71,8 @@ exports.get = function(devmode) {
                   'targets': {
                     'esmodules': true
                   }
-                }]]
+                }]],
+              plugins: ['@babel/plugin-transform-runtime']
             }
           }
         }
