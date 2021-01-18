@@ -42,7 +42,7 @@ export let settings = {
             textsurface: '#000',
             bgbody: '#f5f7fb',
             textbody: '#000',
-            bghover: '#ecf0f1',
+            bghover: '#d8d8d8',
             texthover: '#000',
             bgheader: '',
             textheader: ''
