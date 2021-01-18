@@ -1,4 +1,5 @@
 import { Component } from './component';
+import { makeObservable, observable } from 'mobx';
 
 /**
  * @class Section
@@ -46,6 +47,10 @@ export class Section extends Component {
          * @type {string}
          */
         this.cols = '';
+
+        makeObservable(this, {
+            design: observable
+        });
     }
 
     /**
