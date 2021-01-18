@@ -29,19 +29,26 @@ import { AppError } from './errors/app';
 */
 
 /**
- * Auth info object.
- * @typedef authInfo
+ * Auth state.
+ * @typedef authState
  * @property {string} [token] Auth token. Used in all requests as a bearer token.
  * @property {string} [userID] ID of the authenticated user.
  */
 
 /**
- * User info object.
- * @typedef userInfo
+ * User state.
+ * @typedef userState
  * @property {string} [email] Email address.
  * @property {string} [name] Full name of the user.
  * @property {string} [initials] User initials.
  * @property {string} [image] User profile image.
+ */
+
+/**
+ * Global application state.
+ * @typedef appState
+ * @property {authState} [auth] Auth state.
+ * @property {userState} [user] User state.
  */
 
 /**

@@ -1,11 +1,12 @@
 import $ from 'cash-dom';
 import { Card } from './card';
-import { fetch, bind, auth } from '../../data';
+import { fetch, bind } from '../../data';
 import { navigate } from '../../route';
 import { get as getWindow } from '../../providers/window';
 import { Header } from '../header';
 import { makeObservable, observable } from 'mobx';
 import { settings } from '../../settings';
+import { appState } from '../../state';
 
 /**
  * @class Login
@@ -132,7 +133,7 @@ export class Login extends Card {
 
                 // Bind the result.
                 let bindData = bind(this.userbind, data);
-                this.header.userInfo = bindData;
+                appState.user = bindData;
             }
         }
 
@@ -187,8 +188,7 @@ export class Login extends Card {
                 let bindData = bind(this.loginbind, data);
 
                 // Save the auth.
-                auth.token = bindData['token'];
-                auth.userID = bindData['userID'];
+                appState.auth = bindData;
 
                 this.state.isLoading = false;
 
@@ -211,8 +211,7 @@ export class Login extends Card {
                 let data = await res.json();
 
                 // Save the auth.
-                auth.token = data['token'];
-                auth.userID = data['userID'];
+                appState.auth = data;
 
                 await this.onLogin();
                 return;

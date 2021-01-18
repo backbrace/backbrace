@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { settings } from './settings';
 import { get as getWindow } from './providers/window';
+import { appState } from './state';
 
 /**
  * @module data
@@ -8,15 +9,6 @@ import { get as getWindow } from './providers/window';
  * @description
  * Data management.
  */
-
-/**
- * Auth object.
- * @type {import('./types').authInfo}
- */
-export let auth = {
-    token: '',
-    userID: ''
-};
 
 /**
  * Bind a datasource to a path.
@@ -67,8 +59,8 @@ export async function fetch(url, query, variables) {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         };
-        if (auth.token)
-            headers.Authorization = 'Bearer ' + auth.token;
+        if (appState.auth?.token)
+            headers.Authorization = 'Bearer ' + appState.auth.token;
 
         let res = await window.fetch(url, {
             method: 'POST',

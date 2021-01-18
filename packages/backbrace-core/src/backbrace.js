@@ -26,7 +26,7 @@ import { get as getStyleHandler, set as setStyleHandler } from './providers/styl
  * @borrows module:log.warning as logWarning
  * @borrows module:route.route as route
  * @borrows module:route.match as matchRoute
- * @borrows module:store.store as store
+ * @borrows module:state.store as store
  * @borrows module:util.clipboard as clipboard
  * @borrows module:util.formatString as formatString
  * @borrows module:util.highlightSyntax as highlightSyntax
@@ -154,7 +154,7 @@ export {
 
 export {
     store
-} from './store';
+} from './state';
 
 export {
     Component

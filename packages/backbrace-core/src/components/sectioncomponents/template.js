@@ -3,6 +3,7 @@ import dompurify from 'dompurify';
 
 import { globals } from '../../globals';
 import { Section } from '../section';
+import { appState } from '../../state';
 
 /**
  * @class Template
@@ -50,7 +51,7 @@ export class Template extends Section {
      */
     render() {
 
-        const context = { data: this.state.data, globals: globals };
+        const context = { data: this.state.data, globals: globals, user: appState?.user };
 
         // Merge the template and context.
         let template = handlebars.compile(this.template);
