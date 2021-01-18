@@ -235,11 +235,7 @@ export class Login extends Card {
         return this.html`
             ${super.renderContent()}
             ${this.errorMessage ? this.html`<span class="bb-login-error">${this.errorMessage}</span>` : ''}
-            <button class="bb-button" @click=${this.login}>
-                <span class="bb-button-label">
-                    Login
-                </span>
-            </button>
+            <bb-button caption="Login" class="clickable" @click=${this.login}></bb-button>
         `;
     }
 
