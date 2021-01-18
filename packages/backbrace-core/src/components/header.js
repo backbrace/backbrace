@@ -5,9 +5,9 @@ import { Component } from './component';
 
 import { get as getStyle } from '../providers/style';
 import { get as getWindow } from '../providers/window';
-import { makeObservable, observable } from 'mobx';
 import { settings } from '../settings';
-import { auth } from '../data';
+import { appState } from '../state';
+import { isMobileDevice } from '../util';
 
 /**
  * @class Header
@@ -39,21 +39,21 @@ export class Header extends Component {
 
         /**
          * @description
-         * App logo text.
+         * Attribute. App logo text.
          * @type {string}
          */
         this.logotext = '';
 
         /**
          * @description
-         * App logo.
+         * Attribute. App logo.
          * @type {string}
          */
         this.logo = '';
 
         /**
          * @description
-         * Menu icon.
+         * Attribute. Menu icon.
          * @type {string}
          */
         this.menuicon = 'menu';
@@ -65,23 +65,6 @@ export class Header extends Component {
          */
         this.menu = null;
 
-        /**
-         * @description
-         * Profile menu element.
-         * @type {import('cash-dom').Cash}
-         */
-        this.profileMenu = null;
-
-        /**
-         * @description
-         * User information.
-         * @type {import('../types').userInfo}
-         */
-        this.userInfo = null;
-
-        makeObservable(this, {
-            userInfo: observable
-        });
     }
 
     /**
@@ -104,10 +87,11 @@ export class Header extends Component {
      * @returns {Header} Returns itself for chaining.
      */
     showProfileMenu(ev) {
-        if (this.profileMenu.css('display') !== 'none')
+        const profileMenu = $(this).find('.bb-profile-menu');
+        if (profileMenu.css('display') !== 'none')
             return;
-        this.profileMenu.show();
-        fadeIn(this.profileMenu[0], 50);
+        profileMenu.show();
+        fadeIn(profileMenu[0], 50);
         ev.stopPropagation();
         return this;
     }
@@ -130,7 +114,7 @@ export class Header extends Component {
      * @returns {Header} Returns itself for chaining.
      */
     hideProfileMenu() {
-        this.profileMenu.hide();
+        $(this).find('.bb-profile-menu').hide();
         return this;
     }
 
@@ -142,7 +126,6 @@ export class Header extends Component {
         const window = getWindow();
 
         this.menu = $(this).find('.bb-menu');
-        this.profileMenu = $(this).find('.bb-profile-menu');
 
         $(window.document).on('click', (event) => {
             if (!$(event.target).closest('.bb-menu-btn').length) {
@@ -158,36 +141,55 @@ export class Header extends Component {
      */
     logout() {
         this.hide();
-        auth.token = '';
-        auth.userID = '';
+        appState.auth = null;
+        appState.user = null;
     }
 
     /**
      * @override
      */
     render() {
-        const userImageStyle = this.userInfo?.image ? {
-            'background-image': `url("${this.userInfo?.image}")`,
+
+        const user = appState.user;
+
+        const imageStyle = user?.image ? {
+            'background-image': `url("${user?.image}")`,
             'background-size': 'cover',
             'background-position': 'center center'
         } : {};
+
+        const profile = this.html`
+            <div class="bb-profile-section">
+                <div class="bb-profile bb-profile-large shape-circle" style=${this.styleMap(imageStyle)}>
+                    ${user?.image ? '' : user?.initials}
+                </div>
+                <h6>${user?.name}</h6>
+                <span>${user?.email}</span>
+                <bb-button caption="Manage your Account" class="bb-button-outlined"></bb-button>
+            </div>
+            ${settings.auth.logout ? this.html`<div class="bb-logout-section">
+                <bb-button caption="Sign Out" class="bb-button-outlined" @click=${this.logout} bb-route="${settings.auth.logout}"></bb-button>
+            </div>` : ''}
+        `;
+
+        const profileIcon = this.html`
+        <a title=${`Account: ${user?.name}
+(${user?.email})`} role="button">
+            <div class="bb-profile shape-circle" style=${this.styleMap(imageStyle)} @click=${this.showProfileMenu}>
+                ${user?.image ? '' : user?.initials}
+            </div>
+        </a>`;
+
         return this.html`
             <div class="bb-menu">
+                ${user && isMobileDevice() ? profile : ''}
+                ${!isMobileDevice() ? this.html`
+                <h6>${settings.app.name}</h6>
+                ${user ? this.html`<span>${user?.email}</span>` : ''}
+                ` : ''}
                 <ul></ul>
             </div>
-            <div class="bb-profile-menu">
-                <div class="bb-profile-section">
-                    <div class="bb-profile bb-profile-large shape-circle" style=${this.styleMap(userImageStyle)}>
-                        ${this.userInfo?.image ? '' : this.userInfo?.initials}
-                    </div>
-                    <h6>${this.userInfo?.name}</h6>
-                    <span>${this.userInfo?.email}</span>
-                    <button class="bb-button">Manage your Account</button>
-                </div>
-                ${settings.auth.logout ? this.html`<div class="bb-logout-section">
-                    <button class="bb-button" @click=${this.logout} bb-route="${settings.auth.logout}">Sign Out</button>
-                </div>` : ''}
-            </div>
+            ${user && !isMobileDevice() ? this.html`<div class="bb-profile-menu">${profile}</div>` : ''}
             <header>
                 <nav class="fixed">
                     <div class="bb-nav-inner">
@@ -199,13 +201,7 @@ export class Header extends Component {
                 this.html`<img class="bb-logo" src=${this.logo} alt=${this.logotext} />` :
                 this.html`<div class="bb-logo">${this.logotext}</div>`}
                         </div>
-                        <a title=${`Account: ${this.userInfo?.name}
-(${this.userInfo?.email})`} role="button">
-                            <div class="bb-profile shape-circle" @click=${this.showProfileMenu}
-                                style=${this.styleMap({ display: (!this.userInfo ? 'none' : ''), ...userImageStyle })}>
-                                    ${this.userInfo?.image ? '' : this.userInfo?.initials}
-                            </div>
-                        </a>
+                        ${user && !isMobileDevice() ? profileIcon : ''}
                     </div>
                 </nav>
             </header>
