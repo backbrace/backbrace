@@ -7,6 +7,7 @@ import { configure } from 'mobx';
 import './apptoolbar';
 import './error';
 import './header';
+import './button';
 
 import { Component } from './component';
 import { init as initRouter } from '../route';
@@ -25,29 +26,11 @@ import { get as getWindow } from '../providers/window';
 export class App extends Component {
 
     /**
-     * Component attributes.
-     * @static
-     * @returns {Map<string,string>} Returns attributes.
-     */
-    static attributes() {
-        return new Map([
-            ['windowmode', 'boolean']
-        ]);
-    }
-
-    /**
      * @constructs App
      */
     constructor() {
 
         super();
-
-        /**
-         * @description
-         * Attribute. Set to true to enable window mode.
-         * @type {boolean}
-         */
-        this.windowmode = false;
 
         /**
          * @ignore
@@ -110,7 +93,7 @@ export class App extends Component {
 
         let pge = new Page();
 
-        if (!this.windowmode) {
+        if (!settings.windowMode) {
             // Routing mode can only have 1 loaded page...
             if (this.currentPage())
                 this.currentPage().remove();
@@ -134,11 +117,10 @@ export class App extends Component {
         await pge.load();
 
         // Add a window shorcut.
-        if (this.windowmode)
+        if (settings.windowMode)
             this.toolbar.addButton(pge);
 
         $(window)[0].scrollTop = 0;
-
     }
 
     /**
@@ -160,7 +142,7 @@ export class App extends Component {
         this.pages.delete(id);
 
         // Remove shortcut.
-        if (this.windowmode) {
+        if (settings.windowMode) {
             this.toolbar.removeButton(id);
             $(window)[0].scrollTop = 0;
         }
@@ -188,7 +170,7 @@ export class App extends Component {
         if (this.currentPage())
             this.currentPage().hide();
 
-        if (this.windowmode)
+        if (settings.windowMode)
             this.toolbar.deselectButtons();
 
         // Show the page.
@@ -199,7 +181,7 @@ export class App extends Component {
         pge.show();
         this.activePage = pge.uid;
 
-        if (this.windowmode)
+        if (settings.windowMode)
             this.toolbar.selectButton(id);
     }
 
@@ -216,7 +198,7 @@ export class App extends Component {
         // Add mobile/desktop class.
         this.classList.add(isMobileDevice() ? 'mobile-app' : 'desktop-app');
 
-        if (!this.windowmode)
+        if (!settings.windowMode)
             initRouter();
     }
 
@@ -227,9 +209,9 @@ export class App extends Component {
         if (this.state.hasError)
             return this.html`<bb-error .err=${this.state.error}></bb-error>`;
         return this.html`
-            <bb-header logo="${settings.style.images.logo}" logotext="${settings.app.name}"
+            <bb-header logo=${settings.style.images.logo} logotext=${settings.app.name}
                 style=${this.styleMap({ display: settings.auth.login ? 'none' : '' })}></bb-header>
-            <bb-apptoolbar style="${this.windowmode ? '' : 'display:none'}"></bb-apptoolbar>
+            <bb-apptoolbar style=${this.styleMap({ display: !settings.windowMode ? 'none' : '' })}></bb-apptoolbar>
             <div class="bb-main container"></div>
         `;
     }
