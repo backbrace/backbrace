@@ -3,7 +3,8 @@ import {
     Component,
     ShadowComponent,
     Section,
-    Container
+    Container,
+    PageService
 } from './typings/types';
 
 export import app = Backbrace.app;
@@ -27,5 +28,6 @@ export {
     Component,
     ShadowComponent,
     Section,
-    Container
+    Container,
+    PageService
 }

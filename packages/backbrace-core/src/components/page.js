@@ -71,6 +71,13 @@ export class Page extends Component {
 
         /**
          * @description
+         * Page service.
+         * @type {import('../services/page').PageService}
+         */
+        this.service = null;
+
+        /**
+         * @description
          * Progress meter.
          * @type {import('cash-dom').Cash}
          */
@@ -92,6 +99,27 @@ export class Page extends Component {
         // Get our sub components.
         this.sectionContainer = $(this).find('.bb-sections');
 
+    }
+
+    /**
+     * Get a page service by name.
+     * @param {string} name Name or path of the service.
+     * @returns {Promise<import('../services/page').PageService>} Returns the service.
+     */
+    async getPageService(name) {
+
+        let Service = null;
+
+        if (!name)
+            return null;
+
+        // Import external service.
+        const { default: PageService } = await import(
+            /* webpackIgnore: true */
+            `${settings.dir.design}${name}`);
+        Service = PageService;
+
+        return new Service(this);
     }
 
     /**
@@ -138,6 +166,15 @@ export class Page extends Component {
             throw this.error('nodesign', `Cannot find page design '${this.name}'`);
 
         this.design = p;
+
+        // Create page service.
+        if (this.design.service) {
+            this.service = await this.getPageService(this.design.service);
+            if (this.service) {
+                // Load the service.
+                await this.service.load();
+            }
+        }
 
         // Set the caption of the page.
         this.setCaption(this.design.caption);
@@ -201,6 +238,8 @@ export class Page extends Component {
         this.state.isLoading = false;
 
         style().pageUpdated(this);
+
+        await this.service?.pageLoad();
     }
 
     /**

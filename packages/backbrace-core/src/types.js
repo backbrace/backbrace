@@ -220,6 +220,7 @@ export let pagesection = {
  * @property {string} caption Caption of the page.
  * @property {string} data Data source (ie. JSON file).
  * @property {string} icon Icon to use for the page.
+ * @property {string} service Page service path.
  * @property {boolean} noclose Don't allow the page to be closed (in windowed mode).
  * @property {pageSectionDesign[]} sections Page sections.
  */
@@ -227,6 +228,7 @@ export let pagedesign = {
   caption: '',
   data: '',
   icon: '',
+  service: '',
   noclose: false,
   sections: []
 };

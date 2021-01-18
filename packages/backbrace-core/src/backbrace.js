@@ -171,3 +171,7 @@ export {
 export {
     Container as Container
 } from './components/container';
+
+export {
+    PageService as PageService
+} from './services/page';
