@@ -28,12 +28,6 @@ export default class ApiMember extends Component {
                 window.setTimeout(() => window.scroll(0, t.position().top - 80), 100);
             }
         }
-
-        // Highlight code samples.
-        $(this).find('pre code').each((i, ele) => {
-            // @ts-ignore
-            Prism.highlightElement(ele);
-        });
     }
 
     render() {

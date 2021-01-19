@@ -2,11 +2,12 @@
     "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
     "name": "login",
     "caption": "Login Component",
+    "service": "service/docs.js",
     "sections": [
         {
             "name": "Login",
             "caption": "Login Component",
-            "component": "components/ComponentTitle.js",
+            "component": "components/componenttitle.js",
             "attributes": {
                 "api": "Login",
                 "description": "<p>BOOO.</p>"

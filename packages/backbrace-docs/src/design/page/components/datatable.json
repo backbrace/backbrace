@@ -3,11 +3,12 @@
     "name": "datatable",
     "caption": "Data Table Component",
     "data": "data/sample.json",
+    "service": "service/docs.js",
     "sections": [
         {
             "name": "DataTable",
             "caption": "Data Table Component",
-            "component": "components/ComponentTitle.js",
+            "component": "components/componenttitle.js",
             "attributes": {
                 "api": "DataTable",
                 "description": "<p>Data tables display sets of data across rows and columns.</p>"

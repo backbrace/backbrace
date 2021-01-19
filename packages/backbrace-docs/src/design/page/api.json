@@ -1,6 +1,7 @@
 {
     "$schema": "../../../../backbrace-devkit/schema/pagedesign.json",
     "name": "api",
+    "service": "service/docs.js",
     "sections": [
         {
             "name": "main",
