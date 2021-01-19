@@ -12,6 +12,17 @@ import { settings } from '../settings';
 export class ErrorMessage extends ShadowComponent {
 
     /**
+     * Component attributes.
+     * @static
+     * @returns {Map<string,string>} Returns attributes.
+     */
+    static attributes() {
+        return new Map([
+            ['showstack', 'boolean']
+        ]);
+    }
+
+    /**
      * @constructs ErrorMessage
      */
     constructor() {
@@ -32,6 +43,13 @@ export class ErrorMessage extends ShadowComponent {
          */
         this.cache = {};
 
+        /**
+         * @description
+         * Attribute. Show the error stack. Defaults to `true` when in debug mode.
+         * @type {boolean}
+         */
+        this.showstack = settings.debug;
+
         this.update();
     }
 
@@ -47,8 +65,8 @@ export class ErrorMessage extends ShadowComponent {
         if (typeof line === 'undefined')
             return '';
         if (sel)
-            return `>${i}| ${line}\r\n`;
-        return `${i} | ${line}\r\n`;
+            return `>${i < 10 ? '0' + i : i}| ${line}\r\n`;
+        return `${i < 10 ? '0' + i : i} | ${line}\r\n`;
     }
 
     /**
@@ -140,7 +158,7 @@ export class ErrorMessage extends ShadowComponent {
             <div>
                 <h1>Oops, we had an issue.</h1>
                 ${this.err.message}
-                ${settings.debug ? this.asyncReplace(this.getStack()) : ''}
+                ${this.showstack ? this.asyncReplace(this.getStack()) : ''}
             </div>
         `;
     }
