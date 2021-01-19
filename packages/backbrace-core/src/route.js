@@ -58,17 +58,16 @@ function pathName() {
 export async function init() {
 
     const window = getWindow(),
-        path = pathName(),
         loadPageSingle = makeSingle(loadPage);
 
     window.onpopstate = async () => {
-        var r = match(path);
+        var r = match(pathName());
         if (r) {
-            loadPageSingle(r, path);
+            loadPageSingle(r, pathName());
         }
     };
 
-    let route = match(path);
+    let route = match(pathName());
     if (route)
         await app.loadPage(route.page, route.params);
 }
