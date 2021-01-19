@@ -59,7 +59,11 @@ export class Section extends Component {
      */
     setAttributes() {
         if (this.design)
-            Object.entries(this.design.attributes).forEach(([name, value]) => this.setAttribute(name, value));
+            Object.entries(this.design.attributes).forEach(([name, value]) => {
+                if (value.join)
+                    value = value.join('');
+                this.setAttribute(name, value);
+            });
     }
 
     /** @overrides */
