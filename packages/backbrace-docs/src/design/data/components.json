@@ -1,6 +1,12 @@
 {
     "components": [
         {
+            "name": "error",
+            "caption": "Error Message",
+            "type": "base",
+            "initals": "b"
+        },
+        {
             "name": "textbox",
             "caption": "Textbox",
             "type": "field",

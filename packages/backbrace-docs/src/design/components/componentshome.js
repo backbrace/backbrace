@@ -4,7 +4,7 @@ export default class ComponentsHome extends Section {
 
     render() {
         return this.html`
-            ${['Field', 'Section'].map((type) =>
+            ${['Base', 'Field', 'Section'].map((type) =>
             this.html`<div style="margin-top: 20px">
                 <h4>${type} Components</h4>
                 ${this.state.data.filter(c => c.type === type.toLowerCase()).map((c) =>
