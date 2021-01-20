@@ -5,7 +5,6 @@ describe('section component', () => {
 
     beforeAll((done) => {
         // Run up an app.
-        settings.serviceWorker = null;
         settings.windowMode = true;
         settings.dir.design = '/design/sectioncomponent/';
         app.ready(() => done());

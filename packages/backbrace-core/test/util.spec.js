@@ -1,5 +1,5 @@
 import * as util from '../src/util';
-import { get as getWindow, set as setWindow } from '../src/providers/window';
+import { set as setWindow } from '../src/providers/window';
 
 describe('util', function() {
 
