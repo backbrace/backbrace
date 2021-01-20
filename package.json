@@ -15,7 +15,13 @@
     ],
     "scripts": {
         "firebase": "firebase deploy --only hosting:backbrace-io",
-        "changelog": "npx gitmoji-changelog"
+        "changelog": "npx gitmoji-changelog",
+        "test": "grunt test",
+        "build": "grunt package",
+        "localdocs": "grunt localdocs",
+        "docs": "grunt docs",
+        "generate": "grunt generate",
+        "typings": "grunt typings"
     },
     "resolutions": {
         "elliptic": "^6.5.3",
