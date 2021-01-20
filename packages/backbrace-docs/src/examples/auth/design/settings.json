@@ -39,7 +39,8 @@
     },
     "auth": {
         "login": "login",
-        "logout": "logout"
+        "logout": "logout",
+        "profile": "profile"
     },
     "routes": [
         {
@@ -50,6 +51,10 @@
         {
             "path": "login",
             "page": "page/login.json"
+        },
+        {
+            "path": "profile/:id",
+            "page": "page/profile.json"
         },
         {
             "path": "logout",

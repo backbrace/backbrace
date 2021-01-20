@@ -62,6 +62,7 @@ export let settings = {
     auth: {
         login: '',
         logout: '',
+        profile: '',
         refreshTokenURL: ''
     }
 };

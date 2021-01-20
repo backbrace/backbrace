@@ -150,7 +150,8 @@ export class Header extends Component {
      */
     render() {
 
-        const user = appState.user;
+        const user = appState.user,
+            auth = appState.auth;
 
         const imageStyle = user?.image ? {
             'background-image': `url("${user?.image}")`,
@@ -165,10 +166,13 @@ export class Header extends Component {
                 </div>
                 <h6>${user?.name}</h6>
                 <span>${user?.email}</span>
-                <bb-button caption="Manage your Account" class="bb-button-outlined"></bb-button>
+                ${settings.auth.profile ? this.html`
+                <bb-button caption="Manage your Account" class="bb-button-outlined"
+                    bb-route=${settings.auth.profile + '/' + auth?.userID} @click=${this.hideProfileMenu}></bb-button>
+                ` : ''}
             </div>
             ${settings.auth.logout ? this.html`<div class="bb-logout-section">
-                <bb-button caption="Sign Out" class="bb-button-outlined" @click=${this.logout} bb-route="${settings.auth.logout}"></bb-button>
+                <bb-button caption="Sign Out" class="bb-button-outlined" @click=${this.logout} bb-route=${settings.auth.logout}></bb-button>
             </div>` : ''}
         `;
 

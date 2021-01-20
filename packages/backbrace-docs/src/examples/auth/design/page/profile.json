@@ -1,0 +1,31 @@
+{
+    "$schema": "../../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
+    "name": "profile",
+    "caption": "Profile",
+    "data": "data/auth.json",
+    "sections": [
+        {
+            "name": "Basic Information",
+            "bind": "user",
+            "fields": [
+                {
+                    "name": "Image",
+                    "component": "imagelookup",
+                    "bind": "image",
+                    "attributes": {
+                        "cols": "col-md-12",
+                        "icon": "add_a_photo"
+                    }
+                },
+                {
+                    "name": "Name",
+                    "bind": "name"
+                },
+                {
+                    "name": "Email",
+                    "bind": "email"
+                }
+            ]
+        }
+    ]
+}

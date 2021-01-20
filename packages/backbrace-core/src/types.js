@@ -113,6 +113,7 @@ import { AppError } from './errors/app';
  * @typedef authConfig
  * @property {string} [login] Set the path to the login page.
  * @property {string} [logout] Set the path to the logout page.
+ * @property {string} [profile] Set the path to the profile page.
  * @property {string} [refreshTokenURL] URL to refresh the auth token.
  */
 
