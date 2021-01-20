@@ -81,12 +81,12 @@ export class Field extends Component {
             Object.entries(this.design.attributes).forEach(([name, value]) => this.setAttribute(name, value));
     }
 
-    /** @override */
-    render() {
-
-        // Add classes.
-        if (this.cols)
-            this.cols.split(' ').forEach((c) => this.classList.add(c));
+    /**
+     * Bind the field to the data.
+     * @async
+     * @returns {Promise<void>}
+     */
+    async bind() {
 
         if (this.state.hasError)
             return;
@@ -102,5 +102,15 @@ export class Field extends Component {
             const val = bindData;
             this.value = val;
         }
+
+    }
+
+    /** @override */
+    render() {
+
+        // Add classes.
+        if (this.cols)
+            this.cols.split(' ').forEach((c) => this.classList.add(c));
+
     }
 }

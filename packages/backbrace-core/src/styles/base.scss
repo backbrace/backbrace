@@ -39,6 +39,8 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-spacing: 0px;
+  overflow: hidden;
+  position: relative;
 }
 
 @media only screen and (max-width: 640px) {

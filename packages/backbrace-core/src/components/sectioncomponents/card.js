@@ -38,6 +38,8 @@ export class Card extends Container {
             if (this.state.data.length > 0)
                 field.state.data = [this.state.data[0]];
 
+            await field.bind();
+
             // Set the component attributes.
             field.setAttributes();
 
