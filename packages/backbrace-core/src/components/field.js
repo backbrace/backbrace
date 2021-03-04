@@ -92,7 +92,13 @@ export class Field extends Component {
 
         if (this.state.data.length > 0 && this.design.bind) {
             let bindData = this.state.data[0];
-            this._value = bindData[this.design.bind];
+            let val = bindData[this.design.bind];
+            if (typeof val === 'undefined') {
+                this.state.error = this.error('bind', `Cannot bind property ${this.design.bind}`);
+                this.state.hasError = true;
+            } else {
+                this._value = val;
+            }
         }
 
     }
