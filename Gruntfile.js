@@ -96,7 +96,9 @@ module.exports = function(grunt) {
           paths.core + '/src/app.js',
           paths.core + '/src/log.js',
           paths.core + '/src/util.js',
-          paths.core + '/src/route.js'
+          paths.core + '/src/route.js',
+          paths.core + '/src/data.js',
+          paths.core + '/src/state.js'
         ],
         options: {
           private: true,
