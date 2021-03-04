@@ -10,7 +10,7 @@
             "component": "components/componenttitle.js",
             "attributes": {
                 "api": "Login",
-                "description": "<p>BOOO.</p>"
+                "description": "<p></p>"
             }
         },
         {
@@ -40,8 +40,10 @@
             "name": "Source 1",
             "caption": "Design",
             "component": "components/sectionsource.js",
-            "source": "page/components/login.json",
-            "bind": "sections.1",
+            "data": {
+                "source": "page/components/login.json",
+                "bind": "sections.1"
+            },
             "attributes": {
                 "cols": "col-md-6"
             }

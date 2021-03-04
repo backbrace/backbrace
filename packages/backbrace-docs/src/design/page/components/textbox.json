@@ -2,7 +2,9 @@
     "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
     "name": "textfeld",
     "caption": "Textbox Component",
-    "source": "data/sample.json",
+    "data": {
+        "source": "data/sample.json"
+    },
     "service": "service/docs.js",
     "sections": [
         {
@@ -39,8 +41,10 @@
             "name": "Source 1",
             "caption": "Design",
             "component": "components/sectionsource.js",
-            "source": "page/components/textbox.json",
-            "bind": "sections.1",
+            "data": {
+                "source": "page/components/textbox.json",
+                "bind": "sections.1"
+            },
             "attributes": {
                 "cols": "col-md-6"
             }

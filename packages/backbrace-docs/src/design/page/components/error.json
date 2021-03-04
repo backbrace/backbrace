@@ -42,7 +42,7 @@
                 "template": [
                     "<br><p>To show the stack trace, use the <code>showstack</code> attribute. Note: This is turned on by default if the app is set to <code>debugMode: true</code></p>",
                     "<p>Example:</p>",
-                    "<pre class=\"prettyprint source lang-jsx\"><code>",
+                    "<pre class=\"prettyprint source lang-js\"><code>",
                     "return this.html`&lt;bb-error .err=${new Error('Test error')} showstack&gt;&lt;/bb-error&gt;`;",
                     "</pre></code>"
                 ]

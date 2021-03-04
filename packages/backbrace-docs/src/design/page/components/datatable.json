@@ -2,7 +2,6 @@
     "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
     "name": "datatable",
     "caption": "Data Table Component",
-    "source": "data/sample.json",
     "service": "service/docs.js",
     "sections": [
         {
@@ -17,7 +16,9 @@
         {
             "name": "Basic Table",
             "component": "datatable",
-            "source": "data/samplelist.json",
+            "data": {
+                "source": "data/samplelist.json"
+            },
             "attributes": {
                 "cols": "col-md-6",
                 "height": "400px"
@@ -41,8 +42,10 @@
             "name": "Source 1",
             "caption": "Design",
             "component": "components/sectionsource.js",
-            "source": "page/components/datatable.json",
-            "bind": "sections.1",
+            "data": {
+                "source": "page/components/datatable.json",
+                "bind": "sections.1"
+            },
             "attributes": {
                 "cols": "col-md-6"
             }

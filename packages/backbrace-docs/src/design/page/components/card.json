@@ -40,8 +40,10 @@
             "name": "Source 1",
             "caption": "Design",
             "component": "components/sectionsource.js",
-            "source": "page/components/card.json",
-            "bind": "sections.1",
+            "data": {
+                "source": "page/components/card.json",
+                "bind": "sections.1"
+            },
             "attributes": {
                 "cols": "col-md-6"
             }

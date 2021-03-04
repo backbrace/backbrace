@@ -6,8 +6,10 @@
     {
       "name": "main",
       "component": "components/apihome.js",
-      "source": "data/modules.json",
-      "bind": "modules"
+      "data": {
+        "source": "data/modules.json",
+        "bind": "modules"
+      }
     }
   ]
 }
