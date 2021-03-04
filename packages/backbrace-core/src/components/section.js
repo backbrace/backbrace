@@ -1,5 +1,6 @@
 import { Component } from './component';
 import { makeObservable, observable } from 'mobx';
+import { get as getData } from '../providers/data';
 
 /**
  * @class Section
@@ -78,6 +79,24 @@ export class Section extends Component {
      * @returns {Promise<void>}
      */
     async load() {
+    }
+
+    /**
+     * Save the section data.
+     * @async
+     * @returns {Promise<void>}
+     */
+    async save() {
+
+        this.state.isLoading = true;
+
+        let ret = await getData().update(this.design.data, this.params, null, this.design, this.state.data);
+
+        this.state.isLoading = false;
+
+        if (ret.error)
+            throw this.error('save', ret.error);
+
     }
 
     /**

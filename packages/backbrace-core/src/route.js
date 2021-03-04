@@ -124,7 +124,7 @@ export function match(path, pathparams) {
                 }
             });
             if (res) {
-                if (route.private && !appState?.auth?.token) {
+                if (route.private && !appState.isAuthenticated) {
                     if (settings.auth.login)
                         ret = match(settings.auth.login, {
                             callbackPath: path
@@ -160,7 +160,7 @@ export function processLinks(comp) {
         if (r) {
             loadPageSingle(r, path);
             if (window.history)
-                window.history.pushState(null, r.page, path);
+                window.history.pushState(null, r.page, path === '/' ? settings.base || path : path);
         }
     };
 

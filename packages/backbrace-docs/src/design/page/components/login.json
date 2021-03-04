@@ -40,7 +40,7 @@
             "name": "Source 1",
             "caption": "Design",
             "component": "components/sectionsource.js",
-            "data": "page/components/login.json",
+            "source": "page/components/login.json",
             "bind": "sections.1",
             "attributes": {
                 "cols": "col-md-6"

@@ -1,12 +1,11 @@
-import $ from 'cash-dom';
 import { Card } from './card';
 import { fetch, bind } from '../../data';
 import { navigate } from '../../route';
 import { get as getWindow } from '../../providers/window';
-import { Header } from '../header';
 import { makeObservable, observable } from 'mobx';
 import { settings } from '../../settings';
 import { appState } from '../../state';
+import { get as getData } from '../../providers/data';
 
 /**
  * @class Login
@@ -26,9 +25,7 @@ export class Login extends Card {
             ['path', 'string'],
             ['data', 'string'],
             ['loginquery', 'string'],
-            ['loginbind', 'string'],
-            ['userquery', 'string'],
-            ['userbind', 'string']
+            ['loginbind', 'string']
         ]);
     }
 
@@ -69,46 +66,14 @@ export class Login extends Card {
 
         /**
          * @description
-         * Attribute. Query to run when getting the `userInfo`.
-         * @type {string}
-         */
-        this.userquery = '';
-
-        /**
-         * @description
-         * Attribute. Binding path to the `userInfo` object.
-         * @type {string}
-         */
-        this.userbind = '';
-
-        /**
-         * @description
          * Login error message.
          * @type {string}
          */
         this.errorMessage = '';
 
-        /**
-         * @description
-         * App header.
-         * @type {import('../header').Header}
-         */
-        this.header = null;
-
         makeObservable(this, {
             errorMessage: observable
         });
-    }
-
-    /** @override */
-    firstUpdated() {
-
-        super.firstUpdated();
-
-        // Save a reference to the app header.
-        const ele = $('bb-header');
-        if (ele.length > 0 && ele[0] instanceof Header)
-            this.header = ele[0];
     }
 
     /**
@@ -119,25 +84,24 @@ export class Login extends Card {
     async onLogin() {
 
         const path = this.path || this.params.callbackPath;
+        const config = getData().config;
 
         // Get the user info.
-        if (this.userquery && this.userbind) {
+        if (config.user?.source) {
 
-            let data = await fetch(this.data, this.userquery);
+            let ret = await getData().find(config.user);
 
-            if (data) {
+            if (ret) {
 
                 // Check for errors.
-                if (data.errors && data.errors.length && data.errors.length > 0 && data.errors[0].message)
-                    throw this.error('onlogin', data.errors[0].message);
+                if (ret.error)
+                    throw this.error('onlogin', ret.error);
 
                 // Bind the result.
-                let bindData = bind(this.userbind, data);
-                appState.user = bindData;
+                let bindData = bind(config.user.bind, ret.data);
+                appState.user = bindData[0];
             }
         }
-
-        this.header.show();
 
         // Navigate to the callback path.
         if (path)
@@ -178,7 +142,7 @@ export class Login extends Card {
             if (data) {
 
                 // Check for errors.
-                if (data.errors && data.errors.length && data.errors.length > 0 && data.errors[0].message) {
+                if (data?.errors?.[0].message) {
                     this.errorMessage = data.errors[0].message;
                     this.state.isLoading = false;
                     return;
@@ -189,6 +153,7 @@ export class Login extends Card {
 
                 // Save the auth.
                 appState.auth = bindData;
+                appState.isAuthenticated = true;
 
                 this.state.isLoading = false;
 
@@ -212,6 +177,7 @@ export class Login extends Card {
 
                 // Save the auth.
                 appState.auth = data;
+                appState.isAuthenticated = true;
 
                 await this.onLogin();
                 return;

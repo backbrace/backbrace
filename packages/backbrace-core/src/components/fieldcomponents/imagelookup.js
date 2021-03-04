@@ -1,4 +1,5 @@
 import $ from 'cash-dom';
+import Jimp from 'jimp/es';
 import { Field } from '../field';
 import { get as getStyle } from '../../providers/style';
 
@@ -44,7 +45,7 @@ export class ImageLookup extends Field {
 
         /**
          * @description
-         * Icon to display at the bottom of the component.
+         * Attribute. Icon to display at the bottom of the component.
          * @type {string}
          */
         this.icon = '';
@@ -74,7 +75,13 @@ export class ImageLookup extends Field {
         const reader = new FileReader();
 
         reader.addEventListener('load', () => {
-            this.value = reader.result.toString();
+            Jimp
+                .read(reader.result.toString())
+                .then((j) => {
+                    j.scaleToFit(200, 200).getBase64Async(j.getMIME()).then((v) => {
+                        this.value = v;
+                    });
+                });
         }, false);
 
         if (file) {

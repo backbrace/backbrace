@@ -141,6 +141,7 @@ export class Header extends Component {
      */
     logout() {
         this.hide();
+        appState.isAuthenticated = false;
         appState.auth = null;
         appState.user = null;
     }

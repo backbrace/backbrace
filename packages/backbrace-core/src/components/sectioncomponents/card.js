@@ -27,6 +27,8 @@ export class Card extends Container {
     /** @override */
     async load() {
 
+        await super.load();
+
         // Load the fields.
         for (let fieldDesign of this.design.fields) {
 

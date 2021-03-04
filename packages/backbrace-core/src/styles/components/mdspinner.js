@@ -1,4 +1,5 @@
 import { ShadowComponent } from '../../components/shadowcomponent';
+import { settings } from '../../settings';
 
 /**
  * @class MaterialDesignSpinner
@@ -94,7 +95,7 @@ export class MaterialDesignSpinner extends ShadowComponent {
                     }
                 }
                 svg.spinner {
-                    stroke: #3498db;
+                    stroke: ${settings.style.colors.fgprogress};
                 }
             </style>
             <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">

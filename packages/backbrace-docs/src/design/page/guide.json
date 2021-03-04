@@ -7,9 +7,10 @@
     {
       "name": "main",
       "component": "components/guide.js",
-      "data": "data/tutorials.json",
-      "bind": "tutorials",
-      "query": "guide"
+      "data": {
+        "source": "data/tutorials.json",
+        "bind": "tutorials"
+      }
     }
   ]
 }

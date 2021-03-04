@@ -23,6 +23,9 @@ exports.get = function(devmode) {
       filename: '[name].js',
       chunkFilename: '[name].js'
     },
+    node: {
+      fs: 'empty'
+    },
     module: {
       rules: [
         {

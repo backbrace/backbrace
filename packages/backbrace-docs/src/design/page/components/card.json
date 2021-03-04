@@ -1,37 +1,38 @@
 {
     "$schema": "../../../../../../packages/backbrace-devkit/schema/pagedesign.json",
-    "name": "textfeld",
-    "caption": "Textbox Component",
-    "source": "data/sample.json",
+    "name": "card",
+    "caption": "Card Component",
     "service": "service/docs.js",
     "sections": [
         {
-            "name": "Textbox",
-            "caption": "Textbox Component",
+            "name": "Card",
+            "caption": "Card Component",
             "component": "components/componenttitle.js",
             "attributes": {
-                "api": "Textbox",
-                "description": "<p>Text boxes allow users to enter text into a UI. They typically appear in forms and dialogs.</p>"
+                "api": "Card",
+                "description": "<p></p>"
             }
         },
         {
-            "name": "Basic Options",
+            "name": "Card with Actions",
             "attributes": {
                 "cols": "col-md-6"
             },
             "fields": [
                 {
-                    "name": "Default"
+                    "name": "First Name"
                 },
                 {
-                    "name": "Error Text",
-                    "bind": "field1"
+                    "name": "Last Name"
+                }
+            ],
+            "actions": [
+                {
+                    "name": "Save"
                 },
                 {
-                    "name": "Helper Text",
-                    "attributes": {
-                        "helpertext": "Helper message"
-                    }
+                    "name": "Cancel",
+                    "style": "text"
                 }
             ]
         },
@@ -39,7 +40,7 @@
             "name": "Source 1",
             "caption": "Design",
             "component": "components/sectionsource.js",
-            "source": "page/components/textbox.json",
+            "source": "page/components/card.json",
             "bind": "sections.1",
             "attributes": {
                 "cols": "col-md-6"

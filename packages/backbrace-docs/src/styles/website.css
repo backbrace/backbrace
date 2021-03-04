@@ -1,7 +1,7 @@
 body {
   overflow-y: auto !important;
 }
-bb-app .bb-main {
+bb-app main {
   margin-top: 64px;
 }
 bb-header nav {

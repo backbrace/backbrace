@@ -6,7 +6,7 @@
     {
       "name": "main",
       "component": "components/apihome.js",
-      "data": "data/modules.json",
+      "source": "data/modules.json",
       "bind": "modules"
     }
   ]

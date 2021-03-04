@@ -11,6 +11,7 @@ import './components/preloader';
 
 import { get as getStyle, set as setStyle } from './providers/style';
 import { get as getWindow } from './providers/window';
+import { set as setData } from './providers/data';
 
 /**
  * App module.
@@ -173,6 +174,30 @@ async function loadStyle() {
 }
 
 /**
+ * Load the data provider.
+ * @ignore
+ * @async
+ * @returns {Promise<void>}
+ */
+async function loadDataProvider() {
+
+    if (settings.data.provider) {
+
+        const { default: DataHandler } = await import(
+            /* webpackChunkName: "data-[request]" */
+            './data/' + settings.data.provider);
+
+        /**
+         * @ignore
+         * @type {import('./providers/data').DataHandler}
+         */
+        const data = new DataHandler();
+        data.config = settings.data;
+        setData(data);
+    }
+}
+
+/**
  * Start the app.
  * @async
  * @returns {Promise<void>} Returns after the app is started.
@@ -228,7 +253,9 @@ export async function start() {
         /* webpackChunkName: "app" */
         './components/app');
 
+    // Load providers.
     await loadStyle();
+    await loadDataProvider();
 
     // Add link tags.
     settings.head.link.forEach(l => {

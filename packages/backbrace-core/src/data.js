@@ -69,6 +69,12 @@ export async function fetch(url, query, variables) {
         });
         if (res.ok) {
             return await res.json();
+        } else {
+            return {
+                errors: [
+                    { message: res.statusText }
+                ]
+            };
         }
     }
 

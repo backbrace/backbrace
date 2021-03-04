@@ -5,6 +5,7 @@ import ripplet from 'ripplet.js';
 import Swal from 'sweetalert2';
 
 import { compile } from '../../jss';
+import { MaterialDesignLinear } from '../components/mdlinear';
 import { MaterialDesignSpinner } from '../components/mdspinner';
 import { settings } from '../../settings';
 
@@ -42,7 +43,9 @@ export default class MaterialDesignStyle extends StyleHandler {
     /**
      * @override
      */
-    progress() {
+    progress(action) {
+        if (action === 'save')
+            return new MaterialDesignLinear();
         return new MaterialDesignSpinner();
     }
 

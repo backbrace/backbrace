@@ -18,6 +18,7 @@ import { get as getStyleHandler, set as setStyleHandler } from './providers/styl
  * @borrows module:app.serviceWorker as serviceWorker
  * @borrows module:app.start as start
  * @borrows module:app.unload as unload
+ * @borrows module:data.fetch as fetch
  * @borrows module:globals~globals as globals
  * @borrows module:log.debug as logDebug
  * @borrows module:log.info as logInfo
@@ -26,6 +27,7 @@ import { get as getStyleHandler, set as setStyleHandler } from './providers/styl
  * @borrows module:log.warning as logWarning
  * @borrows module:route.route as route
  * @borrows module:route.match as matchRoute
+ * @borrows module:state.appState as appState
  * @borrows module:state.store as store
  * @borrows module:util.clipboard as clipboard
  * @borrows module:util.formatString as formatString
@@ -153,8 +155,13 @@ export {
 } from './app';
 
 export {
-    store
+    store,
+    appState
 } from './state';
+
+export {
+    fetch
+} from './data';
 
 export {
     Component

@@ -16,6 +16,7 @@ import { isMobileDevice } from '../util';
 import { Page } from './page';
 
 import { get as getWindow } from '../providers/window';
+import { appState } from '../state';
 
 /**
  * @class App
@@ -52,13 +53,6 @@ export class App extends Component {
          * @type {import('./apptoolbar').AppToolbar}
          */
         this.toolbar = null;
-
-        /**
-         * @description
-         * Header component.
-         * @type {import('./header').Header}
-         */
-        this.header = null;
 
         /**
          * @description
@@ -191,9 +185,8 @@ export class App extends Component {
     firstUpdated() {
 
         // Get our sub components.
-        this.main = $(this).find('.bb-main');
+        this.main = $(this).find('main');
         this.toolbar = this.querySelector('bb-apptoolbar');
-        this.header = this.querySelector('bb-appheader');
 
         // Add mobile/desktop class.
         this.classList.add(isMobileDevice() ? 'mobile-app' : 'desktop-app');
@@ -209,10 +202,11 @@ export class App extends Component {
         if (this.state.hasError)
             return this.html`<bb-error .err=${this.state.error}></bb-error>`;
         return this.html`
-            <bb-header logo=${settings.style.images.logo} logotext=${settings.app.name}
-                style=${this.styleMap({ display: settings.auth.login ? 'none' : '' })}></bb-header>
-            <bb-apptoolbar style=${this.styleMap({ display: !settings.windowMode ? 'none' : '' })}></bb-apptoolbar>
-            <div class="bb-main container"></div>
+            ${!settings.auth.login || appState.isAuthenticated ?
+                this.html`<bb-header logo=${settings.style.images.logo} logotext=${settings.app.name}></bb-header>` : ''}
+            ${settings.windowMode ?
+                this.html`<bb-apptoolbar></bb-apptoolbar>` : ''}
+            <main class="container"></main>
         `;
     }
 

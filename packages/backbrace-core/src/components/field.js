@@ -48,7 +48,7 @@ export class Field extends Component {
          * Field value.
          * @type {string}
          */
-        this.value = '';
+        this._value = '';
 
         /**
          * @description
@@ -65,7 +65,6 @@ export class Field extends Component {
         this.caption = '';
 
         makeObservable(this, {
-            value: observable,
             caption: observable,
             helpertext: observable
         });
@@ -93,16 +92,32 @@ export class Field extends Component {
 
         if (this.state.data.length > 0 && this.design.bind) {
             let bindData = this.state.data[0];
-            this.design.bind.split('.').forEach((bprop) => {
-                if (typeof bindData[bprop] === 'undefined') {
-                    throw this.error('bind', `Data binding failed for ${this.design.bind} on property ${bprop}`);
-                }
-                bindData = bindData[bprop];
-            });
-            const val = bindData;
-            this.value = val;
+            this._value = bindData[this.design.bind];
         }
 
+    }
+
+    /**
+     * Getter on `this.value`.
+     * @ignore
+     * @returns {string}
+     */
+    get value() {
+        return this._value;
+    }
+
+    /**
+     * Setter on `this.value`
+     * @ignore
+     * @returns {void}
+     */
+    set value(newValue) {
+        if (this.state.data.length > 0 && this.design.bind) {
+            let bindData = this.state.data[0];
+            bindData[this.design.bind] = newValue;
+        }
+        this._value = newValue;
+        this.update();
     }
 
     /** @override */

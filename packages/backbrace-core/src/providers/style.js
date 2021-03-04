@@ -17,9 +17,10 @@ export class StyleHandler {
 
     /**
      * Create a progress meter element.
+     * @param {string} action Action performed.
      * @returns {HTMLElement}
      */
-    progress() {
+    progress(action) {
         return null;
     }
 

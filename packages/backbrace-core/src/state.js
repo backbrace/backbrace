@@ -20,6 +20,7 @@ export let store = observable.map();
  * Global application state.
  */
 export let appState = observable({
+    isAuthenticated: false,
     auth: null,
     user: null
 });

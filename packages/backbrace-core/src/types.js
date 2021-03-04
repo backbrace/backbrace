@@ -29,6 +29,31 @@ import { AppError } from './errors/app';
 */
 
 /**
+* Data options.
+* @typedef dataOptions
+* @property {string} [source] Data source.
+* @property {string} [args] Data source arguments.
+* @property {string[]} [fields] Fields to retrieve.
+* @property {string} [bind] Data property to bind to.
+*/
+
+/**
+* Data config.
+* @typedef dataConfig
+* @property {string} [provider] Set the data provider. Defaults to `json`.
+* @property {string} [url] Set the provider URL.
+* @property {dataOptions} [user] Set the source for user info.
+*/
+
+/**
+* Data info.
+* @typedef dataInfo
+* @property {number} [count] Data record count.
+* @property {string} [error] Data error.
+* @property {Object} [data] Data.
+*/
+
+/**
  * Auth state.
  * @typedef authState
  * @property {string} [token] Auth token. Used in all requests as a bearer token.
@@ -47,6 +72,7 @@ import { AppError } from './errors/app';
 /**
  * Global application state.
  * @typedef appState
+ * @property {boolean} [isAuthenticated] `True` if the user is authenticated.
  * @property {authState} [auth] Auth state.
  * @property {userState} [user] User state.
  */
@@ -90,6 +116,8 @@ import { AppError } from './errors/app';
  * @property {string} [texthover] Hover text color.
  * @property {string} [bgheader] Override the primary color on the header.
  * @property {string} [textheader] Override the primary text color on the header.
+ * @property {string} [bgprogress] Progress bar background color.
+ * @property {string} [fgprogress] Progress bar foreground color.
  */
 
 /**
@@ -130,6 +158,7 @@ import { AppError } from './errors/app';
  * @property {routeConfig[]} [routes] App routes.
  * @property {headConfig} [head] Head config.
  * @property {authConfig} [auth] App auth config.
+ * @property {dataConfig} [data] Data config.
  */
 
 /**
@@ -184,15 +213,15 @@ export let pagefield = {
  * @property {string} name Name of the action.
  * @property {string} text Caption of the action.
  * @property {string} icon Icon to use on the button.
- * @property {string} iconColor Icon color. Defaults to header color.
- * @property {string} className Classes to add to the button.
+ * @property {string} style Button style (outlined or text).
+ * @property {string} type Button type.
  */
 export let pageaction = {
   name: '',
   text: '',
   icon: '',
-  iconColor: '',
-  className: ''
+  style: '',
+  type: ''
 };
 
 /**
@@ -203,9 +232,7 @@ export let pageaction = {
  * @property {string} [className] Classes to add to the section.
  * @property {string} [component] Component for the section (defaults to `cardpage`).
  * @property {Object} [attributes] Section component attributes.
- * @property {string} [data] Data source (ie. JSON file).
- * @property {string} [query] Data query.
- * @property {string} [bind] Data property to bind to.
+ * @property {dataOptions} [data] Data source.
  * @property {pageFieldDesign[]} [fields] Page section fields.
  * @property {pageActionDesign[]} [actions] Page actions.
  */
@@ -216,9 +243,7 @@ export let pagesection = {
   className: '',
   component: 'card',
   attributes: {},
-  data: '',
-  query: '',
-  bind: '',
+  data: {},
   fields: [],
   actions: []
 };
@@ -226,7 +251,7 @@ export let pagesection = {
 /**
  * @typedef pageDesign
  * @property {string} caption Caption of the page.
- * @property {string} data Data source (ie. JSON file).
+ * @property {dataOptions} data Data source.
  * @property {string} icon Icon to use for the page.
  * @property {string} service Page service path.
  * @property {boolean} noclose Don't allow the page to be closed (in windowed mode).
@@ -234,7 +259,7 @@ export let pagesection = {
  */
 export let pagedesign = {
   caption: '',
-  data: '',
+  data: {},
   icon: '',
   service: '',
   noclose: false,

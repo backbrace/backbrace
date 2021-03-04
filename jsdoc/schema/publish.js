@@ -13,7 +13,8 @@ exports.publish = function(data, opts, tutorials) {
 
     var reftypes = [
         'sectionOptions', 'appConfig', 'dirConfig', 'styleConfig', 'pageSectionDesign',
-        'imagesConfig', 'colorsConfig', 'routeConfig', 'queryDesign', 'storeMapping', 'headConfig', 'authConfig'];
+        'imagesConfig', 'colorsConfig', 'routeConfig', 'storeMapping',
+        'headConfig', 'authConfig', 'dataConfig', 'dataOptions'];
 
     function getType(docs_, name_) {
         for (var d in docs_) {
@@ -62,16 +63,27 @@ exports.publish = function(data, opts, tutorials) {
 
                 t = p.type.replace(/Array\.\</g, '').replace(/\>/g, '');
                 p.type = "array";
-                p.items = {
-                    "$ref": "#/definitions/" + t
-                }
-                root.definitions[t] = {
-                    "description": t + " Object",
-                    "type": "object",
-                    "properties": {
+
+                if (t === 'string' || t === 'number') {
+
+                    p.items = {
+                        "type": t
                     }
+
+                } else {
+
+                    p.items = {
+                        "$ref": "#/definitions/" + t
+                    }
+                    root.definitions[t] = {
+                        "description": t + " Object",
+                        "type": "object",
+                        "properties": {
+                        }
+                    }
+                    generate(root, root.definitions[t], t);
+
                 }
-                generate(root, root.definitions[t], t);
             }
             schema.properties[prop.name] = p;
         });

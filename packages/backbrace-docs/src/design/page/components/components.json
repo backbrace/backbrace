@@ -6,13 +6,13 @@
     {
       "name": "main",
       "component": "components/guide.js",
-      "data": "data/tutorials.json",
+      "source": "data/tutorials.json",
       "bind": "tutorials"
     },
     {
       "name": "components",
       "component": "components/componentshome.js",
-      "data": "data/components.json",
+      "source": "data/components.json",
       "bind": "components"
     }
   ]

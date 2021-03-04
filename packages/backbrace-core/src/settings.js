@@ -45,7 +45,9 @@ export let settings = {
             bghover: '#d8d8d8',
             texthover: '#000',
             bgheader: '',
-            textheader: ''
+            textheader: '',
+            bgprogress: '#a7caed',
+            fgprogress: '#3498db'
         }
     },
     routes: [],
@@ -64,5 +66,10 @@ export let settings = {
         logout: '',
         profile: '',
         refreshTokenURL: ''
+    },
+    data: {
+        provider: 'json',
+        url: '',
+        user: {}
     }
 };
