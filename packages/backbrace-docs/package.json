@@ -1,6 +1,6 @@
 {
     "name": "@backbrace/docs",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "description": "Backbrace documentation website.",
     "repository": {
         "type": "git",

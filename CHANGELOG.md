@@ -1,3 +1,19 @@
+<a name="0.2.5"></a>
+## 0.2.5 (2021-03-04)
+
+### Added
+
+- ✨ Update v0.2.5 ([#49](https://github.com/backbrace/backbrace/pull/49)) [[128a933](https://github.com/backbrace/backbrace/commit/128a933c78147209958c0cdf859b9b03c50cf2e6)]
+
+### Security
+
+- 🔒 Fix dependency security [[7f01667](https://github.com/backbrace/backbrace/commit/7f01667bbd0313be8c5a14938524dac260e84ede)]
+
+### Miscellaneous
+
+- 🔨 Fix firebase not loading from &#x60;node_modules&#x60; [[214705c](https://github.com/backbrace/backbrace/commit/214705cc07671039a4b5de573e8dec02b9c812d4)]
+
+
 <a name="0.2.4"></a>
 ## 0.2.4 (2020-08-12)
 
