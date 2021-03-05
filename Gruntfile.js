@@ -141,15 +141,16 @@ module.exports = function(grunt) {
       dev: {
         files: [
           { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/src/node_modules/@backbrace/core/dist' },
-          { expand: true, cwd: './node_modules/prismjs', src: ['**'], dest: paths.docs + '/src/node_modules/prismjs' }
+          { src: './node_modules/prismjs/themes/prism-tomorrow.css', dest: paths.docs + '/dist/node_modules/prismjs/themes/prism-tomorrow.css' },
+          { src: './node_modules/prismjs/prism.js', dest: paths.docs + '/dist/node_modules/prismjs/prism.js' },
+          { src: './node_modules/prismjs/components/prism-json.js', dest: paths.docs + '/dist/node_modules/prismjs/components/prism-json.js' }
         ]
       },
       dist: {
         files: [
           { expand: true, cwd: paths.docs + '/src', src: ['**'], dest: paths.docs + '/dist' },
           { expand: true, cwd: paths.core + '/dist', src: ['**'], dest: paths.docs + '/dist/node_modules/@backbrace/core/dist' },
-          { src: paths.core + '/dist/service-worker.js', dest: paths.docs + '/dist/service-worker.js' },
-          { expand: true, cwd: './node_modules/prismjs', src: ['**'], dest: paths.docs + '/dist/node_modules/prismjs' }
+          { src: paths.core + '/dist/service-worker.js', dest: paths.docs + '/dist/service-worker.js' }
         ]
       },
       typings: {
